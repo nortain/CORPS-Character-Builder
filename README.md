@@ -13,6 +13,31 @@ to run using: <br>
 and to stop using: <br>
 `docker stop corps-character-builder`
 
+### Other docker info
+Ideall this stuff should work but it doesn\'t yet :(
+To run a project generated from the Angular CLI in nginx do the following:
+
+Run `ng build --delete-output-path false`    (or use -dop)<br>
+cd into the "dist" folder<br>
+Run the following command:
+
+`docker run -d -p 4200:4200 -v $(pwd):/usr/src/app nginx:alpine`
+
+Note: The Angular CLI currently deletes the "dist" folder and recreates it when running ng build so if you run it again the volume defined above won't work correctly.
+
+### Docker commands
+ 	
+     docker pull [imageName]
+     docker images
+     docker rmi [imageID]
+     docker build -t [imageName] .
+     docker push [imageName]
+      
+     docker run -p externalPort:internalPort [imageName]
+     docker ps -a
+     docker stop [containerID]
+     docker rm [containerID] 
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.5.
 
 ## Development server
