@@ -6,12 +6,12 @@ More information regarding CORPS and its development please visit herf: http://n
 This project is being developed with deployment in mind so is meant to be ran inside of a docker container.
 
 to build with docker you can visit here:
-Once you have docker setup on your system you should be able to build using:
-docker build -t corps-character-builder:dev .
-to run using:
-docker run -d --name corps-character-builder -p 4200:4200 corps-character-builder:dev
-and to stop using:
-docker stop corps-character-builder
+Once you have docker setup on your system you should be able to build using: <br>
+`docker build -t corps-character-builder:dev .` <br>
+to run using: <br>
+`docker run -d --name corps-character-builder -p 4200:4200 corps-character-builder:dev` <br>
+and to stop using: <br>
+`docker stop corps-character-builder`
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.5.
 
