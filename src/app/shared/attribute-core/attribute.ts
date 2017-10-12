@@ -3,13 +3,15 @@ import {AttributeStrength} from "./attribute-strength.enum";
 import {AttributeName} from "./attribute-name.enum";
 import {SpecialText} from "./special-text.enum";
 import {
-  HP_SCALING_FACTOR, IN_THP_BONUS, Level, MAGIC_DEFENSE, PRIMARY_DAMAGE, QU_HP_BONUS, QU_INIT_BONUS, ROUNDING_VALUE, SD_HP_BONUS,
+  IN_INIT_BONUS,
+  IN_THP_BONUS, MAGIC_DEFENSE, PRIMARY_DAMAGE, QU_HP_BONUS, QU_INIT_BONUS, SD_HP_BONUS,
   SD_PP_BONUS,
   SECONDARY_DAMAGE,
   SKILL_BONUS, TRAINED_SKILL_BONUS, VI_HP_BONUS
 } from "../constants";
-import {Armor} from "../armor";
-import {ArmorType} from "../armor-type.enum";
+import {Armor} from "../armor-core/armor";
+import {ArmorType} from "../armor-core/armor-type.enum";
+import {Level} from "../level.enum";
 
 
 export class Attribute {
@@ -63,7 +65,7 @@ export class Attribute {
   }
 
   /*Given a level this finds how many bonus hit points an attribute gives based on its strength*/
-  getHitPointBonus(level: number): number {
+  getHitPointBonus(level: Level): number {
     if (this.hasHpBonus()) {
       if (this.name === AttributeName.Vitality) {
         return VI_HP_BONUS[level][this.strength];
@@ -77,7 +79,8 @@ export class Attribute {
     }
   }
 
-  getTemporaryHitPointBonus(level: number): number {
+
+  getTemporaryHitPointBonus(level: Level): number {
     if (this.hasThpBonus()) {
       return IN_THP_BONUS[level][this.strength];
     } else {
@@ -85,15 +88,16 @@ export class Attribute {
     }
   }
 
-  getCritDieBonus(level: number): number {
+  /*gets critical die bonus for the given attribute given the level*/
+  getCritDieBonus(level: Level): number {
     if (this.strength < AttributeStrength.Legendary
       || this.type === AttributeType.MentalDefensive
       || this.type === AttributeType.PhysicalDefensive) {
       return 0;
     } else {
-      if (level === 10) {
+      if (level === Level.Ten) {
         return 3;
-      } else if (level > 5) {
+      } else if (level > Level.Five) {
         return 2;
       } else {
         return 1;
@@ -101,11 +105,12 @@ export class Attribute {
     }
   }
 
+  /*Gets initiative bonus for the given attribute*/
   getInitiativeBonus(): number {
     if (this.name === AttributeName.Quickness) {
       return QU_INIT_BONUS[this.strength];
     } else if (this.name === AttributeName.Intuition) {
-      return this.strength;
+      return IN_INIT_BONUS[this.strength];
     } else {
       return 0;
     }

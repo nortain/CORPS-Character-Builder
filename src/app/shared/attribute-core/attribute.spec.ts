@@ -2,8 +2,8 @@ import {Attribute} from "./attribute";
 import {AttributeName} from "./attribute-name.enum";
 import {AttributeStrength} from "./attribute-strength.enum";
 import {SpecialText} from "./special-text.enum";
-import {Armor} from "../armor";
-import {ArmorType} from "../armor-type.enum";
+import {Armor} from "../armor-core/armor";
+import {ArmorType} from "../armor-core/armor-type.enum";
 
 describe('Testing attribute class', () => {
 
@@ -129,7 +129,7 @@ describe('Testing attribute class', () => {
 
   it('should be able to get bonus initiative', () => {
     expect(qu.getInitiativeBonus()).toEqual(10);
-    expect(int.getInitiativeBonus()).toEqual(4);
+    expect(int.getInitiativeBonus()).toEqual(5);
     expect(bra.getInitiativeBonus()).toEqual(0);
   });
 

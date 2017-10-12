@@ -1,14 +1,21 @@
-export const Level = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-export const HP_SCALING_FACTOR = 2;
-export const ROUNDING_VALUE = .7;
+import {MaxMovement} from "./armor-core/max-movement";
+
+export const AVAILABLE_THEME_POINTS = 4;
 
 // Armor constants based off of the ArmorType Enum
 export const ACTIVE_DEFENSE = [11, 13, 13, 13, 14];
 export const PASSIVE_DEFENSE = [10, 11, 11, 12, 13];
 export const CRITICAL_REDUCTION = [0, 0, 1, 2, 3];
-export const CASTER_REDUCTION = [3, 3, 2, 1, 0];
-export const MAX_MOVEMENT = [[10, 0], [10, 0], [8, 0], [7, 0], [6, -1]];
-export const SKILL_PENALTY = [0, 0, 0, -1, -2];
+export const CASTER_PENALTY = [3, 3, 2, 1, 0];
+export const MAX_MOVEMENT: Array<MaxMovement> =
+  [
+    new MaxMovement(10, 0),
+    new MaxMovement(10, 0),
+    new MaxMovement(8, 0),
+    new MaxMovement(7, 0),
+    new MaxMovement(6, -1)
+  ];
+export const SKILL_PENALTY = [0, 0, 0, 1, 2];
 export const REQUIRES_TRAINING = [false, false, false, false, true];
 export const REQUIRES_THREE_MAGIC = [false, true, false, false, false];
 
@@ -18,7 +25,8 @@ export const SECONDARY_DAMAGE = [0, 2, 4, 5, 6];
 export const SKILL_BONUS = [0, 2, 3, 3, 4];
 export const MAGIC_DEFENSE = [0, 2, 3, 3, 3];
 export const SD_PP_BONUS = [0, 2, 3, 3, 4];
-export const QU_INIT_BONUS = [0, 4, 6, 8, 10];
+export const QU_INIT_BONUS = [0, 5, 8, 9, 10];
+export const IN_INIT_BONUS = [0, 2, 3, 4, 5];
 export const TRAINED_SKILL_BONUS = [0, 0, 1, 1, 2];
 // Attribute constants based off of Level constant and AttributeStrength enum
 export const VI_HP_BONUS = [
@@ -50,16 +58,16 @@ export const QU_HP_BONUS = [
 
 export const SD_HP_BONUS = [
   [0, 0, 0, 0, 0], // should never happen cause there is no level 0 but done to keep level 1 - 10 rather than 0-9 as an index
-  [0, 1, 2, 3, 4],
-  [0, 1, 2, 3, 5],
-  [0, 1, 2, 4, 6],
-  [0, 1, 3, 5, 6],
-  [0, 2, 3, 5, 7],
-  [0, 2, 4, 6, 8],
-  [0, 2, 4, 7, 9],
-  [0, 2, 5, 7, 10],
-  [0, 3, 5, 8, 11],
-  [0, 3, 6, 9, 12]
+  [0, 1, 2, 4, 4],
+  [0, 1, 2, 5, 5],
+  [0, 1, 2, 6, 6],
+  [0, 1, 3, 6, 6],
+  [0, 2, 3, 7, 7],
+  [0, 2, 3, 8, 8],
+  [0, 2, 3, 9, 9],
+  [0, 2, 4, 10, 10],
+  [0, 3, 4, 11, 11],
+  [0, 3, 4, 12, 12]
 ];
 
 export const IN_THP_BONUS = [
