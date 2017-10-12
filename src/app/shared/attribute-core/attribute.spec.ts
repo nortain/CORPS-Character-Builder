@@ -2,6 +2,8 @@ import {Attribute} from "./attribute";
 import {AttributeName} from "./attribute-name.enum";
 import {AttributeStrength} from "./attribute-strength.enum";
 import {SpecialText} from "./special-text.enum";
+import {Armor} from "../armor";
+import {ArmorType} from "../armor-type.enum";
 
 describe('Testing attribute class', () => {
 
@@ -92,11 +94,11 @@ describe('Testing attribute class', () => {
   });
 
   it('should show bonus critical dice for legendary offensive attributes only', () => {
-    expect(bra.getBonusCriticalDice(1)).toEqual(1);
-    expect(attribute.getBonusCriticalDice(1)).toEqual(0);
-    expect(vit.getBonusCriticalDice(1)).toEqual(0);
-    expect(bra.getBonusCriticalDice(10)).toEqual(3);
-    expect(bra.getBonusCriticalDice(6)).toEqual(2);
+    expect(bra.getCritDieBonus(1)).toEqual(1);
+    expect(attribute.getCritDieBonus(1)).toEqual(0);
+    expect(vit.getCritDieBonus(1)).toEqual(0);
+    expect(bra.getCritDieBonus(10)).toEqual(3);
+    expect(bra.getCritDieBonus(6)).toEqual(2);
   });
 
   it('should be able to get special text for an attribute has', () => {
@@ -105,30 +107,30 @@ describe('Testing attribute class', () => {
   });
 
   it('should be able to show how many bonus hit points it gives', () => {
-    expect(vit.getBonusHitPoints(1)).toEqual(12);
-    expect(vit.getBonusHitPoints(10)).toEqual(36);
-    expect(bra.getBonusHitPoints(10)).toEqual(0);
-    expect(qu.getBonusHitPoints(1)).toEqual(5);
-    expect(sd.getBonusHitPoints(1)).toEqual(4);
-    expect(int.getBonusHitPoints(1)).toEqual(0);
+    expect(vit.getHitPointBonus(1)).toEqual(12);
+    expect(vit.getHitPointBonus(10)).toEqual(36);
+    expect(bra.getHitPointBonus(10)).toEqual(0);
+    expect(qu.getHitPointBonus(1)).toEqual(5);
+    expect(sd.getHitPointBonus(1)).toEqual(4);
+    expect(int.getHitPointBonus(1)).toEqual(0);
   });
 
   it('should be able to show how many bonus thp an attribute has', () => {
-    expect(int.getBonusTemporaryHitPoints(1)).toEqual(5);
-    expect(int.getBonusTemporaryHitPoints(10)).toEqual(15);
-    expect(qu.getBonusTemporaryHitPoints(1)).toEqual(0);
-    expect(bra.getBonusTemporaryHitPoints(1)).toEqual(0);
+    expect(int.getTemporaryHitPointBonus(1)).toEqual(5);
+    expect(int.getTemporaryHitPointBonus(10)).toEqual(15);
+    expect(qu.getTemporaryHitPointBonus(1)).toEqual(0);
+    expect(bra.getTemporaryHitPointBonus(1)).toEqual(0);
   });
 
   it('should be able to get bonus recoveries', () => {
-    expect(vit.getBonusRecoveries()).toEqual(1);
-    expect(qu.getBonusRecoveries()).toEqual(0);
+    expect(vit.getRecoveryBonus()).toEqual(1);
+    expect(qu.getRecoveryBonus()).toEqual(0);
   });
 
   it('should be able to get bonus initiative', () => {
-    expect(qu.getBonusInitiative()).toEqual(10);
-    expect(int.getBonusInitiative()).toEqual(4);
-    expect(bra.getBonusInitiative()).toEqual(0);
+    expect(qu.getInitiativeBonus()).toEqual(10);
+    expect(int.getInitiativeBonus()).toEqual(4);
+    expect(bra.getInitiativeBonus()).toEqual(0);
   });
 
   it('should be able to get speed bonus', () => {
@@ -144,7 +146,23 @@ describe('Testing attribute class', () => {
   });
 
   it('should be able to get armor bonus', () => {
-    // Need to create armor class first
+    let armor = new Armor(ArmorType.LightArmor);
+    expect(bra.getArmorBonus(armor)).toEqual(0);
+    expect(qu.getArmorBonus(armor)).toEqual(1);
+    attribute = makeAttribute(AttributeName.Quickness, AttributeStrength.Champion);
+    expect(attribute.getArmorBonus(armor)).toEqual(0);
+    expect(sd.getArmorBonus(armor)).toEqual(0);
+    armor = new Armor(ArmorType.CasterArmor);
+    expect(sd.getArmorBonus(armor)).toEqual(1);
+  });
+
+  it('should be able to get trained skill bonus', () => {
+    expect(bra.getTrainedSkillBonus()).toEqual(0);
+    expect(qu.getTrainedSkillBonus()).toEqual(2);
+    expect(vit.getTrainedSkillBonus()).toEqual(2);
+    expect(sd.getTrainedSkillBonus()).toEqual(2);
+    attribute = makeAttribute(AttributeName.Quickness, AttributeStrength.Champion);
+    expect(attribute.getTrainedSkillBonus()).toEqual(1);
   });
 
 

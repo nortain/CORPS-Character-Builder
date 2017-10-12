@@ -3,9 +3,13 @@ import {AttributeStrength} from "./attribute-strength.enum";
 import {AttributeName} from "./attribute-name.enum";
 import {SpecialText} from "./special-text.enum";
 import {
-  HP_SCALING_FACTOR, IN_THP_BONUS, Level, MAGIC_DEFENSE, PRIMARY_DAMAGE, QU_HP_BONUS, ROUNDING_VALUE, SD_HP_BONUS, SECONDARY_DAMAGE,
-  SKILL_BONUS, VI_HP_BONUS
+  HP_SCALING_FACTOR, IN_THP_BONUS, Level, MAGIC_DEFENSE, PRIMARY_DAMAGE, QU_HP_BONUS, QU_INIT_BONUS, ROUNDING_VALUE, SD_HP_BONUS,
+  SD_PP_BONUS,
+  SECONDARY_DAMAGE,
+  SKILL_BONUS, TRAINED_SKILL_BONUS, VI_HP_BONUS
 } from "../constants";
+import {Armor} from "../armor";
+import {ArmorType} from "../armor-type.enum";
 
 
 export class Attribute {
@@ -59,7 +63,7 @@ export class Attribute {
   }
 
   /*Given a level this finds how many bonus hit points an attribute gives based on its strength*/
-  getBonusHitPoints(level: number): number {
+  getHitPointBonus(level: number): number {
     if (this.hasHpBonus()) {
       if (this.name === AttributeName.Vitality) {
         return VI_HP_BONUS[level][this.strength];
@@ -73,7 +77,7 @@ export class Attribute {
     }
   }
 
-  getBonusTemporaryHitPoints(level: number): number {
+  getTemporaryHitPointBonus(level: number): number {
     if (this.hasThpBonus()) {
       return IN_THP_BONUS[level][this.strength];
     } else {
@@ -81,7 +85,7 @@ export class Attribute {
     }
   }
 
-  getBonusCriticalDice(level: number): number {
+  getCritDieBonus(level: number): number {
     if (this.strength < AttributeStrength.Legendary
       || this.type === AttributeType.MentalDefensive
       || this.type === AttributeType.PhysicalDefensive) {
@@ -94,6 +98,66 @@ export class Attribute {
       } else {
         return 1;
       }
+    }
+  }
+
+  getInitiativeBonus(): number {
+    if (this.name === AttributeName.Quickness) {
+      return QU_INIT_BONUS[this.strength];
+    } else if (this.name === AttributeName.Intuition) {
+      return this.strength;
+    } else {
+      return 0;
+    }
+  }
+
+  /*gets any potential bonus to armor dependent on the type of armor the character is wearing*/
+  getArmorBonus(armor: Armor): number {
+    if (this.strength > AttributeStrength.Champion) {
+      if (this.name === AttributeName.Quickness && armor.type === ArmorType.LightArmor) {
+        return 1;
+      } else if (this.name === AttributeName.SelfDiscipline && armor.type === ArmorType.CasterArmor) {
+        return 1;
+      } else {
+        return 0;
+      }
+    } else {
+      return 0;
+    }
+  }
+
+  /*returns the number of bonus trained skills a character gets*/
+  getTrainedSkillBonus(): number {
+    if (this.type === AttributeType.PhysicalDefensive || this.name === AttributeName.SelfDiscipline) {
+      return TRAINED_SKILL_BONUS[this.strength];
+    } else {
+      return 0;
+    }
+  }
+
+  getRecoveryBonus(): number {
+    if (this.name === AttributeName.Vitality && this.strength > AttributeStrength.Champion) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
+  getPowerPointBonus(): number {
+    if (this.type === AttributeType.MentalOffensive && this.strength > AttributeStrength.Champion) {
+      return 1;
+    } else if (this.name === AttributeName.SelfDiscipline) {
+      return SD_PP_BONUS[this.strength];
+    } else {
+      return 0;
+    }
+  }
+
+  getSpeedBonus(): number {
+    if (this.name === AttributeName.Quickness && this.strength > AttributeStrength.Champion) {
+      return 2;
+    } else {
+      return 0;
     }
   }
 
