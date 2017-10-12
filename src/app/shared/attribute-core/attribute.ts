@@ -2,14 +2,15 @@ import {AttributeType} from "./attribute-type.enum";
 import {AttributeStrength} from "./attribute-strength.enum";
 import {AttributeName} from "./attribute-name.enum";
 import {SpecialText} from "./special-text.enum";
+import {
+  HP_SCALING_FACTOR, IN_THP_BONUS, Level, MAGIC_DEFENSE, PRIMARY_DAMAGE, QU_HP_BONUS, ROUNDING_VALUE, SD_HP_BONUS, SECONDARY_DAMAGE,
+  SKILL_BONUS, VI_HP_BONUS
+} from "../constants";
+
 
 export class Attribute {
-  private epicText;
-  private legendaryText;
-  primaryPhysicalDamage = [0, 3, 6, 7, 8];
-  secondayPhysicalDamage = [0, 2, 4, 5, 6];
-  skillBonus = [0, 2, 3, 3, 4];
-  magicDefense = [0, 2, 3, 3, 3];
+  private epicText: string;
+  private legendaryText: string;
   type: AttributeType;
 
   constructor(protected name: AttributeName, public strength: AttributeStrength) {
@@ -22,7 +23,7 @@ export class Attribute {
 
   getSkillBonus(): number {
     if (this.hasSkillBonus()) {
-      return this.skillBonus[this.strength];
+      return SKILL_BONUS[this.strength];
     } else {
       return 0;
     }
@@ -31,9 +32,9 @@ export class Attribute {
 
   getMagicDefense(): number {
     if (this.name === AttributeName.Intuition) {
-      return this.magicDefense[this.strength] - 1;
+      return MAGIC_DEFENSE[this.strength] - 1;
     } else if (this.hasMagicDefense()) {
-      return this.magicDefense[this.strength];
+      return MAGIC_DEFENSE[this.strength];
     } else {
       return 0;
     }
@@ -41,7 +42,7 @@ export class Attribute {
 
   getPrimaryDamage(): number {
     if (this.hasDamageBonus()) {
-      return this.primaryPhysicalDamage[this.strength];
+      return PRIMARY_DAMAGE[this.strength];
     } else {
       return 0;
     }
@@ -50,11 +51,34 @@ export class Attribute {
 
   getSecondaryDamage(): number {
     if (this.hasDamageBonus()) {
-      return this.secondayPhysicalDamage[this.strength];
+      return SECONDARY_DAMAGE[this.strength];
     } else {
       return 0;
     }
 
+  }
+
+  /*Given a level this finds how many bonus hit points an attribute gives based on its strength*/
+  getBonusHitPoints(level: number): number {
+    if (this.hasHpBonus()) {
+      if (this.name === AttributeName.Vitality) {
+        return VI_HP_BONUS[level][this.strength];
+      } else if (this.name === AttributeName.Quickness) {
+        return QU_HP_BONUS[level][this.strength];
+      } else {// assumes SelfDiscipline
+        return SD_HP_BONUS[level][this.strength];
+      }
+    } else {
+      return 0;
+    }
+  }
+
+  getBonusTemporaryHitPoints(level: number): number {
+    if (this.hasThpBonus()) {
+      return IN_THP_BONUS[level][this.strength];
+    } else {
+      return 0;
+    }
   }
 
   getBonusCriticalDice(level: number): number {
@@ -88,6 +112,15 @@ export class Attribute {
       || this.name === AttributeName.Intuition;
   }
 
+  /*Return true if this attribute gives a bonus to hp*/
+  hasHpBonus(): boolean {
+    return this.type === AttributeType.PhysicalDefensive || this.name === AttributeName.SelfDiscipline;
+  }
+
+  hasThpBonus(): boolean {
+    return this.name === AttributeName.Intuition;
+  }
+
 
   getSpecialText(): string {
     return this.getEpicText() + this.getLegendaryText();
@@ -117,6 +150,7 @@ export class Attribute {
     }
     this.epicText = SpecialText[name.toString().trim() + "EpicText"];
     this.legendaryText = SpecialText[name.toString().trim() + "LegendaryText"];
+
   }
 
   private getEpicText(): string {

@@ -99,9 +99,52 @@ describe('Testing attribute class', () => {
     expect(bra.getBonusCriticalDice(6)).toEqual(2);
   });
 
-  it('should be able to get special text for an attribute', () => {
+  it('should be able to get special text for an attribute has', () => {
     expect(attribute.getSpecialText()).toBe('');
     expect(bra.getSpecialText()).toBe(SpecialText.BrawnEpicText.toString() + SpecialText.BrawnLegendaryText.toString());
+  });
+
+  it('should be able to show how many bonus hit points it gives', () => {
+    expect(vit.getBonusHitPoints(1)).toEqual(12);
+    expect(vit.getBonusHitPoints(10)).toEqual(36);
+    expect(bra.getBonusHitPoints(10)).toEqual(0);
+    expect(qu.getBonusHitPoints(1)).toEqual(5);
+    expect(sd.getBonusHitPoints(1)).toEqual(4);
+    expect(int.getBonusHitPoints(1)).toEqual(0);
+  });
+
+  it('should be able to show how many bonus thp an attribute has', () => {
+    expect(int.getBonusTemporaryHitPoints(1)).toEqual(5);
+    expect(int.getBonusTemporaryHitPoints(10)).toEqual(15);
+    expect(qu.getBonusTemporaryHitPoints(1)).toEqual(0);
+    expect(bra.getBonusTemporaryHitPoints(1)).toEqual(0);
+  });
+
+  it('should be able to get bonus recoveries', () => {
+    expect(vit.getBonusRecoveries()).toEqual(1);
+    expect(qu.getBonusRecoveries()).toEqual(0);
+  });
+
+  it('should be able to get bonus initiative', () => {
+    expect(qu.getBonusInitiative()).toEqual(10);
+    expect(int.getBonusInitiative()).toEqual(4);
+    expect(bra.getBonusInitiative()).toEqual(0);
+  });
+
+  it('should be able to get speed bonus', () => {
+    expect(qu.getSpeedBonus()).toEqual(2);
+    attribute = makeAttribute(AttributeName.Quickness, AttributeStrength.Champion);
+    expect(attribute.getSpeedBonus()).toEqual(0);
+  });
+
+  it('should be able to get power point bonus', () => {
+    expect(rea.getPowerPointBonus()).toEqual(1);
+    expect(sd.getPowerPointBonus()).toEqual(4);
+    expect(bra.getPowerPointBonus()).toEqual(0);
+  });
+
+  it('should be able to get armor bonus', () => {
+    // Need to create armor class first
   });
 
 
