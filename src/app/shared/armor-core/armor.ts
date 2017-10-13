@@ -4,7 +4,6 @@ import {
   SKILL_PENALTY
 } from "../constants";
 import {MaxMovement} from "./max-movement";
-import {ThemePoint} from "../theme-points/theme-point";
 import {ThemePointsContainer} from "../theme-points/theme-points-container";
 
 export class Armor {

@@ -20,4 +20,10 @@ describe('test the ThemePoint class', () => {
     const tp = new ThemePoint(ThemeType.Stealth);
     expect(tp.getType()).toEqual(ThemeType.Stealth);
   });
+
+  it('should be able to set a new strength', () => {
+    const tp = new ThemePoint(ThemeType.Magic);
+    tp.setStrength(ThemeStrength.Greater);
+    expect(tp.getStrength()).toEqual(ThemeStrength.Greater);
+  });
 });

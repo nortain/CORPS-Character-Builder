@@ -54,10 +54,10 @@ describe('Testing armor class in all of its awesomeness', () => {
 
   it('should expect to get caster penalties', () => {
     const theme = new ThemePointsContainer(
-      new ThemePoint(ThemeType.Combat, ThemeStrength.Greater),
-      new ThemePoint(ThemeType.Stealth, ThemeStrength.Greater),
-      new ThemePoint(ThemeType.Magic, ThemeStrength.Greater),
-      new ThemePoint(ThemeType.General, ThemeStrength.Greater)
+      ThemeStrength.Greater,
+      ThemeStrength.Greater,
+      ThemeStrength.Greater,
+      ThemeStrength.Greater
     );
     expect(caster.getCasterPenalty(theme)).toEqual(0);
     expect(heavy.getCasterPenalty(theme)).toEqual(6);
