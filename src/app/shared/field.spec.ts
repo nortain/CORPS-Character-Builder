@@ -21,9 +21,9 @@ describe('Field', () => {
     weaponBonus.add['skill'] = 3;
     weaponBonus.add['talent'] = 3;
     expect(weaponBonus.value()).toEqual(6);
-    weaponBonus.replaceValue['buff'] = 1;
+    weaponBonus.replace['buff'] = 1;
     expect(weaponBonus.value()).toEqual(7);
-    weaponBonus.replaceValue['buff'] = -1;
+    weaponBonus.replace['buff'] = -1;
     expect(weaponBonus.value()).toEqual(5);
   });
 
@@ -49,7 +49,7 @@ describe('Field', () => {
     const bonus = new ff(3);
     bonus.preMultiply['missile'] = 2;
     bonus.add['fast'] = 3;
-    bonus.replaceValue['missile'] = 3;
+    bonus.replace['missile'] = 3;
     expect(bonus.value()).toEqual(9);
     bonus.preMultiply['missile'] = 3;
     expect(bonus.value()).toEqual(12);
@@ -85,7 +85,7 @@ describe('Field', () => {
     bonus.add['sword'] = 6;
     expect(bonus.value('ui')).toEqual(3 + 4);
 
-    bonus.replaceValue['ui'] = 10;
+    bonus.replace['ui'] = 10;
 
     expect(bonus.value('ui')).toEqual(10 + 4); // seems confusing as hell, this changes the original variable value without affecting any other add or things... but whatever
 
@@ -121,14 +121,14 @@ describe('Field', () => {
     item.add['crap'] = 4;
     item.add['moreCrap'] = 5;
     expect(item.value()).toEqual(12);
-    item.clear('a');
+    item.clear('add');
     expect(item.value()).toEqual(3);
   });
 
   it('should be able to clear all properties', function () {
     const item = new ff(3);
     item.add['crap'] = 2;
-    item.replaceValue['stuff'] = 5;
+    item.replace['stuff'] = 5;
     item.preMultiply['uber'] = 4;
     item.postMultiply['i am cool'] = 12;
     expect(item.value()).toEqual(264);

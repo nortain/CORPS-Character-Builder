@@ -1,10 +1,10 @@
-import {forEach} from "@angular/router/src/utils/collection";
 import {Precision} from "./precision.enum";
+
 
 export class Field {
   precision = Precision.None;
   // objects that hold dynamic values
-  replaceValue: any = {};
+  replace: any = {};
   preMultiply: any = {};
   add: any = {};
   postMultiply: any = {};
@@ -31,9 +31,9 @@ export class Field {
   */
   value(filter?: any, precision?: Precision): any {
     let returnValue = this.baseValue;
-    for (const rep in this.replaceValue) {
-      if ((!filter || rep === filter) && this.replaceValue[rep]) {
-        returnValue = this.replaceValue[rep];
+    for (const rep in this.replace) {
+      if ((!filter || rep === filter) && this.replace[rep]) {
+        returnValue = this.replace[rep];
       }
     }
     for (const pm in this.preMultiply) {
@@ -83,6 +83,29 @@ export class Field {
       return value;
     }
   }
+
+  newGUID() {
+    let d = new Date().getTime();
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+      const r = (d + Math.random() * 16) % 16 | 0;
+      d = Math.floor(d / 16);
+      return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+  }
+
+  clear(property) {
+    if (this[property]) {
+      this[property] = {};
+    }
+  }
+
+  clearAll() {
+    this.clear('add');
+    this.clear('pm');
+    this.clear('r');
+    this.clear('m');
+  }
+
 
 }
 
