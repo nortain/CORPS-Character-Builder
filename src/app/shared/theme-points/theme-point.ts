@@ -1,45 +1,26 @@
 import {ThemeStrength} from "./theme-strength.enum";
+import {ThemeType} from "./theme-type.enum";
 
 export class ThemePoint {
-  constructor(private combat = ThemeStrength.None,
-              private stealth = ThemeStrength.None,
-              private magic = ThemeStrength.None,
-              private general = ThemeStrength.None) {}
-
-  getMagic(): ThemeStrength {
-    return this.magic;
+  constructor(private type: ThemeType, private strength: ThemeStrength = ThemeStrength.None) {
+    this.setStrength(strength);
   }
 
-  setMagic(themeStrength: ThemeStrength) {
-    this.magic = themeStrength;
+  getType(): ThemeType {
+    return this.type;
   }
 
-  getCombat(): ThemeStrength {
-    return this.combat;
+  getStrength(): ThemeStrength {
+    return this.strength;
   }
 
-  setCombat(themeStrength: ThemeStrength) {
-    this.combat = themeStrength;
-  }
-
-  getStealth(): ThemeStrength {
-    return this.stealth;
-  }
-
-  setStealth(themeStrength: ThemeStrength) {
-    this.stealth = themeStrength;
-  }
-
-  getGeneral(): ThemeStrength {
-    return this.general;
-  }
-
-  setGeneral(themeStrength: ThemeStrength) {
-    if (themeStrength > ThemeStrength.Minor) {
-      this.general = ThemeStrength.Minor;
+  setStrength(strength: ThemeStrength) {
+    if (this.type === ThemeType.General && strength > ThemeStrength.Minor) {
+      this.strength = ThemeStrength.Minor;
     } else {
-      this.magic = themeStrength;
+      this.strength = strength;
     }
-
   }
+
+
 }

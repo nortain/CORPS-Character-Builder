@@ -2,6 +2,8 @@ import {Armor} from "./armor";
 import {ArmorType} from "./armor-type.enum";
 import {ThemePoint} from "../theme-points/theme-point";
 import {ThemeStrength} from "../theme-points/theme-strength.enum";
+import {ThemePointsContainer} from "../theme-points/theme-points-container";
+import {ThemeType} from "../theme-points/theme-type.enum";
 
 describe('Testing armor class in all of its awesomeness', () => {
   let none, caster, light, medium, heavy: Armor;
@@ -16,6 +18,13 @@ describe('Testing armor class in all of its awesomeness', () => {
   it('should be able to create an armor class', () => {
     expect(none).toBeDefined();
     expect(none).not.toBeNull();
+  });
+
+  it('should have a name or default to a name if one is not provided', () => {
+    expect(none.name).toBe("None");
+    const name = "EPIC ARMOR";
+    const epicArmor = new Armor(ArmorType.HeavyArmor, name);
+    expect(epicArmor.name).toBe(name);
   });
 
   it('should be able to get active defense', () => {
@@ -44,7 +53,12 @@ describe('Testing armor class in all of its awesomeness', () => {
   });
 
   it('should expect to get caster penalties', () => {
-    const theme = new ThemePoint(ThemeStrength.Greater, ThemeStrength.Greater, ThemeStrength.Greater, ThemeStrength.Greater);
+    const theme = new ThemePointsContainer(
+      new ThemePoint(ThemeType.Combat, ThemeStrength.Greater),
+      new ThemePoint(ThemeType.Stealth, ThemeStrength.Greater),
+      new ThemePoint(ThemeType.Magic, ThemeStrength.Greater),
+      new ThemePoint(ThemeType.General, ThemeStrength.Greater)
+    );
     expect(caster.getCasterPenalty(theme)).toEqual(0);
     expect(heavy.getCasterPenalty(theme)).toEqual(6);
     expect(medium.getCasterPenalty(theme)).toEqual(4);

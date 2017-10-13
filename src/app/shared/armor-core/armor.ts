@@ -5,6 +5,7 @@ import {
 } from "../constants";
 import {MaxMovement} from "./max-movement";
 import {ThemePoint} from "../theme-points/theme-point";
+import {ThemePointsContainer} from "../theme-points/theme-points-container";
 
 export class Armor {
 
@@ -35,8 +36,8 @@ export class Armor {
   }
 
   /*returns the number of power points the wearer of this armor would lose, if any*/
-  getCasterPenalty(themePoints: ThemePoint): number {
-    let penValue = themePoints.getMagic() - CASTER_PENALTY[this.type];
+  getCasterPenalty(themePoints: ThemePointsContainer): number {
+    let penValue = themePoints.magic.getStrength() - CASTER_PENALTY[this.type];
     if (penValue > 0) {
       penValue *= 2;
     } else {
