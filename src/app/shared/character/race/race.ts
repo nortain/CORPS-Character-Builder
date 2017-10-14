@@ -1,4 +1,4 @@
-import {AttributeName} from "../../attribute-core/attribute-name.enum";
+import {AttributeName} from "../../attribute/attribute-name.enum";
 import {ThemeType} from "../../theme-points/theme-type.enum";
 import {MagicDefenseType} from "../../magic-defense/magic-defense-type.enum";
 import {FieldMap} from "../../field/field-map";

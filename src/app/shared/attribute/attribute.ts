@@ -9,9 +9,9 @@ import {
   SECONDARY_DAMAGE,
   SKILL_BONUS, TRAINED_SKILL_BONUS, VI_HP_BONUS
 } from "../constants";
-import {Armor} from "../armor-core/armor";
-import {ArmorType} from "../armor-core/armor-type.enum";
-import {Level} from "../character-core/level.enum";
+import {Armor} from "../armor/armor";
+import {ArmorType} from "../armor/armor-type.enum";
+import {Level} from "../character/level.enum";
 
 
 export class Attribute {

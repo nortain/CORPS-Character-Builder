@@ -1,4 +1,4 @@
-import {MaxMovement} from "./armor-core/max-movement";
+import {MaxMovement} from "./armor/max-movement";
 
 export const AVAILABLE_THEME_POINTS = 4;
 
