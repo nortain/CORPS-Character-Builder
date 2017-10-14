@@ -9,8 +9,12 @@ export class Dice {
 
   constructor(numOfDice: number = 0, sizeOfDice: DiceSize = DiceSize.None, modifierOfDice: number = 0) {
     this.numOfDice = new Field(numOfDice);
-    this.sizeOfDice = new Field(sizeOfDice); // Specifically setting here for clarity
+    this.sizeOfDice = new Field(sizeOfDice);
     this.modifierOfDice = new Field(modifierOfDice);
+  }
+
+  getSizeOfDice(): Field {
+    return this.sizeOfDice;
   }
 
   /*Give the number, size and modifier of the dice we can print the roll like 3d12+4 or 2d6-*/

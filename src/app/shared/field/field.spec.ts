@@ -1,5 +1,5 @@
 import {Field} from './field';
-import {Precision} from "../precision.enum";
+import {Precision} from "./precision.enum";
 import {FieldType} from "./field-type.enum";
 
 /*Example usage of fields:

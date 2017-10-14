@@ -1,4 +1,4 @@
-import {Precision} from "../precision.enum";
+import {Precision} from "./precision.enum";
 import {newGUID} from "../guid-generator";
 import {FieldMap} from "./field-map";
 import {FieldType} from "./field-type.enum";

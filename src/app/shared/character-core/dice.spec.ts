@@ -1,8 +1,9 @@
 import {Dice} from './dice';
 import {DiceSize} from "./dice-size.enum";
+import {Field} from "../field/field";
 
 describe('Dice', () => {
-  let empty, noDiceJustPlus, _3d12Plus5;
+  let empty: Dice, noDiceJustPlus: Dice, _3d12Plus5: Dice;
   beforeEach(() => {
     empty = new Dice();
     noDiceJustPlus = new Dice(0, DiceSize.d6, -3);
@@ -22,11 +23,12 @@ describe('Dice', () => {
   });
 
   it('should be able to modify the values of my dice', () => {
-    empty.sizeOfDice.replaceVal["skillz"] = DiceSize.d4;
+    empty.getSizeOfDice().replaceVal["skillz"] = DiceSize.d4;
     expect(empty.printRoll()).toBe("0");
     empty.numOfDice.addVal["axe"] = 2;
     expect(empty.printRoll()).toBe("2d4");
     empty.modifierOfDice.addVal["bob"] = 3;
     expect(empty.printRoll()).toBe("2d4+3");
   });
+
 });
