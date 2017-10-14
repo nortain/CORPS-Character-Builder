@@ -101,11 +101,9 @@ export class Field {
 
   clearAll() {
     this.clear('add');
-    this.clear('pm');
-    this.clear('r');
-    this.clear('m');
+    this.clear('preMultiply');
+    this.clear('replace');
+    this.clear('postMultiply');
   }
-
-
 }
 

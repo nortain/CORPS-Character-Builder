@@ -1,6 +1,7 @@
 import {ThemePointsContainer} from "./theme-points-container";
 import {ThemeType} from "./theme-type.enum";
 import {ThemeStrength} from "./theme-strength.enum";
+import {MagicDefenseType} from "../magic-defense/magic-defense-type.enum";
 
 describe('', () => {
   let thc;
@@ -10,6 +11,15 @@ describe('', () => {
 
   it('should be able to make theme points container', () => {
     expect(thc).toBeDefined();
+  });
+
+  it('should be able to figure out how many theme points are assigned', () => {
+    expect(thc.getTotalThemePoints()).toEqual(0);
+    thc.stealth.setStrength(ThemeStrength.Lesser);
+    expect(thc.getTotalThemePoints()).toEqual(2);
+    thc.general.setStrength(ThemeStrength.Lesser);
+    expect(thc.getTotalThemePoints()).toEqual(3);
+    expect(thc.getTotalThemePoints(2)).toEqual(1);
   });
 
   it('should be able up which magical defense when they are tied', () => {
@@ -30,5 +40,15 @@ describe('', () => {
     thc.magic.setStrength(ThemeStrength.Minor);
     expect(thc.getStrongestThemePoints()).toContain(ThemeType.Magic);
     expect(thc.getStrongestThemePoints()).not.toContain(ThemeType.Stealth);
+  });
+
+  it('should be able to say, given its theme points which magic defense gets a bonus', () => {
+    expect(thc.getDefensiveBonus()).toContain(MagicDefenseType.Fortitude);
+    expect(thc.getDefensiveBonus()).toContain(MagicDefenseType.Reflex);
+    expect(thc.getDefensiveBonus()).toContain(MagicDefenseType.Will);
+    thc.magic.setStrength(ThemeStrength.Lesser);
+    expect(thc.getDefensiveBonus()).not.toContain(MagicDefenseType.Fortitude);
+    expect(thc.getDefensiveBonus()).not.toContain(MagicDefenseType.Reflex);
+    expect(thc.getDefensiveBonus()).toContain(MagicDefenseType.Will);
   });
 });
