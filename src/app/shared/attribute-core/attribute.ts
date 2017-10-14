@@ -11,7 +11,7 @@ import {
 } from "../constants";
 import {Armor} from "../armor-core/armor";
 import {ArmorType} from "../armor-core/armor-type.enum";
-import {Level} from "../level.enum";
+import {Level} from "../character-core/level.enum";
 
 
 export class Attribute {

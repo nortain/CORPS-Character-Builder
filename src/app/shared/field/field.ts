@@ -1,62 +1,56 @@
-import {Precision} from "./precision.enum";
+import {Precision} from "../precision.enum";
+import {newGUID} from "../guid-generator";
+import {FieldMap} from "./field-map";
+import {FieldType} from "./field-type.enum";
 
 
 export class Field {
+  id: string;
   precision = Precision.None;
   // objects that hold dynamic values
-  replace: any = {};
-  preMultiply: any = {};
-  add: any = {};
-  postMultiply: any = {};
+  replaceVal: FieldMap = {} as FieldMap;
+  preMultiply: FieldMap = {} as FieldMap;
+  addVal: FieldMap = {} as FieldMap;
+  postMultiply: FieldMap = {} as FieldMap;
 
   constructor(private baseValue, private defaultValue?) {
-
+    this.id = newGUID();
   }
 
   /*This function is the money shot of what makes this class useful and important.
   Calling value will return a return value that is equal to the base value.
-  If replace, pre/postMultiply or add a property that matches the passed in filter
+  If replaceVal, pre/postMultiply or addVal a property that matches the passed in filter
   OR
-  no filter is passed in and a parameter lives on any of the replace, pre/postMultiply, add objects then those operations will be carried out.
-  Examples:
-  let f = new Field(3);
-  f.value() //3
-  f.add["sword"] = 4;
-  f.value() // 3 + 4 = 7
-  f.preMultiply["skills"] = 2;
-  f.value() // 3 * 2 + 4 = 10
-  f.replace["sword"] = 10;
-  f.value() // 3 * 2 + 10 = 16
-  See the spec file for more examples
+  no filter is passed in and a parameter lives on any of the replaceVal, pre/postMultiply, addVal objects then those operations will be carried out.
+    See the spec file for examples
   */
   value(filter?: any, precision?: Precision): any {
     let returnValue = this.baseValue;
-    for (const rep in this.replace) {
-      if ((!filter || rep === filter) && this.replace[rep]) {
-        returnValue = this.replace[rep];
+    for (const rep of Object.keys(this.replaceVal)) {
+      if (!filter || rep === filter) {
+        returnValue = this.replaceVal[rep];
       }
     }
-    for (const pm in this.preMultiply) {
-      if ((!filter || pm === filter) && this.preMultiply[pm]) {
+    for (const pm of Object.keys(this.preMultiply)) {
+      if (!filter || pm === filter) {
         returnValue = Number(returnValue) * Number(this.preMultiply[pm]);
       }
     }
-    for (const a in this.add) {
-      if ((!filter || a === filter) && this.add[a]) {
-        returnValue = Number(returnValue) + Number(this.add[a]);
+    for (const a of Object.keys(this.addVal)) {
+      if (!filter || a === filter) {
+        returnValue = Number(returnValue) + Number(this.addVal[a]);
       }
     }
-    for (const m in this.postMultiply) {
-      if ((!filter || m === filter) && this.postMultiply[m]) {
-        const multi = Number(this.postMultiply[m]);
-        returnValue = Number(returnValue) * multi;
+    for (const m of Object.keys(this.postMultiply)) {
+      if (!filter || m === filter) {
+        returnValue = Number(returnValue) * Number(this.postMultiply[m]);
       }
     }
     if (!precision) {
       precision = this.precision;
     }
 
-    if (!returnValue) {
+    if (!returnValue && returnValue !== 0) {
       return this.defaultValue;
     } else if (typeof returnValue === "number") {
       return this.round(returnValue, precision);
@@ -84,26 +78,16 @@ export class Field {
     }
   }
 
-  newGUID() {
-    let d = new Date().getTime();
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-      const r = (d + Math.random() * 16) % 16 | 0;
-      d = Math.floor(d / 16);
-      return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-    });
-  }
-
-  clear(property) {
+  clearField(property: FieldType) {
     if (this[property]) {
       this[property] = {};
     }
   }
 
   clearAll() {
-    this.clear('add');
-    this.clear('preMultiply');
-    this.clear('replace');
-    this.clear('postMultiply');
+    for (const type of Object.keys(FieldType)) {
+      this.clearField(type as FieldType);
+    }
   }
 }
 
