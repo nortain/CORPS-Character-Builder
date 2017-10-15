@@ -1,4 +1,10 @@
 import {MaxMovement} from "./armor/max-movement";
+import {FieldMap} from "./field/field-map";
+import {WeaponType} from "./weapon/weapon-type";
+import {WeaponCategory} from "./weapon/weapon-category.enum";
+import {WeaponClass} from "./weapon/weapon-class.enum";
+import {Dice} from "./character/dice";
+import {DiceSize} from "./character/dice-size.enum";
 
 export const AVAILABLE_THEME_POINTS = 4;
 
@@ -83,3 +89,131 @@ export const IN_THP_BONUS = [
   [0, 5, 8, 11, 14],
   [0, 6, 9, 12, 15]
 ];
+
+export const BASE_WEAPON_DAMAGE = {
+  Agile: {
+    Thrown: {
+      damage: new Dice(2, DiceSize.d6, -1),
+      critical: new Dice(1, DiceSize.d8, 1),
+      range: [6, 12, 18]
+    } as WeaponType,
+    Unarmed: {
+      damage: new Dice(2, DiceSize.d6, 0),
+      critical: new Dice(1, DiceSize.d8, 0),
+    } as WeaponType,
+    "Melee 1h": {
+      damage: new Dice(2, DiceSize.d6, 1),
+      critical: new Dice(1, DiceSize.d10, 0),
+    } as WeaponType,
+    "Melee 2h": {
+      damage: new Dice(2, DiceSize.d8, 0),
+      critical: new Dice(1, DiceSize.d12, 0)
+    } as WeaponType,
+    Polearm: {
+      damage: new Dice(2, DiceSize.d6, 1),
+      critical: new Dice(1, DiceSize.d10, 1),
+      range: [2]
+    } as WeaponType,
+    Ranged: {
+      damage: new Dice(2, DiceSize.d6, 1),
+      critical: new Dice(1, DiceSize.d10, 0),
+      range: [12, 25, 50],
+      specialText: "Move action to Reload"
+    } as WeaponType
+  },
+  Balanced: {
+    Thrown: {
+      damage: new Dice(2, DiceSize.d6, 0),
+      critical: new Dice(1, DiceSize.d6, 1),
+      range: [5, 10, 15]
+    } as WeaponType,
+    Unarmed: {
+      damage: new Dice(2, DiceSize.d6, 1),
+      critical: new Dice(1, DiceSize.d6, 0),
+    } as WeaponType,
+    "Melee 1h": {
+      damage: new Dice(2, DiceSize.d8, 0),
+      critical: new Dice(1, DiceSize.d8, 0),
+    } as WeaponType,
+    "Melee 2h": {
+      damage: new Dice(2, DiceSize.d10, 0),
+      critical: new Dice(1, DiceSize.d10, 0)
+    } as WeaponType,
+    Polearm: {
+      damage: new Dice(2, DiceSize.d8, 0),
+      critical: new Dice(1, DiceSize.d8, 1),
+      range: [2]
+    } as WeaponType,
+    Ranged: {
+      damage: new Dice(2, DiceSize.d8, 0),
+      critical: new Dice(1, DiceSize.d8, 0),
+      range: [12, 25, 50],
+      specialText: "Move action to Reload"
+    } as WeaponType
+  },
+  Heavy: {
+    Thrown: {
+      attack: new Dice(2, 12, 2),
+      damage: new Dice(2, DiceSize.d8, 0),
+      critical: new Dice(1, DiceSize.d8, 0),
+      range: [4, 8, 12],
+      specialText: "-1 to hit"
+    } as WeaponType,
+    Unarmed: {
+      attack: new Dice(2, 12, 2),
+      damage: new Dice(2, DiceSize.d8, 1),
+      critical: new Dice(1, DiceSize.d6, 1),
+      specialText: "-1 to hit"
+    } as WeaponType,
+    "Melee 1h": {
+      attack: new Dice(2, 12, 2),
+      damage: new Dice(2, DiceSize.d10, 0),
+      critical: new Dice(1, DiceSize.d8, 1),
+      specialText: "-1 to hit"
+    } as WeaponType,
+    "Melee 2h": {
+      attack: new Dice(2, 12, 2),
+      damage: new Dice(2, DiceSize.d12, 0),
+      critical: new Dice(1, DiceSize.d10, 1),
+      specialText: "-1 to hit"
+    } as WeaponType,
+    Polearm: {
+      attack: new Dice(2, 12, 2),
+      damage: new Dice(2, DiceSize.d10, 0),
+      critical: new Dice(1, DiceSize.d10, 0),
+      range: [2],
+      specialText: "-1 to hit"
+    } as WeaponType,
+    Ranged: {
+      attack: new Dice(2, 12, 2),
+      damage: new Dice(2, DiceSize.d10, 0),
+      critical: new Dice(1, DiceSize.d8, 1),
+      range: [15, 30, 60],
+      specialText: "1- to hit, Move action to Reload"
+    } as WeaponType
+  },
+  Simple: {
+    Thrown: {
+      damage: new Dice(2, DiceSize.d6, -1),
+      critical: new Dice(1, DiceSize.d6, 0),
+      range: [3, 6, 9],
+      specialText: "Requires no training, no extra attribute damage"
+    } as WeaponType,
+    "Melee 1h": {
+      damage: new Dice(2, DiceSize.d6, 2),
+      critical: new Dice(1, DiceSize.d6, 1),
+      specialText: "Requires no training, no extra attribute damage"
+    } as WeaponType,
+    "Melee 2h": {
+      damage: new Dice(2, DiceSize.d8, 2),
+      critical: new Dice(1, DiceSize.d8, 1),
+      specialText: "Requires no training, no extra attribute damage"
+    } as WeaponType,
+    Ranged: {
+      damage: new Dice(2, DiceSize.d6, 2),
+      critical: new Dice(1, DiceSize.d8, 1),
+      range: [15, 30, 60],
+      specialText: "Requires no training, no extra attribute damage, Move action to Reload"
+    } as WeaponType
+  }
+};
