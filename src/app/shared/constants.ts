@@ -5,6 +5,14 @@ import {WeaponCategory} from "./weapon/weapon-category.enum";
 import {WeaponClass} from "./weapon/weapon-class.enum";
 import {Dice} from "./character/dice";
 import {DiceSize} from "./character/dice-size.enum";
+import {MagicDefenseType} from "./magic-defense/magic-defense-type.enum";
+import {Field} from "./field/field";
+import {MagicDefense} from "./magic-defense/magic-defense";
+import {Race} from "./character/race/race";
+import {VisionType} from "./character/race/vision-type.enum";
+import {AttributeName} from "./attribute/attribute-name.enum";
+import {ThemeType} from "./theme-points/theme-type.enum";
+import {Bonus} from "./character/bonus";
 
 export const AVAILABLE_THEME_POINTS = 4;
 
@@ -89,6 +97,53 @@ export const IN_THP_BONUS = [
   [0, 5, 8, 11, 14],
   [0, 6, 9, 12, 15]
 ];
+
+export const STARTING_PLAYER_RACES = {
+  Altwani: {
+    vision: VisionType.Low,
+    startingAttributes: [AttributeName.Agility, AttributeName.Reasoning, AttributeName.Intuition],
+    availableLanguagePoints: 3,
+    talentBonus: [ThemeType.Stealth],
+    passiveBonuses: [
+      {
+        name: "Catstep",
+        value: "Abilities that allow you to shift and tactical move ignore difficult terrain"
+      } as Bonus
+    ],
+    activeBonuses: [
+      {
+        name: "Perfect Attack",
+        value: "Once per encounter you may reroll an attack or spell attack roll."
+      }
+    ]
+  } as Race,
+  Burman: {
+    vision: VisionType.Star,
+    startingAttributes: [AttributeName.Brawn, AttributeName.Reasoning, AttributeName.Vitality],
+    availableLanguagePoints: 3,
+    magicDefenseBonus: MagicDefenseType.Will,
+    passiveBonuses: [
+      {
+        name: "Virile Recovery",
+        value: "Increase your recovery value by $Virile Recovery$"
+      },
+      {
+        name: "Low Center of Mass",
+        value: "Any time you are affected with a non-falling attack that results in you being knocked prone you can make a medium saving throw, if the roll is successful you ignore the knockdown effect."
+      }
+    ],
+    activeBonuses: [
+      {
+        name: "Tough as Nails",
+        value: "Once per combat as a minor action you gain $Tough as Nails$ temporary hit points and reduce the damage category of all attacks against you by one until the start of your next turn."
+      },
+    ],
+    mechanicalBonusValues: {
+      "Tough as Nails": [6, 7, 8, 10, 11, 12, 14, 15, 16, 18],
+      "Virile Recovery": [1, 1, 1, 2, 2, 2, 2, 3, 3, 3]
+    }
+  } as Race
+};
 
 export const BASE_WEAPON_DAMAGE = {
   Agile: {
@@ -212,8 +267,14 @@ export const BASE_WEAPON_DAMAGE = {
     Ranged: {
       damage: new Dice(2, DiceSize.d6, 2),
       critical: new Dice(1, DiceSize.d8, 1),
-      range: [15, 30, 60],
+      range: [10, 20, 40],
       specialText: "Requires no training, no extra attribute damage, Move action to Reload"
     } as WeaponType
   }
 };
+
+export const STARTING_MAGIC_DEFENSES = [
+  new MagicDefense(MagicDefenseType.Fortitude, new Field(10)),
+  new MagicDefense(MagicDefenseType.Reflex, new Field(10)),
+  new MagicDefense(MagicDefenseType.Will, new Field(10))
+];

@@ -1,7 +1,7 @@
 export enum VisionType {
-  Bright = "Bright",
+  Bright = "Bright Light",
   Normal = "Normal",
-  Low = "Low",
-  Star = "Star",
-  Dark = "Dark"
+  Low = "Low Light",
+  Star = "Starlight",
+  Dark = "Dark Vision"
 }
