@@ -17,7 +17,9 @@ export interface Race {
   talentBonus: Array<ThemeType>;
   startingAttributes: Array<AttributeName>;
   optionalStartingAttributes: Array<AttributeName>;
-  powerPointsBonus: number;
+  powerPointBonus: number;
+  skillPointBonus: number;
+  recoveryBonus: number;
   racialRestrictions: string;
   mechanicalBonusValues: any; // not sure how to type a string: array inteface
 

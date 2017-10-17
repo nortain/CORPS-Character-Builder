@@ -1,8 +1,5 @@
 import {MaxMovement} from "./armor/max-movement";
-import {FieldMap} from "./field/field-map";
 import {WeaponType} from "./weapon/weapon-type";
-import {WeaponCategory} from "./weapon/weapon-category.enum";
-import {WeaponClass} from "./weapon/weapon-class.enum";
 import {Dice} from "./character/dice";
 import {DiceSize} from "./character/dice-size.enum";
 import {MagicDefenseType} from "./magic-defense/magic-defense-type.enum";
@@ -14,7 +11,7 @@ import {AttributeName} from "./attribute/attribute-name.enum";
 import {ThemeType} from "./theme-points/theme-type.enum";
 import {Bonus} from "./character/bonus";
 
-export const AVAILABLE_THEME_POINTS = 4;
+export const NON_HUMAN_AVAILABLE_THEME_POINTS = 4;
 
 // Armor constants based off of the ArmorType Enum
 export const ACTIVE_DEFENSE = [11, 13, 13, 13, 14];
@@ -142,7 +139,51 @@ export const STARTING_PLAYER_RACES = {
       "Tough as Nails": [6, 7, 8, 10, 11, 12, 14, 15, 16, 18],
       "Virile Recovery": [1, 1, 1, 2, 2, 2, 2, 3, 3, 3]
     }
+  } as Race,
+  Elder: {
+    startingAttributes: [AttributeName.Vitality, AttributeName.SelfDiscipline, AttributeName.Intuition],
+    availableLanguagePoints: 4,
+    talentBonus: [ThemeType.Combat, ThemeType.Magic],
+    passiveBonuses: [
+      {
+        name: "Steady Gait",
+        value: "As part of any movement you can reduce your speed by 1 to ignore difficult terrain for the action"
+      }
+    ],
+    activeBonuses: [
+      {
+        name: "Resistance of the Ancients",
+        value: "As a minor action you can remove all decaying effects on you and reduce your ongoing by Resistance of the Ancients$"
+      },
+    ],
+    mechanicalBonusValues: {
+      "Resistance of the Ancients": [5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+    }
+  } as Race,
+  Human: {
+    availableAttributePoints: 6,
+    availableLanguagePoints: 3,
+    talentBonus: [ThemeType.General],
+    powerPointBonus: 1,
+    skillPointBonus: 1,
+    passiveBonuses: [
+      {
+        name: "Powerpoint Bonus",
+        value: "Start with 1 additional powerpoint"
+      }, {
+        name: "Skill point Bonus",
+        value: "Start with 1 additional skill point"
+      },
+    ],
+    activeBonuses: [
+      {
+        name: "Oh the Humanity",
+        value: "As a minor action you can gain a +4 to hit with all attacks and any critical rolls gain 1 additional die until the end of your turn."
+      },
+    ]
+
   } as Race
+
 };
 
 export const BASE_WEAPON_DAMAGE = {
