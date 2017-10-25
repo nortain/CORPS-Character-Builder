@@ -1,7 +1,6 @@
 import {AttributeName} from "../../attribute/attribute-name.enum";
 import {ThemeType} from "../../theme-points/theme-type.enum";
 import {MagicDefenseType} from "../../magic-defense/magic-defense-type.enum";
-import {FieldMap} from "../../field/field-map";
 import {RaceType} from "./race-type.enum";
 import {VisionType} from "./vision-type.enum";
 import {Bonus} from "../bonus";
@@ -23,7 +22,7 @@ export interface Race {
   skillPointBonus: number;
   recoveryBonus: number;
   racialRestriction: string;
-  mechanicalBonusValues: any; // not sure how to type a string: array inteface
+  mechanicalBonusValues: Array<string>;
 
 //  this string: array object will take in a mechanicBonus with a name matching an active or passive bonus with a key of the same name as the bonsu name.  The value will be a level based array of th resulting value
 
