@@ -246,6 +246,9 @@ export const STARTING_PLAYER_RACES = {
       {
         name: "Elemental Resistance",
         value: "You gain $Elemental Resistance$ resistance to $racialSubType$ keyword and $Other Elemental Resistance$ to all other magic damage keywords"
+      }, {
+        name: "Elemental Type",
+        value: ""
       }
     ],
     activeBonuses: [
@@ -257,13 +260,6 @@ export const STARTING_PLAYER_RACES = {
     mechanicalBonusValues: {
       "Elemental Resistance": [3, 4, 5, 5, 6, 7, 7, 8, 9, 9],
       "Other Elemental Resistance": [2, 2, 3, 3, 4, 4, 5, 5, 6, 6],
-      racialSubtype: "racialSubType",
-      racialSubTypeActive: {
-        Force: "As a minor action strike the ground with tremendous force.  All adjacent enemies must make a hard saving throw (" + SavingThrow.Hard + ") throw or be knocked prone.",
-        Lightning: "When you are hit with a melee attack by an enemy you can have the attacking enemy take $Lightning$ lightning damage as a free action.",
-        Heat: "As a minor action any successful attacks gain the heat keyword and do an additional $Heat$ heat damage (roll once).",
-        Cold: "Water: Swift action.  Until the end of your turn you ignore all difficult terrain and your movement does not provoke opportunity attacks."
-      },
       Lightning: [17, 21, 25, 29, 33, 37, 41, 45, 49, 53],
       Heat: [
         new Dice(1, DiceSize.d8, 3).printRoll(),
@@ -289,10 +285,10 @@ export const STARTING_PLAYER_RACES = {
       {
         name: "No Small Skill",
         value: "Increase the game your agility applies to weapons by $No Small Skill$.  Increase the damage your presence applies to magic attacks by $No Small Skill$"
-      }, {
+      } as Bonus, {
         name: "Sheer Luck",
         value: "Gain a +1 bonus to your saving throw rolls"
-      }
+      } as Bonus
     ],
     activeBonuses: [
       {
@@ -307,6 +303,16 @@ export const STARTING_PLAYER_RACES = {
     }
   } as Race
 
+};
+
+export const primentalRacialText = {
+  racialSubtype: "racialSubType",
+  racialSubTypeActive: {
+    Force: "As a minor action strike the ground with tremendous force.  All adjacent enemies must make a hard saving throw (" + SavingThrow.Hard + ") throw or be knocked prone.",
+    Lightning: "When you are hit with a melee attack by an enemy you can have the attacking enemy take $Lightning$ lightning damage as a free action.",
+    Heat: "As a minor action any successful attacks gain the heat keyword and do an additional $Heat$ heat damage (roll once).",
+    Cold: "Water: Swift action.  Until the end of your turn you ignore all difficult terrain and your movement does not provoke opportunity attacks."
+  }
 };
 
 export const BASE_WEAPON_DAMAGE = {
