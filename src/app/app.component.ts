@@ -1,8 +1,9 @@
 import {Component} from '@angular/core';
-import {Observable} from "rxjs/Observable";
+import {Observable} from "rxjs/Rx";
 
 
 import {Store} from "ngrx/@ngrx/store";
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
 
 type Reducer<T> = (state: T, action: Action) => T;
@@ -12,7 +13,7 @@ export interface Action {
   payload?: any;
 }
 
-export const counter: Reducer<number> = (state: number = 0, action: Action) => {
+export function counter(state: number = 0, action: Action) {
   switch (action.type) {
     case 'INCREMENT':
       return state + 1;
@@ -21,7 +22,13 @@ export const counter: Reducer<number> = (state: number = 0, action: Action) => {
     default:
       return state;
   }
-};
+}
+
+export class store extends BehaviorSubject<any> {
+  constructor(initalState: any) {
+    super(initalState);
+  }
+}
 
 
 @Component({

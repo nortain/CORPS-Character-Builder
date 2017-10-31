@@ -1,9 +1,10 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
   <div class="content">
+    Counter here!
     <button (click)="increment()">+</button>
     <button (click)="decrement()">-</button>
-    <h3>{{counter$ | async}}</h3>
+    The count is: <h3>{{counter$ | async}}</h3>
   </div>
 
   <router-outlet></router-outlet>
