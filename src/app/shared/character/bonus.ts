@@ -4,5 +4,5 @@ export interface Bonus {
 }
 
 export interface BonusByLevel {
-  [s: string]: Array<number | string> | string;
+  [s: string]: Array<number | string>;
 }

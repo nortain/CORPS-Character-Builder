@@ -9,7 +9,7 @@ import {Race} from "./character/race/race";
 import {VisionType} from "./character/race/vision-type.enum";
 import {AttributeName} from "./attribute/attribute-name.enum";
 import {ThemeType} from "./theme-points/theme-type.enum";
-import {Bonus} from "./character/bonus";
+import {Bonus, BonusByLevel} from "./character/bonus";
 import {RaceType} from "./character/race/race-type.enum";
 import {RacialSubType} from "./character/race/racial-sub-type.enum";
 import {SavingThrow} from "./character/saving-throw.enum";
@@ -141,7 +141,7 @@ export const STARTING_PLAYER_RACES = {
     mechanicalBonusValues: {
       "Tough as Nails": [6, 7, 8, 10, 11, 12, 14, 15, 16, 18],
       "Virile Recovery": [1, 1, 1, 2, 2, 2, 2, 3, 3, 3]
-    }
+    } as BonusByLevel
   } as Race,
   Elder: {
     startingAttributes: [AttributeName.Vitality, AttributeName.SelfDiscipline, AttributeName.Intuition],
@@ -161,7 +161,7 @@ export const STARTING_PLAYER_RACES = {
     ],
     mechanicalBonusValues: {
       "Resistance of the Ancients": [5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
-    }
+    } as BonusByLevel
   } as Race,
   Human: {
     availableAttributePoints: 6,
@@ -216,8 +216,7 @@ export const STARTING_PLAYER_RACES = {
         "2 extra damage dice.",
         "2 extra damage dice."
       ]
-
-    }
+    } as BonusByLevel
   } as Race,
   Gryx: {
     startingAttributes: [AttributeName.Brawn, AttributeName.Presence, AttributeName.Quickness],
@@ -274,7 +273,7 @@ export const STARTING_PLAYER_RACES = {
         new Dice(1, DiceSize.d12, 16).printRoll(),
 
       ]
-    }
+    } as BonusByLevel
   } as Race,
   Halfling: {
     startingAttributes: [AttributeName.Agility, AttributeName.Presence, AttributeName.Quickness],
@@ -300,7 +299,7 @@ export const STARTING_PLAYER_RACES = {
     mechanicalBonusValues: {
       "No Small Skill": [1, 1, 1, 1, 1, 2, 2, 2, 2, 2],
       "Tiny Target": [11, 14, 16, 19, 21, 24, 26, 29, 31, 34]
-    }
+    } as BonusByLevel
   } as Race
 
 };
