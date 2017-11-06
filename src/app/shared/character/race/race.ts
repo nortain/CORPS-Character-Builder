@@ -37,6 +37,8 @@ export class Race {
     this.racialSubType = racialSubType;
     this.magicDefenseBonus = STARTING_PLAYER_RACES[raceType].magicDefenseBonus;
     this.availableAttributePoints = STARTING_PLAYER_RACES[raceType].availableAttributePoints ? STARTING_PLAYER_RACES[raceType].availableAttributePoints : 4;
+
+    // TODO CONTINUE BUILDING THIS
   }
 
   formatText(text: String): string {
