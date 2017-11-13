@@ -154,7 +154,6 @@ describe('Field', () => {
     expect(item.baseValue).toBe("bob");
     item.defaultValue = "bobmoe";
     expect(item.defaultValue).toBe("bobmoe");
-
     expect(item.value()).toBe("bob");
   });
 

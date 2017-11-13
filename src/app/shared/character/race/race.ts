@@ -3,10 +3,11 @@ import {ThemeType} from "../../theme-points/theme-type.enum";
 import {MagicDefenseType} from "../../magic-defense/magic-defense-type.enum";
 import {RaceType} from "./race-type.enum";
 import {VisionType} from "./vision-type.enum";
-import {Bonus, BonusByLevel} from "../bonus";
 import {RacialSubType} from "./racial-sub-type.enum";
 import {Level} from "../level.enum";
-import {STARTING_PLAYER_RACES} from "../../constants";
+import {NON_HUMAN_AVAILABLE_ATTRIBUTE_POINTS, STARTING_PLAYER_RACES} from "../../constants";
+import {BonusByLevel} from "../bonus-by-level";
+import {Bonus} from "../bonus";
 
 export class Race {
   vision: VisionType;
@@ -33,12 +34,20 @@ export class Race {
 
 
   initializeData(raceType: RaceType, level: Level, racialSubType?: RacialSubType) {
+    this.mechanicalBonusValues = STARTING_PLAYER_RACES[raceType].mechanicalBonusValues;
     this.vision = STARTING_PLAYER_RACES[raceType].vision ? STARTING_PLAYER_RACES[raceType].vision : VisionType.Normal;
     this.racialSubType = racialSubType;
     this.magicDefenseBonus = STARTING_PLAYER_RACES[raceType].magicDefenseBonus;
-    this.availableAttributePoints = STARTING_PLAYER_RACES[raceType].availableAttributePoints ? STARTING_PLAYER_RACES[raceType].availableAttributePoints : 4;
-
-    // TODO CONTINUE BUILDING THIS
+    this.availableAttributePoints = STARTING_PLAYER_RACES[raceType].availableAttributePoints ? STARTING_PLAYER_RACES[raceType].availableAttributePoints : NON_HUMAN_AVAILABLE_ATTRIBUTE_POINTS;
+    this.availableLanguagePoints = STARTING_PLAYER_RACES[raceType].availableLanguagePoints;
+    this.passiveBonuses = STARTING_PLAYER_RACES[raceType].passiveBonuses;
+    this.activeBonuses = STARTING_PLAYER_RACES[raceType].activeBonuses;
+    this.talentBonus = STARTING_PLAYER_RACES[raceType].talentBonus;
+    this.startingAttributes = STARTING_PLAYER_RACES[raceType].startingAttributes;
+    this.recoveryBonus = this.getRecoveryBonus();
+    this.powerPointBonus = STARTING_PLAYER_RACES[raceType].powerPointBonus;
+    this.skillPointBonus = STARTING_PLAYER_RACES[raceType].skillPointBonus;
+    this.racialRestriction = STARTING_PLAYER_RACES[raceType].racialRestriction;
   }
 
   formatText(text: String): string {
@@ -55,6 +64,9 @@ export class Race {
     return result;
   }
 
+
+  //  this string: array object will take in a mechanicBonus with a name matching an active or passive bonus with a key of the same name as the bonsu name.  The value will be a level based array of th resulting value
+
   getMechanicalBonus(propertyName: string): number | string {
     const valueArray = this.mechanicalBonusValues[propertyName];
     let valueResult: number | string;
@@ -64,7 +76,12 @@ export class Race {
     return valueResult;
   }
 
-
-//  this string: array object will take in a mechanicBonus with a name matching an active or passive bonus with a key of the same name as the bonsu name.  The value will be a level based array of th resulting value
+  private getRecoveryBonus(): number {
+    if (this.raceType === RaceType.Burman) {
+      return this.getMechanicalBonus("Virile Recovery") as number;
+    } else {
+      return 0;
+    }
+  }
 
 }

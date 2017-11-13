@@ -80,7 +80,7 @@ export class Field {
 
   clearField(property: FieldType) {
     if (this[property]) {
-      this[property] = {};
+      this[property] = {} as FieldMap;
     }
   }
 
