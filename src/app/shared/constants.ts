@@ -9,12 +9,11 @@ import {Race} from "./character/race/race";
 import {VisionType} from "./character/race/vision-type.enum";
 import {AttributeName} from "./attribute/attribute-name.enum";
 import {ThemeType} from "./theme-points/theme-type.enum";
-import {Bonus, BonusByLevel} from "./character/bonus";
-import {RaceType} from "./character/race/race-type.enum";
-import {RacialSubType} from "./character/race/racial-sub-type.enum";
 import {SavingThrow} from "./character/saving-throw.enum";
+import {BonusByLevel} from "./character/bonus-by-level";
+import {Bonus} from "./character/bonus";
 
-export const NON_HUMAN_AVAILABLE_THEME_POINTS = 4;
+export const NON_HUMAN_AVAILABLE_ATTRIBUTE_POINTS = 4;
 
 // Armor constants based off of the ArmorType Enum
 export const ACTIVE_DEFENSE = [11, 13, 13, 13, 14];
