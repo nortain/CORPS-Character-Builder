@@ -45,9 +45,9 @@ export class Race {
     this.talentBonus = STARTING_PLAYER_RACES[raceType].talentBonus;
     this.startingAttributes = STARTING_PLAYER_RACES[raceType].startingAttributes;
     this.recoveryBonus = this.getRecoveryBonus();
-    this.powerPointBonus = STARTING_PLAYER_RACES[raceType].powerPointBonus;
-    this.skillPointBonus = STARTING_PLAYER_RACES[raceType].skillPointBonus;
-    this.racialRestriction = STARTING_PLAYER_RACES[raceType].racialRestriction;
+    this.powerPointBonus = STARTING_PLAYER_RACES[raceType].powerPointBonus ? STARTING_PLAYER_RACES[raceType].powerPointBonus : 0;
+    this.skillPointBonus = STARTING_PLAYER_RACES[raceType].skillPointBonus ? STARTING_PLAYER_RACES[raceType].skillPointBonus : 0;
+    this.racialRestriction = STARTING_PLAYER_RACES[raceType].racialRestriction ? STARTING_PLAYER_RACES[raceType].racialRestriction : "";
   }
 
   formatText(text: String): string {
@@ -55,8 +55,14 @@ export class Race {
     const chunk = text.split("$");
     if (chunk.length > 1) {
       for (let i = 1; i <= chunk.length; i += 2) {
-        result.concat(chunk[i - 1]);
-        result.concat(<string>this.getMechanicalBonus(chunk[i]));
+        if (chunk[i - 1]) {
+          result = result.concat(chunk[i - 1]);
+          const valueText = <string>this.getMechanicalBonus(chunk[i]);
+          if (valueText !== undefined) {
+            result = result.concat(valueText);
+          }
+
+        }
       }
     } else {
       result = chunk[0];
@@ -71,7 +77,7 @@ export class Race {
     const valueArray = this.mechanicalBonusValues[propertyName];
     let valueResult: number | string;
     if (valueArray) {
-      valueResult = valueArray[this.level];
+      valueResult = valueArray[this.level - 1];
     }
     return valueResult;
   }

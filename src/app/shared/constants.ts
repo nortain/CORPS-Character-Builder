@@ -155,7 +155,7 @@ export const STARTING_PLAYER_RACES = {
     activeBonuses: [
       {
         name: "Resistance of the Ancients",
-        value: "As a minor action you can remove all decaying effects on you and reduce your ongoing by Resistance of the Ancients$"
+        value: "As a minor action you can remove all decaying effects on you and reduce your ongoing by $Resistance of the Ancients$"
       },
     ],
     mechanicalBonusValues: {
