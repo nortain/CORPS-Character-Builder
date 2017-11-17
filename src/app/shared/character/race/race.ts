@@ -76,8 +76,10 @@ export class Race {
   getMechanicalBonus(propertyName: string): number | string {
     const valueArray = this.mechanicalBonusValues[propertyName];
     let valueResult: number | string;
-    if (valueArray) {
+    if (valueArray && valueArray.length === 10) {
       valueResult = valueArray[this.level - 1];
+    } else if (valueArray) {
+      valueResult = valueArray[this.racialSubType];
     }
     return valueResult;
   }

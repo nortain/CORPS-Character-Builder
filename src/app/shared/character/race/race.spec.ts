@@ -3,6 +3,7 @@ import {RaceType} from "./race-type.enum";
 import {VisionType} from "./vision-type.enum";
 import {MagicDefenseType} from "../../magic-defense/magic-defense-type.enum";
 import {NON_HUMAN_AVAILABLE_ATTRIBUTE_POINTS, STARTING_PLAYER_RACES} from "../../constants";
+import {RacialSubType} from "./racial-sub-type.enum";
 
 describe('Race', () => {
   let elf, human, dwarf, prim, fey, halfling, orc, elder;
@@ -84,6 +85,12 @@ describe('Race', () => {
   });
 
   it('should be able to format text for a primental\'s elemental resistance', () => {
-    // todo fill me in
+    prim.initializeData(prim.raceType, 1, RacialSubType.Air);
+    expect(prim.formatText(prim.passiveBonuses[0].value)).toBe("You gain 3 resistance to the Lightning keyword and 2 to all other magic damage keywords");
+  });
+
+  it('should be able to format test for a primental\'s active elemental release', () => {
+    prim.initializeData(prim.raceType, 1, RacialSubType.Fire);
+    expect(prim.formatText(prim.activeBonuses[0].value)).toBe("As a minor action any successful attacks gain the heat keyword and do an additional 1d8+3 heat damage (roll once).");
   });
 });
