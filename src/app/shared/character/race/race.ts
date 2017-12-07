@@ -50,14 +50,17 @@ export class Race {
     this.racialRestriction = STARTING_PLAYER_RACES[raceType].racialRestriction ? STARTING_PLAYER_RACES[raceType].racialRestriction : "";
   }
 
-  formatText(text: String): string {
+  formatText(text: string): string {
     let result = "";
+    if (!text) {
+      return "";
+    }
     const chunk = text.split("$");
     if (chunk.length > 1) {
       for (let i = 1; i <= chunk.length; i += 2) {
         if (chunk[i - 1]) {
           result = result.concat(chunk[i - 1]);
-          const valueText = <string>this.getMechanicalBonus(chunk[i]);
+          const valueText = this.formatText(<string>this.getMechanicalBonus(chunk[i]));
           if (valueText !== undefined) {
             result = result.concat(valueText);
           }
@@ -73,9 +76,9 @@ export class Race {
 
   //  this string: array object will take in a mechanicBonus with a name matching an active or passive bonus with a key of the same name as the bonsu name.  The value will be a level based array of th resulting value
 
-  getMechanicalBonus(propertyName: string): number | string {
+  getMechanicalBonus(propertyName: string): string {
     const valueArray = this.mechanicalBonusValues[propertyName];
-    let valueResult: number | string;
+    let valueResult: string;
     if (valueArray && valueArray.length === 10) {
       valueResult = valueArray[this.level - 1];
     } else if (valueArray) {
@@ -86,7 +89,7 @@ export class Race {
 
   private getRecoveryBonus(): number {
     if (this.raceType === RaceType.Burman) {
-      return this.getMechanicalBonus("Virile Recovery") as number;
+      return parseInt(this.getMechanicalBonus("Virile Recovery"), 10);
     } else {
       return 0;
     }

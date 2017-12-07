@@ -139,8 +139,8 @@ export const STARTING_PLAYER_RACES = {
       },
     ],
     mechanicalBonusValues: {
-      "Tough as Nails": [6, 7, 8, 10, 11, 12, 14, 15, 16, 18],
-      "Virile Recovery": [1, 1, 1, 2, 2, 2, 2, 3, 3, 3]
+      "Tough as Nails": ["6", "7", "8", "10", "11", "12", "14", "15", "16", "18"],
+      "Virile Recovery": ["1", "1", "1", "2", "2", "2", "2", "3", "3", "3"]
     } as BonusByLevel
   } as Race,
   Elder: {
@@ -160,7 +160,7 @@ export const STARTING_PLAYER_RACES = {
       },
     ],
     mechanicalBonusValues: {
-      "Resistance of the Ancients": [5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+      "Resistance of the Ancients": ["5", "6", "7", "8", "9", "10", "11", "12", "13", "14"]
     } as BonusByLevel
   } as Race,
   Human: {
@@ -204,7 +204,7 @@ export const STARTING_PLAYER_RACES = {
       },
     ],
     mechanicalBonusValues: {
-      "Eldritch Enervation": [4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+      "Eldritch Enervation": ["4", "5", "6", "7", "8", "9", "10", "11", "12", "13"],
       "Eldritch Infusion": ["1 extra damage die.",
         "1 extra damage die.",
         "1 extra damage die.",
@@ -253,12 +253,12 @@ export const STARTING_PLAYER_RACES = {
     activeBonuses: [
       {
         name: "Elemental Release",
-        value: "$racialSubTypeActive$"
+        value: "As a $racialSubTypeActive$."
       }
     ],
     mechanicalBonusValues: {
-      "Elemental Resistance": [3, 4, 5, 5, 6, 7, 7, 8, 9, 9],
-      "Other Elemental Resistance": [2, 2, 3, 3, 4, 4, 5, 5, 6, 6],
+      "Elemental Resistance": ["3", "4", "5", "5", "6", "7", "7", "8", "9", "9"],
+      "Other Elemental Resistance": ["2", "2", "3", "3", "4", "4", "5", "5", "6", "6"],
       racialSubTypePassive: [
         "Force",
         "Lightning",
@@ -266,12 +266,12 @@ export const STARTING_PLAYER_RACES = {
         "Cold",
       ],
       racialSubTypeActive: [
-        "As a minor action strike the ground with tremendous force.  All adjacent enemies must make a hard saving throw (" + SavingThrow.Hard + ") throw or be knocked prone.",
-        "When you are hit with a melee attack by an enemy you can have the attacking enemy take $Lightning$ lightning damage as a free action.",
-       "As a minor action any successful attacks gain the heat keyword and do an additional $Heat$ heat damage (roll once).",
-        "Water: Swift action.  Until the end of your turn you ignore all difficult terrain and your movement does not provoke opportunity attacks."
+        "minor action strike the ground with tremendous force.  All adjacent enemies must make a hard saving throw (" + SavingThrow.Hard + ") throw or be knocked prone",
+        "when you are hit with a melee attack by an enemy you can have the attacking enemy take $Lightning$ lightning damage as a free action",
+       "minor action any successful attacks gain the heat keyword and do an additional $Heat$ heat damage (roll once)",
+        "swift action you ignore all difficult terrain and your movement does not provoke opportunity attacks until the end of your turn"
       ],
-      Lightning: [17, 21, 25, 29, 33, 37, 41, 45, 49, 53],
+      Lightning: ["17", "21", "25", "29", "33", "37", "41", "45", "49", "53"],
       Heat: [
         new Dice(1, DiceSize.d8, 3).printRoll(),
         new Dice(1, DiceSize.d8, 4).printRoll(),
@@ -309,8 +309,8 @@ export const STARTING_PLAYER_RACES = {
     ],
     racialRestriction: "Can't use two handed melee weapons",
     mechanicalBonusValues: {
-      "No Small Skill": [1, 1, 1, 1, 1, 2, 2, 2, 2, 2],
-      "Tiny Target": [11, 14, 16, 19, 21, 24, 26, 29, 31, 34]
+      "No Small Skill": ["1", "1", "1", "1", "1", "2", "2", "2", "2", "2"],
+      "Tiny Target": ["11", "14", "16", "19", "21", "24", "26", "29", "31", "34"]
     } as BonusByLevel
   } as Race
 
