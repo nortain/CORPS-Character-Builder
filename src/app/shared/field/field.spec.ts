@@ -27,6 +27,14 @@ describe('Field', () => {
     expect(item).toBeDefined();
   });
 
+  it('should be able to replace an existing value', function () {
+    const weapon = new ff(2);
+    weapon.addVal['madSkillz'] = 3;
+    expect(weapon.value()).toEqual(5);
+    weapon.replaceVal['madSkillz'] = 8;
+    expect(weapon.value()).toEqual(11);
+  });
+
   it('should sum two values together and equal the correct result', function () {
     const weaponBonus = new ff(0);
     weaponBonus.addVal['skill'] = 3;
