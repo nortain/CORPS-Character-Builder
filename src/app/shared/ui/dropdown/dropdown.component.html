@@ -1,4 +1,8 @@
-<div ngbDropdown class="d-inline-block">
-  <label>{{labelName ? labelName : ''}}</label>
-  <button class="btn btn-outline-primary"></button>
+<label class="font-weight-bold">{{labelName ? labelName : ''}}</label>
+<br *ngIf="newLineLabelName">
+<div ngbDropdown class="d-inline-flex custom-button">
+  <button class="btn btn-outline-primary" id="dropdownMenu" ngbDropdownToggle>{{selectedValue ? selectedValue.label : 'Button'}}</button>
+  <div ngbDropdownMenu class="" aria-labelledby="dropdownMenu">
+    <button *ngFor="let value of values" (click)="selectDropdown(value)" class="dropdown-item">{{value.label}}</button>
+  </div>
 </div>
