@@ -15,7 +15,7 @@
   "dependencies": {
     "@angular/animations": "^5.1.2",
     "@angular/common": "^5.1.2",
-    "@angular/compiler": "^5.2.3",
+    "@angular/compiler": "^5.1.2",
     "@angular/core": "^5.1.2",
     "@angular/forms": "^5.1.2",
     "@angular/http": "^5.1.2",
@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@angular/cli": "^1.6.1",
-    "@angular/compiler-cli": "^5.2.3",
+    "@angular/compiler-cli": "^5.1.2",
     "@angular/language-service": "^5.1.2",
     "@types/jasmine": "~2.8.2",
     "@types/jasminewd2": "~2.0.3",
@@ -47,7 +47,6 @@
     "karma-jasmine": "~1.1.1",
     "karma-jasmine-html-reporter": "^0.2.2",
     "protractor": "~5.2.2",
-    "ts-node": "~4.0.2",
     "ts-node": "~4.0.2",
     "tslint": "~5.8.0",
     "typescript": "^2.6.2"
