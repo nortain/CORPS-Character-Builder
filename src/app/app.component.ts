@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {mockDropdownData} from "./shared/testing-constants";
 
 
 
@@ -8,6 +9,7 @@ import {Component} from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  mockDropdownData = mockDropdownData();
 
 }
 
