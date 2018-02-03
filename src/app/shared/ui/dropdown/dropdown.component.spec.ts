@@ -3,7 +3,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DropdownComponent } from './dropdown.component';
 import {mockDropdownData} from "../../testing-constants";
 import {By} from "@angular/platform-browser";
-import {SharedModule} from "../../shared.module";
 import {NgbDropdownMenu} from "@ng-bootstrap/ng-bootstrap/dropdown/dropdown";
 import {NgbDropdownConfig, NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
 
@@ -82,5 +81,31 @@ describe('DropdownComponent', () => {
     fixture.detectChanges();
     const newLine = fixture.debugElement.query(By.css("br"));
     expect(newLine.nativeElement).toBeTruthy();
+  });
+
+  it('should be able to have a default value of select when asked', function () {
+    fixture = TestBed.createComponent(DropdownComponent);
+    component = fixture.componentInstance;
+    component.values = mockDropdownData();
+    component.defaultSelect = true;
+    fixture.detectChanges();
+    const btn = fixture.debugElement.query(By.css("button")).nativeElement;
+    expect(btn.innerText).toBe("<Select>");
+  });
+
+  it('it should have a way to be mark itself in an error state', function () {
+    fixture = TestBed.createComponent(DropdownComponent);
+    component = fixture.componentInstance;
+    component.values = mockDropdownData();
+    component.isInvalid = true;
+    fixture.detectChanges();
+    const btn = fixture.debugElement.query(By.css("button")).nativeElement;
+    expect(btn.classList).toContain("btn-outline-danger");
+    const message = fixture.debugElement.query(By.css("div.errorMessage")).nativeElement;
+    expect(message).toBeTruthy();
+    component.isInvalid = false;
+    fixture.detectChanges();
+    expect(btn.classList).not.toContain("btn-outline-danger");
+
   });
 });

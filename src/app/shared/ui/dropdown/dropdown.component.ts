@@ -12,6 +12,7 @@ export class DropdownComponent implements OnInit {
   @Input() values: DropdownValueObject[]; // array of possible values
   @Input() value: DropdownValueObject; // pre selected value on load
   @Input() defaultSelect = false; // should there be a select option
+  @Input() isInvalid = false;
   @Output() valueChange: EventEmitter<DropdownValueObject>; // emits state on change
   @Output() selectedValue: any; // change to dropdown value object
 
