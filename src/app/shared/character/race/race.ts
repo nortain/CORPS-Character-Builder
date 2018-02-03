@@ -5,7 +5,7 @@ import {RaceType} from "./race-type.enum";
 import {VisionType} from "./vision-type.enum";
 import {RacialSubType} from "./racial-sub-type.enum";
 import {Level} from "../level.enum";
-import {NON_HUMAN_AVAILABLE_ATTRIBUTE_POINTS, STARTING_PLAYER_RACES} from "../../constants";
+import {NON_HUMAN_AVAILABLE_ATTRIBUTE_POINTS, STARTING_PLAYER_RACES} from "../../constants/constants";
 import {BonusByLevel} from "../bonus-by-level";
 import {Bonus} from "../bonus";
 

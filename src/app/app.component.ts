@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {mockDropdownData} from "./shared/testing-constants";
+import {mockDropdownData} from "./shared/constants/testing-constants";
 
 
 

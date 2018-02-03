@@ -1,18 +1,18 @@
-import {MaxMovement} from "./armor/max-movement";
-import {WeaponType} from "./weapon/weapon-type";
-import {Dice} from "./character/dice";
-import {DiceSize} from "./character/dice-size.enum";
-import {MagicDefenseType} from "./magic-defense/magic-defense-type.enum";
-import {Field} from "./field/field";
-import {MagicDefense} from "./magic-defense/magic-defense";
-import {Race} from "./character/race/race";
-import {VisionType} from "./character/race/vision-type.enum";
-import {AttributeName} from "./attribute/attribute-name.enum";
-import {ThemeType} from "./theme-points/theme-type.enum";
-import {SavingThrow} from "./character/saving-throw.enum";
-import {BonusByLevel} from "./character/bonus-by-level";
-import {Bonus} from "./character/bonus";
-import {RacialSubType} from "./character/race/racial-sub-type.enum";
+import {MaxMovement} from "../armor/max-movement";
+import {WeaponType} from "../weapon/weapon-type";
+import {Dice} from "../character/dice";
+import {DiceSize} from "../character/dice-size.enum";
+import {MagicDefenseType} from "../magic-defense/magic-defense-type.enum";
+import {Field} from "../field/field";
+import {MagicDefense} from "../magic-defense/magic-defense";
+import {Race} from "../character/race/race";
+import {VisionType} from "../character/race/vision-type.enum";
+import {AttributeName} from "../attribute/attribute-name.enum";
+import {ThemeType} from "../theme-points/theme-type.enum";
+import {SavingThrow} from "../character/saving-throw.enum";
+import {BonusByLevel} from "../character/bonus-by-level";
+import {Bonus} from "../character/bonus";
+
 
 export const NON_HUMAN_AVAILABLE_ATTRIBUTE_POINTS = 4;
 
@@ -268,7 +268,7 @@ export const STARTING_PLAYER_RACES = {
       racialSubTypeActive: [
         "minor action strike the ground with tremendous force.  All adjacent enemies must make a hard saving throw (" + SavingThrow.Hard + ") throw or be knocked prone",
         "when you are hit with a melee attack by an enemy you can have the attacking enemy take $Lightning$ lightning damage as a free action",
-       "minor action any successful attacks gain the heat keyword and do an additional $Heat$ heat damage (roll once)",
+        "minor action any successful attacks gain the heat keyword and do an additional $Heat$ heat damage (roll once)",
         "swift action you ignore all difficult terrain and your movement does not provoke opportunity attacks until the end of your turn"
       ],
       Lightning: ["17", "21", "25", "29", "33", "37", "41", "45", "49", "53"],

@@ -1,7 +1,7 @@
 import {Weapon} from './weapon';
 import {WeaponCategory} from "./weapon-category.enum";
 import {WeaponClass} from "./weapon-class.enum";
-import {BASE_WEAPON_DAMAGE} from "../constants";
+import {BASE_WEAPON_DAMAGE} from "../constants/constants";
 
 describe('Weapon', () => {
   let axe: Weapon, dagger: Weapon, spear: Weapon, crossbow: Weapon;

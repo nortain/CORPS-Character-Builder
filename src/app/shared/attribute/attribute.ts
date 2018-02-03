@@ -8,7 +8,7 @@ import {
   SD_PP_BONUS,
   SECONDARY_DAMAGE,
   SKILL_BONUS, TRAINED_SKILL_BONUS, VI_HP_BONUS
-} from "../constants";
+} from "../constants/constants";
 import {Armor} from "../armor/armor";
 import {ArmorType} from "../armor/armor-type.enum";
 import {Level} from "../character/level.enum";

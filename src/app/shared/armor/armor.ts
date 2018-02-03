@@ -2,7 +2,7 @@ import {ArmorType} from "./armor-type.enum";
 import {
   ACTIVE_DEFENSE, CASTER_PENALTY, CRITICAL_REDUCTION, MAX_MOVEMENT, PASSIVE_DEFENSE, REQUIRES_THREE_MAGIC, REQUIRES_TRAINING,
   SKILL_PENALTY
-} from "../constants";
+} from "../constants/constants";
 import {MaxMovement} from "./max-movement";
 import {ThemePointsContainer} from "../theme-points/theme-points-container";
 

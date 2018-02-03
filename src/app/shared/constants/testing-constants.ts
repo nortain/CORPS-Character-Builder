@@ -1,4 +1,4 @@
-import {DropdownValueObject} from "./ui/dropdown/dropdown-value-object";
+import {DropdownValueObject} from "../ui/dropdown/dropdown-value-object";
 
 export function mockDropdownData() {
   return [

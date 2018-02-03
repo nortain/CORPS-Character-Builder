@@ -165,7 +165,6 @@ describe('Testing attribute class', () => {
     expect(attribute.getTrainedSkillBonus()).toEqual(1);
   });
 
-
 });
 
 function makeAttribute(name?: AttributeName, strength?: AttributeStrength): Attribute {

@@ -2,7 +2,7 @@ import {Race} from "./race/race";
 import {Weapon} from "../weapon/weapon";
 import {Armor} from "../armor/armor";
 import {MagicDefense} from "../magic-defense/magic-defense";
-import {STARTING_MAGIC_DEFENSES} from "../constants";
+import {STARTING_MAGIC_DEFENSES} from "../constants/constants";
 import {RaceType} from "./race/race-type.enum";
 
 export class Character extends Race {

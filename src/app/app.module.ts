@@ -5,6 +5,7 @@ import {AppComponent} from './app.component';
 import {CoreModule} from "./core/core.module";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {SharedModule} from "./shared/shared.module";
+import {CharacterSheetModule} from "./character-sheet/character-sheet.module";
 
 
 @NgModule({
@@ -15,7 +16,7 @@ import {SharedModule} from "./shared/shared.module";
     CoreModule,
     NgbModule.forRoot(),
     AppRoutingModule,
-    SharedModule
+    CharacterSheetModule
   ],
   providers: [],
   bootstrap: [AppComponent]
