@@ -17,7 +17,7 @@ export class CharacterAttributesComponent implements OnInit {
 
   ngOnInit() {
     this.attributeStrength = this.attributeService.getArrayOfDropdownValueObjectsFromEnum(AttributeStrength);
-    this.attributes = this.attributeService.getEnumAsArrayOfStrings(AttributeName);
+    this.attributes = this.attributeService.getEnumAsArrayOfStrings(AttributeName, true);
   }
 
 }

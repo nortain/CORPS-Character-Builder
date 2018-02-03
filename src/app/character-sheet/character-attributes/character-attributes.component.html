@@ -2,8 +2,8 @@
   <div *ngFor="let attribute of attributes | slice:0:4" class="col-md-6 col-sm-12">
     <app-dropdown [labelName]="attribute"
                   [newLineLabelName]="true"
-                  [values]="attributeStrength">
-
+                  [values]="attributeStrength"
+                  [fixedWidth]="175">
     </app-dropdown>
   </div>
 </div>
@@ -11,8 +11,8 @@
   <div *ngFor="let attribute of attributes | slice:4:8" class="col-md-6 col-sm-12">
     <app-dropdown [labelName]="attribute"
                   [newLineLabelName]="true"
-                  [values]="attributeStrength">
-
+                  [values]="attributeStrength"
+                  [fixedWidth]="175">
     </app-dropdown>
   </div>
 </div>

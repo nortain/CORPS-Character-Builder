@@ -108,4 +108,14 @@ describe('DropdownComponent', () => {
     expect(btn.classList).not.toContain("btn-outline-danger");
 
   });
+
+  it('should be able to have a fixed width when one is given', () => {
+    fixture = TestBed.createComponent(DropdownComponent);
+    component = fixture.componentInstance;
+    component.values = mockDropdownData();
+    component.fixedWidth = 200;
+    fixture.detectChanges();
+    const btn = fixture.debugElement.query(By.css("div.d-inline-block")).nativeElement;
+    expect(btn.clientWidth).toEqual(200);
+  });
 });

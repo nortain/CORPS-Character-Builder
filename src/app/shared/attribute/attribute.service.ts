@@ -7,10 +7,17 @@ export class AttributeService {
   constructor() {
   }
 
-  getEnumAsArrayOfStrings(enumeration): string[] {
-    const names = Object.keys(enumeration).filter((value) => {
-      return !(parseInt(value, 10) >= 0);
-    });
+  getEnumAsArrayOfStrings(enumeration, isStringBased = false): string[] {
+    let names;
+    if (!isStringBased) {
+      names = Object.keys(enumeration).filter((keys) => {
+        return !(parseInt(keys, 10) >= 0);
+      });
+    } else {
+      names = Object.values(enumeration).filter((values) => {
+        return !(parseInt(values, 10) >= 0);
+      });
+    }
     return names;
   }
 

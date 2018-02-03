@@ -6,6 +6,7 @@ import { CharacterAttributesComponent } from './character-attributes/character-a
   imports: [
     SharedModule
   ],
-  declarations: [CharacterAttributesComponent]
+  declarations: [CharacterAttributesComponent],
+
 })
 export class CharacterSheetModule { }

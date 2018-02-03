@@ -13,6 +13,7 @@ export class DropdownComponent implements OnInit {
   @Input() value: DropdownValueObject; // pre selected value on load
   @Input() defaultSelect = false; // should there be a select option
   @Input() isInvalid = false;
+  @Input() fixedWidth: number;
   @Output() valueChange: EventEmitter<DropdownValueObject>; // emits state on change
   @Output() selectedValue: any; // change to dropdown value object
 

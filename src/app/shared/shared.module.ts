@@ -2,8 +2,8 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { DropdownComponent } from './ui/dropdown/dropdown.component';
-import {NgbDropdownModule, NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import {BrowserModule} from "@angular/platform-browser";
+import {NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
+import {AttributeService} from "./attribute/attribute.service";
 
 @NgModule({
   imports: [
@@ -13,6 +13,7 @@ import {BrowserModule} from "@angular/platform-browser";
     NgbDropdownModule
   ],
   declarations: [DropdownComponent],
+  providers: [AttributeService],
   exports: [CommonModule, FormsModule, DropdownComponent]
 })
 export class SharedModule {

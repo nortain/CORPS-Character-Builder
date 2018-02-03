@@ -22,7 +22,7 @@ describe('AttributeService', () => {
 
   it('should be able to get all enums as an array', function () {
     const attributes = AttributeName;
-    expect(attributeService.getEnumAsArrayOfStrings(attributes).length).toBe(8);
+    expect(attributeService.getEnumAsArrayOfStrings(attributes, true).length).toBe(8);
     expect(attributeService.getEnumAsArrayOfStrings(AttributeStrength).length).toBe(5);
     expect(attributeService.getEnumAsArrayOfStrings(AttributeStrength)[4]).toBe(AttributeStrength[4]);
   });
