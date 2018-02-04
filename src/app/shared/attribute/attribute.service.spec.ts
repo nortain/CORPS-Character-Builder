@@ -35,4 +35,9 @@ describe('AttributeService', () => {
 
   });
 
+  it('should be able to format the value for attributes', () => {
+    const result = attributeService.getArrayOfDropdownValueObjectsFromEnum(AttributeStrength, true);
+    expect(result[0].label).toBe("Normal (0)");
+  });
+
 });

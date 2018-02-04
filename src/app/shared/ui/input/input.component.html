@@ -1,0 +1,6 @@
+<label class="font-weight-bold">{{labelName}}</label>
+<br *ngIf="newLineLabelName">
+<div class="d-inline-block" [ngStyle]="{'width': fixedWidth ? fixedWidth + 'px' : '100%'}">
+  <input id="{{labelName}}Id" name="{{labelName}}Id" class="w-100 form-control" [type]="inputType" [ngModel]="inputModel" [required]="required" (ngModelChange)="changeModel($event)">
+</div>
+<div *ngIf="isInvalid" class="errorMessage">Invalid Value!</div>

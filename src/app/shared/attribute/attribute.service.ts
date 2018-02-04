@@ -21,11 +21,18 @@ export class AttributeService {
     return names;
   }
 
-  getArrayOfDropdownValueObjectsFromEnum(enumeration): DropdownValueObject[] {
+  /*Takes in an enumeration and uses the keys and values to insert them into a dropdown value object. i.e. {label: "Normal" value: 0}.
+  If the isAttribute boolean is set to true then the label is appended wrapped in parenthesis like {label: "Normal (0), value: 0}"*/
+  getArrayOfDropdownValueObjectsFromEnum(enumeration, isAttribute = false): DropdownValueObject[] {
     const results: DropdownValueObject[] = [];
     const names = this.getEnumAsArrayOfStrings(enumeration);
     for (const name of names) {
-      results.push({value: enumeration[name], label: name});
+      if (!isAttribute) {
+        results.push({value: enumeration[name], label: name});
+      } else {
+        const attributeName = name + " (" + enumeration[name] + ")";
+        results.push({value: enumeration[name], label: attributeName});
+      }
     }
     return results;
   }
