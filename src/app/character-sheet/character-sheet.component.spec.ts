@@ -1,6 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CharacterSheetComponent } from './character-sheet.component';
+import {CharacterSheetComponent} from './character-sheet.component';
+import {SharedModule} from "../shared/shared.module";
+import {NgbDropdownConfig} from "@ng-bootstrap/ng-bootstrap";
 
 describe('CharacterSheetComponent', () => {
   let component: CharacterSheetComponent;
@@ -8,9 +10,11 @@ describe('CharacterSheetComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CharacterSheetComponent ]
+      imports: [SharedModule],
+      declarations: [CharacterSheetComponent],
+      providers: [NgbDropdownConfig]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

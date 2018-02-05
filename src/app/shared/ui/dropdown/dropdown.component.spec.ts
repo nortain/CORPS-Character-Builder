@@ -79,7 +79,7 @@ describe('DropdownComponent', () => {
     component.labelName = "Bobs test";
     component.newLineLabelName = true;
     fixture.detectChanges();
-    const newLine = fixture.debugElement.query(By.css("br"));
+    const newLine = fixture.debugElement.query(By.css("div.col-lg-12"));
     expect(newLine.nativeElement).toBeTruthy();
   });
 
