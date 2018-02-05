@@ -14,8 +14,8 @@ import {CharacterSheetModule} from "./character-sheet/character-sheet.module";
   imports: [
     CoreModule,
     NgbModule.forRoot(),
-    AppRoutingModule,
-    CharacterSheetModule
+    CharacterSheetModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -15,7 +15,7 @@ import { InputComponent } from './ui/input/input.component';
   ],
   declarations: [DropdownComponent, InputComponent],
   providers: [AttributeService],
-  exports: [CommonModule, FormsModule, DropdownComponent]
+  exports: [CommonModule, FormsModule, DropdownComponent, InputComponent]
 })
 export class SharedModule {
 }

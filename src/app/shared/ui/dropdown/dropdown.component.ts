@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {DropdownValueObject} from "./dropdown-value-object";
 
 @Component({
-  selector: 'app-dropdown',
+  selector: 'corps-dropdown',
   templateUrl: './dropdown.component.html',
   styleUrls: ['./dropdown.component.css']
 })
