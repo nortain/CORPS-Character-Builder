@@ -1,14 +1,15 @@
 <form>
   <div class="row">
 
-      <corps-input [labelName]="'Name'" class="col-lg-4" [newLineLabelName]="true" inputModel="{{character.name}}"></corps-input>
+      <corps-input id="characterName" [labelName]="'Name'" class="col-lg-4" [newLineLabelName]="true" [inputModel]="character.name" (outGoingModel)="character.name=$event"></corps-input>
 
-      <corps-dropdown [labelName]="'Race'" class="col-lg-4" [newLineLabelName]="true" [values]="races" (valueChange)="reloadCharacter($event)"></corps-dropdown>
+      <corps-dropdown id="characterRace" [labelName]="'Race'" class="col-lg-4" [newLineLabelName]="true" [values]="races" (valueChange)="reloadCharacter($event)"></corps-dropdown>
 
-    <corps-dropdown [labelName]="'Level'" class="col-lg-3" [newLineLabelName]="true" [values]="levels" (valueChange)="reloadCharacter($event)"> </corps-dropdown>
+    <corps-dropdown id="characterLevel" [labelName]="'Level'" class="col-lg-3" [newLineLabelName]="true" [values]="levels" (valueChange)="reloadCharacter($event)"> </corps-dropdown>
 
   </div>
   Awesome middle
+  this is the name: {{name}}
   <div class="row">
     <label class="col-lg-3">stuff</label>
     <input class="col-lg-3">
