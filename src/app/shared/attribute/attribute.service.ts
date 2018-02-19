@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {DropdownValueObject} from "../ui/dropdown/dropdown-value-object";
+import {Level} from "../character/level.enum";
 
 @Injectable()
 export class AttributeService {
@@ -37,5 +38,16 @@ export class AttributeService {
     return results;
   }
 
+  buildArrayAsDropdownArray(array: any[]) {
+    const results: DropdownValueObject[] = [];
+    for (const a of array) {
+      results.push({value: a, label: a});
+    }
+    return results;
+  }
+
+  getLevelAsArray(): Array<Level> {
+    return [Level.One, Level.Two, Level.Three, Level.Four, Level.Five, Level.Six, Level.Seven, Level.Eight, Level.Nine, Level.Ten];
+  }
 
 }

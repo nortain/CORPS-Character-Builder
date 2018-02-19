@@ -2,13 +2,14 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {CharacterSheetComponent} from './character-sheet.component';
 import {SharedModule} from "../shared/shared.module";
-import {NgbDropdownConfig} from "@ng-bootstrap/ng-bootstrap";
+import {NgbDropdown, NgbDropdownConfig} from "@ng-bootstrap/ng-bootstrap";
 import {mockCharacter} from "../shared/constants/testing-constants";
 import {RaceType} from "../shared/character/race/race-type.enum";
 import {Level} from "../shared/character/level.enum";
 import {Character} from "../shared/character/character";
 import {By} from "@angular/platform-browser";
 import {InputComponent} from "../shared/ui/input/input.component";
+import {NgbDropdownMenu} from "@ng-bootstrap/ng-bootstrap/dropdown/dropdown";
 
 describe('CharacterSheetComponent', () => {
   let component: CharacterSheetComponent;
@@ -48,5 +49,29 @@ describe('CharacterSheetComponent', () => {
     nameInput.dispatchEvent(new Event("input"));
     fixture.detectChanges();
     expect(component.character.name).toBe("Bob");
+  });
+
+  it('should be able to reload a new character when modifying the race dropdown', () => {
+    const raceDD = fixture.debugElement.query(By.css("#characterRace"));
+    const raceDDButton = raceDD.query(By.directive(NgbDropdown)).query(By.css("button")).nativeElement;
+    raceDDButton.click();
+    fixture.detectChanges();
+    const raceDDItem = raceDD.query(By.directive(NgbDropdownMenu)).queryAll(By.css("button.dropdown-item"));
+    expect(raceDDItem.length).toBe(8);
+    raceDDItem[2].nativeElement.click();
+    fixture.detectChanges();
+    expect(component.character.raceType).toBe(RaceType.Elder);
+  });
+
+  it('should be able to reload a new character when modifying the level dropdown', () => {
+    const levelDD = fixture.debugElement.query(By.css("#characterLevel"));
+    const levelDDButton = levelDD.query(By.directive(NgbDropdown)).query(By.css("button")).nativeElement;
+    levelDDButton.click();
+    fixture.detectChanges();
+    const levelDDItem = levelDD.query(By.directive(NgbDropdownMenu)).queryAll(By.css("button.dropdown-item"));
+    expect(levelDDItem.length).toBe(10);
+    levelDDItem[2].nativeElement.click();
+    fixture.detectChanges();
+    expect(component.character.level).toBe(3);
   });
 });

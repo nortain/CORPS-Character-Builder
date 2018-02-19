@@ -22,13 +22,21 @@ export class CharacterSheetComponent implements OnInit {
 
   ngOnInit() {
     this.races = this.attributeService.getArrayOfDropdownValueObjectsFromEnum(RaceType, false);
-    this.levels = this.attributeService.getArrayOfDropdownValueObjectsFromEnum(Level, false);
+    this.levels = this.attributeService.buildArrayAsDropdownArray(this.attributeService.getLevelAsArray());
     const raceType = this.races[0].label;
     this.character = new Character("", RaceType[raceType] as RaceType);
   }
 
   reloadCharacter(raceType: RaceType, level: Level) {
     this.character = new Character(this.character.name, raceType, level);
+  }
+
+  startReloadWithRace(raceString: string) {
+    this.reloadCharacter(RaceType[raceString], this.character.level);
+  }
+
+  startReloadWithLevel(level: number) {
+    this.reloadCharacter(this.character.raceType, level);
   }
 
 }

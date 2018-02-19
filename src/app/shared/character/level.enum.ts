@@ -12,6 +12,5 @@ export enum Level {
 
 }
 
-export function getLevelAsArray(): Array<Level> {
-  return [this.One, this.Two, this.Three, this.Four, this.Five, this.Six, this.Seven, this.Eight, this.Nine, this.Ten];
-}
+
+
