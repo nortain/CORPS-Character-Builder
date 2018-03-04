@@ -16,11 +16,16 @@ export class ThemePointsContainer {
     this.stealth = new ThemePoint(ThemeType.Stealth, stealth);
     this.magic = new ThemePoint(ThemeType.Magic, magic);
     this.general = new ThemePoint(ThemeType.General, general);
-
   }
 
+  /*returns the total number of theme points that are assigned*/
   getTotalThemePoints(currentNumberOfTheme: number = 0): number {
     return this.combat.getStrength() + this.stealth.getStrength() + this.magic.getStrength() + this.general.getStrength() - currentNumberOfTheme;
+  }
+
+  getOtherThemePoints(exluduceCurrentTheme: string): number {
+    const result = this.getTotalThemePoints() - this[exluduceCurrentTheme].getStrength();
+    return result;
   }
 
   /*Gets the defensive bonus based on theme point distribution*/
@@ -38,6 +43,7 @@ export class ThemePointsContainer {
     return result;
   }
 
+  /*returns an array of theme types based on their strength.  This is used for determining which magic defense gets a bonus from selected theme points*/
   getStrongestThemePoints(): Array<ThemeType> {
     const results = [];
     if (this.combat.getStrength() >= this.stealth.getStrength() && this.combat.getStrength() >= this.magic.getStrength()) {

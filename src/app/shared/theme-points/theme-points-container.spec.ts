@@ -22,7 +22,7 @@ describe('', () => {
     expect(thc.getTotalThemePoints(2)).toEqual(1);
   });
 
-  it('should be able up which magical defense when they are tied', () => {
+  it('should be able to return which magical defense when they are tied', () => {
     expect(thc.getStrongestThemePoints()).toContain(ThemeType.Combat);
     expect(thc.getStrongestThemePoints()).toContain(ThemeType.Stealth);
     expect(thc.getStrongestThemePoints()).toContain(ThemeType.Magic);

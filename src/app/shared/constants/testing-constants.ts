@@ -1,6 +1,9 @@
 import {DropdownValueObject} from "../ui/dropdown/dropdown-value-object";
 import {Character} from "../character/character";
 import {RaceType} from "../character/race/race-type.enum";
+import {ComponentFixture} from "@angular/core/testing";
+import {By} from "@angular/platform-browser";
+import {NgbDropdownMenu} from "@ng-bootstrap/ng-bootstrap/dropdown/dropdown";
 
 export function mockDropdownData() {
   return [
@@ -13,4 +16,13 @@ export function mockDropdownData() {
 export function mockCharacter(name = "Bob", raceType = RaceType.Altwani) {
   const character = new Character(name, raceType);
   return character;
+}
+
+export function actionClickDropdownItemX(fixture: ComponentFixture<any>, selector: string, x = 0) {
+  const dropdown = fixture.debugElement.query(By.css(selector));
+  const dropdownBtn = dropdown.query(By.css("button")).nativeElement;
+  dropdownBtn.click();
+  const menuItem = dropdown.query(By.directive(NgbDropdownMenu)).queryAll(By.css("button.dropdown-item"));
+  menuItem[x].nativeElement.click();
+  fixture.detectChanges();
 }

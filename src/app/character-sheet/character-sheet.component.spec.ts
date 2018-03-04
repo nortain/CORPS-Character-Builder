@@ -10,6 +10,7 @@ import {Character} from "../shared/character/character";
 import {By} from "@angular/platform-browser";
 import {InputComponent} from "../shared/ui/input/input.component";
 import {NgbDropdownMenu} from "@ng-bootstrap/ng-bootstrap/dropdown/dropdown";
+import {CharacterThemePointsComponent} from "./character-theme-points/character-theme-points.component";
 
 describe('CharacterSheetComponent', () => {
   let component: CharacterSheetComponent;
@@ -18,7 +19,7 @@ describe('CharacterSheetComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [SharedModule],
-      declarations: [CharacterSheetComponent],
+      declarations: [CharacterSheetComponent, CharacterThemePointsComponent],
       providers: [NgbDropdownConfig]
     })
       .compileComponents();

@@ -40,4 +40,24 @@ describe('AttributeService', () => {
     expect(result[0].label).toBe("Normal (0)");
   });
 
+  it('should be able to get the theme point strength', () => {
+    const result = attributeService.getThemePointStrength(false, 0);
+    expect(result.length).toBe(4);
+  });
+
+  it('should be able to get theme point strength when 2 values assigned to other themes', () => {
+    const result = attributeService.getThemePointStrength(false, 2);
+    expect(result.length).toBe(3);
+  });
+
+  it('should always return a non-empty array when getting the theme points strength', () => {
+    const result = attributeService.getThemePointStrength(false, 4);
+    expect(result.length).toBe(1);
+  });
+
+  it('should return a length of 3 when getting the strength of the general theme if 2 points are assigned else where', () => {
+    const result = attributeService.getThemePointStrength(true, 3);
+    expect(result.length).toBe(2);
+  });
+
 });

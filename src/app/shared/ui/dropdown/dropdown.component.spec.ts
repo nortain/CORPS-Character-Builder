@@ -79,7 +79,7 @@ describe('DropdownComponent', () => {
     component.labelName = "Bobs test";
     component.newLineLabelName = true;
     fixture.detectChanges();
-    const newLine = fixture.debugElement.query(By.css("div.col-lg-12"));
+    const newLine = fixture.debugElement.query(By.css(".newLineForLabel"));
     expect(newLine.nativeElement).toBeTruthy();
   });
 
@@ -115,7 +115,7 @@ describe('DropdownComponent', () => {
     component.values = mockDropdownData();
     component.fixedWidth = 200;
     fixture.detectChanges();
-    const btn = fixture.debugElement.query(By.css("div.d-inline-block")).nativeElement;
-    expect(btn.clientWidth).toEqual(200);
+    const btn = fixture.debugElement.query(By.css("button.btn-outline-primary")).nativeElement;
+    expect(btn.clientWidth).toBeGreaterThan(190); // about 4 px gets shaved off in padding
   });
 });

@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {DropdownValueObject} from "../ui/dropdown/dropdown-value-object";
 import {Level} from "../character/level.enum";
+import {ThemeStrength} from "../theme-points/theme-strength.enum";
 
 @Injectable()
 export class AttributeService {
@@ -48,6 +49,24 @@ export class AttributeService {
 
   getLevelAsArray(): Array<Level> {
     return [Level.One, Level.Two, Level.Three, Level.Four, Level.Five, Level.Six, Level.Seven, Level.Eight, Level.Nine, Level.Ten];
+  }
+
+  getThemePointStrength(isGeneral: boolean, totalThemePointAssigned: number): Array<ThemeStrength> {
+    let resultArray = [];
+    if (totalThemePointAssigned > 4) {
+      totalThemePointAssigned = 4;
+    }
+    if (isGeneral) {
+      totalThemePointAssigned = totalThemePointAssigned;
+      resultArray = [ThemeStrength.None, ThemeStrength.Minor];
+    } else {
+      resultArray = [ThemeStrength.None, ThemeStrength.Minor, ThemeStrength.Lesser, ThemeStrength.Greater];
+    }
+    while (5 - totalThemePointAssigned < resultArray.length) {
+      resultArray.pop();
+    }
+    return resultArray;
+
   }
 
 }
