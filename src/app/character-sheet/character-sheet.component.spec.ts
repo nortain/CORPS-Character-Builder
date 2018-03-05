@@ -3,12 +3,11 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CharacterSheetComponent} from './character-sheet.component';
 import {SharedModule} from "../shared/shared.module";
 import {NgbDropdown, NgbDropdownConfig} from "@ng-bootstrap/ng-bootstrap";
-import {mockCharacter} from "../shared/constants/testing-constants";
+import {actionClickDropdownItemX, mockCharacter} from "../shared/constants/testing-constants";
 import {RaceType} from "../shared/character/race/race-type.enum";
 import {Level} from "../shared/character/level.enum";
 import {Character} from "../shared/character/character";
 import {By} from "@angular/platform-browser";
-import {InputComponent} from "../shared/ui/input/input.component";
 import {NgbDropdownMenu} from "@ng-bootstrap/ng-bootstrap/dropdown/dropdown";
 import {CharacterThemePointsComponent} from "./character-theme-points/character-theme-points.component";
 
@@ -74,5 +73,13 @@ describe('CharacterSheetComponent', () => {
     levelDDItem[2].nativeElement.click();
     fixture.detectChanges();
     expect(component.character.level).toBe(3);
+  });
+
+  it('should be able to update the theme points in the UI and see those changes reflected in the character data model', () => {
+
+    actionClickDropdownItemX(fixture, "#combat", 1);
+    expect(component.character.themePoints.combat.getStrength()).toBe(1);
+
+
   });
 });

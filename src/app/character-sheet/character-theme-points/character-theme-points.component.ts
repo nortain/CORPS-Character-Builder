@@ -1,9 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {AttributeService} from "../../shared/attribute/attribute.service";
 import {DropdownValueObject} from "../../shared/ui/dropdown/dropdown-value-object";
 import {ThemePointsContainer} from "../../shared/theme-points/theme-points-container";
-import {ThemeStrength} from "../../shared/theme-points/theme-strength.enum";
-import {ThemeType} from "../../shared/theme-points/theme-type.enum";
 
 @Component({
   selector: 'corps-character-theme-points',
@@ -11,18 +9,20 @@ import {ThemeType} from "../../shared/theme-points/theme-type.enum";
   styleUrls: ['./character-theme-points.component.css']
 })
 export class CharacterThemePointsComponent implements OnInit {
-  themeType = ThemeType;
+  @Output() emitter: EventEmitter<ThemePointsContainer>;
   themeContainer: ThemePointsContainer;
-  themeStrength = ThemeStrength;
 
-  constructor(private attributeService: AttributeService) { }
+
+  constructor(private attributeService: AttributeService) {
+    this.emitter = new EventEmitter<ThemePointsContainer>();
+  }
 
   ngOnInit() {
     this.themeContainer = new ThemePointsContainer();
   }
 
   getDropdownValues(themeType: string, isGeneral = false): DropdownValueObject[] {
-    const result =  this.attributeService.buildArrayAsDropdownArray(this.attributeService.getThemePointStrength(isGeneral, this.themeContainer.getOtherThemePoints(themeType)));
+    const result = this.attributeService.buildArrayAsDropdownArray(this.attributeService.getThemePointStrength(isGeneral, this.themeContainer.getOtherThemePoints(themeType)));
     return result;
   }
 
@@ -32,6 +32,7 @@ export class CharacterThemePointsComponent implements OnInit {
 
   updateThemePoints(themeType: string, themeStrength: number) {
     this.themeContainer[themeType].setStrength(themeStrength);
+    this.emitter.emit(this.themeContainer);
   }
 
 }
