@@ -3,5 +3,4 @@ export enum RacialSubType {
   Air,
   Fire,
   Water
-
 }

@@ -10,6 +10,7 @@ import {Character} from "../shared/character/character";
 import {By} from "@angular/platform-browser";
 import {NgbDropdownMenu} from "@ng-bootstrap/ng-bootstrap/dropdown/dropdown";
 import {CharacterThemePointsComponent} from "./character-theme-points/character-theme-points.component";
+import {RacialSubType} from "../shared/character/race/racial-sub-type.enum";
 
 describe('CharacterSheetComponent', () => {
   let component: CharacterSheetComponent;
@@ -78,6 +79,19 @@ describe('CharacterSheetComponent', () => {
   it('should be able to update the theme points in the UI and see those changes reflected in the character data model', () => {
     actionClickDropdownItemX(fixture, "#combat", 1);
     expect(component.character.themePoints.combat.getStrength()).toBe(1);
+  });
+
+  it('should be able to select a racial subtype when choosing a primental', function () {
+    actionClickDropdownItemX(fixture, "#characterRace", 7); 
+    actionClickDropdownItemX(fixture, "#characterSubRace", 1);
+    expect(component.character.racialSubType).toBe(RacialSubType[RacialSubType.Air]);
+  });
+
+  it('should set sub race to null if the race does not have a subrace', function () {
+    actionClickDropdownItemX(fixture, "#characterRace", 7);
+    actionClickDropdownItemX(fixture, "#characterSubRace", 1);
+    actionClickDropdownItemX(fixture, "#characterRace", 5);
+    expect(component.character.racialSubType).toBeNull();
   });
 
 
