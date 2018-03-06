@@ -1,11 +1,17 @@
 <form>
   <div class="row">
 
-    <corps-input id="characterName" [labelName]="'Name'" class="col-lg-4" [newLineLabelName]="true" [inputModel]="character.name" (outGoingModel)="character.name=$event"></corps-input>
+    <corps-input id="characterName" labelName="Name" class="col-lg-4" [newLineLabelName]="true"
+                 [inputModel]="character.name" (outGoingModel)="character.name=$event"></corps-input>
 
-    <corps-dropdown id="characterRace" [labelName]="'Race'" class="col-lg-4" [newLineLabelName]="true" [values]="races" (valueChange)="startReloadWithRace($event.value)"></corps-dropdown>
+    <div class="col-lg-4">
+      <corps-dropdown id="characterRace" labelName="Race" class="col-auto" [newLineLabelName]="true" [values]="races" (valueChange)="startReloadWithRace($event.value)"></corps-dropdown>
 
-    <corps-dropdown id="characterLevel" [labelName]="'Level'" class="col-lg-3" [newLineLabelName]="true" [values]="levels" (valueChange)="startReloadWithLevel($event.value)"></corps-dropdown>
+      <corps-dropdown *ngIf="character.raceType === RaceType.Primental" id="characterSubRace" labelName="Sub-Race" [values]="subraces" (valueChange)="updateSubRace($event.value)" class="col-auto"></corps-dropdown>
+    </div>
+
+    <corps-dropdown id="characterLevel" labelName="Level" class="col-lg-3" [newLineLabelName]="true"
+                    [values]="levels" (valueChange)="startReloadWithLevel($event.value)"></corps-dropdown>
 
   </div>
   Awesome middle
@@ -14,7 +20,8 @@
   <div class="row">
     <div class="col-3">
       <label class="font-weight-bold col-12">Theme Points</label>
-      <corps-character-theme-points id="themePoints" (emitter)="updateThemePoints($event)"></corps-character-theme-points>
+      <corps-character-theme-points id="themePoints"
+                                    (emitter)="updateThemePoints($event)"></corps-character-theme-points>
     </div>
   </div>
 </form>

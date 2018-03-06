@@ -76,10 +76,9 @@ describe('CharacterSheetComponent', () => {
   });
 
   it('should be able to update the theme points in the UI and see those changes reflected in the character data model', () => {
-
     actionClickDropdownItemX(fixture, "#combat", 1);
     expect(component.character.themePoints.combat.getStrength()).toBe(1);
-
-
   });
+
+
 });
