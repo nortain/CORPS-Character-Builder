@@ -1,27 +1,47 @@
 <form>
   <div class="row">
 
-    <corps-input id="characterName" labelName="Name" class="col-lg-4" [newLineLabelName]="true"
+    <corps-input id="characterName" labelName="Name" class="col-md-4" [newLineLabelName]="true"
                  [inputModel]="character.name" (outGoingModel)="character.name=$event"></corps-input>
 
-    <div class="col-lg-4">
+    <div class="col-md-4 col-7">
       <corps-dropdown id="characterRace" labelName="Race" class="col-auto" [newLineLabelName]="true" [values]="races" (valueChange)="startReloadWithRace($event.value)"></corps-dropdown>
 
       <corps-dropdown *ngIf="character.raceType === RaceType.Primental" id="characterSubRace" labelName="Sub-Race" [values]="subraces" (valueChange)="updateSubRace($event.value)" class="col-auto"></corps-dropdown>
     </div>
 
-    <corps-dropdown id="characterLevel" labelName="Level" class="col-lg-3" [newLineLabelName]="true"
+    <corps-dropdown id="characterLevel" labelName="Level" class="col-md-3 col-5" [newLineLabelName]="true"
                     [values]="levels" (valueChange)="startReloadWithLevel($event.value)"></corps-dropdown>
 
   </div>
-  Awesome middle
+
+  <div class="col-auto">
+    <div class="row">
 
 
-  <div class="row">
-    <div class="col-3">
-      <label class="font-weight-bold col-12">Theme Points</label>
-      <corps-character-theme-points id="themePoints"
-                                    (emitter)="updateThemePoints($event)"></corps-character-theme-points>
+      <div class="col-lg-3 col-md-6 col-12">
+
+        <label class="font-weight-bold col-12">Theme Points</label>
+        <corps-character-theme-points id="themePoints"
+                                      (emitter)="updateThemePoints($event)"></corps-character-theme-points>
+
+      </div>
+
+      <div class="col-lg-3 col-md-6 col-4">
+        <label class="font-weight-bold label-thickener">Initiative</label><br>
+
+        <label class="font-weight-normal">{{character.getInitiative()}}</label>
+      </div>
+      <div class="col-lg-3 col-md-6 col-4">
+        <label class="font-weight-bold label-thickener">Movement</label><br>
+
+        <label class="font-weight-normal">{{character.getMovement()}}</label>
+      </div>
+      <div class="col-lg-3 col-md-6 col-4">
+        <label class="font-weight-bold label-thickener">Vision</label><br>
+
+        <label class="font-weight-normal">{{character.vision}}</label>
+      </div>
     </div>
   </div>
 </form>

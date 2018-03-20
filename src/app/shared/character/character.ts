@@ -20,4 +20,14 @@ export class Character extends Race {
     this.magicDefenses = STARTING_MAGIC_DEFENSES;
 
   }
+
+  getInitiative(): number {
+    return 4;
+  }
+
+  getMovement(): number {
+    return 6;
+  }
+
+
 }

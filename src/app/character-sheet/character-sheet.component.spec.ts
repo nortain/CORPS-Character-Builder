@@ -82,9 +82,9 @@ describe('CharacterSheetComponent', () => {
   });
 
   it('should be able to select a racial subtype when choosing a primental', function () {
-    actionClickDropdownItemX(fixture, "#characterRace", 7); 
+    actionClickDropdownItemX(fixture, "#characterRace", 7);
     actionClickDropdownItemX(fixture, "#characterSubRace", 1);
-    expect(component.character.racialSubType).toBe(RacialSubType[RacialSubType.Air]);
+    expect(component.character.racialSubType).toEqual(RacialSubType[RacialSubType.Air]);
   });
 
   it('should set sub race to null if the race does not have a subrace', function () {
