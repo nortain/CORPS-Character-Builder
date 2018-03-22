@@ -1,5 +1,6 @@
 import { Character } from './character';
 import {RaceType} from "./race/race-type.enum";
+import {AttributeStrength} from "../attribute/attribute-strength.enum";
 
 describe('Character', () => {
   let bob: Character;
@@ -13,11 +14,11 @@ describe('Character', () => {
   });
 
   it('should be able to get default movement of 6', function () {
-    expect(bob.getMovement()).toEqual(6);
+    expect(bob.getSpeed()).toEqual(6);
   });
 
   it('should recognize that a characters movement is increased if they have epic agility', function () {
-      bob.att
-      expect(bob.getMovement).toEqual(7);
+      bob.attributes.Agility.strength = AttributeStrength.Epic;
+      expect(bob.getSpeed()).toEqual(7);
   });
 });

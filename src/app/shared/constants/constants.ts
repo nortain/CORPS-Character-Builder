@@ -12,6 +12,8 @@ import {ThemeType} from "../theme-points/theme-type.enum";
 import {SavingThrow} from "../character/saving-throw.enum";
 import {BonusByLevel} from "../character/bonus-by-level";
 import {Bonus} from "../character/bonus";
+import {Attribute} from "../attribute/attribute";
+import {AttributeStrength} from "../attribute/attribute-strength.enum";
 
 
 export const NON_HUMAN_AVAILABLE_ATTRIBUTE_POINTS = 4;
@@ -445,8 +447,24 @@ export const BASE_WEAPON_DAMAGE = {
   }
 };
 
-export const STARTING_MAGIC_DEFENSES = [
-  new MagicDefense(MagicDefenseType.Fortitude, new Field(10)),
-  new MagicDefense(MagicDefenseType.Reflex, new Field(10)),
-  new MagicDefense(MagicDefenseType.Will, new Field(10))
-];
+export class StartingCharacterMagicDefense {
+   Fortitude =  new MagicDefense(MagicDefenseType.Fortitude, new Field(10));
+   Reflex = new MagicDefense(MagicDefenseType.Reflex, new Field(10));
+   Will = new MagicDefense(MagicDefenseType.Will, new Field(10));
+}
+
+
+export class StartingCharacterAttributes {
+  Brawn = new Attribute(AttributeName.Brawn, AttributeStrength.Normal);
+  Vitality = new Attribute(AttributeName.Vitality, AttributeStrength.Normal);
+  Agility = new Attribute(AttributeName.Agility, AttributeStrength.Normal);
+  Quickness = new Attribute(AttributeName.Quickness, AttributeStrength.Normal);
+  Presence = new Attribute(AttributeName.Presence, AttributeStrength.Normal);
+  Intuition = new Attribute(AttributeName.Intuition, AttributeStrength.Normal);
+  Reasoning = new Attribute(AttributeName.Reasoning, AttributeStrength.Normal);
+  "Self Discipline" = new Attribute(AttributeName.SelfDiscipline, AttributeStrength.Normal);
+}
+
+
+export const STARTING_MOVEMENT = 6;
+

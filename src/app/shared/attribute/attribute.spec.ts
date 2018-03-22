@@ -8,7 +8,7 @@ import {ArmorType} from "../armor/armor-type.enum";
 describe('Testing attribute class', () => {
 
   let attribute: Attribute;
-  let bra, vit, rea, sd, int, qu;
+  let bra, vit, rea, sd, int, qu, agi;
 
   beforeEach(() => {
     attribute = makeAttribute();
@@ -18,6 +18,7 @@ describe('Testing attribute class', () => {
     sd = makeAttribute(AttributeName.SelfDiscipline, AttributeStrength.Legendary);
     int = makeAttribute(AttributeName.Intuition, AttributeStrength.Legendary);
     qu = makeAttribute(AttributeName.Quickness, AttributeStrength.Legendary);
+    agi = makeAttribute(AttributeName.Agility, AttributeStrength.Legendary);
   });
 
 
@@ -134,8 +135,8 @@ describe('Testing attribute class', () => {
   });
 
   it('should be able to get speed bonus', () => {
-    expect(qu.getSpeedBonus()).toEqual(2);
-    attribute = makeAttribute(AttributeName.Quickness, AttributeStrength.Champion);
+    expect(agi.getSpeedBonus()).toEqual(1);
+    attribute = makeAttribute(AttributeName.Agility, AttributeStrength.Champion);
     expect(attribute.getSpeedBonus()).toEqual(0);
   });
 

@@ -3,7 +3,7 @@ import {ThemeType} from "../../theme-points/theme-type.enum";
 import {MagicDefenseType} from "../../magic-defense/magic-defense-type.enum";
 import {RaceType} from "./race-type.enum";
 import {VisionType} from "./vision-type.enum";
-import {RacialSubType} from "./racial-sub-type.enum";
+import {RacialSubType, RacialSubTypeToDamageTypeConverter} from "./racial-sub-type.enum";
 import {Level} from "../level.enum";
 import {NON_HUMAN_AVAILABLE_ATTRIBUTE_POINTS, STARTING_PLAYER_RACES} from "../../constants/constants";
 import {BonusByLevel} from "../bonus-by-level";
@@ -74,15 +74,19 @@ export class Race {
   }
 
 
-  //  this string: array object will take in a mechanicBonus with a name matching an active or passive bonus with a key of the same name as the bonsu name.  The value will be a level based array of th resulting value
-
+  /** In the constants file there are a number of default values for races.
+   * This gets the mechanical text value for those bonus by using the propertyName to match up with predefined values in the constants file.
+   * In the mechanicBonus object there is a name matching an active or passive bonus with a key of the same name as the given propertyName.
+   * The value will be a level based array of th resulting value.  In events where the array is not exactly a length of 10 a conditional path is taken.
+   * Currently this only exists for RacialSubType, which given a racialSubType will match up to the spell damage keyword they have an affinity for.
+   */
   getMechanicalBonus(propertyName: string): string {
     const valueArray = this.mechanicalBonusValues[propertyName];
     let valueResult: string;
     if (valueArray && valueArray.length === 10) {
       valueResult = valueArray[this.level - 1];
     } else if (valueArray) {
-      valueResult = valueArray[this.racialSubType];
+      valueResult = valueArray[RacialSubTypeToDamageTypeConverter[this.racialSubType]];
     }
     return valueResult;
   }

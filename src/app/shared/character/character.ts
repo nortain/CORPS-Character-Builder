@@ -2,23 +2,26 @@ import {Race} from "./race/race";
 import {Weapon} from "../weapon/weapon";
 import {Armor} from "../armor/armor";
 import {MagicDefense} from "../magic-defense/magic-defense";
-import {STARTING_MAGIC_DEFENSES} from "../constants/constants";
+import {StartingCharacterAttributes, StartingCharacterMagicDefense, STARTING_MOVEMENT} from "../constants/constants";
 import {RaceType} from "./race/race-type.enum";
 import {Level} from "./level.enum";
 import {RacialSubType} from "./race/racial-sub-type.enum";
 import {ThemePointsContainer} from "../theme-points/theme-points-container";
 import {AttributeType} from "../attribute/attribute-type.enum";
+import {AttributeName} from "../attribute/attribute-name.enum";
 
 export class Character extends Race {
 
   themePoints: ThemePointsContainer;
   weapons: Array<Weapon>;
   armor: Armor;
-  magicDefenses: Array<MagicDefense>;
+  magicDefenses: StartingCharacterMagicDefense;
+  attributes: StartingCharacterAttributes;
 
   constructor(public name: string, public raceType: RaceType, level?: Level, subRace?: RacialSubType, themePoints = new ThemePointsContainer()) {
     super(raceType, level, subRace);
-    this.magicDefenses = STARTING_MAGIC_DEFENSES;
+    this.magicDefenses = new StartingCharacterMagicDefense();
+    this.attributes = new StartingCharacterAttributes();
 
   }
 
@@ -26,8 +29,8 @@ export class Character extends Race {
     return 4;
   }
 
-  getMovement(): number {
-    return 6;
+  getSpeed(): number {
+    return STARTING_MOVEMENT + this.attributes[AttributeName.Agility].getSpeedBonus();
   }
 
   /**

@@ -9,6 +9,12 @@ export class AttributeService {
   constructor() {
   }
 
+  /**
+   * As the name implies this takes in an enum and turns it into an array of strings.
+   * @param enumeration to be converted
+   * @param {boolean} isStringBased if the enum is a string based array or not
+   * @returns {string[]} the array of string values of the enum
+   */
   getEnumAsArrayOfStrings(enumeration, isStringBased = false): string[] {
     let names;
     if (!isStringBased) {
@@ -23,7 +29,7 @@ export class AttributeService {
     return names;
   }
 
-  /*Takes in an enumeration and uses the keys and values to insert them into a dropdown value object. i.e. {label: "Normal" value: 0}.
+  /**Takes in an enumeration and uses the keys and values to insert them into a dropdown value object. i.e. {label: "Normal" value: 0}.
   If the isAttribute boolean is set to true then the label is appended wrapped in parenthesis like {label: "Normal (0), value: 0}"*/
   getArrayOfDropdownValueObjectsFromEnum(enumeration, isAttribute = false): DropdownValueObject[] {
     const results: DropdownValueObject[] = [];

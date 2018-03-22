@@ -159,8 +159,8 @@ export class Attribute {
   }
 
   getSpeedBonus(): number {
-    if (this.name === AttributeName.Quickness && this.strength > AttributeStrength.Champion) {
-      return 2;
+    if (this.name === AttributeName.Agility && this.strength > AttributeStrength.Champion) {
+      return 1;
     } else {
       return 0;
     }

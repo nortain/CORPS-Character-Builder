@@ -130,11 +130,6 @@ describe('Field', () => {
     expect(bonus.isDifferentFrom('ui')).toBeFalsy();
   });
 
-  it('should be able to produce a simple looking GUID', function () {
-    const item = new ff(0);
-    expect(item.id.length).toEqual('xxxxxxxx-xxxx-xxxx-yxxx-xxxxxxxxxxxx'.length);
-  });
-
   it('should be able to clearField out a property, cause like that\'s important for resetting shit', function () {
     const item: Field = new ff(3);
     expect(item.value()).toEqual(3);

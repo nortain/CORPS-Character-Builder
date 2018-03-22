@@ -1,11 +1,10 @@
 import {Precision} from "./precision.enum";
-import {newGUID} from "../guid-generator";
 import {FieldMap} from "./field-map";
 import {FieldType} from "./field-type.enum";
 
 
 export class Field {
-  id: string;
+
   precision = Precision.None;
   // objects that hold dynamic values
   replaceVal: FieldMap = {} as FieldMap;
@@ -14,7 +13,7 @@ export class Field {
   postMultiply: FieldMap = {} as FieldMap;
 
   constructor(private baseValue, private defaultValue?) {
-    this.id = newGUID();
+
   }
 
   /*This function is the money shot of what makes this class useful and important.
