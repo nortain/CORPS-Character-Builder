@@ -1,7 +1,6 @@
 import {Race} from "./race/race";
 import {Weapon} from "../weapon/weapon";
 import {Armor} from "../armor/armor";
-import {MagicDefense} from "../magic-defense/magic-defense";
 import {StartingCharacterAttributes, StartingCharacterMagicDefense, STARTING_MOVEMENT} from "../constants/constants";
 import {RaceType} from "./race/race-type.enum";
 import {Level} from "./level.enum";
@@ -29,8 +28,21 @@ export class Character extends Race {
     return 4;
   }
 
+  /**
+   * Takes a normal characters default speed and should add in bonuses to speed from agility, armor and talents
+   * @returns {number} the value that represents the speed of the character
+   */
   getSpeed(): number {
-    return STARTING_MOVEMENT + this.attributes[AttributeName.Agility].getSpeedBonus();
+    let result = STARTING_MOVEMENT;
+    result = result +
+      this.attributes[AttributeName.Agility].getSpeedBonus();
+    if (this.armor) {
+      result += this.armor.getMaxMovement().movementPenalty;
+      if (result > this.armor.getMaxMovement().maxMovement) {
+        result = this.armor.getMaxMovement().maxMovement;
+      }
+    }
+    return result;
   }
 
   /**

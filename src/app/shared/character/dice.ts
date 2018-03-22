@@ -1,4 +1,4 @@
-/*The Dice class knows everything about dice, how to use them and how to print out how they should be displayed.*/
+/**The Dice class knows everything about dice, how to use them and how to print out how they should be displayed.*/
 import {Field} from "../field/field";
 import {DiceSize} from "./dice-size.enum";
 
@@ -17,7 +17,7 @@ export class Dice {
     return this.sizeOfDice;
   }
 
-  /*Give the number, size and modifier of the dice we can print the roll like 3d12+4 or 2d6-*/
+  /**Give the number, size and modifier of the dice we can print the roll like 3d12+4 or 2d6-*/
   printRoll(): string {
     const num = this.numOfDice.value();
     const size = this.sizeOfDice.value();

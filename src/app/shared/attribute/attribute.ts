@@ -64,7 +64,7 @@ export class Attribute {
 
   }
 
-  /*Given a level this finds how many bonus hit points an attribute gives based on its strength*/
+  /**Given a level this finds how many bonus hit points an attribute gives based on its strength*/
   getHitPointBonus(level: Level): number {
     if (this.hasHpBonus()) {
       if (this.name === AttributeName.Vitality) {
@@ -88,7 +88,7 @@ export class Attribute {
     }
   }
 
-  /*gets critical die bonus for the given attribute given the level*/
+  /**gets critical die bonus for the given attribute given the level*/
   getCritDieBonus(level: Level): number {
     if (this.strength < AttributeStrength.Legendary
       || this.type === AttributeType.MentalDefensive
@@ -105,7 +105,7 @@ export class Attribute {
     }
   }
 
-  /*Gets initiative bonus for the given attribute*/
+  /**Gets initiative bonus for the given attribute*/
   getInitiativeBonus(): number {
     if (this.name === AttributeName.Quickness) {
       return QU_INIT_BONUS[this.strength];
@@ -116,7 +116,7 @@ export class Attribute {
     }
   }
 
-  /*gets any potential bonus to armor dependent on the type of armor the character is wearing*/
+  /**gets any potential bonus to armor dependent on the type of armor the character is wearing*/
   getArmorBonus(armor: Armor): number {
     if (this.strength > AttributeStrength.Champion) {
       if (this.name === AttributeName.Quickness && armor.type === ArmorType.LightArmor) {
@@ -131,7 +131,7 @@ export class Attribute {
     }
   }
 
-  /*returns the number of bonus trained skills a character gets*/
+  /**returns the number of bonus trained skills a character gets*/
   getTrainedSkillBonus(): number {
     if (this.type === AttributeType.PhysicalDefensive || this.name === AttributeName.SelfDiscipline) {
       return TRAINED_SKILL_BONUS[this.strength];
@@ -174,14 +174,14 @@ export class Attribute {
     return this.type === AttributeType.PhysicalDefensive || this.type === AttributeType.MentalDefensive;
   }
 
-  /*Return the skill bonus for the given attribute*/
+  /**Return the skill bonus for the given attribute*/
   hasSkillBonus(): boolean {
     return this.type === AttributeType.MentalOffensive
       || this.type === AttributeType.PhysicalOffensive
       || this.name === AttributeName.Intuition;
   }
 
-  /*Return true if this attribute gives a bonus to hp*/
+  /**Return true if this attribute gives a bonus to hp*/
   hasHpBonus(): boolean {
     return this.type === AttributeType.PhysicalDefensive || this.name === AttributeName.SelfDiscipline;
   }
@@ -195,7 +195,7 @@ export class Attribute {
     return this.getEpicText() + this.getLegendaryText();
   }
 
-  /*responsible for assigned the special text and attributeType based on the name of the attribute*/
+  /**responsible for assigned the special text and attributeType based on the name of the attribute*/
   private assignType(name) {
     switch (name) {
       case AttributeName.Brawn:

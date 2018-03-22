@@ -4,7 +4,6 @@ import {AttributeService} from "../shared/attribute/attribute.service";
 import {RaceType} from "../shared/character/race/race-type.enum";
 import {DropdownValueObject} from "../shared/ui/dropdown/dropdown-value-object";
 import {Level} from "../shared/character/level.enum";
-import {CharacterThemePointsComponent} from "./character-theme-points/character-theme-points.component";
 import {ThemePointsContainer} from "../shared/theme-points/theme-points-container";
 import {RacialSubType} from "../shared/character/race/racial-sub-type.enum";
 

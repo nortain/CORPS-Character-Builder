@@ -18,7 +18,7 @@ export function mockCharacter(name = "Bob", raceType = RaceType.Altwani) {
   return character;
 }
 
-/*This helper function for testing.
+/**This helper function for testing.
 It will click on a dropdown button matching the selector string and then choose the xth dropdown menu item.
 If the xth item doesn't exist an error is thrown.
 This will also update UI after the button click has been performed.*/

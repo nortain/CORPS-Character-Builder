@@ -16,7 +16,7 @@ export class Field {
 
   }
 
-  /*This function is the money shot of what makes this class useful and important.
+  /**This function is the money shot of what makes this class useful and important.
   Calling value will return a return value that is equal to the base value.
   If replaceVal, pre/postMultiply or addVal a property that matches the passed in filter
   OR
@@ -68,7 +68,7 @@ export class Field {
     return this.baseValue && this.round(this.baseValue, this.precision) !== this.value(filter);
   }
 
-  /*Rounding function that is using a preset of determined precision values based off of the enum by the same name.*/
+  /**Rounding function that is using a preset of determined precision values based off of the enum by the same name.*/
   round(value: any, precision: Precision = Precision.None): any {
     if (typeof value === "number") {
       return Math.floor(precision * value) / precision;

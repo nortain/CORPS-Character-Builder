@@ -2,7 +2,7 @@ import {Field} from './field';
 import {Precision} from "./precision.enum";
 import {FieldType} from "./field-type.enum";
 
-/*Example usage of fields:
+/**Example usage of fields:
   let f = new Field(3);
   f.value() //3
   f.addValVal["sword"] = 4;
