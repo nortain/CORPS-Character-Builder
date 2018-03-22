@@ -7,6 +7,7 @@ import {RaceType} from "./race/race-type.enum";
 import {Level} from "./level.enum";
 import {RacialSubType} from "./race/racial-sub-type.enum";
 import {ThemePointsContainer} from "../theme-points/theme-points-container";
+import {AttributeType} from "../attribute/attribute-type.enum";
 
 export class Character extends Race {
 
@@ -27,6 +28,15 @@ export class Character extends Race {
 
   getMovement(): number {
     return 6;
+  }
+
+  /**
+   * Need to add more notes about how attributes are assigned to characters.
+   * @param {number} points
+   * @param {AttributeType} attribute
+   */
+  assignAttributePoint(points: number, attribute: AttributeType) {
+
   }
 
 
