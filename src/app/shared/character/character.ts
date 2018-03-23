@@ -1,13 +1,14 @@
 import {Race} from "./race/race";
 import {Weapon} from "../weapon/weapon";
 import {Armor} from "../armor/armor";
-import {StartingCharacterAttributes, StartingCharacterMagicDefense, STARTING_MOVEMENT} from "../constants/constants";
+import {StartingCharacterMagicDefense, STARTING_MOVEMENT, STARTING_INITIATIVE} from "../constants/constants";
 import {RaceType} from "./race/race-type.enum";
 import {Level} from "./level.enum";
 import {RacialSubType} from "./race/racial-sub-type.enum";
 import {ThemePointsContainer} from "../theme-points/theme-points-container";
 import {AttributeType} from "../attribute/attribute-type.enum";
 import {AttributeName} from "../attribute/attribute-name.enum";
+import {StartingCharacterAttributes} from "../attribute/character-attribute/starting-character-attributes";
 
 export class Character extends Race {
 
@@ -25,7 +26,9 @@ export class Character extends Race {
   }
 
   getInitiative(): number {
-    return 4;
+    let init = STARTING_INITIATIVE;
+    init += this.attributes.Quickness.getInitiativeBonus();
+    return init;
   }
 
   /**

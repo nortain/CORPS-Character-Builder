@@ -453,18 +453,6 @@ export class StartingCharacterMagicDefense {
    Will = new MagicDefense(MagicDefenseType.Will, new Field(10));
 }
 
-
-export class StartingCharacterAttributes {
-  Brawn = new Attribute(AttributeName.Brawn, AttributeStrength.Normal);
-  Vitality = new Attribute(AttributeName.Vitality, AttributeStrength.Normal);
-  Agility = new Attribute(AttributeName.Agility, AttributeStrength.Normal);
-  Quickness = new Attribute(AttributeName.Quickness, AttributeStrength.Normal);
-  Presence = new Attribute(AttributeName.Presence, AttributeStrength.Normal);
-  Intuition = new Attribute(AttributeName.Intuition, AttributeStrength.Normal);
-  Reasoning = new Attribute(AttributeName.Reasoning, AttributeStrength.Normal);
-  "Self Discipline" = new Attribute(AttributeName.SelfDiscipline, AttributeStrength.Normal);
-}
-
-
 export const STARTING_MOVEMENT = 6;
+export const STARTING_INITIATIVE = 0;
 
