@@ -35,6 +35,8 @@ export const SKILL_PENALTY = [0, 0, 0, 1, 2];
 export const REQUIRES_TRAINING = [false, false, false, false, true];
 export const REQUIRES_THREE_MAGIC = [false, true, false, false, false];
 
+export const STEALTH_INIT_BONUS = [0, 2, 4, 6];
+
 // Attribute constants based off of the AttributeStrength enum
 export const PRIMARY_DAMAGE = [0, 3, 6, 7, 8];
 export const SECONDARY_DAMAGE = [0, 2, 4, 5, 6];
@@ -42,7 +44,7 @@ export const SKILL_BONUS = [0, 2, 3, 3, 4];
 export const MAGIC_DEFENSE = [0, 2, 3, 3, 3];
 export const SD_PP_BONUS = [0, 2, 3, 3, 4];
 export const QU_INIT_BONUS = [0, 5, 8, 9, 10];
-export const IN_INIT_BONUS = [0, 2, 3, 4, 5];
+export const IN_INIT_BONUS = [0, 2, 4, 6, 8];
 export const TRAINED_SKILL_BONUS = [0, 0, 1, 1, 2];
 // Attribute constants based off of Level constant and AttributeStrength enum
 export const VI_HP_BONUS = [

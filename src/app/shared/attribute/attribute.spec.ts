@@ -130,7 +130,7 @@ describe('Testing attribute class', () => {
 
   it('should be able to get bonus initiative', () => {
     expect(qu.getInitiativeBonus()).toEqual(10);
-    expect(int.getInitiativeBonus()).toEqual(5);
+    expect(int.getInitiativeBonus()).toEqual(8);
     expect(bra.getInitiativeBonus()).toEqual(0);
   });
 

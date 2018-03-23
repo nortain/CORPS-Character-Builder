@@ -7,6 +7,12 @@ import {Dice} from "../character/dice";
 export class Weapon {
   baseValues: WeaponType;
 
+  /**
+   *
+   * @param {string} name
+   * @param {WeaponClass} weaponClass
+   * @param {WeaponCategory} category
+   */
   constructor(public name: string, weaponClass: WeaponClass, category: WeaponCategory) {
     this.baseValues = BASE_WEAPON_DAMAGE[category][weaponClass];
     this.baseValues.category = category;

@@ -4,17 +4,25 @@ import {Attribute} from "../attribute";
 import {AttributeBonus} from "./attribute-bonus.enum";
 
 export class StartingCharacterAttributes {
-  Brawn = new Attribute(AttributeName.Brawn, AttributeStrength.Normal);
-  Vitality = new Attribute(AttributeName.Vitality, AttributeStrength.Normal);
-  Agility = new Attribute(AttributeName.Agility, AttributeStrength.Normal);
-  Quickness = new Attribute(AttributeName.Quickness, AttributeStrength.Normal);
-  Presence = new Attribute(AttributeName.Presence, AttributeStrength.Normal);
-  Intuition = new Attribute(AttributeName.Intuition, AttributeStrength.Normal);
-  Reasoning = new Attribute(AttributeName.Reasoning, AttributeStrength.Normal);
-  SelfDiscipline = new Attribute(AttributeName.SelfDiscipline, AttributeStrength.Normal);
+  Brawn: Attribute;
+  Vitality: Attribute;
+  Agility: Attribute;
+  Quickness: Attribute;
+  Presence: Attribute;
+  Intuition: Attribute;
+  Reasoning: Attribute;
+  SelfDiscipline: Attribute;
   attributesArray;
 
   constructor() {
+    this.Brawn = new Attribute(AttributeName.Brawn, AttributeStrength.Normal);
+    this.Vitality = new Attribute(AttributeName.Vitality, AttributeStrength.Normal);
+    this.Agility = new Attribute(AttributeName.Agility, AttributeStrength.Normal);
+    this.Quickness = new Attribute(AttributeName.Quickness, AttributeStrength.Normal);
+    this.Presence = new Attribute(AttributeName.Presence, AttributeStrength.Normal);
+    this.Intuition = new Attribute(AttributeName.Intuition, AttributeStrength.Normal);
+    this.Reasoning = new Attribute(AttributeName.Reasoning, AttributeStrength.Normal);
+    this.SelfDiscipline = new Attribute(AttributeName.SelfDiscipline, AttributeStrength.Normal);
     this.attributesArray = [
       this.Brawn,
       this.Vitality,

@@ -43,7 +43,9 @@ export class ThemePointsContainer {
     return result;
   }
 
-  /**returns an array of theme types based on their strength.  This is used for determining which magic defense gets a bonus from selected theme points*/
+  /**
+   * returns an array of theme types based on their strength.  This is used for determining which magic defense gets a bonus from selected theme points
+   * */
   getStrongestThemePoints(): Array<ThemeType> {
     const results = [];
     if (this.combat.getStrength() >= this.stealth.getStrength() && this.combat.getStrength() >= this.magic.getStrength()) {
