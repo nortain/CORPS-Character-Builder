@@ -12,6 +12,8 @@ import {AttributeBonus} from "../attribute/character-attribute/attribute-bonus.e
 import {ArmorType} from "../armor/armor-type.enum";
 import {WeaponClass} from "../weapon/weapon-class.enum";
 import {WeaponCategory} from "../weapon/weapon-category.enum";
+import {AttributeStrength} from "../attribute/attribute-strength.enum";
+import {AttributeName} from "../attribute/attribute-name.enum";
 
 export class Character extends Race {
 
@@ -25,6 +27,9 @@ export class Character extends Race {
               public magicDefenses = new StartingCharacterMagicDefense(),
               public attributes = new StartingCharacterAttributes()) {
     super(raceType, level, subRace);
+    for (const attribute of this.attributes.attributesArray) {
+      this.assignAttributePoint(AttributeStrength.Normal, attribute.getName());
+    }
 
   }
 
@@ -73,8 +78,17 @@ export class Character extends Race {
    * @param {number} points
    * @param {AttributeType} attribute
    */
-  assignAttributePoint(points: number, attribute: AttributeType) {
-
+  assignAttributePoint(strength: AttributeStrength, attribute: AttributeName) {
+    if (strength === AttributeStrength.Normal &&
+      this.startingAttributes.indexOf(attribute) > -1) {
+      this.attributes[attribute].strength = AttributeStrength.Heroic;
+    } else {
+      const strengthDifference = this.attributes[attribute].strength - strength;
+      if (-strengthDifference <= this.availableAttributePoints) {
+        this.attributes[attribute].strength = strength;
+        this.availableAttributePoints += strengthDifference;
+      }
+    }
   }
 
 

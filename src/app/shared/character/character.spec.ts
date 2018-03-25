@@ -8,6 +8,7 @@ import {ThemeStrength} from "../theme-points/theme-strength.enum";
 import {Weapon} from "../weapon/weapon";
 import {WeaponClass} from "../weapon/weapon-class.enum";
 import {WeaponCategory} from "../weapon/weapon-category.enum";
+import {AttributeName} from "../attribute/attribute-name.enum";
 
 describe('Character', () => {
   let bob: Character;
@@ -35,7 +36,7 @@ describe('Character', () => {
   });
 
   it('should be able to get the starting initiative for a character', () => {
-    expect(bob.getInitiative()).toEqual(STARTING_INITIATIVE);
+    expect(bob.getInitiative()).toEqual(5);
   });
 
   it('should be get modified initiative when attributes are modified', () => {
@@ -53,22 +54,42 @@ describe('Character', () => {
 
   it('should get modified initiative as a result of having theme points in stealth', function () {
     bob.themePoints.stealth.setStrength(ThemeStrength.Minor);
-    expect(bob.getInitiative()).toEqual(2);
+    expect(bob.getInitiative()).toEqual(7);
     bob.themePoints.stealth.setStrength(ThemeStrength.Greater);
-    expect(bob.getInitiative()).toEqual(6);
+    expect(bob.getInitiative()).toEqual(11);
   });
 
   it('should be able to get primary damage of a character', function () {
     bob.attributes.Brawn.strength = AttributeStrength.Normal;
-    expect(bob.getWeaponDamage(0)).toBe("2d6+1", "unarmed weapon");
+    expect(bob.getWeaponDamage(0)).toBe("2d6+3", "unarmed weapon");
     bob.attributes.Brawn.strength = AttributeStrength.Champion;
-    expect(bob.getWeaponDamage(0)).toBe("2d6+5", "unarmed with some brawn");
+    expect(bob.getWeaponDamage(0)).toBe("2d6+7", "unarmed with some brawn");
     bob.weapons[0] = new Weapon("Crossbow", WeaponClass.Ranged, WeaponCategory.Simple);
     expect(bob.getWeaponDamage(0)).toBe("2d6+2", "with a simple ranged weapon");
   });
 
-  it('should be able to see attribute bonus based off of selected race of character', function () {
+  it('should be able to assign attribute points to a character and follow valid attribute point logic', function () {
+    bob.assignAttributePoint(AttributeStrength.Heroic, AttributeName.Agility);
+    expect(bob.attributes.Agility.strength).toEqual(AttributeStrength.Heroic);
+    expect(bob.availableAttributePoints).toEqual(3);
+  });
 
+  it('should be able to prevent negative attribute assignment', function () {
+    bob.assignAttributePoint(AttributeStrength.Normal, AttributeName.Brawn);
+    expect(bob.attributes.Brawn.strength).toEqual(AttributeStrength.Heroic);
+    expect(bob.availableAttributePoints).toEqual(4);
+  });
+
+  it('should be able to prevent a character from assigning more attribute points than they have available', function () {
+    bob.assignAttributePoint(AttributeStrength.Legendary, AttributeName.Agility);
+    bob.assignAttributePoint(AttributeStrength.Champion, AttributeName.Vitality);
+    expect(bob.availableAttributePoints).toEqual(0);
+    expect(bob.attributes.Vitality.strength).toEqual(AttributeStrength.Normal);
+  });
+
+  it('should be able to see attribute bonus based off of selected race of character', function () {
+    expect(bob.raceType).toBe(RaceType.Gryx);
+    expect(bob.attributes.Brawn.strength).toBe(AttributeStrength.Heroic);
   });
 
   it('should be able to assign an attribute', function () {

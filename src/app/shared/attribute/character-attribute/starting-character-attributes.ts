@@ -11,8 +11,8 @@ export class StartingCharacterAttributes {
   Presence: Attribute;
   Intuition: Attribute;
   Reasoning: Attribute;
-  SelfDiscipline: Attribute;
-  attributesArray;
+  "Self Discipline": Attribute;
+  attributesArray: Array<any>;
 
   constructor() {
     this.Brawn = new Attribute(AttributeName.Brawn, AttributeStrength.Normal);
@@ -22,7 +22,7 @@ export class StartingCharacterAttributes {
     this.Presence = new Attribute(AttributeName.Presence, AttributeStrength.Normal);
     this.Intuition = new Attribute(AttributeName.Intuition, AttributeStrength.Normal);
     this.Reasoning = new Attribute(AttributeName.Reasoning, AttributeStrength.Normal);
-    this.SelfDiscipline = new Attribute(AttributeName.SelfDiscipline, AttributeStrength.Normal);
+    this["Self Discipline"] = new Attribute(AttributeName.SelfDiscipline, AttributeStrength.Normal);
     this.attributesArray = [
       this.Brawn,
       this.Vitality,
@@ -31,7 +31,7 @@ export class StartingCharacterAttributes {
       this.Presence,
       this.Intuition,
       this.Reasoning,
-      this.SelfDiscipline
+      this["Self Discipline"]
     ];
   }
 
