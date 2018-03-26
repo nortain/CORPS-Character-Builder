@@ -93,12 +93,22 @@ describe('Character', () => {
   });
 
   it('should be able to assign an attribute', function () {
-
+    bob.assignAttributePoint(AttributeStrength.Heroic, AttributeName.SelfDiscipline);
+    expect(bob.attributes[AttributeName.SelfDiscipline].strength).toEqual(AttributeStrength.Heroic);
+    expect(bob.availableAttributePoints).toEqual(3);
   });
 
-  it('should be prevented from adding an attribute point if no points are available', function () {
-
+  it('should allow humans to assign 6 available points', () => {
+    const moe = new Character("Moe", RaceType.Human);
+    expect(moe.availableAttributePoints).toEqual(6);
+    moe.assignAttributePoint(AttributeStrength.Epic, AttributeName.Brawn);
+    moe.assignAttributePoint(AttributeStrength.Legendary, AttributeName.Agility);
+    expect(moe.availableAttributePoints).toEqual(3);
+    moe.assignAttributePoint(AttributeStrength.Epic, AttributeName.Agility);
+    expect(moe.availableAttributePoints).toEqual(0);
   });
+
+
 
 
 

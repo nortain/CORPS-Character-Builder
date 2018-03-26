@@ -168,6 +168,7 @@ export const STARTING_PLAYER_RACES = {
     } as BonusByLevel
   } as Race,
   Human: {
+    startingAttributes: [],
     availableAttributePoints: 6,
     availableLanguagePoints: 3,
     talentBonus: [ThemeType.General],

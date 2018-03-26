@@ -125,7 +125,7 @@ describe('Race', () => {
     expect(dwarf.startingAttributes).toContain(AttributeName.Reasoning);
     expect(dwarf.startingAttributes).toContain(AttributeName.Brawn);
     expect(dwarf.availableAttributePoints).toBe(4);
-    expect(human.startingAttributes).toBeUndefined();
+    expect(human.startingAttributes.length).toEqual(0);
     expect(human.availableAttributePoints).toBe(6);
   });
 });
