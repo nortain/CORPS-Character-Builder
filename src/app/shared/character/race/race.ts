@@ -1,6 +1,6 @@
 import {AttributeName} from "../../attribute/attribute-name.enum";
 import {ThemeType} from "../../theme-points/theme-type.enum";
-import {MagicDefenseType} from "../../magic-defense/magic-defense-type.enum";
+import {MagicDefenseType} from "../defenses/magic-defense/magic-defense-type.enum";
 import {RaceType} from "./race-type.enum";
 import {VisionType} from "./vision-type.enum";
 import {RacialSubType, RacialSubTypeToDamageTypeConverter} from "./racial-sub-type.enum";

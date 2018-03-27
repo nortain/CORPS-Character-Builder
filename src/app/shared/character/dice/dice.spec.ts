@@ -1,6 +1,6 @@
 import {Dice} from './dice';
 import {DiceSize} from "./dice-size.enum";
-import {Field} from "../field/field";
+import {Field} from "../../field/field";
 
 describe('Dice', () => {
   let empty: Dice, noDiceJustPlus: Dice, _3d12Plus5: Dice;

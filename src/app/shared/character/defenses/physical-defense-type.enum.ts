@@ -1,4 +1,4 @@
-export enum AlternativePhysicalDefenseType {
+export enum PhysicalDefenseType {
   Line = "Line",
   Zone = "Zone",
   Missile = "Missile",

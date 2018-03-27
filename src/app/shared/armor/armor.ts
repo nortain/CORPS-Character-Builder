@@ -34,7 +34,9 @@ export class Armor {
     return CRITICAL_REDUCTION[this.type];
   }
 
-  /**returns the number of power points the wearer of this armor would lose, if any*/
+  /**
+   * returns the number of power points the wearer of this armor would lose, if any
+   * */
   getCasterPenalty(themePoints: ThemePointsContainer): number {
     let penValue = themePoints.magic.getStrength() - CASTER_PENALTY[this.type];
     if (penValue > 0) {

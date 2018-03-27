@@ -1,5 +1,5 @@
 /**The Dice class knows everything about dice, how to use them and how to print out how they should be displayed.*/
-import {Field} from "../field/field";
+import {Field} from "../../field/field";
 import {DiceSize} from "./dice-size.enum";
 
 export class Dice {

@@ -30,9 +30,19 @@ export class Character extends Race {
     for (const attribute of this.attributes.attributesArray) {
       this.assignAttributePoint(AttributeStrength.Normal, attribute.getName());
     }
+  }
+
+  /**
+   * gets a defensive container that is responsible for keeping track of which defenses are active, which are passive, the values of each of those and the 3 magic defenses.
+   */
+  getDefenses() {
 
   }
 
+  /**
+   * Gets all initiative bonuses for a character and returns it as a whole number
+   * @returns {number}
+   */
   getInitiative(): number {
     let init = STARTING_INITIATIVE;
     init += this.attributes.getBonus(AttributeBonus.InitiativeBonus);

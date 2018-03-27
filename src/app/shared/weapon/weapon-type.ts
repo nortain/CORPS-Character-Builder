@@ -1,4 +1,4 @@
-import {Dice} from "../character/dice";
+import {Dice} from "../character/dice/dice";
 import {WeaponCategory} from "./weapon-category.enum";
 import {WeaponClass} from "./weapon-class.enum";
 

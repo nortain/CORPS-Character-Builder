@@ -1,10 +1,10 @@
 import {MaxMovement} from "../armor/max-movement";
 import {WeaponType} from "../weapon/weapon-type";
-import {Dice} from "../character/dice";
-import {DiceSize} from "../character/dice-size.enum";
-import {MagicDefenseType} from "../magic-defense/magic-defense-type.enum";
+import {Dice} from "../character/dice/dice";
+import {DiceSize} from "../character/dice/dice-size.enum";
+import {MagicDefenseType} from "../character/defenses/magic-defense/magic-defense-type.enum";
 import {Field} from "../field/field";
-import {MagicDefense} from "../magic-defense/magic-defense";
+import {MagicDefense} from "../character/defenses/magic-defense/magic-defense";
 import {Race} from "../character/race/race";
 import {VisionType} from "../character/race/vision-type.enum";
 import {AttributeName} from "../attribute/attribute-name.enum";
@@ -17,6 +17,9 @@ import {AttributeStrength} from "../attribute/attribute-strength.enum";
 
 
 export const NON_HUMAN_AVAILABLE_ATTRIBUTE_POINTS = 4;
+
+export const STARTING_MOVEMENT = 6;
+export const STARTING_INITIATIVE = 0;
 
 // Armor constants based off of the ArmorType Enum
 export const ACTIVE_DEFENSE = [11, 13, 13, 13, 14];
@@ -456,6 +459,5 @@ export class StartingCharacterMagicDefense {
    Will = new MagicDefense(MagicDefenseType.Will, new Field(10));
 }
 
-export const STARTING_MOVEMENT = 6;
-export const STARTING_INITIATIVE = 0;
+
 

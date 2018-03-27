@@ -2,7 +2,7 @@ import {WeaponCategory} from "./weapon-category.enum";
 import {WeaponType} from "./weapon-type";
 import {BASE_WEAPON_DAMAGE} from "../constants/constants";
 import {WeaponClass} from "./weapon-class.enum";
-import {Dice} from "../character/dice";
+import {Dice} from "../character/dice/dice";
 
 export class Weapon {
   baseValues: WeaponType;
