@@ -1,4 +1,4 @@
-import {ACTIVE_DEFENSE, PASSIVE_DEFENSE, StartingCharacterMagicDefense} from "../../constants/constants";
+import {StartingCharacterMagicDefense} from "../../constants/constants";
 import {PhysicalDefenseType} from "./physical-defense-type.enum";
 import {Field} from "../../field/field";
 import {Armor} from "../../armor/armor";
@@ -37,6 +37,10 @@ export class Defense {
     }
   }
 
+  equipArmor(armor: Armor) {
+    this.armor = armor;
+  }
+
   /**
    * pass in a string name and a bonus value to set that value to the field object under the given name.  If a bonus needs to be removed just pass in the value of 0 along with the name of the bonus and it'll be set to 0.
    * @param {string} bonusName
@@ -49,7 +53,6 @@ export class Defense {
     } else {
       this.passiveDefenseBonus.addVal[bonusName] = bonusValue;
     }
-
   }
 
   getPassiveDefensiveValue() {
@@ -62,5 +65,9 @@ export class Defense {
     let baseValue = this.armor.getActiveDefense();
     baseValue += this.activeDefenseBonus.value();
     return baseValue;
+  }
+
+  getMagicalDefenseValue(): StartingCharacterMagicDefense {
+    return this.magicalDefenses;
   }
 }

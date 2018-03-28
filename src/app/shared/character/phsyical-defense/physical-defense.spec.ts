@@ -1,5 +1,7 @@
 import {Defense} from './defense';
 import {PhysicalDefenseType} from "./physical-defense-type.enum";
+import {Armor} from "../../armor/armor";
+import {ArmorType} from "../../armor/armor-type.enum";
 
 
 describe('Defense', () => {
@@ -57,16 +59,13 @@ describe('Defense', () => {
   });
 
   it('should be able to change armor types', () => {
-
+    defenses.equipArmor(new Armor(ArmorType.HeavyArmor));
+    expect(defenses.getActiveDefensiveValue()).toEqual(14);
   });
 
-  it('should be able to account for armor bonuses from attributes', () => {
-
+  it('should be able to get magical defensive values', function () {
+    expect(defenses.getMagicalDefenseValue().Reflex.getDefense()).toEqual(10);
   });
-
-  
-
-
 });
 
 
