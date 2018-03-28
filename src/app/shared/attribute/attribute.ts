@@ -119,7 +119,8 @@ export class Attribute {
   /**gets any potential bonus to armor dependent on the type of armor the character is wearing*/
   getArmorBonus(armor: Armor): number {
     if (this.strength > AttributeStrength.Champion) {
-      if (this.name === AttributeName.Quickness && armor.type === ArmorType.LightArmor) {
+      if (this.name === AttributeName.Quickness &&
+        (armor.type === ArmorType.LightArmor || armor.type === ArmorType.None)) {
         return 1;
       } else if (this.name === AttributeName.SelfDiscipline && armor.type === ArmorType.CasterArmor) {
         return 1;

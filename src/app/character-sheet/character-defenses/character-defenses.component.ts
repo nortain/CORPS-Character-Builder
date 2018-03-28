@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {Character} from "../../shared/character/character";
-import {PhysicalDefense} from "../../shared/character/phsyical-defense/physical-defense";
+import {AttributeBonus} from "../../shared/attribute/character-attribute/attribute-bonus.enum";
 
 
 @Component({
@@ -8,13 +8,32 @@ import {PhysicalDefense} from "../../shared/character/phsyical-defense/physical-
   templateUrl: './character-defenses.component.html',
   styleUrls: ['./character-defenses.component.css']
 })
-export class CharacterDefensesComponent implements OnInit {
-  @Input() defense: PhysicalDefense;
+export class CharacterDefensesComponent implements OnChanges {
+  @Input() character: Character;
 
   constructor() {
+    this.updateDefenses();
   }
 
-  ngOnInit() {
+  ngOnChanges() {
+    this.updateDefenses();
   }
+
+  updateDefenses() {
+
+  }
+
+  getActiveDefenseValue() {
+    let ad = this.character.physicalDefense.getActiveDefensiveValue();
+    ad += this.character.attributes.getBonus(
+      AttributeBonus.ArmorBonus,
+      this.character.physicalDefense.armor);
+    return ad;
+  }
+
+  getPassiveDefenseValue() {
+    return this.character.physicalDefense.getPassiveDefensiveValue();
+  }
+
 
 }

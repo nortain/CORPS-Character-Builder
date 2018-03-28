@@ -9,11 +9,11 @@ import {ThemePointsContainer} from "../theme-points/theme-points-container";
 import {AttributeType} from "../attribute/attribute-type.enum";
 import {StartingCharacterAttributes} from "../attribute/character-attribute/starting-character-attributes";
 import {AttributeBonus} from "../attribute/character-attribute/attribute-bonus.enum";
-import {ArmorType} from "../armor/armor-type.enum";
 import {WeaponClass} from "../weapon/weapon-class.enum";
 import {WeaponCategory} from "../weapon/weapon-category.enum";
 import {AttributeStrength} from "../attribute/attribute-strength.enum";
 import {AttributeName} from "../attribute/attribute-name.enum";
+import {PhysicalDefense} from "./phsyical-defense/physical-defense";
 
 export class Character extends Race {
 
@@ -22,21 +22,14 @@ export class Character extends Race {
               level?: Level,
               subRace?: RacialSubType,
               public themePoints = new ThemePointsContainer(),
-              public armor = new Armor(ArmorType.None),
+              public physicalDefense = new PhysicalDefense(),
               public weapons = [new Weapon('Fist', WeaponClass.Unarmed, WeaponCategory.Balanced)],
-              public magicDefenses = new StartingCharacterMagicDefense(),
+              public magicDefense = new StartingCharacterMagicDefense(),
               public attributes = new StartingCharacterAttributes()) {
     super(raceType, level, subRace);
     for (const attribute of this.attributes.attributesArray) {
       this.assignAttributePoint(AttributeStrength.Normal, attribute.getName());
     }
-  }
-
-  /**
-   * gets a defensive container that is responsible for keeping track of which defenses are active, which are passive, the values of each of those and the 3 magic defenses.
-   */
-  getDefenses() {
-
   }
 
   /**
@@ -74,10 +67,10 @@ export class Character extends Race {
   getSpeed(): number {
     let result = STARTING_MOVEMENT;
     result = result + this.attributes.getBonus(AttributeBonus.SpeedBonus);
-    if (this.armor) {
-      result += this.armor.getMaxMovement().movementPenalty;
-      if (result > this.armor.getMaxMovement().maxMovement) {
-        result = this.armor.getMaxMovement().maxMovement;
+    if (this.physicalDefense.armor) {
+      result += this.physicalDefense.armor.getMaxMovement().movementPenalty;
+      if (result > this.physicalDefense.armor.getMaxMovement().maxMovement) {
+        result = this.physicalDefense.armor.getMaxMovement().maxMovement;
       }
     }
     return result;

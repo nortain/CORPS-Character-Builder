@@ -39,12 +39,13 @@ export class StartingCharacterAttributes {
   /**
    * Given a attributeBonus (enum) this will loop through all 8 attributes and sum the bonus of each and return the final result
    * @param {AttributeBonus} functionName
+   * @param {optionalParameters} optionalParameters as its name implies are optional parameters that might get passed along to the function to be called where they are necessary.  Any example of this is the getArmorBonus call in attributes.  It requires an armor object be passed in.  So in such cases you would pass in an armor object as an optional parameter.  There is no real testing around this so don't be stupid.
    * @returns {number} the bonus of whatever type of attribute bonus is selected
    */
-  getBonus(functionName: AttributeBonus): number {
+  getBonus(functionName: AttributeBonus, ...optionalParameters): number {
     let result = 0;
     for (const att of this.attributesArray) {
-      result += att[functionName]();
+      result += att[functionName](...optionalParameters);
     }
     return result;
   }

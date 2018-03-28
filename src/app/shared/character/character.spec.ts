@@ -31,7 +31,7 @@ describe('Character', () => {
   });
 
   it('should reduce a characters speed when they are wearing really heavy ass armor', () => {
-    bob.armor = new Armor(ArmorType.HeavyArmor, "Platemail");
+    bob.physicalDefense.armor = new Armor(ArmorType.HeavyArmor, "Platemail");
     expect(bob.getSpeed()).toEqual(5);
   });
 

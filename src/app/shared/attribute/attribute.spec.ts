@@ -157,6 +157,11 @@ describe('Testing attribute class', () => {
     expect(sd.getArmorBonus(armor)).toEqual(1);
   });
 
+  it('should be reasonable to say that you shoudld get an armor bonus if you are unarmored as well as wearing light armor', function () {
+    const armor = new Armor(ArmorType.None);
+    expect(qu.getArmorBonus(armor)).toEqual(1);
+  });
+
   it('should be able to get trained skill bonus', () => {
     expect(bra.getTrainedSkillBonus()).toEqual(0);
     expect(qu.getTrainedSkillBonus()).toEqual(2);
