@@ -5,7 +5,7 @@ import {FieldType} from "./field-type.enum";
 /**Example usage of fields:
   let f = new Field(3);
   f.value() //3
-  f.addValVal["sword"] = 4;
+  f.addVal["sword"] = 4;
   f.value() // 3 + 4 = 7
   f.preMultiply["skills"] = 2;
   f.value() // 3 * 2 + 4 = 10

@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CharacterDefensesComponent } from './character-defenses.component';
 import {By} from "@angular/platform-browser";
-import {mockCharacter} from "../../shared/constants/testing-constants";
+import {mockCharacter, mockDefense} from "../../shared/constants/testing-constants";
 
 describe('CharacterDefensesComponent', () => {
   let component: CharacterDefensesComponent;
@@ -18,7 +18,7 @@ describe('CharacterDefensesComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CharacterDefensesComponent);
     component = fixture.componentInstance;
-    component.character = mockCharacter();
+    component.defense = mockDefense();
     fixture.detectChanges();
   });
 
@@ -26,8 +26,12 @@ describe('CharacterDefensesComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have a label for active and passive defenses', function () {
+  it('should have a label for active and passive defenses',  () => {
     const ad = fixture.debugElement.query(By.css("#activeDefense")).nativeElement;
     expect(ad).toBeTruthy();
   });
+
+
+
+
 });

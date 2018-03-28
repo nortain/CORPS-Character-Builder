@@ -85,8 +85,8 @@ export class Character extends Race {
 
   /**
    * Need to add more notes about how attributes are assigned to characters.
-   * @param {number} points
-   * @param {AttributeType} attribute
+   * @param {number} strength of the attribute
+   * @param {AttributeType} attribute is the type of the attribute
    */
   assignAttributePoint(strength: AttributeStrength, attribute: AttributeName) {
     if (strength === AttributeStrength.Normal &&
