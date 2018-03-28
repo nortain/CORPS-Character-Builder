@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Character} from "../../shared/character/character";
-import {Defense} from "../../shared/character/defenses/defense";
+import {PhysicalDefense} from "../../shared/character/phsyical-defense/defense";
 
 @Component({
   selector: 'corps-character-defenses',
@@ -8,7 +8,7 @@ import {Defense} from "../../shared/character/defenses/defense";
   styleUrls: ['./character-defenses.component.css']
 })
 export class CharacterDefensesComponent implements OnInit {
-  @Input() defense: Defense;
+  @Input() defense: PhysicalDefense;
 
   constructor() {
   }

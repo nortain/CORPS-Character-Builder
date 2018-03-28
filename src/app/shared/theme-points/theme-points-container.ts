@@ -1,7 +1,7 @@
 import {ThemePoint} from "./theme-point";
 import {ThemeType} from "./theme-type.enum";
 import {ThemeStrength} from "./theme-strength.enum";
-import {MagicDefenseType} from "../character/defenses/magic-defense/magic-defense-type.enum";
+import {MagicDefenseType} from "../character/magic-defense/magic-defense-type.enum";
 
 export class ThemePointsContainer {
 

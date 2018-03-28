@@ -1,19 +1,19 @@
-import {Defense} from './defense';
+import {PhysicalDefense} from './defense';
 import {PhysicalDefenseType} from "./physical-defense-type.enum";
 import {Armor} from "../../armor/armor";
 import {ArmorType} from "../../armor/armor-type.enum";
 
 
 describe('Defense', () => {
-  let defenses: Defense;
+  let defenses: PhysicalDefense;
 
   beforeEach(() => {
-    defenses = new Defense();
+    defenses = new PhysicalDefense();
   });
 
 
   it('should create an instance', () => {
-    expect(new Defense()).toBeTruthy();
+    expect(new PhysicalDefense()).toBeTruthy();
   });
 
   it('should be able to move a defensive type from active to passive', () => {
@@ -61,10 +61,6 @@ describe('Defense', () => {
   it('should be able to change armor types', () => {
     defenses.equipArmor(new Armor(ArmorType.HeavyArmor));
     expect(defenses.getActiveDefensiveValue()).toEqual(14);
-  });
-
-  it('should be able to get magical defensive values', function () {
-    expect(defenses.getMagicalDefenseValue().Reflex.getDefense()).toEqual(10);
   });
 });
 

@@ -1,6 +1,6 @@
 import {MagicDefense} from './magic-defense';
 import {MagicDefenseType} from "./magic-defense-type.enum";
-import {Field} from "../../../field/field";
+import {Field} from "../../field/field";
 
 describe('MagicDefense', () => {
   let fort, ref, will;

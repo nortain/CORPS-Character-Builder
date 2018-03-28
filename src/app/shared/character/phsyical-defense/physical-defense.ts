@@ -1,10 +1,9 @@
-import {StartingCharacterMagicDefense} from "../../constants/constants";
 import {PhysicalDefenseType} from "./physical-defense-type.enum";
 import {Field} from "../../field/field";
 import {Armor} from "../../armor/armor";
 import {ArmorType} from "../../armor/armor-type.enum";
 
-export class Defense {
+export class PhysicalDefense {
 
   activeDefenseBonus: Field;
   passiveDefenseBonus: Field;
@@ -15,8 +14,7 @@ export class Defense {
                 PhysicalDefenseType.Line,
                 PhysicalDefenseType.Missile,
                 PhysicalDefenseType.Unarmed,
-                PhysicalDefenseType.Zone],
-              public magicalDefenses = new StartingCharacterMagicDefense()) {
+                PhysicalDefenseType.Zone]) {
     this.activeDefenseBonus = new Field(0);
     this.passiveDefenseBonus = new Field(0);
   }
@@ -65,9 +63,5 @@ export class Defense {
     let baseValue = this.armor.getActiveDefense();
     baseValue += this.activeDefenseBonus.value();
     return baseValue;
-  }
-
-  getMagicalDefenseValue(): StartingCharacterMagicDefense {
-    return this.magicalDefenses;
   }
 }
