@@ -1,7 +1,8 @@
-import {PhysicalDefense} from './defense';
+
 import {PhysicalDefenseType} from "./physical-defense-type.enum";
 import {Armor} from "../../armor/armor";
 import {ArmorType} from "../../armor/armor-type.enum";
+import {PhysicalDefense} from "./physical-defense";
 
 
 describe('Defense', () => {
