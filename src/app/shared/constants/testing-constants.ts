@@ -4,7 +4,7 @@ import {RaceType} from "../character/race/race-type.enum";
 import {ComponentFixture} from "@angular/core/testing";
 import {By} from "@angular/platform-browser";
 import {NgbDropdownMenu} from "@ng-bootstrap/ng-bootstrap/dropdown/dropdown";
-import {PhysicalDefense} from "../character/phsyical-defense/defense";
+import {PhysicalDefense} from "../character/phsyical-defense/physical-defense";
 
 export function mockDropdownData() {
   return [

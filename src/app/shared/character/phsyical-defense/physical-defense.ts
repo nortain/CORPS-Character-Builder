@@ -22,7 +22,7 @@ export class PhysicalDefense {
   moveToActive(defense: PhysicalDefenseType) {
     const index = this.passiveDefenses.indexOf(defense);
     if (index !== -1) {
-      this.passiveDefenses.splice(index);
+      this.passiveDefenses.splice(index, 1);
       this.activeDefenses.push(defense);
     }
   }
@@ -30,7 +30,7 @@ export class PhysicalDefense {
   moveToPassive(defense: PhysicalDefenseType) {
     const index = this.activeDefenses.indexOf(defense);
     if (index !== -1) {
-      this.activeDefenses.splice(index);
+      this.activeDefenses.splice(index, 1);
       this.passiveDefenses.push(defense);
     }
   }

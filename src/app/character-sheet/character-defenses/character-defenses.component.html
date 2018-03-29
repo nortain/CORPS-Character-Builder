@@ -2,14 +2,18 @@
   <div class="col-4">
     <label id="activeDefense">Active Defense: {{getActiveDefenseValue()}}</label>
     <div class="row">
-      <label class="col-12"></label>
+      <label *ngFor="let defense of character.physicalDefense.activeDefenses"
+             class="activeList col-12">{{defense}}</label>
     </div>
 
   </div>
   <div class="col-4">
     <label id="passiveDefense">Passive Defenses: {{getPassiveDefenseValue()}}</label>
     <div class="row">
-      <label class="col-12"></label>
+      <label *ngFor="let defense of character.physicalDefense.passiveDefenses; let index = index"
+             class="passiveList col-12">{{defense}}
+        <span *ngIf="index > character.physicalDefense.passiveDefenses.length">, </span>
+      </label>
     </div>
   </div>
   <div class="col-4">
