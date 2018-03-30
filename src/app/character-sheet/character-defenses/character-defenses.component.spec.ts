@@ -133,5 +133,20 @@ describe('CharacterDefensesComponent', () => {
     expect(component.getMagicDefensiveValue(MagicDefenseType.Reflex)).toEqual(11);
   });
 
+  it('should reflect bonuses to fortitude defense when a characters vitality and/or intuition are strong enough', () => {
+    component.character.attributes.Vitality.strength = AttributeStrength.Heroic;
+    expect(component.getMagicDefensiveValue(MagicDefenseType.Fortitude)).toEqual(12);
+    component.character.attributes.Vitality.strength = AttributeStrength.Champion;
+    expect(component.getMagicDefensiveValue(MagicDefenseType.Fortitude)).toEqual(13);
+    component.character.attributes.Intuition.strength = AttributeStrength.Heroic;
+    expect(component.getMagicDefensiveValue(MagicDefenseType.Fortitude)).toEqual(14);
+    component.character.attributes.Intuition.strength = AttributeStrength.Champion;
+    expect(component.getMagicDefensiveValue(MagicDefenseType.Fortitude)).toEqual(15);
+  });
+
+  it('should reflect bonuses to reflex and will when quickness and self discipline are strong enough respectively', () => {
+
+  });
+
 
 });
