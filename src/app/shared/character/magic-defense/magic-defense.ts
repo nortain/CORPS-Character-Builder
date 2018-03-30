@@ -13,6 +13,10 @@ export class MagicDefense {
     this.strength.addVal[name] = value;
   }
 
+  /**
+   * takes in a string name to remove that bonus from the field object.  If no name is provided then all bonuses from the field are removed
+   * @param {string} name
+   */
   removeDefenseBonus(name?: string) {
     if (!name) {
       this.strength.clearAll();
