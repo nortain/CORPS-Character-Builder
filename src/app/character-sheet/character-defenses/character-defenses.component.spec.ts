@@ -105,39 +105,39 @@ describe('CharacterDefensesComponent', () => {
   });
 
   it('should reflect changes in fortitude when combat has the most theme points', () => {
-    expect(component.getMagicDefensiveValue(MagicDefenseType.Fortitude)).toEqual(10);
-    component.character.themePoints.combat.setStrength(ThemeStrength.Minor);
     expect(component.getMagicDefensiveValue(MagicDefenseType.Fortitude)).toEqual(11);
+    component.character.themePoints.combat.setStrength(ThemeStrength.Minor);
+    expect(component.getMagicDefensiveValue(MagicDefenseType.Fortitude)).toEqual(12);
   });
 
   it('should be able to assign and remove abitrary bonuses from things like talents', () => {
     let ref = component.getMagicDefensiveValue(MagicDefenseType.Reflex);
-    expect(ref).toEqual(10);
+    expect(ref).toEqual(11);
     component.assignMagicDefensiveBonus(MagicDefenseType.Reflex, "talent", 1);
     ref = component.getMagicDefensiveValue(MagicDefenseType.Reflex);
-    expect(ref).toEqual(11);
+    expect(ref).toEqual(12);
     component.removeMagicDefensiveBonus(MagicDefenseType.Reflex, "bob");
     ref = component.getMagicDefensiveValue(MagicDefenseType.Reflex);
-    expect(ref).toEqual(11, "trying to remove a bonus with wrong name");
+    expect(ref).toEqual(12, "trying to remove a bonus with wrong name");
     component.removeMagicDefensiveBonus(MagicDefenseType.Reflex, "talent");
     ref = component.getMagicDefensiveValue(MagicDefenseType.Reflex);
-    expect(ref).toEqual(10, "trying to remove a bonus with the correct name");
+    expect(ref).toEqual(11, "trying to remove a bonus with the correct name");
   });
 
   it('should not change magic defense from theme points if 2 are tied for the having the most', () => {
     component.character.themePoints.combat.setStrength(ThemeStrength.Lesser);
     component.character.themePoints.stealth.setStrength(ThemeStrength.Lesser);
-    expect(component.getMagicDefensiveValue(MagicDefenseType.Reflex)).toEqual(10);
-    expect(component.getMagicDefensiveValue(MagicDefenseType.Fortitude)).toEqual(10);
-    component.character.themePoints.combat.setStrength(ThemeStrength.Minor);
     expect(component.getMagicDefensiveValue(MagicDefenseType.Reflex)).toEqual(11);
+    expect(component.getMagicDefensiveValue(MagicDefenseType.Fortitude)).toEqual(11);
+    component.character.themePoints.combat.setStrength(ThemeStrength.Minor);
+    expect(component.getMagicDefensiveValue(MagicDefenseType.Reflex)).toEqual(12);
   });
 
   it('should reflect bonuses to fortitude defense when a characters vitality and/or intuition are strong enough', () => {
     component.character.attributes.Vitality.strength = AttributeStrength.Heroic;
-    expect(component.getMagicDefensiveValue(MagicDefenseType.Fortitude)).toEqual(12);
-    component.character.attributes.Vitality.strength = AttributeStrength.Champion;
     expect(component.getMagicDefensiveValue(MagicDefenseType.Fortitude)).toEqual(13);
+    component.character.attributes.Vitality.strength = AttributeStrength.Champion;
+    expect(component.getMagicDefensiveValue(MagicDefenseType.Fortitude)).toEqual(14);
     component.character.attributes.Intuition.strength = AttributeStrength.Heroic;
     expect(component.getMagicDefensiveValue(MagicDefenseType.Fortitude)).toEqual(14);
     component.character.attributes.Intuition.strength = AttributeStrength.Champion;
@@ -145,7 +145,12 @@ describe('CharacterDefensesComponent', () => {
   });
 
   it('should reflect bonuses to reflex and will when quickness and self discipline are strong enough respectively', () => {
-
+    component.character.attributes.Quickness.strength = AttributeStrength.Heroic;
+    expect(component.getMagicDefensiveValue(MagicDefenseType.Reflex)).toEqual(13);
+    expect(component.getMagicDefensiveValue(MagicDefenseType.Will)).toEqual(11);
+    component.character.attributes["Self Discipline"].strength = AttributeStrength.Heroic;
+    expect(component.getMagicDefensiveValue(MagicDefenseType.Reflex)).toEqual(13);
+    expect(component.getMagicDefensiveValue(MagicDefenseType.Will)).toEqual(13);
   });
 
 

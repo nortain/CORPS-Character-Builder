@@ -4,6 +4,7 @@ import {AttributeStrength} from "./attribute-strength.enum";
 import {SpecialText} from "./special-text.enum";
 import {Armor} from "../armor/armor";
 import {ArmorType} from "../armor/armor-type.enum";
+import {MagicDefenseType} from "../character/magic-defense/magic-defense-type.enum";
 
 describe('Testing attribute class', () => {
 
@@ -65,14 +66,14 @@ describe('Testing attribute class', () => {
   });
 
   it('should be able to determine if an attribute is defensive', () => {
-    expect(attribute.getMagicDefense()).toBeFalsy();
+    expect(attribute.getMagicDefense(MagicDefenseType.Fortitude)).toBeFalsy();
   });
 
   it('should be able to get magic defense for attributes that have magic defense', () => {
     attribute = makeAttribute(AttributeName.Vitality, AttributeStrength.Legendary);
-    expect(attribute.getMagicDefense()).toEqual(3);
+    expect(attribute.getMagicDefense(MagicDefenseType.Fortitude)).toEqual(3);
     attribute = makeAttribute(AttributeName.Intuition, AttributeStrength.Legendary);
-    expect(attribute.getMagicDefense()).toEqual(2);
+    expect(attribute.getMagicDefense(MagicDefenseType.Reflex)).toEqual(2);
   });
 
   it('should be able to get primary damage for legendary brawn', () => {

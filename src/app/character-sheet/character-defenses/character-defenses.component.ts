@@ -46,6 +46,7 @@ export class CharacterDefensesComponent implements OnChanges {
     if (themePointBonus.length === 1 && themePointBonus[0] === magicDefenseType) {
       magicDef++;
     }
+    magicDef += this.character.attributes.getBonus(AttributeBonus.MagicDefense, magicDefenseType);
     return magicDef;
   }
 

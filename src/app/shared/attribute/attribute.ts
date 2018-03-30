@@ -12,6 +12,7 @@ import {
 import {Armor} from "../armor/armor";
 import {ArmorType} from "../armor/armor-type.enum";
 import {Level} from "../character/level.enum";
+import {MagicDefenseType} from "../character/magic-defense/magic-defense-type.enum";
 
 
 export class Attribute {
@@ -36,10 +37,10 @@ export class Attribute {
   }
 
 
-  getMagicDefense(): number {
+  getMagicDefense(magicDefenseType: MagicDefenseType): number {
     if (this.name === AttributeName.Intuition) {
       return MAGIC_DEFENSE[this.strength] - 1;
-    } else if (this.hasMagicDefense()) {
+    } else if (this.hasMagicDefense(magicDefenseType)) {
       return MAGIC_DEFENSE[this.strength];
     } else {
       return 0;
@@ -171,8 +172,10 @@ export class Attribute {
     return this.type === AttributeType.PhysicalOffensive || this.type === AttributeType.MentalOffensive;
   }
 
-  hasMagicDefense(): boolean {
-    return this.type === AttributeType.PhysicalDefensive || this.type === AttributeType.MentalDefensive;
+  private hasMagicDefense(magicDefenseType: MagicDefenseType): boolean {
+    return (magicDefenseType === MagicDefenseType.Fortitude && this.name === AttributeName.Vitality) ||
+      (magicDefenseType === MagicDefenseType.Reflex && this.name === AttributeName.Quickness) ||
+      (magicDefenseType === MagicDefenseType.Will && this.name === AttributeName.SelfDiscipline);
   }
 
   /**Return the skill bonus for the given attribute*/
