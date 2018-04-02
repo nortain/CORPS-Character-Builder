@@ -41,7 +41,6 @@ describe('CharacterDefensesComponent', () => {
   });
 
   it('should be able to get a value for active defense', () => {
-    component.updateDefenses();
     const ad = fixture.debugElement.query(By.css("#activeDefense ")).nativeElement;
     expect(ad.innerText).toContain(11);
     const pd = fixture.debugElement.query(By.css("#passiveDefense ")).nativeElement;
@@ -50,21 +49,18 @@ describe('CharacterDefensesComponent', () => {
 
   it('should be able to get active defense if they are wearing light or lighter armor and have epic quickenss', () => {
     component.character.assignAttributePoint(AttributeStrength.Epic, AttributeName.Quickness);
-    component.updateDefenses();
     expect(component.getActiveDefenseValue()).toEqual(12);
   });
 
   it('should be able to get active defense if they are wearing caster armor and have epic self discipline', () => {
     component.character.assignAttributePoint(AttributeStrength.Epic, AttributeName.SelfDiscipline);
     component.character.physicalDefense.equipArmor(new Armor(ArmorType.CasterArmor));
-    component.updateDefenses();
     expect(component.getActiveDefenseValue()).toEqual(14);
   });
 
   it('should be able to reflect an updated armor value in the UI', () => {
     component.character.physicalDefense.equipArmor(new Armor(ArmorType.LightArmor));
     component.character.assignAttributePoint(AttributeStrength.Epic, AttributeName.Quickness);
-    component.updateDefenses();
     fixture.detectChanges();
     const ad = fixture.debugElement.query(By.css("#activeDefense ")).nativeElement;
     expect(ad.innerText).toContain(14);

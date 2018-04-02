@@ -1,9 +1,12 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange} from '@angular/core';
 import {Character} from "../../shared/character/character";
 import {AttributeBonus} from "../../shared/attribute/character-attribute/attribute-bonus.enum";
 import {MagicDefenseType} from "../../shared/character/magic-defense/magic-defense-type.enum";
 import {MagicDefense} from "../../shared/character/magic-defense/magic-defense";
-
+import {PhysicalDefense} from "../../shared/character/phsyical-defense/physical-defense";
+import {StartingCharacterMagicDefense} from "../../shared/constants/constants";
+import {StartingCharacterAttributes} from "../../shared/attribute/character-attribute/starting-character-attributes";
+import {ThemePointsContainer} from "../../shared/theme-points/theme-points-container";
 
 
 @Component({
@@ -11,50 +14,51 @@ import {MagicDefense} from "../../shared/character/magic-defense/magic-defense";
   templateUrl: './character-defenses.component.html',
   styleUrls: ['./character-defenses.component.css']
 })
-export class CharacterDefensesComponent implements OnChanges {
-  @Input() character: Character;
-  @Output() emitter: EventEmitter<Character>;
+export class CharacterDefensesComponent implements OnInit {
+
+  @Input() physicalDefense: PhysicalDefense;
+  @Input() magicDefense: StartingCharacterMagicDefense;
+  @Input() attributes: StartingCharacterAttributes;
+  @Input() magicRacialBonusType: MagicDefenseType;
+  @Input() themePoints: ThemePointsContainer;
 
   constructor() {
-    this.emitter = new EventEmitter<Character>();
   }
 
-  ngOnChanges() {
-    console.log("character defense changes have been called");
-    // this.updateDefenses();
+  ngOnInit() {
+    if (!this.physicalDefense) {
+      this.physicalDefense = new PhysicalDefense();
+    }
   }
 
-  updateDefenses() {
-    this.emitter.emit(this.character);
-  }
 
   getActiveDefenseValue(): number {
-    let ad = this.character.physicalDefense.getActiveDefensiveValue();
-    ad += this.character.attributes.getBonus(
+    let ad = this.physicalDefense.getActiveDefensiveValue();
+    ad += this.attributes.getBonus(
       AttributeBonus.ArmorBonus,
-      this.character.physicalDefense.armor);
+      this.physicalDefense.armor);
     return ad;
   }
 
   getPassiveDefenseValue(): number {
-    return this.character.physicalDefense.getPassiveDefensiveValue();
+    return this.physicalDefense.getPassiveDefensiveValue();
   }
 
   getMagicDefensiveValue(magicDefenseType: MagicDefenseType): number {
-    let magicDef = this.character.magicDefense[MagicDefenseType[magicDefenseType]].getDefense();
-    if (this.character.magicDefenseBonus === magicDefenseType) {
+    let magicDef = this.magicDefense[MagicDefenseType[magicDefenseType]].getDefense();
+    if (this.magicRacialBonusType === magicDefenseType) {
       magicDef++;
     }
-    const themePointBonus = this.character.themePoints.getDefensiveBonus();
+    const themePointBonus = this.themePoints.getDefensiveBonus();
     if (themePointBonus.length === 1 && themePointBonus[0] === magicDefenseType) {
       magicDef++;
     }
-    magicDef += this.character.attributes.getBonus(AttributeBonus.MagicDefense, magicDefenseType);
+    magicDef += this.attributes.getBonus(AttributeBonus.MagicDefense, magicDefenseType);
     return magicDef;
   }
 
   assignMagicDefensiveBonus(magicDefenseType: MagicDefenseType, bonusName: string, bonusValue: number) {
-    this.character.magicDefense[MagicDefenseType[magicDefenseType]].addDefenseBonus(bonusName, bonusValue);
+    this.magicDefense[MagicDefenseType[magicDefenseType]].addDefenseBonus(bonusName, bonusValue);
   }
 
   /**
@@ -63,7 +67,7 @@ export class CharacterDefensesComponent implements OnChanges {
    * @param {string} bonusName
    */
   removeMagicDefensiveBonus(magicDefenseType: MagicDefenseType, bonusName?: string) {
-    this.character.magicDefense[MagicDefenseType[magicDefenseType]].removeDefenseBonus(bonusName);
+    this.magicDefense[MagicDefenseType[magicDefenseType]].removeDefenseBonus(bonusName);
   }
 
 

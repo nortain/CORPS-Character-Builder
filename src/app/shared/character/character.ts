@@ -18,7 +18,7 @@ import {PhysicalDefense} from "./phsyical-defense/physical-defense";
 export class Character extends Race {
 
   constructor(public name: string,
-              public raceType: RaceType,
+              public raceType: RaceType = RaceType.Altwani,
               level?: Level,
               subRace?: RacialSubType,
               public themePoints = new ThemePointsContainer(),

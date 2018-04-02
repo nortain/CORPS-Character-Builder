@@ -6,13 +6,14 @@ import {DropdownValueObject} from "../shared/ui/dropdown/dropdown-value-object";
 import {Level} from "../shared/character/level.enum";
 import {ThemePointsContainer} from "../shared/theme-points/theme-points-container";
 import {RacialSubType} from "../shared/character/race/racial-sub-type.enum";
+import {CharacterDefensesComponent} from "./character-defenses/character-defenses.component";
 
 @Component({
   selector: 'corps-character-sheet',
   templateUrl: './character-sheet.component.html',
   styleUrls: ['./character-sheet.component.css']
 })
-export class CharacterSheetComponent implements OnInit {
+export class CharacterSheetComponent implements OnInit, OnChanges {
 
   character: Character;
   races: DropdownValueObject[];
@@ -21,10 +22,10 @@ export class CharacterSheetComponent implements OnInit {
 
   RaceType = RaceType; // expose racetype to the UI
 
-  @Output() characterEmitter: EventEmitter<Character>;
+  constructor(private attributeService: AttributeService) {}
 
-  constructor(private attributeService: AttributeService) {
-    this.characterEmitter = new EventEmitter<Character>();
+  ngOnChanges() {
+    console.log("ngchanges was called");
   }
 
   ngOnInit() {
@@ -35,29 +36,45 @@ export class CharacterSheetComponent implements OnInit {
     this.character = new Character("", RaceType[raceType] as RaceType);
   }
 
-  reloadCharacter(raceType: RaceType, level: Level) {
+  reloadCharacter(propertyName: string, valueChange: any) {
     console.log("Character has been reloaded");
-    this.character = new Character(this.character.name, raceType, level, this.character.racialSubType, this.character.themePoints);
-    this.characterEmitter.emit(this.character);
+    this.character[propertyName] = valueChange;
+    this.cloneCharacter();
   }
 
   startReloadWithRace(raceString: string) {
     if (RaceType[raceString] !== RaceType.Primental) {
       this.character.racialSubType = null;
     }
-    this.reloadCharacter(RaceType[raceString], this.character.level);
+    this.reloadCharacter("raceType", RaceType[raceString]);
   }
 
   startReloadWithLevel(level: number) {
-    this.reloadCharacter(this.character.raceType, level);
+    this.reloadCharacter("level", level);
   }
 
   updateSubRace(subrace: string) {
-    this.character.racialSubType = RacialSubType[subrace];
+    this.reloadCharacter("racialSubType", RacialSubType[subrace]);
+
   }
 
   updateThemePoints(updatedThemePoints: ThemePointsContainer) {
-    this.character.themePoints = updatedThemePoints;
+    this.reloadCharacter("themePoints", updatedThemePoints);
   }
+
+  private cloneCharacter() {
+    this.character = new Character(
+      this.character.name,
+      this.character.raceType,
+      this.character.level,
+      this.character.racialSubType,
+      this.character.themePoints,
+      this.character.physicalDefense,
+      this.character.weapons,
+      this.character.magicDefense,
+      this.character.attributes
+    );
+  }
+
 
 }

@@ -39,9 +39,12 @@ describe('CharacterSheetComponent', () => {
   it('should be able to reload a character', () => {
     component.character.name = "Bob";
     expect(component.character).toEqual(mockCharacter());
-    component.reloadCharacter(RaceType.Burman, Level.Two);
+    component.reloadCharacter("raceType", RaceType.Burman);
+    component.reloadCharacter("level", Level.Two);
     expect(component.character).not.toEqual(mockCharacter());
-    expect(component.character).toEqual(new Character("Bob", RaceType.Burman, Level.Two));
+    expect(component.character.name).toBe("Bob");
+    expect(component.character.raceType).toEqual(RaceType.Burman);
+    expect(component.character.level).toEqual(2);
   });
 
   it('should be able to set character name via the input component', function () {
