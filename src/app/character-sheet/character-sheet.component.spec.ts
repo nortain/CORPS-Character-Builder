@@ -11,6 +11,7 @@ import {By} from "@angular/platform-browser";
 import {NgbDropdownMenu} from "@ng-bootstrap/ng-bootstrap/dropdown/dropdown";
 import {CharacterThemePointsComponent} from "./character-theme-points/character-theme-points.component";
 import {RacialSubType} from "../shared/character/race/racial-sub-type.enum";
+import {CharacterDefensesComponent} from "./character-defenses/character-defenses.component";
 
 describe('CharacterSheetComponent', () => {
   let component: CharacterSheetComponent;
@@ -19,7 +20,7 @@ describe('CharacterSheetComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [SharedModule],
-      declarations: [CharacterSheetComponent, CharacterThemePointsComponent],
+      declarations: [CharacterSheetComponent, CharacterThemePointsComponent, CharacterDefensesComponent],
       providers: [NgbDropdownConfig]
     })
       .compileComponents();

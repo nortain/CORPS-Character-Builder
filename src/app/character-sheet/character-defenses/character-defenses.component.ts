@@ -1,8 +1,9 @@
-import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {Character} from "../../shared/character/character";
 import {AttributeBonus} from "../../shared/attribute/character-attribute/attribute-bonus.enum";
 import {MagicDefenseType} from "../../shared/character/magic-defense/magic-defense-type.enum";
 import {MagicDefense} from "../../shared/character/magic-defense/magic-defense";
+
 
 
 @Component({
@@ -12,17 +13,19 @@ import {MagicDefense} from "../../shared/character/magic-defense/magic-defense";
 })
 export class CharacterDefensesComponent implements OnChanges {
   @Input() character: Character;
+  @Output() emitter: EventEmitter<Character>;
 
   constructor() {
-    this.updateDefenses();
+    this.emitter = new EventEmitter<Character>();
   }
 
   ngOnChanges() {
-    this.updateDefenses();
+    console.log("character defense changes have been called");
+    // this.updateDefenses();
   }
 
   updateDefenses() {
-
+    this.emitter.emit(this.character);
   }
 
   getActiveDefenseValue(): number {

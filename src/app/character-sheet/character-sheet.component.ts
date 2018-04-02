@@ -1,4 +1,4 @@
-import {Component, OnChanges, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnChanges, OnInit, Output, ViewChild} from '@angular/core';
 import {Character} from "../shared/character/character";
 import {AttributeService} from "../shared/attribute/attribute.service";
 import {RaceType} from "../shared/character/race/race-type.enum";
@@ -21,8 +21,10 @@ export class CharacterSheetComponent implements OnInit {
 
   RaceType = RaceType; // expose racetype to the UI
 
-  constructor(private attributeService: AttributeService) {
+  @Output() characterEmitter: EventEmitter<Character>;
 
+  constructor(private attributeService: AttributeService) {
+    this.characterEmitter = new EventEmitter<Character>();
   }
 
   ngOnInit() {
@@ -34,7 +36,9 @@ export class CharacterSheetComponent implements OnInit {
   }
 
   reloadCharacter(raceType: RaceType, level: Level) {
+    console.log("Character has been reloaded");
     this.character = new Character(this.character.name, raceType, level, this.character.racialSubType, this.character.themePoints);
+    this.characterEmitter.emit(this.character);
   }
 
   startReloadWithRace(raceString: string) {
