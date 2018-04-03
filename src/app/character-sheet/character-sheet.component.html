@@ -1,4 +1,4 @@
-<form>
+<form name="characterSheetForm">
   <div class="row">
 
     <corps-input id="characterName" labelName="Name" class="col-md-4" [newLineLabelName]="true"
@@ -43,7 +43,7 @@
         <label class="font-weight-normal">{{character.vision}}</label>
       </div>
     </div>
-    <corps-character-defenses [character]="character"></corps-character-defenses>
+    <corps-character-defenses name="defense" [ngModel]="character" [character]="character"></corps-character-defenses>
     <pre>{{character.magicDefense.Fortitude.getDefense()| json}}</pre>
   </div>
 </form>

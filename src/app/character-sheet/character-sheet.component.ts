@@ -63,7 +63,7 @@ export class CharacterSheetComponent implements OnInit, OnChanges {
   }
 
   private cloneCharacter() {
-    this.character = new Character(
+    const newChar = new Character(
       this.character.name,
       this.character.raceType,
       this.character.level,
@@ -74,6 +74,8 @@ export class CharacterSheetComponent implements OnInit, OnChanges {
       this.character.magicDefense,
       this.character.attributes
     );
+    this.character = null;
+    this.character = newChar;
   }
 
 
