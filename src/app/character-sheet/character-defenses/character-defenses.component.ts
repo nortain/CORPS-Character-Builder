@@ -8,9 +8,10 @@ import {PhysicalDefense} from "../../shared/character/phsyical-defense/physical-
 @Component({
   selector: 'corps-character-defenses',
   templateUrl: './character-defenses.component.html',
-  styleUrls: ['./character-defenses.component.css']
+  styleUrls: ['./character-defenses.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CharacterDefensesComponent implements OnInit {
+export class CharacterDefensesComponent implements OnInit, OnChanges {
 
   @Input() character: Character;
 
@@ -18,9 +19,16 @@ export class CharacterDefensesComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("This is the character", this.character);
     if (!this.character.physicalDefense) {
       this.character.physicalDefense = new PhysicalDefense();
     }
+  }
+
+  ngOnChanges(change){
+    console.log("This is the change: ", change);
+    console.log("This is the character: ", this.character);
+    this.cloneCharacter();
   }
 
 
@@ -60,6 +68,22 @@ export class CharacterDefensesComponent implements OnInit {
    */
   removeMagicDefensiveBonus(magicDefenseType: MagicDefenseType, bonusName?: string) {
     this.character.magicDefense[MagicDefenseType[magicDefenseType]].removeDefenseBonus(bonusName);
+  }
+
+  private cloneCharacter() {
+    const newChar = new Character(
+      this.character.name,
+      this.character.raceType,
+      this.character.level,
+      this.character.racialSubType,
+      this.character.themePoints,
+      this.character.physicalDefense,
+      this.character.weapons,
+      this.character.magicDefense,
+      this.character.attributes
+    );
+    this.character = null;
+    this.character = newChar;
   }
 
 

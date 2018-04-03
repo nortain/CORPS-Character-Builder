@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnChanges, OnInit, Output, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, OnChanges, OnInit, Output, ViewChild} from '@angular/core';
 import {Character} from "../shared/character/character";
 import {AttributeService} from "../shared/attribute/attribute.service";
 import {RaceType} from "../shared/character/race/race-type.enum";
@@ -7,11 +7,13 @@ import {Level} from "../shared/character/level.enum";
 import {ThemePointsContainer} from "../shared/theme-points/theme-points-container";
 import {RacialSubType} from "../shared/character/race/racial-sub-type.enum";
 import {CharacterDefensesComponent} from "./character-defenses/character-defenses.component";
+import {MagicDefenseType} from "../shared/character/magic-defense/magic-defense-type.enum";
 
 @Component({
   selector: 'corps-character-sheet',
   templateUrl: './character-sheet.component.html',
-  styleUrls: ['./character-sheet.component.css']
+  styleUrls: ['./character-sheet.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CharacterSheetComponent implements OnInit, OnChanges {
 
@@ -20,7 +22,10 @@ export class CharacterSheetComponent implements OnInit, OnChanges {
   subraces: DropdownValueObject[];
   levels: DropdownValueObject[];
 
+  @ViewChild(CharacterDefensesComponent) characterDefense: CharacterDefensesComponent;
+
   RaceType = RaceType; // expose racetype to the UI
+  MagicDefenseType = MagicDefenseType;
 
   constructor(private attributeService: AttributeService) {}
 
@@ -74,7 +79,6 @@ export class CharacterSheetComponent implements OnInit, OnChanges {
       this.character.magicDefense,
       this.character.attributes
     );
-    this.character = null;
     this.character = newChar;
   }
 
