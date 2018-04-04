@@ -2,7 +2,7 @@
   <div class="col-4">
     <label id="activeDefense">Active Defense: {{getActiveDefenseValue()}}</label>
     <div class="row">
-      <label *ngFor="let defense of character.physicalDefense.activeDefenses"
+      <label *ngFor="let defense of physicalDefense.activeDefenses"
              class="activeList col-12">{{defense}}</label>
     </div>
 
@@ -10,18 +10,18 @@
   <div class="col-4">
     <label id="passiveDefense">Passive Defenses: {{getPassiveDefenseValue()}}</label>
     <div class="row">
-      <label *ngFor="let defense of character.physicalDefense.passiveDefenses; let index = index"
+      <label *ngFor="let defense of physicalDefense.passiveDefenses; let index = index"
              class="passiveList col-12">{{defense}}
-        <span *ngIf="index > character.physicalDefense.passiveDefenses.length">, </span>
+        <span *ngIf="index > physicalDefense.passiveDefenses.length">, </span>
       </label>
     </div>
   </div>
   <div class="col-4">
     <label id="magicalDefense"></label>
     <div class="row">
-      <label id="fortitude" class="col-4">Fortitude: {{character.magicDefense.Fortitude.getDefense()}}</label>
-      <label id="reflex" class="col-4">Reflex: {{character.magicDefense.Reflex.getDefense()}}</label>
-      <label id="will" class="col-4">Will: {{character.magicDefense.Will.getDefense()}}</label>
+      <label id="fortitude" class="col-4">Fortitude: {{magicDefense.Fortitude.getDefense()}}</label>
+      <label id="reflex" class="col-4">Reflex: {{magicDefense.Reflex.getDefense()}}</label>
+      <label id="will" class="col-4">Will: {{magicDefense.Will.getDefense()}}</label>
     </div>
   </div>
 </div>

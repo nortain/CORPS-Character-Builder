@@ -44,7 +44,6 @@ export class CharacterSheetComponent implements OnInit, OnChanges {
   reloadCharacter(propertyName: string, valueChange: any) {
     console.log("Character has been reloaded");
     this.character[propertyName] = valueChange;
-    this.cloneCharacter();
   }
 
   startReloadWithRace(raceString: string) {
@@ -65,21 +64,6 @@ export class CharacterSheetComponent implements OnInit, OnChanges {
 
   updateThemePoints(updatedThemePoints: ThemePointsContainer) {
     this.reloadCharacter("themePoints", updatedThemePoints);
-  }
-
-  private cloneCharacter() {
-    const newChar = new Character(
-      this.character.name,
-      this.character.raceType,
-      this.character.level,
-      this.character.racialSubType,
-      this.character.themePoints,
-      this.character.physicalDefense,
-      this.character.weapons,
-      this.character.magicDefense,
-      this.character.attributes
-    );
-    this.character = newChar;
   }
 
 

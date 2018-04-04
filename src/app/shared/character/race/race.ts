@@ -37,7 +37,7 @@ export class Race {
     this.mechanicalBonusValues = STARTING_PLAYER_RACES[raceType].mechanicalBonusValues;
     this.vision = STARTING_PLAYER_RACES[raceType].vision ? STARTING_PLAYER_RACES[raceType].vision : VisionType.Normal;
     this.racialSubType = racialSubType;
-    this.magicDefenseBonus = STARTING_PLAYER_RACES[raceType].magicDefenseBonus;
+    this.magicDefenseBonus = STARTING_PLAYER_RACES[raceType].magicDefenseBonus !== undefined ? STARTING_PLAYER_RACES[raceType].magicDefenseBonus : null;
     this.availableAttributePoints = STARTING_PLAYER_RACES[raceType].availableAttributePoints ? STARTING_PLAYER_RACES[raceType].availableAttributePoints : NON_HUMAN_AVAILABLE_ATTRIBUTE_POINTS;
     this.availableLanguagePoints = STARTING_PLAYER_RACES[raceType].availableLanguagePoints;
     this.passiveBonuses = STARTING_PLAYER_RACES[raceType].passiveBonuses;

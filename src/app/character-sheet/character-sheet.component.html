@@ -5,9 +5,11 @@
                  [inputModel]="character.name" (outGoingModel)="character.name=$event"></corps-input>
 
     <div class="col-md-4 col-7">
-      <corps-dropdown id="characterRace" labelName="Race" class="col-auto" [newLineLabelName]="true" [values]="races" (valueChange)="startReloadWithRace($event.value)"></corps-dropdown>
+      <corps-dropdown id="characterRace" labelName="Race" class="col-auto" [newLineLabelName]="true" [values]="races"
+                      (valueChange)="startReloadWithRace($event.value)"></corps-dropdown>
 
-      <corps-dropdown *ngIf="character.raceType === RaceType.Primental" id="characterSubRace" labelName="Sub-Race" [values]="subraces" (valueChange)="updateSubRace($event.value)" class="col-auto"></corps-dropdown>
+      <corps-dropdown *ngIf="character.raceType === RaceType.Primental" id="characterSubRace" labelName="Sub-Race"
+                      [values]="subraces" (valueChange)="updateSubRace($event.value)" class="col-auto"></corps-dropdown>
     </div>
 
     <corps-dropdown id="characterLevel" labelName="Level" class="col-md-3 col-5" [newLineLabelName]="true"
@@ -43,7 +45,13 @@
         <label class="font-weight-normal">{{character.vision}}</label>
       </div>
     </div>
-    <corps-character-defenses [character]="character"></corps-character-defenses>
+    <corps-character-defenses
+      [physicalDefense]="character.physicalDefense"
+      [themePoints]="character.themePoints"
+      [magicDefense]="character.magicDefense"
+      [magicDefenseBonus]="character.magicDefenseBonus"
+      [attributes]="character.attributes">
+    </corps-character-defenses>
     <pre>{{character.magicDefense.Fortitude.getDefense()| json}}</pre>
     <pre>{{characterDefense.getMagicDefensiveValue(MagicDefenseType.Fortitude)| json}}</pre>
   </div>

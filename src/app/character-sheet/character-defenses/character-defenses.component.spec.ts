@@ -25,7 +25,11 @@ describe('CharacterDefensesComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CharacterDefensesComponent);
     component = fixture.componentInstance;
-    component.character = mockCharacter();
+    component.physicalDefense = mockCharacter().physicalDefense;
+    component.attributes = mockCharacter().attributes;
+    component.magicDefense = mockCharacter().magicDefense;
+    component.magicDefenseBonus = mockCharacter().magicDefenseBonus;
+    component.themePoints = mockCharacter().themePoints;
     fixture.detectChanges();
   });
 
@@ -48,19 +52,25 @@ describe('CharacterDefensesComponent', () => {
   });
 
   it('should be able to get active defense if they are wearing light or lighter armor and have epic quickenss', () => {
-    component.character.assignAttributePoint(AttributeStrength.Epic, AttributeName.Quickness);
+    const char = mockCharacter();
+    char.assignAttributePoint(AttributeStrength.Epic, AttributeName.Quickness);
+    component.attributes = char.attributes;
     expect(component.getActiveDefenseValue()).toEqual(12);
   });
 
   it('should be able to get active defense if they are wearing caster armor and have epic self discipline', () => {
-    component.character.assignAttributePoint(AttributeStrength.Epic, AttributeName.SelfDiscipline);
-    component.character.physicalDefense.equipArmor(new Armor(ArmorType.CasterArmor));
+    const char = mockCharacter();
+    char.assignAttributePoint(AttributeStrength.Epic, AttributeName.SelfDiscipline);
+    component.attributes = char.attributes;
+    component.physicalDefense.equipArmor(new Armor(ArmorType.CasterArmor));
     expect(component.getActiveDefenseValue()).toEqual(14);
   });
 
   it('should be able to reflect an updated armor value in the UI', () => {
-    component.character.physicalDefense.equipArmor(new Armor(ArmorType.LightArmor));
-    component.character.assignAttributePoint(AttributeStrength.Epic, AttributeName.Quickness);
+    component.physicalDefense.equipArmor(new Armor(ArmorType.LightArmor));
+    const char = mockCharacter();
+    char.assignAttributePoint(AttributeStrength.Epic, AttributeName.Quickness);
+    component.attributes = char.attributes;
     fixture.detectChanges();
     const ad = fixture.debugElement.query(By.css("#activeDefense ")).nativeElement;
     expect(ad.innerText).toContain(14);
@@ -70,13 +80,13 @@ describe('CharacterDefensesComponent', () => {
     let passiveList = fixture.debugElement.queryAll(By.css(".passiveList"));
     let activeList = fixture.debugElement.queryAll(By.css(".activeList"));
     expect(passiveList.length).toEqual(4);
-    component.character.physicalDefense.moveToActive(PhysicalDefenseType.Missile);
+    component.physicalDefense.moveToActive(PhysicalDefenseType.Missile);
     fixture.detectChanges();
     passiveList = fixture.debugElement.queryAll(By.css(".passiveList"));
     activeList = fixture.debugElement.queryAll(By.css(".activeList"));
     expect(passiveList.length).toEqual(3);
     expect(activeList[0].nativeElement.innerText).toContain(PhysicalDefenseType.Missile);
-    component.character.physicalDefense.moveToPassive(PhysicalDefenseType.Missile);
+    component.physicalDefense.moveToPassive(PhysicalDefenseType.Missile);
     fixture.detectChanges();
     passiveList = fixture.debugElement.queryAll(By.css(".passiveList"));
     activeList = fixture.debugElement.queryAll(By.css(".activeList"));
@@ -102,7 +112,7 @@ describe('CharacterDefensesComponent', () => {
 
   it('should reflect changes in fortitude when combat has the most theme points', () => {
     expect(component.getMagicDefensiveValue(MagicDefenseType.Fortitude)).toEqual(11);
-    component.character.themePoints.combat.setStrength(ThemeStrength.Minor);
+    component.themePoints.combat.setStrength(ThemeStrength.Minor);
     expect(component.getMagicDefensiveValue(MagicDefenseType.Fortitude)).toEqual(12);
   });
 
@@ -121,30 +131,30 @@ describe('CharacterDefensesComponent', () => {
   });
 
   it('should not change magic defense from theme points if 2 are tied for the having the most', () => {
-    component.character.themePoints.combat.setStrength(ThemeStrength.Lesser);
-    component.character.themePoints.stealth.setStrength(ThemeStrength.Lesser);
+    component.themePoints.combat.setStrength(ThemeStrength.Lesser);
+    component.themePoints.stealth.setStrength(ThemeStrength.Lesser);
     expect(component.getMagicDefensiveValue(MagicDefenseType.Reflex)).toEqual(11);
     expect(component.getMagicDefensiveValue(MagicDefenseType.Fortitude)).toEqual(11);
-    component.character.themePoints.combat.setStrength(ThemeStrength.Minor);
+    component.themePoints.combat.setStrength(ThemeStrength.Minor);
     expect(component.getMagicDefensiveValue(MagicDefenseType.Reflex)).toEqual(12);
   });
 
   it('should reflect bonuses to fortitude defense when a characters vitality and/or intuition are strong enough', () => {
-    component.character.attributes.Vitality.strength = AttributeStrength.Heroic;
+    component.attributes.Vitality.strength = AttributeStrength.Heroic;
     expect(component.getMagicDefensiveValue(MagicDefenseType.Fortitude)).toEqual(13);
-    component.character.attributes.Vitality.strength = AttributeStrength.Champion;
+    component.attributes.Vitality.strength = AttributeStrength.Champion;
     expect(component.getMagicDefensiveValue(MagicDefenseType.Fortitude)).toEqual(14);
-    component.character.attributes.Intuition.strength = AttributeStrength.Heroic;
+    component.attributes.Intuition.strength = AttributeStrength.Heroic;
     expect(component.getMagicDefensiveValue(MagicDefenseType.Fortitude)).toEqual(14);
-    component.character.attributes.Intuition.strength = AttributeStrength.Champion;
+    component.attributes.Intuition.strength = AttributeStrength.Champion;
     expect(component.getMagicDefensiveValue(MagicDefenseType.Fortitude)).toEqual(15);
   });
 
   it('should reflect bonuses to reflex and will when quickness and self discipline are strong enough respectively', () => {
-    component.character.attributes.Quickness.strength = AttributeStrength.Heroic;
+    component.attributes.Quickness.strength = AttributeStrength.Heroic;
     expect(component.getMagicDefensiveValue(MagicDefenseType.Reflex)).toEqual(13);
     expect(component.getMagicDefensiveValue(MagicDefenseType.Will)).toEqual(11);
-    component.character.attributes["Self Discipline"].strength = AttributeStrength.Heroic;
+    component.attributes["Self Discipline"].strength = AttributeStrength.Heroic;
     expect(component.getMagicDefensiveValue(MagicDefenseType.Reflex)).toEqual(13);
     expect(component.getMagicDefensiveValue(MagicDefenseType.Will)).toEqual(13);
   });

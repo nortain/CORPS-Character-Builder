@@ -1,8 +1,10 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange} from '@angular/core';
-import {Character} from "../../shared/character/character";
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange} from '@angular/core';
 import {AttributeBonus} from "../../shared/attribute/character-attribute/attribute-bonus.enum";
 import {MagicDefenseType} from "../../shared/character/magic-defense/magic-defense-type.enum";
 import {PhysicalDefense} from "../../shared/character/phsyical-defense/physical-defense";
+import {StartingCharacterAttributes} from "../../shared/attribute/character-attribute/starting-character-attributes";
+import {StartingCharacterMagicDefense} from "../../shared/constants/constants";
+import {ThemePointsContainer} from "../../shared/theme-points/theme-points-container";
 
 
 @Component({
@@ -13,52 +15,60 @@ import {PhysicalDefense} from "../../shared/character/phsyical-defense/physical-
 })
 export class CharacterDefensesComponent implements OnInit, OnChanges {
 
-  @Input() character: Character;
 
-  constructor() {
+  @Input() physicalDefense: PhysicalDefense;
+  @Input() attributes: StartingCharacterAttributes;
+  @Input() magicDefense: StartingCharacterMagicDefense;
+  @Input() magicDefenseBonus: MagicDefenseType;
+  @Input() themePoints: ThemePointsContainer;
+
+  constructor(private ref: ChangeDetectorRef) {
+
   }
 
   ngOnInit() {
-    console.log("This is the character", this.character);
-    if (!this.character.physicalDefense) {
-      this.character.physicalDefense = new PhysicalDefense();
-    }
+
   }
 
-  ngOnChanges(change){
+  ngOnChanges(change) {
     console.log("This is the change: ", change);
-    console.log("This is the character: ", this.character);
-    this.cloneCharacter();
+    for (const prop of Object.keys(change)) {
+      console.log(" is the prop: ", prop);
+      if (this[prop]) {
+        this[prop] = null;
+        this[prop] = change[prop].currentValue;
+      }
+    }
+    this.ref.detectChanges();
   }
-
 
   getActiveDefenseValue(): number {
-    let ad = this.character.physicalDefense.getActiveDefensiveValue();
-    ad += this.character.attributes.getBonus(
+    let ad = this.physicalDefense.getActiveDefensiveValue();
+    ad += this.attributes.getBonus(
       AttributeBonus.ArmorBonus,
-      this.character.physicalDefense.armor);
+      this.physicalDefense.armor);
     return ad;
   }
 
   getPassiveDefenseValue(): number {
-    return this.character.physicalDefense.getPassiveDefensiveValue();
+    return this.physicalDefense.getPassiveDefensiveValue();
   }
 
   getMagicDefensiveValue(magicDefenseType: MagicDefenseType): number {
-    let magicDef = this.character.magicDefense[MagicDefenseType[magicDefenseType]].getDefense();
-    if (this.character.magicDefenseBonus === magicDefenseType) {
+    let magicDef = this.magicDefense[MagicDefenseType[magicDefenseType]].getDefense();
+    if (this.magicDefenseBonus === magicDefenseType) {
       magicDef++;
     }
-    const themePointBonus = this.character.themePoints.getDefensiveBonus();
+    const themePointBonus = this.themePoints.getDefensiveBonus();
     if (themePointBonus.length === 1 && themePointBonus[0] === magicDefenseType) {
       magicDef++;
     }
-    magicDef += this.character.attributes.getBonus(AttributeBonus.MagicDefense, magicDefenseType);
+    magicDef += this.attributes.getBonus(AttributeBonus.MagicDefense, magicDefenseType);
     return magicDef;
   }
 
   assignMagicDefensiveBonus(magicDefenseType: MagicDefenseType, bonusName: string, bonusValue: number) {
-    this.character.magicDefense[MagicDefenseType[magicDefenseType]].addDefenseBonus(bonusName, bonusValue);
+    this.magicDefense[MagicDefenseType[magicDefenseType]].addDefenseBonus(bonusName, bonusValue);
   }
 
   /**
@@ -67,24 +77,7 @@ export class CharacterDefensesComponent implements OnInit, OnChanges {
    * @param {string} bonusName
    */
   removeMagicDefensiveBonus(magicDefenseType: MagicDefenseType, bonusName?: string) {
-    this.character.magicDefense[MagicDefenseType[magicDefenseType]].removeDefenseBonus(bonusName);
+    this.magicDefense[MagicDefenseType[magicDefenseType]].removeDefenseBonus(bonusName);
   }
-
-  private cloneCharacter() {
-    const newChar = new Character(
-      this.character.name,
-      this.character.raceType,
-      this.character.level,
-      this.character.racialSubType,
-      this.character.themePoints,
-      this.character.physicalDefense,
-      this.character.weapons,
-      this.character.magicDefense,
-      this.character.attributes
-    );
-    this.character = null;
-    this.character = newChar;
-  }
-
 
 }
