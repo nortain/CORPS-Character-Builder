@@ -38,13 +38,17 @@ export class Attribute {
 
 
   getMagicDefense(magicDefenseType: MagicDefenseType): number {
+    let value = 0;
     if (this.name === AttributeName.Intuition) {
-      return MAGIC_DEFENSE[this.strength] - 1;
+      const result = MAGIC_DEFENSE[this.strength] - 1;
+      if (result > value) {
+        value = result;
+      }
     } else if (this.hasMagicDefense(magicDefenseType)) {
-      return MAGIC_DEFENSE[this.strength];
-    } else {
-      return 0;
+      value = MAGIC_DEFENSE[this.strength];
     }
+    return value;
+
   }
 
   getPrimaryDamage(): number {
