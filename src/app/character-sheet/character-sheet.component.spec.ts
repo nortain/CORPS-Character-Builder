@@ -6,12 +6,10 @@ import {NgbDropdown, NgbDropdownConfig} from "@ng-bootstrap/ng-bootstrap";
 import {actionClickDropdownItemX, mockCharacter} from "../shared/constants/testing-constants";
 import {RaceType} from "../shared/character/race/race-type.enum";
 import {Level} from "../shared/character/level.enum";
-import {Character} from "../shared/character/character";
 import {By} from "@angular/platform-browser";
 import {NgbDropdownMenu} from "@ng-bootstrap/ng-bootstrap/dropdown/dropdown";
-import {CharacterThemePointsComponent} from "./character-theme-points/character-theme-points.component";
+
 import {RacialSubType} from "../shared/character/race/racial-sub-type.enum";
-import {CharacterDefensesComponent} from "./character-defenses/character-defenses.component";
 import {CharacterSheetModule} from "./character-sheet.module";
 
 describe('CharacterSheetComponent', () => {

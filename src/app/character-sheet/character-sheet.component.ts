@@ -26,7 +26,8 @@ export class CharacterSheetComponent implements OnInit, OnChanges {
   RaceType = RaceType; // expose racetype to the UI
   MagicDefenseType = MagicDefenseType;
 
-  constructor(private attributeService: AttributeService) {}
+  constructor(private attributeService: AttributeService) {
+  }
 
   ngOnChanges() {
     console.log("ngchanges was called");
@@ -59,12 +60,61 @@ export class CharacterSheetComponent implements OnInit, OnChanges {
 
   updateSubRace(subrace: string) {
     this.reloadCharacter("racialSubType", RacialSubType[subrace]);
-
   }
 
   updateThemePoints(updatedThemePoints: ThemePointsContainer) {
     this.reloadCharacter("themePoints", updatedThemePoints);
   }
+
+  getHitPointsValue(): number {
+    return 0;
+  }
+
+  getRecoveries(): number {
+    return 0;
+  }
+
+  getRecoveryValue(): number {
+    return 0;
+  }
+
+  getOutofCombatRecoveryValue(): number {
+    return 0;
+  }
+
+
+  getCriticalReductionValue(): number {
+    return 0;
+  }
+
+  getPrimaryMagicResistanceValue(): number {
+    return 0;
+  }
+
+  getSecondaryMagicRestanceValue(): number {
+    return Math.round(this.getPrimaryMagicResistanceValue() * .75);
+  }
+
+  getPrimaryMagicReistances(): string[] {
+    return [];
+  }
+
+  getPowerPoints(): number {
+    return 0;
+  }
+
+  getAdrenalinePoints(): number {
+    return 0;
+  }
+
+  getBloodiedValue(): number {
+    return Math.floor(this.getHitPointsValue() / 2);
+  }
+
+  getAuras(): string[] {
+    return null;
+  }
+
 
   getActiveDefenseValue(): number {
     let ad = this.character.physicalDefense.getActiveDefensiveValue();

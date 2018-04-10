@@ -1,27 +1,27 @@
 <form name="characterSheetForm">
   <div class="row">
 
-    <corps-input id="characterName" labelName="Name" class="col-md-4" [newLineLabelName]="true"
+    <corps-input id="characterName" labelName="Name" class="col" [newLineLabelName]="true"
                  [inputModel]="character.name" (outGoingModel)="character.name=$event"></corps-input>
 
-    <div class="col-md-4 col-7">
-      <corps-dropdown id="characterRace" labelName="Race" class="col-auto" [newLineLabelName]="true" [values]="races"
+    <div class="col">
+      <corps-dropdown id="characterRace" labelName="Race" class="col" [newLineLabelName]="true" [values]="races"
                       (valueChange)="startReloadWithRace($event.value)"></corps-dropdown>
 
       <corps-dropdown *ngIf="character.raceType === RaceType.Primental" id="characterSubRace" labelName="Sub-Race"
-                      [values]="subraces" (valueChange)="updateSubRace($event.value)" class="col-auto"></corps-dropdown>
+                      [values]="subraces" (valueChange)="updateSubRace($event.value)" class="col"></corps-dropdown>
     </div>
 
-    <corps-dropdown id="characterLevel" labelName="Level" class="col-md-3 col-5" [newLineLabelName]="true"
+    <corps-dropdown id="characterLevel" labelName="Level" class="col" [newLineLabelName]="true"
                     [values]="levels" (valueChange)="startReloadWithLevel($event.value)"></corps-dropdown>
 
   </div>
 
-  <div class="col-auto">
+  <div class="col">
     <div class="row">
 
 
-      <div class="col-lg-3 col-md-6 col-12">
+      <div class="col">
 
         <label class="font-weight-bold col-12">Theme Points</label>
         <corps-character-theme-points id="themePoints"
@@ -29,50 +29,98 @@
 
       </div>
 
-      <div class="col-lg-3 col-md-6 col-4">
+      <div class="col">
         <label class="font-weight-bold label-thickener">Initiative</label><br>
 
         <label class="font-weight-normal">{{character.getInitiative()}}</label>
       </div>
-      <div class="col-lg-3 col-md-6 col-4">
+      <div class="col">
         <label class="font-weight-bold label-thickener">Movement</label><br>
 
         <label class="font-weight-normal">{{character.getSpeed()}}</label>
       </div>
-      <div class="col-lg-3 col-md-6 col-4">
+      <div class="col">
         <label class="font-weight-bold label-thickener">Vision</label><br>
 
         <label class="font-weight-normal">{{character.vision}}</label>
       </div>
     </div>
     <div class="row">
-      <div class="col-4">
-        <label id="activeDefense">Active Defense: {{getActiveDefenseValue()}}</label>
-        <div class="row">
+      <div class="col border border-dark border-spacing">
+        <label id="activeDefense" class="font-weight-bold">Active Defense: {{getActiveDefenseValue()}}</label>
+        <div class="d-flex justify-content-center row">
           <label *ngFor="let defense of character.physicalDefense.activeDefenses"
-                 class="activeList col-12">{{defense}}</label>
+                 class="activeList col">{{defense}}</label>
         </div>
 
       </div>
-      <div class="col-4">
-        <label id="passiveDefense">Passive Defenses: {{getPassiveDefenseValue()}}</label>
-        <div class="row">
+      <div class="col border border-dark border-spacing">
+        <label class="font-weight-bold" id="passiveDefense">Passive Defenses: {{getPassiveDefenseValue()}}</label>
+        <div class="d-flex justify-content-center row">
           <label *ngFor="let defense of character.physicalDefense.passiveDefenses; let index = index"
-                 class="passiveList col-12">{{defense}}
+                 class="passiveList col">{{defense}}
             <span *ngIf="index > character.physicalDefense.passiveDefenses.length">, </span>
           </label>
         </div>
       </div>
-      <div class="col-4">
-        <label id="magicalDefense"></label>
-        <div class="row">
-          <label id="fortitude" class="col-4">Fortitude: {{getMagicDefensiveValue(MagicDefenseType.Fortitude)}}</label>
-          <label id="reflex" class="col-4">Reflex: {{getMagicDefensiveValue(MagicDefenseType.Reflex)}}</label>
-          <label id="will" class="col-4">Will: {{getMagicDefensiveValue(MagicDefenseType.Will)}}</label>
+      <div class="col border border-dark border-spacing">
+        <label class="font-weight-bold" id="magicalDefense">Magic Defenses:</label>
+        <div class="d-flex justify-content-center row">
+          <label id="fortitude" class="col font-weight-bold">Fort: {{getMagicDefensiveValue(MagicDefenseType.Fortitude)}}</label>
+          <label id="reflex" class="col font-weight-bold">Reflex: {{getMagicDefensiveValue(MagicDefenseType.Reflex)}}</label>
+          <label id="will" class="col font-weight-bold">Will: {{getMagicDefensiveValue(MagicDefenseType.Will)}}</label>
         </div>
       </div>
     </div>
   </div>
+  <div class="col-3 float-right border-spacing magicResistancesBorder">
+    <label>Magic Resistance (Prim/Sec):</label>
+    {{getPrimaryMagicResistanceValue()}}/{{getSecondaryMagicRestanceValue()}}
+    More stuff here
+  </div>
+  <div class="col">
+    <div class="row d-flex clearfix rowPaddingAlongTop">
+      <div class="col">
+        <label>Hit Points:</label>
+        {{getHitPointsValue()}}
+      </div>
+      <div class="col">
+        <label>Bloodied Value:</label>
+        {{getBloodiedValue()}}
+      </div>
+      <div class="col">
+        <label>Recovery Value (Combat/OoC):</label>
+        {{getRecoveryValue()}} / {{getOutofCombatRecoveryValue()}}
+      </div>
+      <div class="col">
+        <label>Critical Reduction:</label>
+        {{getCriticalReductionValue()}}
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="row d-flex">
+      <div class="col">
+        <label>Power Points:</label>
+        {{getPowerPoints()}}
+      </div>
+      <div class="col">
+        <label>Adrenaline Points:</label>
+        {{getAdrenalinePoints()}}
+      </div>
+      <div class="col">
+        <label>Recovery Points:</label>
+        {{getRecoveries()}}
+      </div>
+      <div class="col">
+        <label>Auras:</label>
+        {{getAuras()}}
+      </div>
+
+    </div>
+
+  </div>
+
   <div class="col-auto">
     <div class="row">
       <div class="col-12">

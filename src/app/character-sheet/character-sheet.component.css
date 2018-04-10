@@ -5,3 +5,18 @@
 .label-thickener {
   padding-top: 34px;
 }
+
+.border-spacing {
+  margin-right: 7px;
+  margin-left: 7px;
+}
+
+.magicResistancesBorder {
+  padding-bottom: 80px;
+  margin-top: 10px;
+  margin-left: 0px !important;
+}
+
+.rowPaddingAlongTop {
+  margin-top: 10px;
+}
