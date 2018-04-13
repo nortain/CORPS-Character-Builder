@@ -20,6 +20,7 @@ export const NON_HUMAN_AVAILABLE_ATTRIBUTE_POINTS = 4;
 
 export const STARTING_MOVEMENT = 6;
 export const STARTING_INITIATIVE = 0;
+export const STARTING_HIT_POINTS = 22;
 
 // Armor constants based off of the ArmorType Enum
 export const ACTIVE_DEFENSE = [11, 13, 13, 13, 14];

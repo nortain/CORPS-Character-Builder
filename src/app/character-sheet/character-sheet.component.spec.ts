@@ -11,6 +11,8 @@ import {NgbDropdownMenu} from "@ng-bootstrap/ng-bootstrap/dropdown/dropdown";
 
 import {RacialSubType} from "../shared/character/race/racial-sub-type.enum";
 import {CharacterSheetModule} from "./character-sheet.module";
+import {ThemeStrength} from "../shared/theme-points/theme-strength.enum";
+import {AttributeStrength} from "../shared/attribute/attribute-strength.enum";
 
 describe('CharacterSheetComponent', () => {
   let component: CharacterSheetComponent;
@@ -98,5 +100,21 @@ describe('CharacterSheetComponent', () => {
     expect(component.character.racialSubType).toBeNull();
   });
 
+  it('should be able to get hit points for a character', () => {
+    expect(component.getHitPointsValue()).toEqual(40);
+  });
+
+  it('should be able to get hit points for a character with ranks in theme points', () => {
+    component.character.themePoints.combat.setStrength(ThemeStrength.Lesser);
+    expect(component.getHitPointsValue()).toEqual(44);
+    component.character.themePoints.stealth.setStrength(ThemeStrength.Minor);
+    expect(component.getHitPointsValue()).toEqual(45);
+  });
+
+  it('should be able to get hit points when a character has ranks in vitality', () => {
+    component.character.attributes.Vitality.strength = AttributeStrength.Champion;
+    expect(component.getHitPointsValue()).toEqual(48);
+
+  });
 
 });

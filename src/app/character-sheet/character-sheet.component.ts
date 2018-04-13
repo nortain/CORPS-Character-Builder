@@ -9,6 +9,7 @@ import {RacialSubType} from "../shared/character/race/racial-sub-type.enum";
 import {MagicDefenseType} from "../shared/character/magic-defense/magic-defense-type.enum";
 import {AttributeBonus} from "../shared/attribute/character-attribute/attribute-bonus.enum";
 import {Race} from "../shared/character/race/race";
+import {STARTING_HIT_POINTS} from "../shared/constants/constants";
 
 @Component({
   selector: 'corps-character-sheet',
@@ -67,7 +68,15 @@ export class CharacterSheetComponent implements OnInit, OnChanges {
   }
 
   getHitPointsValue(): number {
-    return 0;
+    let hp = STARTING_HIT_POINTS;
+    const level =  (this.character.level + 2);
+    const themeBonus = (this.character.themePoints.combat.getStrength() * 2 + this.character.themePoints.stealth.getStrength());
+    const attributes = + this.character.attributes.getBonus(AttributeBonus.HitPointBonus, this.character.level);
+    const multiplier = 6;
+    hp += level * multiplier;
+    hp += themeBonus;
+    hp += attributes;
+    return hp;
   }
 
   getRecoveries(): number {
