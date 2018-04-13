@@ -9,7 +9,7 @@ import {RacialSubType} from "../shared/character/race/racial-sub-type.enum";
 import {MagicDefenseType} from "../shared/character/magic-defense/magic-defense-type.enum";
 import {AttributeBonus} from "../shared/attribute/character-attribute/attribute-bonus.enum";
 import {Race} from "../shared/character/race/race";
-import {STARTING_HIT_POINTS} from "../shared/constants/constants";
+import {STARTING_HIT_POINTS, STARTING_RECOVERIES} from "../shared/constants/constants";
 
 @Component({
   selector: 'corps-character-sheet',
@@ -67,28 +67,43 @@ export class CharacterSheetComponent implements OnInit, OnChanges {
     this.reloadCharacter("themePoints", updatedThemePoints);
   }
 
+  /**
+   * calculates out what a characters max hit points are based on theme points, attributes, level and talent bonuses
+   * @returns {number} of hit points character has
+   */
   getHitPointsValue(): number {
     let hp = STARTING_HIT_POINTS;
-    const level =  (this.character.level + 2);
-    const themeBonus = (this.character.themePoints.combat.getStrength() * 2 + this.character.themePoints.stealth.getStrength());
-    const attributes = + this.character.attributes.getBonus(AttributeBonus.HitPointBonus, this.character.level);
-    const multiplier = 6;
-    hp += level * multiplier;
-    hp += themeBonus;
+    const level = (this.character.level + 3);
+    const themeBonus = (8 + this.character.themePoints.combat.getStrength() * .5 + this.character.themePoints.stealth.getStrength() * .25);
+    const attributes = +this.character.attributes.getBonus(AttributeBonus.HitPointBonus, this.character.level);
+    const talentBonusHp = 0; // TODO add talents
+    hp += Math.floor(level * themeBonus);
+    hp += talentBonusHp;
     hp += attributes;
     return hp;
   }
 
+
   getRecoveries(): number {
-    return 0;
+    let recoveries = STARTING_RECOVERIES;
+    const talentBonus = 0; // TODO add talents
+    recoveries += this.character.attributes.getBonus(AttributeBonus.RecoveryBonus);
+    recoveries += talentBonus;
+    return recoveries;
   }
 
+  // floor(getOOCRV / 1.75)
   getRecoveryValue(): number {
-    return 0;
+    return Math.floor(this.getOutofCombatRecoveryValue() / 1.75);
   }
 
+  // 45% of HP + bonus Recovery + if general > 1 then Floor((general+4)/4)
   getOutofCombatRecoveryValue(): number {
-    return 0;
+    let ooc = this.getHitPointsValue() * .45;
+    const talentBonus = 0; // TODO add talents
+    ooc += talentBonus;
+    ooc += this.character.themePoints.getOOCRecoveryValue();
+    return Math.floor(ooc);
   }
 
 

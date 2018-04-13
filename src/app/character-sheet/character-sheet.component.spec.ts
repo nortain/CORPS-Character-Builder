@@ -14,7 +14,7 @@ import {CharacterSheetModule} from "./character-sheet.module";
 import {ThemeStrength} from "../shared/theme-points/theme-strength.enum";
 import {AttributeStrength} from "../shared/attribute/attribute-strength.enum";
 
-describe('CharacterSheetComponent', () => {
+fdescribe('CharacterSheetComponent', () => {
   let component: CharacterSheetComponent;
   let fixture: ComponentFixture<CharacterSheetComponent>;
 
@@ -111,10 +111,76 @@ describe('CharacterSheetComponent', () => {
     expect(component.getHitPointsValue()).toEqual(45);
   });
 
-  it('should be able to get hit points when a character has ranks in vitality', () => {
+  it('should be able to get hit points when a character has ranks in attributes', () => {
     component.character.attributes.Vitality.strength = AttributeStrength.Champion;
     expect(component.getHitPointsValue()).toEqual(48);
+    component.character.attributes.Vitality.strength = AttributeStrength.Legendary;
+    expect(component.getHitPointsValue()).toEqual(52);
+    component.character.attributes["Self Discipline"].strength = AttributeStrength.Heroic;
+    expect(component.getHitPointsValue()).toEqual(53);
+    component.character.attributes["Self Discipline"].strength = AttributeStrength.Epic;
+    expect(component.getHitPointsValue()).toEqual(56);
+    component.character.attributes.Quickness.strength = AttributeStrength.Legendary;
+    expect(component.getHitPointsValue()).toEqual(61);
 
+  });
+
+  it('should be able to get hit points when characters gain levels', () => {
+    component.character.level = Level.Three;
+    expect(component.getHitPointsValue()).toEqual(56);
+    component.character.level = Level.Seven;
+    expect(component.getHitPointsValue()).toEqual(88);
+    component.character.level = Level.Ten;
+    expect(component.getHitPointsValue()).toEqual(112
+    );
+  });
+
+  it('should be able to get hit points when a character has theme points and levels', () => {
+    component.character.themePoints.combat.setStrength(ThemeStrength.Lesser);
+    component.character.level = Level.Four;
+    expect(component.getHitPointsValue()).toEqual(71);
+    component.character.themePoints.stealth.setStrength(ThemeStrength.Lesser);
+    expect(component.getHitPointsValue()).toEqual(74);
+    component.character.level = Level.Six;
+    expect(component.getHitPointsValue()).toEqual(93);
+  });
+
+  it('should be able to get hit points when a character has theme points, levels and attributes', () => {
+    component.character.level = Level.Two;
+    component.character.themePoints.combat.setStrength(ThemeStrength.Lesser);
+    component.character.themePoints.stealth.setStrength(ThemeStrength.Minor);
+    component.character.attributes.Quickness.strength = AttributeStrength.Heroic;
+    component.character.attributes["Self Discipline"].strength = AttributeStrength.Heroic;
+    component.character.attributes.Vitality.strength = AttributeStrength.Heroic;
+    expect(component.getHitPointsValue()).toEqual(63);
+  });
+
+  it('should be able to get recoveries for a character', () => {
+    expect(component.getRecoveries()).toEqual(6);
+    component.character.attributes.Vitality.strength = AttributeStrength.Epic;
+    expect(component.getRecoveries()).toEqual(7);
+  });
+
+  it('should be able to get out of combat recovery value', () => {
+    expect(component.getOutofCombatRecoveryValue()).toEqual(18);
+    component.character.themePoints.combat.setStrength(ThemeStrength.Minor);
+    component.character.themePoints.stealth.setStrength(ThemeStrength.Minor);
+    expect(component.getOutofCombatRecoveryValue()).toEqual(19);
+    component.character.attributes.Vitality.strength = AttributeStrength.Heroic;
+    component.character.attributes.Quickness.strength = AttributeStrength.Heroic;
+    component.character.attributes["Self Discipline"].strength = AttributeStrength.Heroic;
+    expect(component.getOutofCombatRecoveryValue()).toEqual(22);
+  });
+
+  it('should be able to get recovery value', () => {
+    expect(component.getRecoveryValue()).toEqual(10);
+    component.character.themePoints.combat.setStrength(ThemeStrength.Minor);
+    component.character.themePoints.stealth.setStrength(ThemeStrength.Minor);
+    expect(component.getRecoveryValue()).toEqual(10);
+    component.character.attributes.Vitality.strength = AttributeStrength.Heroic;
+    component.character.attributes.Quickness.strength = AttributeStrength.Heroic;
+    component.character.attributes["Self Discipline"].strength = AttributeStrength.Heroic;
+    expect(component.getRecoveryValue()).toEqual(12);
   });
 
 });

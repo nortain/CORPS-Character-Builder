@@ -59,4 +59,16 @@ export class ThemePointsContainer {
     }
     return results;
   }
+
+  /**
+   * gets the bonus to out of combat recovery based on the strength of the general theme
+   * @returns {number}
+   */
+  getOOCRecoveryValue(): number {
+    if (this.general.getStrength() > ThemeStrength.None) {
+      return Math.floor((this.general.getStrength() + 4) / 4);
+    } else {
+      return 0;
+    }
+  }
 }
