@@ -233,6 +233,13 @@ fdescribe('CharacterSheetComponent', () => {
     expect(component.getCriticalReductionValue()).toEqual(2);
     component.character.physicalDefense.equipArmor(new Armor(ArmorType.HeavyArmor));
     expect(component.getCriticalReductionValue()).toEqual(3);
+  });
+
+  it('should be able to get magic resistance of a character', () => {
+    expect(component.getPrimaryMagicResistanceValue()).toEqual(0);
+    component.character.racialSubType = RacialSubType.Air;
+    component.startReloadWithRace("Primental");
+    expect(component.getPrimaryMagicResistanceValue()).toEqual(3);
 
   });
 

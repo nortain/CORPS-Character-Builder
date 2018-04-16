@@ -20,7 +20,7 @@ export class Character extends Race {
   constructor(public name: string,
               public raceType: RaceType = RaceType.Altwani,
               level?: Level,
-              subRace?: RacialSubType,
+              subRace: RacialSubType = null,
               public themePoints = new ThemePointsContainer(),
               public physicalDefense = new PhysicalDefense(),
               public weapons = [new Weapon('Fist', WeaponClass.Unarmed, WeaponCategory.Balanced)],

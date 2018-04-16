@@ -36,7 +36,7 @@ export class Race {
   initializeData(raceType: RaceType, level: Level, racialSubType?: RacialSubType) {
     this.mechanicalBonusValues = STARTING_PLAYER_RACES[raceType].mechanicalBonusValues;
     this.vision = STARTING_PLAYER_RACES[raceType].vision ? STARTING_PLAYER_RACES[raceType].vision : VisionType.Normal;
-    this.racialSubType = racialSubType;
+    this.racialSubType = racialSubType ? racialSubType : null;
     this.magicDefenseBonus = STARTING_PLAYER_RACES[raceType].magicDefenseBonus !== undefined ? STARTING_PLAYER_RACES[raceType].magicDefenseBonus : null;
     this.availableAttributePoints = STARTING_PLAYER_RACES[raceType].availableAttributePoints ? STARTING_PLAYER_RACES[raceType].availableAttributePoints : NON_HUMAN_AVAILABLE_ATTRIBUTE_POINTS;
     this.availableLanguagePoints = STARTING_PLAYER_RACES[raceType].availableLanguagePoints;
@@ -81,14 +81,18 @@ export class Race {
    * Currently this only exists for RacialSubType, which given a racialSubType will match up to the spell damage keyword they have an affinity for.
    */
   getMechanicalBonus(propertyName: string): string {
-    const valueArray = this.mechanicalBonusValues[propertyName];
-    let valueResult: string;
-    if (valueArray && valueArray.length === 10) {
-      valueResult = valueArray[this.level - 1];
-    } else if (valueArray) {
-      valueResult = valueArray[RacialSubTypeToDamageTypeConverter[this.racialSubType]];
+    if (this.mechanicalBonusValues) {
+      const valueArray = this.mechanicalBonusValues[propertyName];
+      let valueResult: string;
+      if (valueArray && valueArray.length === 10) {
+        valueResult = valueArray[this.level - 1];
+      } else if (valueArray) {
+        valueResult = valueArray[RacialSubTypeToDamageTypeConverter[this.racialSubType]];
+      }
+      return valueResult;
+    } else {
+      return null;
     }
-    return valueResult;
   }
 
   private getRecoveryBonus(): number {

@@ -119,7 +119,10 @@ export class CharacterSheetComponent implements OnInit, OnChanges {
   }
 
   getPrimaryMagicResistanceValue(): number {
-    return 0;
+    let pmr = 0;
+    const resistanceAsString = this.character.getMechanicalBonus("Elemental Resistance");
+    pmr += resistanceAsString ? parseInt(resistanceAsString, 10) : 0;
+    return pmr;
   }
 
   getSecondaryMagicRestanceValue(): number {
