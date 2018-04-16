@@ -13,6 +13,8 @@ import {RacialSubType} from "../shared/character/race/racial-sub-type.enum";
 import {CharacterSheetModule} from "./character-sheet.module";
 import {ThemeStrength} from "../shared/theme-points/theme-strength.enum";
 import {AttributeStrength} from "../shared/attribute/attribute-strength.enum";
+import {ArmorType} from "../shared/armor/armor-type.enum";
+import {Armor} from "../shared/armor/armor";
 
 fdescribe('CharacterSheetComponent', () => {
   let component: CharacterSheetComponent;
@@ -170,6 +172,10 @@ fdescribe('CharacterSheetComponent', () => {
     component.character.attributes.Quickness.strength = AttributeStrength.Heroic;
     component.character.attributes["Self Discipline"].strength = AttributeStrength.Heroic;
     expect(component.getOutofCombatRecoveryValue()).toEqual(22);
+    component.startReloadWithRace("Burman");
+    expect(component.getOutofCombatRecoveryValue()).toEqual(23);
+    component.character.themePoints.general.setStrength(ThemeStrength.Minor);
+    expect(component.getOutofCombatRecoveryValue()).toEqual(24);
   });
 
   it('should be able to get recovery value', () => {
@@ -181,6 +187,53 @@ fdescribe('CharacterSheetComponent', () => {
     component.character.attributes.Quickness.strength = AttributeStrength.Heroic;
     component.character.attributes["Self Discipline"].strength = AttributeStrength.Heroic;
     expect(component.getRecoveryValue()).toEqual(12);
+    component.startReloadWithRace("Burman");
+    expect(component.getRecoveryValue()).toEqual(13);
+    component.character.themePoints.general.setStrength(ThemeStrength.Minor);
+    expect(component.getRecoveryValue()).toEqual(13);
+  });
+
+  it('should be able to get power points of a character with attributes and a general theme point', () => {
+    expect(component.getPowerPoints()).toEqual(2);
+    component.character.attributes["Self Discipline"].strength = AttributeStrength.Heroic;
+    expect(component.getPowerPoints()).toEqual(4);
+    component.character.attributes.Reasoning.strength = AttributeStrength.Epic;
+
+    expect(component.getPowerPoints()).toEqual(5);
+    component.character.attributes.Presence.strength = AttributeStrength.Legendary;
+    expect(component.getPowerPoints()).toEqual(6);
+    component.character.attributes["Self Discipline"].strength = AttributeStrength.Legendary;
+    expect(component.getPowerPoints()).toEqual(8);
+    component.character.themePoints.general.setStrength(ThemeStrength.Minor);
+    expect(component.getPowerPoints()).toEqual(9);
+    component.startReloadWithRace("Human");
+    expect(component.getPowerPoints()).toEqual(10);
+    component.character.level = Level.Four;
+    expect(component.getPowerPoints()).toEqual(11);
+  });
+
+  it('should be able to get adrenaline points', () => {
+    expect(component.getAdrenalinePoints()).toEqual(3);
+    component.character.themePoints.magic.setStrength(ThemeStrength.Lesser);
+    expect(component.getAdrenalinePoints()).toEqual(2);
+    component.character.themePoints.general.setStrength(ThemeStrength.Minor);
+    expect(component.getAdrenalinePoints()).toEqual(1);
+    component.character.themePoints.magic.setStrength(ThemeStrength.Minor);
+    expect(component.getAdrenalinePoints()).toEqual(2);
+    component.character.themePoints.magic.setStrength(ThemeStrength.Greater);
+    expect(component.getAdrenalinePoints()).toEqual(0);
+
+  });
+
+  it('should get a characters critical reduction', () => {
+    expect(component.getCriticalReductionValue()).toEqual(0);
+    component.character.physicalDefense.equipArmor(new Armor(ArmorType.LightArmor));
+    expect(component.getCriticalReductionValue()).toEqual(1);
+    component.character.physicalDefense.equipArmor(new Armor(ArmorType.MediumArmor));
+    expect(component.getCriticalReductionValue()).toEqual(2);
+    component.character.physicalDefense.equipArmor(new Armor(ArmorType.HeavyArmor));
+    expect(component.getCriticalReductionValue()).toEqual(3);
+
   });
 
 });

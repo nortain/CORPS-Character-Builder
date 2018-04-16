@@ -71,4 +71,28 @@ export class ThemePointsContainer {
       return 0;
     }
   }
+
+  /**
+   *
+   * @returns {number} returns the amount of bonus theme points a character get
+   */
+  getPowerPointBonus(): number {
+    if (this.general.getStrength() > ThemeStrength.None) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
+  getAdrenalinePoints(): number {
+    if (this.magic.getStrength() === ThemeStrength.Greater) {
+      return 0;
+    } else if (this.magic.getStrength() === ThemeStrength.Lesser) {
+      return 2 - this.general.getStrength();
+    } else if (this.magic.getStrength() === ThemeStrength.Minor) {
+      return 3 - this.general.getStrength();
+    } else {
+      return 3;
+    }
+  }
 }

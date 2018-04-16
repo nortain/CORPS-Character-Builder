@@ -12,7 +12,7 @@ export class StartingCharacterAttributes {
   Intuition: Attribute;
   Reasoning: Attribute;
   "Self Discipline": Attribute;
-  attributesArray: Array<any>;
+  attributesArray: Array<Attribute | any>;
 
   constructor() {
     this.Brawn = new Attribute(AttributeName.Brawn, AttributeStrength.Normal);

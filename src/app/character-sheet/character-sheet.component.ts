@@ -102,13 +102,20 @@ export class CharacterSheetComponent implements OnInit, OnChanges {
     let ooc = this.getHitPointsValue() * .45;
     const talentBonus = 0; // TODO add talents
     ooc += talentBonus;
+    ooc += this.character.recoveryBonus;
     ooc += this.character.themePoints.getOOCRecoveryValue();
     return Math.floor(ooc);
   }
 
 
   getCriticalReductionValue(): number {
-    return 0;
+    let crv = 0;
+    const talentBonus = 0; // TODO add talents
+    const subThemeBonus = 0; // TODO add subthemes
+    crv += this.character.physicalDefense.armor.getCritReduction();
+    crv += talentBonus;
+    crv += subThemeBonus;
+    return crv;
   }
 
   getPrimaryMagicResistanceValue(): number {
@@ -124,11 +131,18 @@ export class CharacterSheetComponent implements OnInit, OnChanges {
   }
 
   getPowerPoints(): number {
-    return 0;
+    let powerPoints = 2;
+    const talentBonus = 0; // TODO add talents
+    powerPoints += this.character.attributes.getBonus(AttributeBonus.PowerPointBonus);
+    powerPoints += this.character.themePoints.getPowerPointBonus();
+    powerPoints += this.character.powerPointBonus;
+    powerPoints += talentBonus;
+    powerPoints += Math.floor(this.character.level / 4);
+    return powerPoints;
   }
 
   getAdrenalinePoints(): number {
-    return 0;
+    return this.character.themePoints.getAdrenalinePoints();
   }
 
   getBloodiedValue(): number {

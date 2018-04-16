@@ -28,7 +28,7 @@ export class Character extends Race {
               public attributes = new StartingCharacterAttributes()) {
     super(raceType, level, subRace);
     for (const attribute of this.attributes.attributesArray) {
-      this.assignAttributePoint(AttributeStrength.Normal, attribute.getName());
+      this.assignAttributePoint(attribute.strength, attribute.getName());
     }
   }
 
