@@ -107,6 +107,58 @@ export const IN_THP_BONUS = [
   [0, 6, 9, 12, 15]
 ];
 
+export const SUBTHEME_BONUS = {
+  Weapon_Specialization: {
+    "1": [2, 3, 3, 4, 4, 5, 5, 6, 6, 7],
+    "2": [5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+    "3": [7, 9, 10, 12, 13, 14, 16, 17, 19, 21]
+  },
+  Protector: {
+    "1": {
+      Thorns: [2, 2, 3, 3, 4, 4, 5, 5, 6, 7],
+      ProtectorAura: [8, 10, 12, 14, 16, 18, 20, 22, 24, 26],
+      RecoveryValueBonus: [1, 1, 1, 1, 2, 2, 2, 2, 3, 3]
+    },
+    "2": {
+      Thorns: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+      ProtectorAura: [16, 20, 24, 28, 32, 36, 40, 44, 48, 52],
+      RecoveryValueBonus: [2, 2, 3, 3, 4, 4, 5, 5, 6, 6]
+    }
+  },
+  Juggernaut: {
+    "1": {
+      TempHp: [3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 9],
+      DamageResist: [1, 1, 1, 2, 2, 2, 2, 3, 3, 3]
+    }
+  },
+  Find_WeaknessAgile: {
+    "1": [4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+    "2": [9, 11, 13, 15, 17, 19, 21, 23, 25, 27],
+    "3": [13, 16, 19, 22, 25, 28, 31, 34, 37, 40]
+  },
+  Find_WeaknessBalanced: {
+    "1": [4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+    "2": [7, 9, 10, 12, 13, 15, 16, 18, 19, 21],
+    "3": [7, 9, 10, 12, 13, 15, 16, 18, 19, 21]
+  },
+  Riposte: {
+    "1": {
+      IsolationDamage: [2, 2, 3, 3, 4, 4, 5, 5, 6, 6],
+      DamageOnMiss: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+    },
+    "2": {
+      IsolationDamage: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+      DamageOnMiss: [8, 10, 12, 14, 16, 18, 20, 22, 24, 26]
+    }
+  },
+  Evasion: {
+    "1": {
+      ActiveDefense: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      CriticalDamageReduction: [1, 1, 1, 2, 2, 2, 2, 3, 3, 3]
+    }
+  }
+};
+
 export const STARTING_PLAYER_RACES = {
   Altwani: {
     vision: VisionType.Low,
@@ -456,9 +508,9 @@ export const BASE_WEAPON_DAMAGE = {
 };
 
 export class StartingCharacterMagicDefense {
-   Fortitude =  new MagicDefense(MagicDefenseType.Fortitude, new Field(10));
-   Reflex = new MagicDefense(MagicDefenseType.Reflex, new Field(10));
-   Will = new MagicDefense(MagicDefenseType.Will, new Field(10));
+  Fortitude = new MagicDefense(MagicDefenseType.Fortitude, new Field(10));
+  Reflex = new MagicDefense(MagicDefenseType.Reflex, new Field(10));
+  Will = new MagicDefense(MagicDefenseType.Will, new Field(10));
 }
 
 

@@ -16,7 +16,7 @@ import {AttributeStrength} from "../shared/attribute/attribute-strength.enum";
 import {ArmorType} from "../shared/armor/armor-type.enum";
 import {Armor} from "../shared/armor/armor";
 
-fdescribe('CharacterSheetComponent', () => {
+describe('CharacterSheetComponent', () => {
   let component: CharacterSheetComponent;
   let fixture: ComponentFixture<CharacterSheetComponent>;
 
@@ -240,7 +240,6 @@ fdescribe('CharacterSheetComponent', () => {
     component.character.racialSubType = RacialSubType.Air;
     component.startReloadWithRace("Primental");
     expect(component.getPrimaryMagicResistanceValue()).toEqual(3);
-
   });
 
 });
