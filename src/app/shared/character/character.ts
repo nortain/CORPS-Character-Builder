@@ -14,6 +14,7 @@ import {WeaponCategory} from "../weapon/weapon-category.enum";
 import {AttributeStrength} from "../attribute/attribute-strength.enum";
 import {AttributeName} from "../attribute/attribute-name.enum";
 import {PhysicalDefense} from "./phsyical-defense/physical-defense";
+import {SubthemeContainer} from "../theme-points/subthemes/subtheme-container";
 
 export class Character extends Race {
 
@@ -22,6 +23,7 @@ export class Character extends Race {
               level?: Level,
               subRace: RacialSubType = null,
               public themePoints = new ThemePointsContainer(),
+              public subthemes = new SubthemeContainer(themePoints),
               public physicalDefense = new PhysicalDefense(),
               public weapons = [new Weapon('Fist', WeaponClass.Unarmed, WeaponCategory.Balanced)],
               public magicDefense = new StartingCharacterMagicDefense(),

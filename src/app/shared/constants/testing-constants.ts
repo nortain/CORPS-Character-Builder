@@ -5,6 +5,8 @@ import {ComponentFixture} from "@angular/core/testing";
 import {By} from "@angular/platform-browser";
 import {NgbDropdownMenu} from "@ng-bootstrap/ng-bootstrap/dropdown/dropdown";
 import {PhysicalDefense} from "../character/phsyical-defense/physical-defense";
+import {ThemePointsContainer} from "../theme-points/theme-points-container";
+import {ThemeStrength} from "../theme-points/theme-strength.enum";
 
 export function mockDropdownData() {
   return [
@@ -21,6 +23,10 @@ export function mockCharacter(name = "Bob", raceType = RaceType.Altwani) {
 
 export function mockDefense() {
   return new PhysicalDefense();
+}
+
+export function mockThemePoints() {
+  return new ThemePointsContainer(ThemeStrength.Minor, ThemeStrength.Minor, ThemeStrength.Minor, ThemeStrength.Minor);
 }
 
 /**This helper function for testing.

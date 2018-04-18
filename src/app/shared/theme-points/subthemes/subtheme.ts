@@ -1,7 +1,6 @@
 import {ThemeStrength} from "../theme-strength.enum";
 import {ThemeType} from "../theme-type.enum";
 import {SubthemeTypes} from "./subtheme-types.enum";
-import {TitleCasePipe} from "@angular/common";
 import {SubthemePipe} from "./subtheme.pipe";
 import {SubthemeBonus} from "./subtheme-bonus.enum";
 import {Level} from "../../character/level.enum";
@@ -28,6 +27,10 @@ export class Subtheme {
 
   getThemeStrength(): ThemeStrength {
     return this.themeStrength;
+  }
+
+  getThemeType(): ThemeType {
+    return this.themeType;
   }
 
   getSubthemeName(): string {
@@ -94,8 +97,13 @@ export class Subtheme {
     this.subthemeName = values[2];
   }
 
+  /**
+   * sets the strength of the sub them to be no higher than the max theme strength.  If the theme type is magic then the theme strength is automatically set to the max theme strength, this is because there no options when choosing theme strength for magic subthemes.
+   */
   private setThemeStrength() {
-    if (this.themeStrength > this.maxThemeStrength) {
+    if (this.themeType === ThemeType.Magic) {
+      this.themeStrength = this.maxThemeStrength;
+    } else if (this.themeStrength > this.maxThemeStrength) {
       this.themeStrength = this.maxThemeStrength;
     }
   }

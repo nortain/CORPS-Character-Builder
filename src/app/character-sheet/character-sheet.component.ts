@@ -45,10 +45,11 @@ export class CharacterSheetComponent implements OnInit, OnChanges {
   reloadCharacter(propertyName: string, valueChange: any) {
     console.log("Character has been reloaded");
     this.character[propertyName] = valueChange;
-    this.character = this.cloneCharacter();
+    const makeNewSubtheme = propertyName === "themePoints";
+    this.character = this.cloneCharacter(makeNewSubtheme);
   }
 
-  startReloadWithRace(raceString: string) {
+  startReloadWithRace(raceString: RaceType) {
     if (RaceType[raceString] !== RaceType.Primental) {
       this.character.racialSubType = null;
     }
@@ -59,7 +60,7 @@ export class CharacterSheetComponent implements OnInit, OnChanges {
     this.reloadCharacter("level", level);
   }
 
-  updateSubRace(subrace: string) {
+  updateSubRace(subrace: RacialSubType) {
     this.reloadCharacter("racialSubType", RacialSubType[subrace]);
   }
 
@@ -195,13 +196,20 @@ export class CharacterSheetComponent implements OnInit, OnChanges {
     this.character.magicDefense[MagicDefenseType[magicDefenseType]].removeDefenseBonus(bonusName);
   }
 
-  cloneCharacter() {
+  /**
+   * Called anytime a change to a character is made to update the UI.
+   * @param {boolean} makeNewSubtheme, trigger a call to force a new subtheme to be created rather than passing in the same one.
+   * @returns {Character}
+   */
+  cloneCharacter(makeNewSubtheme?: boolean) {
+    const subThemes = makeNewSubtheme ? undefined : this.character.subthemes;
     const char = new Character(
       this.character.name,
       this.character.raceType,
       this.character.level,
       this.character.racialSubType,
       this.character.themePoints,
+      subThemes,
       this.character.physicalDefense,
       this.character.weapons,
       this.character.magicDefense,
