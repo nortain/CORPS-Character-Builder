@@ -19,14 +19,18 @@
 
   <div class="col">
     <div class="row">
-
-
-      <div class="col">
-
-        <label class="font-weight-bold col-12">Theme Points</label>
-        <corps-character-theme-points id="themePoints"
-                                      (emitter)="updateThemePoints($event)"></corps-character-theme-points>
-
+      <div class="col-5 col-md-3">
+        <div class="row">
+          <div class="col-9">
+            <label class="font-weight-bold col-12">Theme Points</label>
+            <corps-character-theme-points id="themePoints"
+                                          (emitter)="updateThemePoints($event)">
+            </corps-character-theme-points>
+          </div>
+          <div class="col-3">
+            <button id="subthemesBtn" class="btn btn-sm btn-outline-secondary subthemesBtn" *ngIf="character.themePoints.getOtherThemePoints('general') > 0" (click)="launchSubthemesModal()">+ Subthemes</button>
+          </div>
+        </div>
       </div>
 
       <div class="col">

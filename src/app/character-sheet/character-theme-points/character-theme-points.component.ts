@@ -22,7 +22,9 @@ export class CharacterThemePointsComponent implements OnInit {
   }
 
   getDropdownValues(themeType: string, isGeneral = false): DropdownValueObject[] {
-    const result = this.attributeService.buildArrayAsDropdownArray(this.attributeService.getThemePointStrength(isGeneral, this.themeContainer.getOtherThemePoints(themeType)));
+    const result = this.attributeService.buildArrayAsDropdownArray(
+      this.attributeService.getThemePointStrength(isGeneral, this.themeContainer.getOtherThemePoints(themeType))
+    );
     return result;
   }
 

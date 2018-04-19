@@ -2,7 +2,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {CharacterSheetComponent} from './character-sheet.component';
 import {SharedModule} from "../shared/shared.module";
-import {NgbDropdown, NgbDropdownConfig} from "@ng-bootstrap/ng-bootstrap";
+import {NgbDropdown, NgbDropdownConfig, NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {actionClickDropdownItemX, mockCharacter} from "../shared/constants/testing-constants";
 import {RaceType} from "../shared/character/race/race-type.enum";
 import {Level} from "../shared/character/level.enum";
@@ -16,6 +16,7 @@ import {AttributeStrength} from "../shared/attribute/attribute-strength.enum";
 import {ArmorType} from "../shared/armor/armor-type.enum";
 import {Armor} from "../shared/armor/armor";
 import {ThemePointsContainer} from "../shared/theme-points/theme-points-container";
+import {NgbModalStack} from "@ng-bootstrap/ng-bootstrap/modal/modal-stack";
 
 describe('CharacterSheetComponent', () => {
   let component: CharacterSheetComponent;
@@ -23,9 +24,9 @@ describe('CharacterSheetComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [SharedModule, CharacterSheetModule],
+      imports: [SharedModule, NgbModule, CharacterSheetModule],
       declarations: [],
-      providers: [NgbDropdownConfig]
+      providers: [NgbDropdownConfig, NgbModal, NgbModalStack]
     })
       .compileComponents();
   }));
@@ -243,15 +244,25 @@ describe('CharacterSheetComponent', () => {
     expect(component.getPrimaryMagicResistanceValue()).toEqual(3);
   });
 
-  it('should only load new subthemes if themePoints were changed', () => {
-      expect(component.character.subthemes.getAvailableSubthemes("combat")).toEqual(0);
-      const original = component.character.subthemes;
-      component.updateThemePoints(new ThemePointsContainer(ThemeStrength.Lesser, ThemeStrength.Minor));
-      expect(component.character.subthemes).not.toEqual(original);
-      expect(component.character.subthemes.getAvailableSubthemes("combat")).toEqual(2);
-      const old = component.character.subthemes;
-      component.startReloadWithRace(RaceType.Human);
-      expect(component.character.subthemes).toEqual(old);
+  it('should only load new subthemes if subthemePoints were changed', () => {
+    expect(component.character.subthemes.getAvailableSubthemePoints("combat")).toEqual(0);
+    const original = component.character.subthemes;
+    component.updateThemePoints(new ThemePointsContainer(ThemeStrength.Lesser, ThemeStrength.Minor));
+    expect(component.character.subthemes).not.toEqual(original);
+    expect(component.character.subthemes.getAvailableSubthemePoints("combat")).toEqual(2);
+    const old = component.character.subthemes;
+    component.startReloadWithRace(RaceType.Human);
+    expect(component.character.subthemes).toEqual(old);
+  });
+
+  it('should show a button for subtheme points if at least one of magic, combat or stealth theme points are selected', () => {
+    component.updateThemePoints(new ThemePointsContainer(0, 0, 0, 1));
+    fixture.detectChanges();
+    let subthemeBtn = fixture.debugElement.queryAll(By.css("#subthemesBtn"));
+    expect(subthemeBtn.length).toEqual(0, "With no subthemes button should be hidden");
+    actionClickDropdownItemX(fixture, "#combat", 2);
+    subthemeBtn = fixture.debugElement.queryAll(By.css("#subthemesBtn"));
+    expect(subthemeBtn.length).toEqual(1, "button should be visiable now");
   });
 
 });

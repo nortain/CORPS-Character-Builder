@@ -23,6 +23,11 @@ export class ThemePointsContainer {
     return this.combat.getStrength() + this.stealth.getStrength() + this.magic.getStrength() + this.general.getStrength() - currentNumberOfTheme;
   }
 
+  /**
+   * returns a number to indicate how my theme points are available excluding the theme that was currently passed in
+   * @param {string} exluduceCurrentTheme
+   * @returns {number}
+   */
   getOtherThemePoints(exluduceCurrentTheme: string): number {
     const result = this.getTotalThemePoints() - this[exluduceCurrentTheme].getStrength();
     return result;

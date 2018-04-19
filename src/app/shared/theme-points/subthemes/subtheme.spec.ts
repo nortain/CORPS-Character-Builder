@@ -9,7 +9,7 @@ describe('Subtheme', () => {
   let combat, stealth, magic;
   beforeEach(() => {
     combat = new Subtheme(SubthemeTypes.Weapon_Specialization, ThemeStrength.Minor);
-    stealth = new Subtheme(SubthemeTypes.Find_Weakness, ThemeStrength.Minor, WeaponCategory.Agile);
+    stealth = new Subtheme(SubthemeTypes.Find_Weakness, ThemeStrength.Minor);
     magic = new Subtheme(SubthemeTypes.Spell_Warden, ThemeStrength.Minor);
   });
   it('should create an instance', () => {
@@ -26,9 +26,9 @@ describe('Subtheme', () => {
   });
 
   it('should be able to get unique magic Id and name', () => {
-    expect(magic.getSubthemeName()).toEqual("Spell Warden");
+    expect(magic.getSubthemeFormattedName()).toEqual("Spell Warden");
     magic = new Subtheme(SubthemeTypes.Druid, ThemeStrength.Greater);
-    expect(magic.getSubthemeName()).toEqual("Druid");
+    expect(magic.getSubthemeFormattedName()).toEqual("Druid");
   });
 
   it('should be able to get bonus for weapon specialization', () => {
@@ -38,12 +38,11 @@ describe('Subtheme', () => {
   });
 
   it('should be able to get bonus for Find Weakness', () => {
-    expect(stealth.getBonus(Level.Two)).toEqual(5);
-    stealth = new Subtheme(SubthemeTypes.Find_Weakness, ThemeStrength.Greater, WeaponCategory.Agile);
-    expect(stealth.getBonus(Level.Four)).toEqual(22);
+    expect(stealth.getBonus(Level.Two, SubthemeBonus.Agile)).toEqual(5);
+    stealth = new Subtheme(SubthemeTypes.Find_Weakness, ThemeStrength.Greater);
+    expect(stealth.getBonus(Level.Four, SubthemeBonus.Agile)).toEqual(22);
     stealth = new Subtheme(SubthemeTypes.Find_Weakness, ThemeStrength.Lesser);
-    stealth.findWeaknessType = WeaponCategory.Balanced;
-    expect(stealth.getBonus(Level.Six)).toEqual(15);
+    expect(stealth.getBonus(Level.Six, SubthemeBonus.Balanced)).toEqual(15);
   });
 
   it('should be able to get bonus for protector', () => {

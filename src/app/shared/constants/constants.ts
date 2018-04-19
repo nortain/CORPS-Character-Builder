@@ -22,6 +22,7 @@ export const STARTING_MOVEMENT = 6;
 export const STARTING_INITIATIVE = 0;
 export const STARTING_HIT_POINTS = 8;
 export const STARTING_RECOVERIES = 6;
+export const STARTING_THEME_POINTS = 4;
 
 // Armor constants based off of the ArmorType Enum
 export const ACTIVE_DEFENSE = [11, 13, 13, 13, 14];
@@ -111,7 +112,8 @@ export const SUBTHEME_BONUS = {
   Weapon_Specialization: {
     "1": [2, 3, 3, 4, 4, 5, 5, 6, 6, 7],
     "2": [5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
-    "3": [7, 9, 10, 12, 13, 14, 16, 17, 19, 21]
+    "3": [7, 9, 10, 12, 13, 14, 16, 17, 19, 21],
+    text: "Increase the damage of all weapon and unarmed attacks by your weapon specialization bonus"
   },
   Protector: {
     "1": {
@@ -123,23 +125,31 @@ export const SUBTHEME_BONUS = {
       Thorns: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
       ProtectorAura: [16, 20, 24, 28, 32, 36, 40, 44, 48, 52],
       RecoveryValueBonus: [2, 2, 3, 3, 4, 4, 5, 5, 6, 6]
-    }
+    },
+    text: "Thorns: When you are hit by an enemy you threaten they take physical damage equal to your thorns damage.\n\r" +
+    "Protector Aura: When an enemy threatened by you hits an ally you deal physical damage to them equal to your Protector Aura\n\r" +
+    "Recovery Value Bonus: Increase your Out of Combat recovery value by the Recovery Value Bonus"
   },
   Juggernaut: {
     "1": {
       TempHp: [3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 9],
       DamageResist: [1, 1, 1, 2, 2, 2, 2, 3, 3, 3]
+    },
+    text: "Increase your starting temporary hit points by the Temp Hp value and you gain Damage Resist to all damage equal to the damage resist value."
+  },
+  Find_Weakness: {
+    "1": {
+      Agile: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+      Balanced: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+    },
+    "2": {
+      Agile: [9, 11, 13, 15, 17, 19, 21, 23, 25, 27],
+      Balanced: [7, 9, 10, 12, 13, 15, 16, 18, 19, 21]
+    },
+    "3": {
+      Agile: [13, 16, 19, 22, 25, 28, 31, 34, 37, 40],
+      Balanced: [7, 9, 10, 12, 13, 15, 16, 18, 19, 21]
     }
-  },
-  Find_WeaknessAgile: {
-    "1": [4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
-    "2": [9, 11, 13, 15, 17, 19, 21, 23, 25, 27],
-    "3": [13, 16, 19, 22, 25, 28, 31, 34, 37, 40]
-  },
-  Find_WeaknessBalanced: {
-    "1": [4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
-    "2": [7, 9, 10, 12, 13, 15, 16, 18, 19, 21],
-    "3": [7, 9, 10, 12, 13, 15, 16, 18, 19, 21]
   },
   Riposte: {
     "1": {

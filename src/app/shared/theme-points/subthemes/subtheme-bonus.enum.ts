@@ -8,4 +8,6 @@ export enum SubthemeBonus {
   IsolationDamage = "IsolationDamage",
   ActiveDefense = "ActiveDefense",
   CriticalDamageReduction = "CriticalDamageReduction",
+  Agile = "Agile",
+  Balanced = "Balanced"
 }

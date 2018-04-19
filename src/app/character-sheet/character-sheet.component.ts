@@ -8,8 +8,9 @@ import {RacialSubType} from "../shared/character/race/racial-sub-type.enum";
 
 import {MagicDefenseType} from "../shared/character/magic-defense/magic-defense-type.enum";
 import {AttributeBonus} from "../shared/attribute/character-attribute/attribute-bonus.enum";
-import {Race} from "../shared/character/race/race";
 import {STARTING_HIT_POINTS, STARTING_RECOVERIES} from "../shared/constants/constants";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {SubthemeComponent} from "./character-subtheme-modal/character-subthemes/subtheme.component";
 
 @Component({
   selector: 'corps-character-sheet',
@@ -27,7 +28,7 @@ export class CharacterSheetComponent implements OnInit, OnChanges {
   RaceType = RaceType; // expose racetype to the UI
   MagicDefenseType = MagicDefenseType;
 
-  constructor(private attributeService: AttributeService) {
+  constructor(private attributeService: AttributeService, private modalService: NgbModal) {
   }
 
   ngOnChanges() {
@@ -68,6 +69,10 @@ export class CharacterSheetComponent implements OnInit, OnChanges {
     this.reloadCharacter("themePoints", updatedThemePoints);
   }
 
+  launchSubthemesModal() {
+
+  }
+
   /**
    * calculates out what a characters max hit points are based on theme points, attributes, level and talent bonuses
    * @returns {number} of hit points character has
@@ -106,6 +111,21 @@ export class CharacterSheetComponent implements OnInit, OnChanges {
     ooc += this.character.recoveryBonus;
     ooc += this.character.themePoints.getOOCRecoveryValue();
     return Math.floor(ooc);
+  }
+
+  openModalWindow(modalOptions?) {
+    if (!modalOptions) {
+      modalOptions = {
+        backdrop: "static",
+        windowClass: "lg"
+      };
+    }
+    const modalRef = this.modalService.open(SubthemeComponent, modalOptions);
+    modalRef.result.then((result) => {
+      console.log("modal was closed with result: ", result);
+    }, (rejected) => {
+      console.log("modal was rejected with: ", rejected);
+    });
   }
 
 

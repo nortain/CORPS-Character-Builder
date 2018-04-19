@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <label class="font-weight-bold">{{subtheme.subthemeName | subthemes}}</label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <corps-dropdown
+        id="subthemeDropdown"
+        [labelName]="'Sub Theme Strength'"
+        [value]="loadSelectedDropdownValue()"
+        [values]="getDropdownValues()"
+        (valueChange)="reloadSubtheme($event)"
+      >
+      </corps-dropdown>
+      <div class="col-6">
+        You can assign {{getRemainingSubthemePointsToAssign()}} of {{getTotalSubthemePoints()}} {{themeType[subtheme.getThemeType()]}} points
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      {{getTextInfo()}}
+    </div>
+  </div>
+  <div class="row">
+    <div *ngIf="isData(getTableData())">
+      <table class="col-12" *ngFor="let table of getTableData()">
+        <tr>
+          <td *ngFor="let data of table">{{data}}</td>
+        </tr>
+      </table>
+    </div>
+    <div *ngIf="!isData(getTableData())">
+      <table class="col-12" *ngFor="let table of getTableData()">
+        <tr *ngFor="let header of getRowHeader(table)">
+          <td class="font-weight-bold">{{header}}</td>
+          <td *ngFor="let data of getRowData(table, header)">{{data}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+
