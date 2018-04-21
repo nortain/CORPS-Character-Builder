@@ -12,7 +12,7 @@ import { CharacterSubthemeModalComponent } from './character-subtheme-modal/char
     SharedModule
   ],
   declarations: [CharacterAttributesComponent, CharacterSheetComponent, CharacterThemePointsComponent, SubthemeComponent, CharacterSubthemeModalComponent],
-  entryComponents: [SubthemeComponent]
+  entryComponents: [CharacterSubthemeModalComponent]
 
 })
 export class CharacterSheetModule {

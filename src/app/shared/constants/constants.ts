@@ -14,6 +14,9 @@ import {BonusByLevel} from "../character/bonus-by-level";
 import {Bonus} from "../character/bonus";
 import {Attribute} from "../attribute/attribute";
 import {AttributeStrength} from "../attribute/attribute-strength.enum";
+import {SubthemeTypes} from "../theme-points/subthemes/subtheme-types.enum";
+import {ThemeStrength} from "../theme-points/theme-strength.enum";
+import {Subtheme} from "../theme-points/subthemes/subtheme";
 
 
 export const NON_HUMAN_AVAILABLE_ATTRIBUTE_POINTS = 4;
@@ -108,12 +111,84 @@ export const IN_THP_BONUS = [
   [0, 6, 9, 12, 15]
 ];
 
+export interface SubthemeObject {
+  combat: Subtheme[];
+  stealth: Subtheme[];
+  magic: Subtheme[];
+}
+
+export function getSubthemeObject(magic: number): SubthemeObject {
+  let magicArray;
+  switch (magic) {
+    case 1: {
+      magicArray = [
+        new Subtheme(SubthemeTypes.Spell_Warden),
+        new Subtheme(SubthemeTypes.Magent)
+      ];
+      break;
+    }
+    case 2: {
+      magicArray = [
+        new Subtheme(SubthemeTypes.Cleric),
+        new Subtheme(SubthemeTypes.Assassin),
+        new Subtheme(SubthemeTypes.Druid),
+        new Subtheme(SubthemeTypes.Warrior_Mage)
+      ];
+      break;
+    }
+    case 3: {
+      magicArray = [
+        new Subtheme(SubthemeTypes.Necromancer),
+        new Subtheme(SubthemeTypes.Mage),
+        new Subtheme(SubthemeTypes.Elementalist),
+        new Subtheme(SubthemeTypes.Priest),
+        new Subtheme(SubthemeTypes.Shaman),
+        new Subtheme(SubthemeTypes.Warlock)
+      ];
+      break;
+    }
+    default:
+      magicArray = [];
+      break;
+  }
+  return {
+    combat: [
+      new Subtheme(SubthemeTypes.Weapon_Specialization),
+      new Subtheme(SubthemeTypes.Protector),
+      new Subtheme(SubthemeTypes.Juggernaut)
+    ],
+    stealth: [
+      new Subtheme(SubthemeTypes.Find_Weakness),
+      new Subtheme(SubthemeTypes.Riposte),
+      new Subtheme(SubthemeTypes.Evasion)
+    ],
+    magic: magicArray
+  };
+}
+
+export const ONE_MAGIC_SPELLS = {
+  Magent: {
+    FeatureBonus: "",
+    GeneralFeature: "",
+    ImplementKnacks: {
+      RangedDefender: "",
+      CarpetBagger: ""
+    }
+
+  },
+  SpellWarden: {
+
+  }
+
+
+};
+
 export const SUBTHEME_BONUS = {
   Weapon_Specialization: {
-    "1": [2, 3, 3, 4, 4, 5, 5, 6, 6, 7],
-    "2": [5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
-    "3": [7, 9, 10, 12, 13, 14, 16, 17, 19, 21],
-    text: "Increase the damage of all weapon and unarmed attacks by your weapon specialization bonus"
+    "1": {BonusDamage: [2, 3, 3, 4, 4, 5, 5, 6, 6, 7]},
+    "2": {BonusDamage: [5, 6, 7, 8, 9, 10, 11, 12, 13, 14]},
+    "3": {BonusDamage: [7, 9, 10, 12, 13, 14, 16, 17, 19, 21]},
+    text: ["<b>Weapon Specialization:</b> Increase the damage of all weapon and unarmed attacks by your weapon specialization bonus"]
   },
   Protector: {
     "1": {
@@ -126,16 +201,19 @@ export const SUBTHEME_BONUS = {
       ProtectorAura: [16, 20, 24, 28, 32, 36, 40, 44, 48, 52],
       RecoveryValueBonus: [2, 2, 3, 3, 4, 4, 5, 5, 6, 6]
     },
-    text: "Thorns: When you are hit by an enemy you threaten they take physical damage equal to your thorns damage.\n\r" +
-    "Protector Aura: When an enemy threatened by you hits an ally you deal physical damage to them equal to your Protector Aura\n\r" +
-    "Recovery Value Bonus: Increase your Out of Combat recovery value by the Recovery Value Bonus"
+    text: [
+      "<b>Thorns:</b> When you are hit by an enemy you threaten they take physical damage equal to your Thorns.",
+      "<b>Protector Aura:</b> When an enemy threatened by you hits an ally you deal physical damage to them equal to your Protector Aura.",
+      "<b>Recovery Value Bonus:</b> Increase your Out of Combat recovery value by the Recovery Value Bonus"
+    ]
   },
   Juggernaut: {
     "1": {
       TempHp: [3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 9],
       DamageResist: [1, 1, 1, 2, 2, 2, 2, 3, 3, 3]
     },
-    text: "Increase your starting temporary hit points by the Temp Hp value and you gain Damage Resist to all damage equal to the damage resist value."
+    text: ["<b>Temporary Hp:</b> Increase your starting temporary hit points by the Temp Hp value",
+      "<b>Damage Resist:</b> Reduce all non-ongoing damage taken by the damage resist value."]
   },
   Find_Weakness: {
     "1": {
@@ -149,22 +227,30 @@ export const SUBTHEME_BONUS = {
     "3": {
       Agile: [13, 16, 19, 22, 25, 28, 31, 34, 37, 40],
       Balanced: [7, 9, 10, 12, 13, 15, 16, 18, 19, 21]
-    }
+    },
+    text: ["Once per round as a free action you can deal increased damage with a <b>Balanced</b> or <b>Agile</b> to an enemy granting you combat superiority by your Find Weakness damage. This damage bonus is dependent on the weapon category you are using to make the attack. Heavy and Simple weapons cannot benefit from Find Weakness."]
   },
   Riposte: {
     "1": {
       IsolationDamage: [2, 2, 3, 3, 4, 4, 5, 5, 6, 6],
-      DamageOnMiss: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+      RiposteAura: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
     },
     "2": {
       IsolationDamage: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
-      DamageOnMiss: [8, 10, 12, 14, 16, 18, 20, 22, 24, 26]
-    }
+      RiposteAura: [8, 10, 12, 14, 16, 18, 20, 22, 24, 26]
+    },
+    text: ["<b>Isolation Damage:</b> When you attack an enemy who is isolated you deal bonus Isolation Damage.", "<b>Riposte Aura:</b>  When an enemy threatened by you misses you with an attack you automatically deal damage equal to the Riposte Aura."]
   },
   Evasion: {
     "1": {
       ActiveDefense: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
       CriticalDamageReduction: [1, 1, 1, 2, 2, 2, 2, 3, 3, 3]
+    },
+    text: ["<b>Active Defense:</b> Increase your active defense by 1.", "<b>Critical Damage Reduction:</b>Reduce ongoing damage from critical hits by the reduction value listed in the table below"]
+  },
+  Magent: {
+    "1": {
+      Magent: ONE_MAGIC_SPELLS
     }
   }
 };

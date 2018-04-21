@@ -1,6 +1,6 @@
 <form name="characterSheetForm">
   <div class="row">
-
+    <input id="sillyTest" [ngModel]="testName">
     <corps-input id="characterName" labelName="Name" class="col" [newLineLabelName]="true"
                  [inputModel]="character.name" (outGoingModel)="character.name=$event"></corps-input>
 

@@ -32,9 +32,9 @@ describe('Subtheme', () => {
   });
 
   it('should be able to get bonus for weapon specialization', () => {
-    expect(combat.getBonus(Level.One)).toEqual(2);
+    expect(combat.getBonus(Level.One, SubthemeBonus.BonusDamage)).toEqual(2);
     combat = new Subtheme(SubthemeTypes.Weapon_Specialization, ThemeStrength.Greater);
-    expect(combat.getBonus(Level.Three)).toEqual(10);
+    expect(combat.getBonus(Level.Three, SubthemeBonus.BonusDamage)).toEqual(10);
   });
 
   it('should be able to get bonus for Find Weakness', () => {
@@ -60,7 +60,7 @@ describe('Subtheme', () => {
 
   it('should be able to get bonus for Riposte', () => {
     stealth = new Subtheme(SubthemeTypes.Riposte, ThemeStrength.Greater);
-    expect(stealth.getBonus(Level.Five, SubthemeBonus.DamageOnMiss)).toEqual(16);
+    expect(stealth.getBonus(Level.Five, SubthemeBonus.RiposteAura)).toEqual(16);
     expect(stealth.getBonus(Level.Seven, SubthemeBonus.IsolationDamage)).toEqual(10);
   });
 
@@ -74,5 +74,9 @@ describe('Subtheme', () => {
     stealth = new Subtheme(SubthemeTypes.Riposte, ThemeStrength.Lesser);
     expect(stealth.getBonus(Level.Nine, SubthemeBonus.TempHp)).toEqual(0);
     expect(magic.getBonus(Level.Three)).toEqual(0);
+  });
+
+  it('should find a solution for casters.', () => {
+    expect(true).toBeFalsy();
   });
 });

@@ -13,7 +13,7 @@ export class Subtheme {
   subthemeName: string;
 
 
-  constructor(public subtheme: SubthemeTypes, public themeStrength: ThemeStrength) {
+  constructor(public subtheme: SubthemeTypes, public themeStrength = ThemeStrength.None) {
     const values = this.parseSubtheme(subtheme);
     this.assignValues(values);
     this.setThemeStrength();
@@ -58,58 +58,20 @@ export class Subtheme {
     return this.subthemeName;
   }
 
+  private resolveBonus(level: Level, bonusName: SubthemeBonus) {
+    let result;
+    if (SUBTHEME_BONUS[this.subthemeName] && SUBTHEME_BONUS[this.subthemeName][this.themeStrength][bonusName]) {
+      result = SUBTHEME_BONUS[this.subthemeName][this.themeStrength][bonusName][level];
+    } else {
+      result = 0;
+    }
+    return result;
+  }
+
 
   getBonus(rawLevel: Level, bonusName: SubthemeBonus): number {
     const level = rawLevel - 1;
-    switch (this.subthemeName) {
-      case this.parseSubtheme(SubthemeTypes.Find_Weakness)[2]: {
-        if (bonusName !== SubthemeBonus.Agile
-        && bonusName !== SubthemeBonus.Balanced) {
-          return 0;
-        } else {
-          return SUBTHEME_BONUS[this.subthemeName][this.themeStrength][bonusName][level];
-        }
-      }
-      case this.parseSubtheme(SubthemeTypes.Weapon_Specialization)[2]: {
-        return SUBTHEME_BONUS[this.subthemeName][this.themeStrength][level];
-      }
-      case this.parseSubtheme(SubthemeTypes.Protector)[2]: {
-        if (bonusName !== SubthemeBonus.ProtectorAura
-          && bonusName !== SubthemeBonus.Thorns
-          && bonusName !== SubthemeBonus.RecoveryValueBonus) {
-          return 0;
-        } else {
-          return SUBTHEME_BONUS[this.subthemeName][this.themeStrength][bonusName][level];
-        }
-      }
-      case this.parseSubtheme(SubthemeTypes.Juggernaut)[2]: {
-        if (bonusName !== SubthemeBonus.TempHp
-          && bonusName !== SubthemeBonus.DamageResist) {
-          return 0;
-        } else {
-          return SUBTHEME_BONUS[this.subthemeName][this.themeStrength][bonusName][level];
-        }
-      }
-      case this.parseSubtheme(SubthemeTypes.Riposte)[2]: {
-        if (bonusName !== SubthemeBonus.IsolationDamage
-          && bonusName !== SubthemeBonus.DamageOnMiss) {
-          return 0;
-        } else {
-          return SUBTHEME_BONUS[this.subthemeName][this.themeStrength][bonusName][level];
-        }
-      }
-      case this.parseSubtheme(SubthemeTypes.Evasion)[2]: {
-        if (bonusName !== SubthemeBonus.ActiveDefense
-          && bonusName !== SubthemeBonus.CriticalDamageReduction) {
-          return 0;
-        } else {
-          return SUBTHEME_BONUS[this.subthemeName][this.themeStrength][bonusName][level];
-        }
-      }
-      default: {
-        return 0;
-      }
-    }
+    return this.resolveBonus(level, bonusName);
   }
 
   private assignValues(values: string[]) {

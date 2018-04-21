@@ -11,6 +11,7 @@ import {ThemePointsContainer} from "../../shared/theme-points/theme-points-conta
 import {SubthemeContainer} from "../../shared/theme-points/subthemes/subtheme-container";
 import {SubthemeTypes} from "../../shared/theme-points/subthemes/subtheme-types.enum";
 import {Subtheme} from "../../shared/theme-points/subthemes/subtheme";
+import {By} from "@angular/platform-browser";
 
 describe('CharacterSubthemeModalComponent', () => {
   let component: CharacterSubthemeModalComponent;
@@ -30,6 +31,7 @@ describe('CharacterSubthemeModalComponent', () => {
     fixture = TestBed.createComponent(CharacterSubthemeModalComponent);
     component = fixture.componentInstance;
     component.subthemePoints = new SubthemeContainer(mockThemePoints());
+    component.getAllPossibleSubthemes();
     weapon = new Subtheme(SubthemeTypes.Weapon_Specialization, 0);
     protector = new Subtheme(SubthemeTypes.Protector, 0);
     juggernaut = new Subtheme(SubthemeTypes.Juggernaut, 0);
@@ -47,21 +49,45 @@ describe('CharacterSubthemeModalComponent', () => {
     component.subthemePoints = new SubthemeContainer(new ThemePointsContainer(ThemeStrength.Minor, 0, 0, 0));
 
     fixture.detectChanges();
-    expect(component.getAllPossibleSubthemes()).toEqual([
+    component.getAllPossibleSubthemes();
+    expect(component.subthemeButtonsArray).toEqual([
       weapon, protector, juggernaut
     ]);
   });
 
   it('should be able to get all possible subthemes when stealth is the only possible subthemes available', () => {
-    component.subthemePoints = new SubthemeContainer(new ThemePointsContainer(0, 1, 1, 1));
-    expect(component.getAllPossibleSubthemes()).toEqual([
+    component.subthemePoints = new SubthemeContainer(new ThemePointsContainer(0, 1, 0, 1));
+    component.getAllPossibleSubthemes();
+    expect(component.subthemeButtonsArray).toEqual([
       find, riposte, evasion
     ]);
   });
 
   it('should be able to load in subthemes that have already been assigned values', () => {
-    component.subthemePoints = new SubthemeContainer(new ThemePointsContainer(3, 0, 0, 1));
-    // component.subthemePoints.assignSubtheme()
+    const sc = new SubthemeContainer(new ThemePointsContainer(3, 0, 0, 1));
+    sc.assignSubtheme(new Subtheme(SubthemeTypes.Protector, ThemeStrength.Lesser));
+    component.subthemePoints = sc;
+    component.getAllPossibleSubthemes();
+
+    let btn = fixture.debugElement.queryAll(By.css("#Protector"));
+    btn[0].nativeElement.click();
+    fixture.detectChanges();
+    btn = fixture.debugElement.queryAll(By.css("#Protector"));
+    expect(btn[0].nativeElement).toBeTruthy();
+    expect(btn[0].nativeElement.innerText).toContain("Ranks: 2");
+  });
+
+  // TODO need to test passing in varous sub themes
+
+  it('should load up the subtheme that is first in the array of subthemes', () => {
+    const subComponent = fixture.debugElement.query(By.directive(SubthemeComponent));
+    expect(subComponent.nativeElement).toBeTruthy();
+    const name = subComponent.queryAll(By.css("label"));
+    expect(name[0].nativeElement.innerText).toBe("Subtheme Name: Weapon Specialization");
+  });
+
+  it('should be able to switch subthemes displayed in subtheme component', () => {
+
   });
 
 

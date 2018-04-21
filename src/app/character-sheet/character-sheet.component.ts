@@ -9,8 +9,9 @@ import {RacialSubType} from "../shared/character/race/racial-sub-type.enum";
 import {MagicDefenseType} from "../shared/character/magic-defense/magic-defense-type.enum";
 import {AttributeBonus} from "../shared/attribute/character-attribute/attribute-bonus.enum";
 import {STARTING_HIT_POINTS, STARTING_RECOVERIES} from "../shared/constants/constants";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
 import {SubthemeComponent} from "./character-subtheme-modal/character-subthemes/subtheme.component";
+import {CharacterSubthemeModalComponent} from "./character-subtheme-modal/character-subtheme-modal.component";
 
 @Component({
   selector: 'corps-character-sheet',
@@ -20,6 +21,7 @@ import {SubthemeComponent} from "./character-subtheme-modal/character-subthemes/
 })
 export class CharacterSheetComponent implements OnInit, OnChanges {
 
+  testName;
   character: Character;
   races: DropdownValueObject[];
   subraces: DropdownValueObject[];
@@ -29,6 +31,7 @@ export class CharacterSheetComponent implements OnInit, OnChanges {
   MagicDefenseType = MagicDefenseType;
 
   constructor(private attributeService: AttributeService, private modalService: NgbModal) {
+    this.testName = "";
   }
 
   ngOnChanges() {
@@ -69,8 +72,22 @@ export class CharacterSheetComponent implements OnInit, OnChanges {
     this.reloadCharacter("themePoints", updatedThemePoints);
   }
 
+  /**
+   * launch subtheme modal
+   */
   launchSubthemesModal() {
+    const modalOptions = {
+      backdrop: "static",
+      windowClass: "xlModal"
+    } as NgbModalOptions;
+    const ref = this.modalService.open(CharacterSubthemeModalComponent, modalOptions);
+    ref.componentInstance.subthemePoints = this.character.subthemes;
 
+    ref.result.then((subthemeContainer) => {
+      this.reloadCharacter("subthemes", subthemeContainer);
+    }, (err) => {
+      console.log("User dismissed with err msg : ", err);
+    });
   }
 
   /**

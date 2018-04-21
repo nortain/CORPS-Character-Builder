@@ -5,7 +5,6 @@ import {AttributeService} from "../../../shared/attribute/attribute.service";
 import {SubthemeTypes} from "../../../shared/theme-points/subthemes/subtheme-types.enum";
 import {ThemeType} from "../../../shared/theme-points/theme-type.enum";
 import {STARTING_THEME_POINTS, SUBTHEME_BONUS} from "../../../shared/constants/constants";
-import {ThemeStrength} from "../../../shared/theme-points/theme-strength.enum";
 
 
 @Component({
@@ -32,7 +31,7 @@ export class SubthemeComponent implements OnInit {
     console.log("subtheme component was initialized");
   }
 
-  getTextInfo() {
+  getTextInfo(): string[] {
     return SUBTHEME_BONUS[this.subtheme.getSubthemeName()].text;
   }
 
@@ -47,16 +46,6 @@ export class SubthemeComponent implements OnInit {
       length++;
     }
     return rows;
-  }
-
-  /**
-   * takes in a numberArray or an object and returns true if the object is an array
-   * @param {number[] | Object} table
-   * @returns {boolean}
-   */
-  isData(table: number[] | Object): boolean {
-    const result = Array.isArray(table[0]);
-    return result;
   }
 
   /**
@@ -76,7 +65,8 @@ export class SubthemeComponent implements OnInit {
    * @returns {any}
    */
   getRowData(table, rowName) {
-    return table[rowName];
+    const value = table[rowName];
+    return value.length === 1 ? ' ' + value : value;
   }
 
 

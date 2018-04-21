@@ -4,6 +4,7 @@ import {Subtheme} from "./subtheme";
 import {SubthemeTypes} from "./subtheme-types.enum";
 import {ThemeStrength} from "../theme-strength.enum";
 import {ThemePointsContainer} from "../theme-points-container";
+import {getSubthemeObject} from "../../constants/constants";
 
 describe('SubthemeContainer', () => {
   let st;
@@ -67,6 +68,33 @@ describe('SubthemeContainer', () => {
     st.assignSubtheme(warden);
     expect(st.getSubthemeStrength("magic")).toEqual(1);
     expect(st.magic).toEqual(warden);
+  });
+
+  it('should be able to build a subtheme object correctly', () => {
+    const so = st.buildSubthemeObject();
+    const mock = getSubthemeObject(1);
+    expect(so.combat).toEqual(mock.combat);
+    expect(so.stealth).toEqual(mock.stealth);
+    expect(so.magic).toEqual(mock.magic);
+  });
+
+  it('should be able ot build a sub theme object for various inputs', () => {
+    st = new SubthemeContainer(new ThemePointsContainer(2, 0, 2, 0));
+    const mock = getSubthemeObject(2);
+    const so = st.buildSubthemeObject();
+    expect(so.combat).toEqual(mock.combat);
+    expect(so.stealth.length).toEqual(0);
+    expect(so.magic).toEqual(mock.magic);
+
+    st = new SubthemeContainer(new ThemePointsContainer(3, 0, 0, 1));
+    const pro = new Subtheme(SubthemeTypes.Protector, ThemeStrength.Lesser);
+    st.assignSubtheme(pro);
+    const newSo = st.buildSubthemeObject();
+    expect(newSo).toEqual({
+      combat: [so.combat[0], pro, so.combat[2]],
+      stealth: [],
+      magic: []
+    });
   });
 
 

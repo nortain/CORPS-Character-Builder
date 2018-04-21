@@ -1,10 +1,11 @@
 export enum SubthemeBonus {
   Thorns = "Thorns",
+  BonusDamage = "BonusDamage",
   RecoveryValueBonus = "RecoveryValueBonus",
   ProtectorAura = "ProtectorAura",
   DamageResist = "DamageResist",
   TempHp = "TempHp",
-  DamageOnMiss = "DamageOnMiss",
+  RiposteAura = "RiposteAura",
   IsolationDamage = "IsolationDamage",
   ActiveDefense = "ActiveDefense",
   CriticalDamageReduction = "CriticalDamageReduction",

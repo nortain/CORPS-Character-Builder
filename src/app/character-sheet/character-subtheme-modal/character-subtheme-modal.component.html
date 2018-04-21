@@ -2,16 +2,16 @@
   <div class="modal-body">
     <div class="row">
       <div class="col-3">
-        <button *ngFor="let sub of getAllPossibleSubthemes()" class="btn btn-primary">
-          {{sub.subthemeName | subthemes}}
-          ({{sub.themeType}}) Ranks: {{sub.getThemeStrength()}}
+        <button id="{{sub.subthemeName}}" *ngFor="let sub of subthemeButtonsArray" class="btn btn-primary align-content-center col verticalSubthemeBtns">
+          {{sub.subthemeName | subthemes}}<br>
+          ({{themeType[sub.themeType]}}) Ranks: {{sub.getThemeStrength()}}
         </button>
       </div>
       <div class="col-9">
         <corps-subthemes
           id="corpsSubtheme"
           [assignedSubthemePoints]="getAssignedSubthemes()"
-          [subtheme]="selectedSubtheme()"
+          [subtheme]="selectedSubtheme"
           (submitter)="updateSubtheme($event)">
         </corps-subthemes>
       </div>

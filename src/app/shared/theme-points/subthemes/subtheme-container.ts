@@ -1,6 +1,7 @@
 import {ThemePointsContainer} from "../theme-points-container";
 import {Subtheme} from "./subtheme";
 import {ThemeType} from "../theme-type.enum";
+import {getSubthemeObject, SubthemeObject} from "../../constants/constants";
 
 export class SubthemeContainer {
 
@@ -19,19 +20,31 @@ export class SubthemeContainer {
   }
 
 
-  // getAvailableSubthemes(): Subtheme[] {
-  //   let result = [];
-  //   if (this.getRemainingSubthemePointsToAssign("combat") > 0) {
-  //
-  //   }
-  //   if (this.getRemainingSubthemePointsToAssign("stealth") > 0) {
-  //     result.push("stealth");
-  //   }
-  //   if (this.getRemainingSubthemePointsToAssign("magic") > 0) {
-  //     result.push("magic");
-  //   }
-  //   return result;
-  // }
+  /**
+   * builds a subtheme object with all possible subthemes based on the passed in themes point container.  Any unavailable subthemes will be null.
+   * Ex. if a theme container has 3 combat and 1 magic then this function should return a SubthemeObject with all 3 combat themes, null for stealth and then both 1 magic sub themes but null for 2 magic and 3magic
+   */
+  buildSubthemeObject(): SubthemeObject {
+    const so = getSubthemeObject(this.themePoints.magic.getStrength());
+    this.filterSubtheme("combat", so);
+    this.filterSubtheme("stealth", so);
+    return so;
+  }
+
+  private filterSubtheme(subthemeTypes: "combat" | "stealth", so: SubthemeObject) {
+    if (this.themePoints[subthemeTypes].getStrength() < 1) {
+      so[subthemeTypes] = [];
+    } else if (this[subthemeTypes].length > 0) {
+      for (const item of this.combat) {
+        so[subthemeTypes].find((element, index, array) => {
+          if (element.subthemeName === item.subthemeName) {
+            array[index] = item;
+            return true;
+          }
+        });
+      }
+    }
+  }
 
   /**
    * gets the available number of subtheme points for a given theme type
