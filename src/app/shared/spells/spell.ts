@@ -5,6 +5,9 @@ import {SpellTypes} from "./spell-types";
 import {SpellDamageKeywords} from "./spell-damage-keywords.enum";
 import {SpellKeywords} from "./spell-keywords.enum";
 import {AreaOfEffect} from "../area-of-effect/area-of-effect";
+import {ActionType} from "../action/action-type.enum";
+import {DurationType} from "../duration/duration-type.enum";
+import {Minion} from "../minion/minion";
 
 
 export class Spell {
@@ -15,7 +18,7 @@ export class Spell {
   damageKeywords: SpellDamageKeywords[];
   areaOfEffect: AreaOfEffect;
   castAction: ActionType;
-  duration: DurationTypes[];
+  duration: DurationType[];
   critRoll: Dice;
   special: string[];
   minion: Minion;
