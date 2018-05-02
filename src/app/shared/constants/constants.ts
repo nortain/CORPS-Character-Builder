@@ -168,16 +168,38 @@ export function getSubthemeObject(magic: number): SubthemeObject {
 
 export const ONE_MAGIC_SPELLS = {
   Magent: {
-    FeatureBonus: "",
-    GeneralFeature: "",
+    Overview: "You are a bad ass magent",
+    FeatureBonus: "You can have your attack spells use either your strength, agility or both as a balanced stat for determining your bonus damage",
+    GeneralFeature: "If you have 1 theme point in general you gain 1 spell knack and 1 additional spell.",
     ImplementKnacks: {
-      RangedDefender: "",
-      CarpetBagger: ""
+      RangedDefender: "You can use your AD vs range, area, and line attacks.",
+      Carpetbagger: "When you attack with a weapon or imbue spell and could gain bonus damage from the Find Weakness or the Riposte sub themes you can increase the damage of the attack to that target by the Carpetbagger value.",
+      ElegantRetaliation: "Once per encounter as a free action when you are damaged by an threatened attacker you can reduce the damage taken by the Elegant Retaliation value below and return that much damage to the enemy.",
+      Reprobate: "Once per round, whenever an enemy misses you with an attack, choose to have your next weapon or spell attack you make to have its damage increased by the value listed below against the first target hit."
+    },
+    Spells: {
+      WeaponSpells: [],
+      DirectEffect: [],
+      OffensiveUtility: [],
+      FriendlyUtility: []
     }
-
   },
   SpellWarden: {
-
+    Overview: "",
+    FeatureBonus: "",
+    GeneralBonus: "",
+    ImplementKnacks: {
+      RangedDefender: "You can use your AD vs range, area, and line attacks.",
+      ImprovedWeaponSpells: "Increase the damage of your weapon and imbue spells by the amount listed below",
+    SpellAbsorption: "The first time in a combat when you are damaged by an attack that targets your magic defense or hit by a critical strike, after the attack resolves, you gain temporary hit points equal to the temp hp value below.  These temporary hit points stack with any temporary hit points you might already have.",
+    ShieldOfTheWarden: "If you have a protector’s aura or mark-like ability you can increase the damage inflicted with the mark or ability by the Mark bonus listed below."
+    },
+    Spells: {
+      WeaponSpells: [],
+      DirectEffect: [],
+      OffensiveUtility: [],
+      FriendlyUtility: []
+    }
   }
 
 
@@ -248,11 +270,8 @@ export const SUBTHEME_BONUS = {
     },
     text: ["<b>Active Defense:</b> Increase your active defense by 1.", "<b>Critical Damage Reduction:</b>Reduce ongoing damage from critical hits by the reduction value listed in the table below"]
   },
-  Magent: {
-    "1": {
-      Magent: ONE_MAGIC_SPELLS
-    }
-  }
+  Magent: ONE_MAGIC_SPELLS["Magent"]
+
 };
 
 export const STARTING_PLAYER_RACES = {
