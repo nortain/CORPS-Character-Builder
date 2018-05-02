@@ -1,4 +1,4 @@
-export enum SpellDamageKeywords {
+export enum SpellDamageKeyword {
   Heat = "Heat",
   Cold = "Cold",
   Force = "Force",

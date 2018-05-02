@@ -76,7 +76,7 @@ describe('Subtheme', () => {
     expect(magic.getBonus(Level.Three)).toEqual(0);
   });
 
-  it('should find a solution for casters.', () => {
+  fit('should find a solution for casters.', () => {
     expect(true).toBeFalsy();
   });
 });

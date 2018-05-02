@@ -1,4 +1,4 @@
-export enum SpellTypes {
+export enum SpellType {
   DirectAttack = "DirectAttack",
   DirectEffect = "DirectEffect",
   MagicalAttack = "MagicalAttack",
