@@ -17,6 +17,8 @@ import {AttributeStrength} from "../attribute/attribute-strength.enum";
 import {SubthemeTypes} from "../theme-points/subthemes/subtheme-types.enum";
 import {ThemeStrength} from "../theme-points/theme-strength.enum";
 import {Subtheme} from "../theme-points/subthemes/subtheme";
+import {MagentSpellList, SpellWardenSpellList} from "./spells/minor-spell-constants";
+import {Spell} from "../spells/spell";
 
 
 export const NON_HUMAN_AVAILABLE_ATTRIBUTE_POINTS = 4;
@@ -122,7 +124,7 @@ export function getSubthemeObject(magic: number): SubthemeObject {
   switch (magic) {
     case 1: {
       magicArray = [
-        new Subtheme(SubthemeTypes.Spell_Warden),
+        new Subtheme(SubthemeTypes.SpellWarden),
         new Subtheme(SubthemeTypes.Magent)
       ];
       break;
@@ -132,7 +134,7 @@ export function getSubthemeObject(magic: number): SubthemeObject {
         new Subtheme(SubthemeTypes.Cleric),
         new Subtheme(SubthemeTypes.Assassin),
         new Subtheme(SubthemeTypes.Druid),
-        new Subtheme(SubthemeTypes.Warrior_Mage)
+        new Subtheme(SubthemeTypes.WarriorMage)
       ];
       break;
     }
@@ -153,12 +155,12 @@ export function getSubthemeObject(magic: number): SubthemeObject {
   }
   return {
     combat: [
-      new Subtheme(SubthemeTypes.Weapon_Specialization),
+      new Subtheme(SubthemeTypes.WeaponSpecialization),
       new Subtheme(SubthemeTypes.Protector),
       new Subtheme(SubthemeTypes.Juggernaut)
     ],
     stealth: [
-      new Subtheme(SubthemeTypes.Find_Weakness),
+      new Subtheme(SubthemeTypes.FindWeakness),
       new Subtheme(SubthemeTypes.Riposte),
       new Subtheme(SubthemeTypes.Evasion)
     ],
@@ -177,12 +179,7 @@ export const ONE_MAGIC_SPELLS = {
       ElegantRetaliation: "Once per encounter as a free action when you are damaged by an threatened attacker you can reduce the damage taken by the Elegant Retaliation value below and return that much damage to the enemy.",
       Reprobate: "Once per round, whenever an enemy misses you with an attack, choose to have your next weapon or spell attack you make to have its damage increased by the value listed below against the first target hit."
     },
-    Spells: {
-      WeaponSpells: [],
-      DirectEffect: [],
-      OffensiveUtility: [],
-      FriendlyUtility: []
-    }
+    Spells: () => MagentSpellList()
   },
   SpellWarden: {
     Overview: "",
@@ -194,19 +191,14 @@ export const ONE_MAGIC_SPELLS = {
     SpellAbsorption: "The first time in a combat when you are damaged by an attack that targets your magic defense or hit by a critical strike, after the attack resolves, you gain temporary hit points equal to the temp hp value below.  These temporary hit points stack with any temporary hit points you might already have.",
     ShieldOfTheWarden: "If you have a protector’s aura or mark-like ability you can increase the damage inflicted with the mark or ability by the Mark bonus listed below."
     },
-    Spells: {
-      WeaponSpells: [],
-      DirectEffect: [],
-      OffensiveUtility: [],
-      FriendlyUtility: []
-    }
+    Spells: () => SpellWardenSpellList()
   }
 
 
 };
 
 export const SUBTHEME_BONUS = {
-  Weapon_Specialization: {
+  WeaponSpecialization: {
     "1": {BonusDamage: [2, 3, 3, 4, 4, 5, 5, 6, 6, 7]},
     "2": {BonusDamage: [5, 6, 7, 8, 9, 10, 11, 12, 13, 14]},
     "3": {BonusDamage: [7, 9, 10, 12, 13, 14, 16, 17, 19, 21]},
@@ -237,7 +229,7 @@ export const SUBTHEME_BONUS = {
     text: ["<b>Temporary Hp:</b> Increase your starting temporary hit points by the Temp Hp value",
       "<b>Damage Resist:</b> Reduce all non-ongoing damage taken by the damage resist value."]
   },
-  Find_Weakness: {
+  FindWeakness: {
     "1": {
       Agile: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
       Balanced: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
@@ -270,7 +262,8 @@ export const SUBTHEME_BONUS = {
     },
     text: ["<b>Active Defense:</b> Increase your active defense by 1.", "<b>Critical Damage Reduction:</b>Reduce ongoing damage from critical hits by the reduction value listed in the table below"]
   },
-  Magent: ONE_MAGIC_SPELLS["Magent"]
+  Magent: ONE_MAGIC_SPELLS["Magent"],
+  SpellWarden: ONE_MAGIC_SPELLS["SpellWarden"]
 
 };
 

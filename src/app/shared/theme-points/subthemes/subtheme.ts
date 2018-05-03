@@ -6,14 +6,17 @@ import {SubthemeBonus} from "./subtheme-bonus.enum";
 import {Level} from "../../character/level.enum";
 import {WeaponCategory} from "../../weapon/weapon-category.enum";
 import {SUBTHEME_BONUS} from "../../constants/constants";
+import {Spell} from "../../spells/spell";
 
 export class Subtheme {
   themeType: ThemeType;
   maxThemeStrength: ThemeStrength;
   subthemeName: string;
+  pipe: SubthemePipe;
 
 
   constructor(public subtheme: SubthemeTypes, public themeStrength = ThemeStrength.None) {
+    this.pipe = new SubthemePipe();
     const values = this.parseSubtheme(subtheme);
     this.assignValues(values);
     this.setThemeStrength();
@@ -46,8 +49,7 @@ export class Subtheme {
    * @returns {string}
    */
   getSubthemeFormattedName(): string {
-    const pipe = new SubthemePipe();
-    return pipe.transform(this.subthemeName);
+    return this.pipe.transform(this.subthemeName);
   }
 
   /**
@@ -58,9 +60,24 @@ export class Subtheme {
     return this.subthemeName;
   }
 
+  /**
+   * This will return a collection of spells for the given subtheme if the theme has spells
+   * @returns {Spell[]}
+   */
+  getSpellList(): Spell[] {
+    if (SUBTHEME_BONUS[this.subthemeName]["Spells"]) {
+      return SUBTHEME_BONUS[this.subthemeName].Spells();
+    } else {
+      return null;
+    }
+  }
+
   private resolveBonus(level: Level, bonusName: SubthemeBonus) {
     let result;
-    if (SUBTHEME_BONUS[this.subthemeName] && SUBTHEME_BONUS[this.subthemeName][this.themeStrength][bonusName]) {
+    const hasThemeName = SUBTHEME_BONUS[this.subthemeName];
+    if (hasThemeName
+      && hasThemeName[this.themeStrength]
+      && hasThemeName[this.themeStrength][bonusName]) {
       result = SUBTHEME_BONUS[this.subthemeName][this.themeStrength][bonusName][level];
     } else {
       result = 0;
@@ -68,7 +85,12 @@ export class Subtheme {
     return result;
   }
 
-
+  /**
+   * Gets the bonus of a subtheme for a given level.  For magic themes this returns 0 because there are no implict bonuses for merely picking a magic subtheme.
+   * @param {Level} rawLevel
+   * @param {SubthemeBonus} bonusName
+   * @returns {number}
+   */
   getBonus(rawLevel: Level, bonusName: SubthemeBonus): number {
     const level = rawLevel - 1;
     return this.resolveBonus(level, bonusName);

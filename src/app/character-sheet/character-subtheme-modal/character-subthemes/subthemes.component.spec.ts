@@ -26,7 +26,7 @@ describe('SubthemeComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SubthemeComponent);
     component = fixture.componentInstance;
-    component.subtheme = new Subtheme(SubthemeTypes.Weapon_Specialization, ThemeStrength.None);
+    component.subtheme = new Subtheme(SubthemeTypes.WeaponSpecialization, ThemeStrength.None);
     component.assignedSubthemePoints = 0;
     fixture.detectChanges();
   });
@@ -60,7 +60,7 @@ describe('SubthemeComponent', () => {
   });
 
   it('should be able to reloadSubtheme and get the correct assignedSubtheme points', () => {
-    component.subtheme = new Subtheme(SubthemeTypes.Weapon_Specialization, ThemeStrength.Lesser);
+    component.subtheme = new Subtheme(SubthemeTypes.WeaponSpecialization, ThemeStrength.Lesser);
     component.assignedSubthemePoints = 2;
     component.reloadSubtheme(new DropdownValueObject(ThemeStrength.Greater));
     expect(component.subtheme.getThemeStrength()).toEqual(ThemeStrength.Greater);
@@ -87,9 +87,9 @@ describe('SubthemeComponent', () => {
 
   it('should be able to get table data', () => {
     expect(component.getTableData()).toEqual(
-      [SUBTHEME_BONUS["Weapon_Specialization"]["1"],
-        SUBTHEME_BONUS["Weapon_Specialization"]["2"],
-        SUBTHEME_BONUS["Weapon_Specialization"]["3"]
+      [SUBTHEME_BONUS["WeaponSpecialization"]["1"],
+        SUBTHEME_BONUS["WeaponSpecialization"]["2"],
+        SUBTHEME_BONUS["WeaponSpecialization"]["3"]
       ]);
     component.subtheme = new Subtheme(SubthemeTypes.Protector, ThemeStrength.None);
     fixture.detectChanges();
@@ -107,21 +107,21 @@ describe('SubthemeComponent', () => {
         }
       ]
     );
-    component.subtheme = new Subtheme(SubthemeTypes.Find_Weakness, ThemeStrength.None);
+    component.subtheme = new Subtheme(SubthemeTypes.FindWeakness, ThemeStrength.None);
     fixture.detectChanges();
     expect(component.getTableData()).toEqual(
       [
         {
-          Agile: SUBTHEME_BONUS["Find_Weakness"]["1"]["Agile"],
-          Balanced: SUBTHEME_BONUS["Find_Weakness"]["1"]["Balanced"]
+          Agile: SUBTHEME_BONUS["FindWeakness"]["1"]["Agile"],
+          Balanced: SUBTHEME_BONUS["FindWeakness"]["1"]["Balanced"]
         },
         {
-          Agile: SUBTHEME_BONUS["Find_Weakness"]["2"]["Agile"],
-          Balanced: SUBTHEME_BONUS["Find_Weakness"]["2"]["Balanced"]
+          Agile: SUBTHEME_BONUS["FindWeakness"]["2"]["Agile"],
+          Balanced: SUBTHEME_BONUS["FindWeakness"]["2"]["Balanced"]
         },
         {
-          Agile: SUBTHEME_BONUS["Find_Weakness"]["3"]["Agile"],
-          Balanced: SUBTHEME_BONUS["Find_Weakness"]["3"]["Balanced"]
+          Agile: SUBTHEME_BONUS["FindWeakness"]["3"]["Agile"],
+          Balanced: SUBTHEME_BONUS["FindWeakness"]["3"]["Balanced"]
         }
       ],
       [

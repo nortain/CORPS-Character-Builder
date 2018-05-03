@@ -6,13 +6,9 @@ import {Pipe, PipeTransform} from '@angular/core';
 export class SubthemePipe implements PipeTransform {
 
   transform(value: string, args?: any): any {
-    let resultString = "";
     if (value) {
-      const resultArray = value.split("_");
-      for (const r of resultArray) {
-        resultString += r + " ";
-      }
-      return resultString.trim();
+      const resultArray = value.replace(/[A-Z]/g, " $&");
+      return resultArray.trim();
     } else {
       return value;
     }

@@ -6,17 +6,17 @@
 import {ThemeType} from "../theme-type.enum";
 
 export enum SubthemeTypes {
-  Weapon_Specialization = "Combat,Greater,Weapon_Specialization",
+  WeaponSpecialization = "Combat,Greater,WeaponSpecialization",
   Protector = "Combat,Lesser,Protector",
   Juggernaut = "Combat,Minor,Juggernaut",
-  Find_Weakness = "Stealth,Greater,Find_Weakness",
+  FindWeakness = "Stealth,Greater,FindWeakness",
   Riposte = "Stealth,Lesser,Riposte",
   Evasion = "Stealth,Minor,Evasion",
   Magent = "Magic,Minor,Magent",
-  Spell_Warden = "Magic,Minor,Spell_Warden",
+  SpellWarden = "Magic,Minor,SpellWarden",
   Assassin = "Magic,Lesser,Assassin",
   Druid = "Magic,Lesser,Druid",
-  Warrior_Mage = "Magic,Lesser,Warrior_Mage",
+  WarriorMage = "Magic,Lesser,WarriorMage",
   Cleric = "Magic,Lesser,Cleric",
   Priest = "Magic,Greater,Priest",
   Elementalist = "Magic,Greater,Elementalist",

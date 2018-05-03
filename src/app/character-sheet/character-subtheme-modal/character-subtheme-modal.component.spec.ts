@@ -32,10 +32,10 @@ describe('CharacterSubthemeModalComponent', () => {
     component = fixture.componentInstance;
     component.subthemePoints = new SubthemeContainer(mockThemePoints());
     component.getAllPossibleSubthemes();
-    weapon = new Subtheme(SubthemeTypes.Weapon_Specialization, 0);
+    weapon = new Subtheme(SubthemeTypes.WeaponSpecialization, 0);
     protector = new Subtheme(SubthemeTypes.Protector, 0);
     juggernaut = new Subtheme(SubthemeTypes.Juggernaut, 0);
-    find = new Subtheme(SubthemeTypes.Find_Weakness, 0);
+    find = new Subtheme(SubthemeTypes.FindWeakness, 0);
     riposte = new Subtheme(SubthemeTypes.Riposte, 0);
     evasion = new Subtheme(SubthemeTypes.Evasion, 0);
     fixture.detectChanges();

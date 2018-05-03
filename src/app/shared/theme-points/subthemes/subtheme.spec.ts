@@ -4,16 +4,17 @@ import {Subtheme} from "./subtheme";
 import {Level} from "../../character/level.enum";
 import {WeaponCategory} from "../../weapon/weapon-category.enum";
 import {SubthemeBonus} from "./subtheme-bonus.enum";
+import {Spell} from "../../spells/spell";
 
 describe('Subtheme', () => {
   let combat, stealth, magic;
   beforeEach(() => {
-    combat = new Subtheme(SubthemeTypes.Weapon_Specialization, ThemeStrength.Minor);
-    stealth = new Subtheme(SubthemeTypes.Find_Weakness, ThemeStrength.Minor);
-    magic = new Subtheme(SubthemeTypes.Spell_Warden, ThemeStrength.Minor);
+    combat = new Subtheme(SubthemeTypes.WeaponSpecialization, ThemeStrength.Minor);
+    stealth = new Subtheme(SubthemeTypes.FindWeakness, ThemeStrength.Minor);
+    magic = new Subtheme(SubthemeTypes.SpellWarden, ThemeStrength.Minor);
   });
   it('should create an instance', () => {
-    expect(new Subtheme(SubthemeTypes.Weapon_Specialization, ThemeStrength.None)).toBeTruthy();
+    expect(new Subtheme(SubthemeTypes.WeaponSpecialization, ThemeStrength.None)).toBeTruthy();
   });
 
   it('should be able to get themeStrength', () => {
@@ -21,7 +22,7 @@ describe('Subtheme', () => {
   });
 
   it('should limit theme strength to max', () => {
-    magic = new Subtheme(SubthemeTypes.Spell_Warden, ThemeStrength.Greater);
+    magic = new Subtheme(SubthemeTypes.SpellWarden, ThemeStrength.Greater);
     expect(magic.getThemeStrength()).toEqual(ThemeStrength.Minor);
   });
 
@@ -33,15 +34,15 @@ describe('Subtheme', () => {
 
   it('should be able to get bonus for weapon specialization', () => {
     expect(combat.getBonus(Level.One, SubthemeBonus.BonusDamage)).toEqual(2);
-    combat = new Subtheme(SubthemeTypes.Weapon_Specialization, ThemeStrength.Greater);
+    combat = new Subtheme(SubthemeTypes.WeaponSpecialization, ThemeStrength.Greater);
     expect(combat.getBonus(Level.Three, SubthemeBonus.BonusDamage)).toEqual(10);
   });
 
   it('should be able to get bonus for Find Weakness', () => {
     expect(stealth.getBonus(Level.Two, SubthemeBonus.Agile)).toEqual(5);
-    stealth = new Subtheme(SubthemeTypes.Find_Weakness, ThemeStrength.Greater);
+    stealth = new Subtheme(SubthemeTypes.FindWeakness, ThemeStrength.Greater);
     expect(stealth.getBonus(Level.Four, SubthemeBonus.Agile)).toEqual(22);
-    stealth = new Subtheme(SubthemeTypes.Find_Weakness, ThemeStrength.Lesser);
+    stealth = new Subtheme(SubthemeTypes.FindWeakness, ThemeStrength.Lesser);
     expect(stealth.getBonus(Level.Six, SubthemeBonus.Balanced)).toEqual(15);
   });
 
@@ -73,10 +74,13 @@ describe('Subtheme', () => {
   it('should return 0 for a bonus if the wrong optional parameter or none at all is passed in for something that needs it', () => {
     stealth = new Subtheme(SubthemeTypes.Riposte, ThemeStrength.Lesser);
     expect(stealth.getBonus(Level.Nine, SubthemeBonus.TempHp)).toEqual(0);
-    expect(magic.getBonus(Level.Three)).toEqual(0);
+    expect(magic.getBonus(Level.Three, SubthemeBonus.ProtectorAura)).toEqual(0);
   });
 
-  fit('should find a solution for casters.', () => {
-    expect(true).toBeFalsy();
+  it('should find a solution for casters.', () => {
+    const spells = magic.getSpellList();
+    const result = [{...new Spell()}];
+    expect(spells).toEqual(result);
+    expect(stealth.getSpellList()).toBeNull();
   });
 });
