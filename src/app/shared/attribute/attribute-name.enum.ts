@@ -5,7 +5,7 @@ export enum AttributeName {
   Quickness = "Quickness",
   Reasoning = "Reasoning",
   Presence = "Presence",
-  SelfDiscipline = "Self Discipline",
+  SelfDiscipline = "SelfDiscipline",
   Intuition = "Intuition"
 
 }

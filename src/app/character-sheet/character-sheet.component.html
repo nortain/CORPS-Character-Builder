@@ -1,6 +1,5 @@
 <form name="characterSheetForm">
   <div class="row">
-    <input id="sillyTest" [ngModel]="testName">
     <corps-input id="characterName" labelName="Name" class="col" [newLineLabelName]="true"
                  [inputModel]="character.name" (outGoingModel)="character.name=$event"></corps-input>
 
@@ -134,7 +133,7 @@
         Agility: {{character.attributes.Agility.strength}}
         Reasoning: {{character.attributes.Reasoning.strength}}
         Presence: {{character.attributes.Presence.strength}}
-        Self Discipline: {{character.attributes["Self Discipline"].strength}}
+        Self Discipline: {{character.attributes.SelfDiscipline.strength}}
         Intuition: {{character.attributes.Intuition.strength}}
       </div>
     </div>
