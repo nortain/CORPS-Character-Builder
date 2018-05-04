@@ -104,6 +104,7 @@ describe('DropdownComponent', () => {
     const message = fixture.debugElement.query(By.css("div.errorMessage")).nativeElement;
     expect(message).toBeTruthy();
     component.isInvalid = false;
+    btn.click();
     fixture.detectChanges();
     expect(btn.classList).not.toContain("btn-outline-danger");
 

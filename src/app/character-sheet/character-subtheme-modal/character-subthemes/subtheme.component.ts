@@ -1,10 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Subtheme} from "../../../shared/theme-points/subthemes/subtheme";
 import {DropdownValueObject} from "../../../shared/ui/dropdown/dropdown-value-object";
 import {AttributeService} from "../../../shared/attribute/attribute.service";
 import {SubthemeTypes} from "../../../shared/theme-points/subthemes/subtheme-types.enum";
 import {ThemeType} from "../../../shared/theme-points/theme-type.enum";
 import {STARTING_THEME_POINTS, SUBTHEME_BONUS} from "../../../shared/constants/constants";
+import {DropdownComponent} from "../../../shared/ui/dropdown/dropdown.component";
 
 
 @Component({
@@ -14,6 +15,7 @@ import {STARTING_THEME_POINTS, SUBTHEME_BONUS} from "../../../shared/constants/c
 })
 export class SubthemeComponent implements OnInit {
 
+  @ViewChild(DropdownComponent) dropdown: DropdownComponent;
   @Input() subtheme: Subtheme;
   @Input() assignedSubthemePoints: number; // could be between 0 and 4
   @Output() submitter: EventEmitter<Subtheme>;
@@ -34,6 +36,9 @@ export class SubthemeComponent implements OnInit {
   getTextInfo(): string[] {
     return SUBTHEME_BONUS[this.subtheme.getSubthemeName()].text;
   }
+
+
+
 
   /**
    * gets an array of arrays to represent the values that are gained from the sub theme and displayed in the subtheme component
@@ -71,7 +76,9 @@ export class SubthemeComponent implements OnInit {
 
 
   loadSelectedDropdownValue(): DropdownValueObject {
-    return new DropdownValueObject(this.subtheme.getThemeStrength());
+    const newDD = new DropdownValueObject(this.subtheme.themeStrength);
+    this.dropdown.selectDropdown(newDD);
+    return newDD;
   }
 
   /**
@@ -79,7 +86,8 @@ export class SubthemeComponent implements OnInit {
    * @returns {number}
    */
   getRemainingSubthemePointsToAssign(): number {
-    return this.getTotalSubthemePoints() - this.subtheme.getThemeStrength();
+    const total = this.getTotalSubthemePoints();
+    return total - this.subtheme.themeStrength;
   }
 
   /**

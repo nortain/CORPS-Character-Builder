@@ -1,10 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {DropdownValueObject} from "./dropdown-value-object";
 
 @Component({
   selector: 'corps-dropdown',
   templateUrl: './dropdown.component.html',
-  styleUrls: ['./dropdown.component.css']
+  styleUrls: ['./dropdown.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DropdownComponent implements OnInit {
   @Input() labelName = ""; // label name or none at all

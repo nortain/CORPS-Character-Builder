@@ -5,13 +5,14 @@ import {SharedModule} from "../../shared/shared.module";
 import {SubthemeComponent} from "./character-subthemes/subtheme.component";
 import {NgbActiveModal, NgbDropdownConfig} from "@ng-bootstrap/ng-bootstrap";
 import {NgbModalStack} from "@ng-bootstrap/ng-bootstrap/modal/modal-stack";
-import {mockThemePoints} from "../../shared/constants/testing-constants";
+import {actionClickDropdownItemX, actionGetDropdownValue, mockThemePoints} from "../../shared/constants/testing-constants";
 import {ThemeStrength} from "../../shared/theme-points/theme-strength.enum";
 import {ThemePointsContainer} from "../../shared/theme-points/theme-points-container";
 import {SubthemeContainer} from "../../shared/theme-points/subthemes/subtheme-container";
 import {SubthemeTypes} from "../../shared/theme-points/subthemes/subtheme-types.enum";
 import {Subtheme} from "../../shared/theme-points/subthemes/subtheme";
 import {By} from "@angular/platform-browser";
+import {DropdownComponent} from "../../shared/ui/dropdown/dropdown.component";
 
 describe('CharacterSubthemeModalComponent', () => {
   let component: CharacterSubthemeModalComponent;
@@ -87,7 +88,29 @@ describe('CharacterSubthemeModalComponent', () => {
   });
 
   it('should be able to switch subthemes displayed in subtheme component', () => {
+    const buttons = fixture.debugElement.queryAll(By.css("button.verticalSubthemeBtns"));
+    expect(buttons.length).toEqual(8);
+    buttons[1].nativeElement.click();
+    fixture.detectChanges();
+    expect(component.selectedSubtheme).toBe(component.subthemeButtonsArray[1]);
 
+  });
+
+  it('should reset the theme strength dropdown to the value of that particular subtheme', () => {
+    const buttons = fixture.debugElement.queryAll(By.css("button.verticalSubthemeBtns"));
+    const dropdownValue = actionGetDropdownValue(fixture, "#subthemeDropdown");
+    expect(dropdownValue).toBe("0");
+
+    actionClickDropdownItemX(fixture, "#subthemeDropdown", 1);
+
+    expect(actionGetDropdownValue(fixture, "#subthemeDropdown")).toBe("1");
+    buttons[1].nativeElement.click();
+    fixture.detectChanges();
+    expect(actionGetDropdownValue(fixture, "#subthemeDropdown")).toBe("0");
+  });
+
+  it('should prevent a character from assigning more subtheme points across all subthemes of a paritciular type than they have available', () => {
+    expect(true).toBeFalsy();
   });
 
 

@@ -30,9 +30,9 @@ export function mockThemePoints() {
 }
 
 /**This helper function for testing.
-It will click on a dropdown button matching the selector string and then choose the xth dropdown menu item.
-If the xth item doesn't exist an error is thrown.
-This will also update UI after the button click has been performed.*/
+ It will click on a dropdown button matching the selector string and then choose the xth dropdown menu item.
+ If the xth item doesn't exist an error is thrown.
+ This will also update UI after the button click has been performed.*/
 export function actionClickDropdownItemX(fixture: ComponentFixture<any>, selector: string, x = 0) {
   const dropdown = fixture.debugElement.query(By.css(selector));
   const dropdownBtn = dropdown.query(By.css("button")).nativeElement;
@@ -40,4 +40,15 @@ export function actionClickDropdownItemX(fixture: ComponentFixture<any>, selecto
   const menuItem = dropdown.query(By.directive(NgbDropdownMenu)).queryAll(By.css("button.dropdown-item"));
   menuItem[x].nativeElement.click();
   fixture.detectChanges();
+}
+
+/**
+ * This helper function will return the currently selected value fo the given fixture and dropdown selector
+ * @param {ComponentFixture<any>} fixture
+ * @param {string} selector
+ */
+export function actionGetDropdownValue(fixture: ComponentFixture<any>, selector: string) {
+  const dropdown = fixture.debugElement.query(By.css(selector));
+  const dropdownBtn = dropdown.query(By.css("button")).nativeElement;
+  return dropdownBtn.innerText;
 }

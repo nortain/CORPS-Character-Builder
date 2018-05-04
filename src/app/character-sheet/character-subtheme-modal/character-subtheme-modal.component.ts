@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {Subtheme} from "../../shared/theme-points/subthemes/subtheme";
 import {SubthemeTypes} from "../../shared/theme-points/subthemes/subtheme-types.enum";
 import {ThemeStrength} from "../../shared/theme-points/theme-strength.enum";
@@ -20,7 +20,8 @@ export class CharacterSubthemeModalComponent implements OnInit {
   themeType = ThemeType;
   selectedSubtheme: Subtheme;
 
-  constructor(private activeModal: NgbActiveModal) { }
+  constructor(private activeModal: NgbActiveModal) {
+  }
 
   ngOnInit() {
     console.log("Out subthemePoints container at init of modal", this.subthemePoints);
@@ -51,13 +52,26 @@ export class CharacterSubthemeModalComponent implements OnInit {
   }
 
   getAssignedSubthemes(): number {
-    return 0;
+
+    return this.selectedSubtheme.themeStrength;
   }
 
 
-
   updateSubtheme(updatedSubtheme: Subtheme) {
+    for (const sub of this.subthemeButtonsArray) {
+      if (sub.subthemeName === updatedSubtheme.subthemeName) {
+        const index = this.subthemeButtonsArray.indexOf(sub);
+        this.subthemeButtonsArray[index] = updatedSubtheme;
+        this.selectedSubtheme = updatedSubtheme;
+        break;
+      }
+    }
 
+  }
+
+
+  selectSubtheme(selectedSubtheme: Subtheme) {
+    this.selectedSubtheme = selectedSubtheme;
   }
 
   close() {

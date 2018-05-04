@@ -33,10 +33,24 @@
       <div *ngFor="let table of getTableData(); let i = index">
         <b>{{i+1}} Subtheme Rank{{i+1 === 1 ? '' : 's'}}</b>
         <table class="table table-bordered">
-          <thead></thead>
+          <thead>
+          <tr>
+            <th scope="col">Bonus</th>
+            <th scope="col">L 1</th>
+            <th scope="col">L 2</th>
+            <th scope="col">L 3</th>
+            <th scope="col">L 4</th>
+            <th scope="col">L 5</th>
+            <th scope="col">L 6</th>
+            <th scope="col">L 7</th>
+            <th scope="col">L 8</th>
+            <th scope="col">L 9</th>
+            <th scope="col">L 10</th>
+          </tr>
+          </thead>
           <tr *ngFor="let header of getRowHeader(table)">
-            <td>{{header}}</td>
-            <td class="col-auto" *ngFor="let data of getRowData(table, header)">{{data}}</td>
+            <th>{{header}}</th>
+            <td *ngFor="let data of getRowData(table, header)">{{data}}</td>
           </tr>
         </table>
       </div>
