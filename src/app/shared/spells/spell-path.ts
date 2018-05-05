@@ -1,5 +1,5 @@
 import {Spell} from "./spell";
-import {SpellPathTypes} from "./spell-path-types.enum";
+import {SpellPathTypes} from "./enums/spell-path-type.enum";
 
 export class SpellPath {
   overview: string;

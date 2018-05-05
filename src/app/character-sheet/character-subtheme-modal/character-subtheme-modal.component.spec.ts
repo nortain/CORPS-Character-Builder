@@ -13,6 +13,7 @@ import {SubthemeTypes} from "../../shared/theme-points/subthemes/subtheme-types.
 import {Subtheme} from "../../shared/theme-points/subthemes/subtheme";
 import {By} from "@angular/platform-browser";
 import {DropdownComponent} from "../../shared/ui/dropdown/dropdown.component";
+import {NgbDropdownMenu} from "@ng-bootstrap/ng-bootstrap/dropdown/dropdown";
 
 describe('CharacterSubthemeModalComponent', () => {
   let component: CharacterSubthemeModalComponent;
@@ -109,8 +110,12 @@ describe('CharacterSubthemeModalComponent', () => {
     expect(actionGetDropdownValue(fixture, "#subthemeDropdown")).toBe("0");
   });
 
-  it('should prevent a character from assigning more subtheme points across all subthemes of a paritciular type than they have available', () => {
-    expect(true).toBeFalsy();
+  fit('should prevent a character from assigning more subtheme points across all subthemes of a paritciular type than they have available', () => {
+    const dropdown = fixture.debugElement.query(By.css("#subthemeDropdown"));
+    const dropdownBtn = dropdown.query(By.css("button")).nativeElement;
+    dropdownBtn.click();
+    const menuItems = dropdown.query(By.directive(NgbDropdownMenu)).queryAll(By.css("button.dropdown-item"));
+    expect(menuItems.length).toEqual(2);
   });
 
 

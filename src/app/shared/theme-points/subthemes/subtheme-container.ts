@@ -32,9 +32,11 @@ export class SubthemeContainer {
   }
 
   private filterSubtheme(subthemeTypes: "combat" | "stealth", so: SubthemeObject) {
-    if (this.themePoints[subthemeTypes].getStrength() < 1) {
+    const subthemeBasedOnThemePoints = this.themePoints[subthemeTypes];
+    const subtheme = this[subthemeTypes];
+    if (subthemeBasedOnThemePoints.getStrength() < 1) {
       so[subthemeTypes] = [];
-    } else if (this[subthemeTypes].length > 0) {
+    } else if (subtheme.length > 0) {
       for (const item of this.combat) {
         so[subthemeTypes].find((element, index, array) => {
           if (element.subthemeName === item.subthemeName) {
