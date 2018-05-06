@@ -110,7 +110,7 @@ describe('CharacterSubthemeModalComponent', () => {
     expect(actionGetDropdownValue(fixture, "#subthemeDropdown")).toBe("0");
   });
 
-  fit('should prevent a character from assigning more subtheme points across all subthemes of a paritciular type than they have available', () => {
+  it('should prevent a character from assigning more subtheme points across all subthemes of a paritciular type than they have available', () => {
     const dropdown = fixture.debugElement.query(By.css("#subthemeDropdown"));
     const dropdownBtn = dropdown.query(By.css("button")).nativeElement;
     dropdownBtn.click();

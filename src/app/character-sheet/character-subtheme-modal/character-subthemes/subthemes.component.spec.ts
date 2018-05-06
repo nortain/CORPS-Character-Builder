@@ -145,4 +145,8 @@ describe('SubthemeComponent', () => {
     expect(component.getRemainingSubthemePointsToAssign()).toEqual(2);
     expect(component.getTotalSubthemePoints()).toEqual(3);
   });
+
+  fit('should limit max number of subtheme points to be equal to that of theme points', () => {
+    
+  });
 });
