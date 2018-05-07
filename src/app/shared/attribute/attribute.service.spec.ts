@@ -60,4 +60,11 @@ describe('AttributeService', () => {
     expect(result.length).toBe(2);
   });
 
+  it('should be able to build an array as a dropdown array', () => {
+    const testInput = ["a", "b", "c"];
+    const output = attributeService.buildArrayAsDropdownArray(testInput);
+    expect(output.length).toEqual(3);
+    expect(output[0].value).toBe("a");
+  });
+
 });

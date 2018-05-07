@@ -51,4 +51,13 @@ describe('', () => {
     expect(thc.getDefensiveBonus()).not.toContain(MagicDefenseType.Reflex);
     expect(thc.getDefensiveBonus()).toContain(MagicDefenseType.Will);
   });
+
+  it('should be able to get other theme points', () => {
+    thc.combat.setStrength(ThemeStrength.Minor);
+    thc.stealth.setStrength(ThemeStrength.Minor);
+    thc.magic.setStrength(ThemeStrength.None);
+    expect(thc.getOtherThemePoints("combat")).toEqual(1);
+    expect(thc.getOtherThemePoints("magic")).toEqual(2);
+    expect(thc.getOtherThemePoints("stealth")).toEqual(1);
+  });
 });

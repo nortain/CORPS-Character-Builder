@@ -10,7 +10,7 @@ import {DropdownValueObject} from "../../../shared/ui/dropdown/dropdown-value-ob
 import {SUBTHEME_BONUS} from "../../../shared/constants/constants";
 import {actionClickDropdownItemX} from "../../../shared/constants/testing-constants";
 
-describe('SubthemeComponent', () => {
+fdescribe('SubthemeComponent', () => {
   let component: SubthemeComponent;
   let fixture: ComponentFixture<SubthemeComponent>;
 
@@ -28,6 +28,7 @@ describe('SubthemeComponent', () => {
     component = fixture.componentInstance;
     component.subtheme = new Subtheme(SubthemeTypes.WeaponSpecialization, ThemeStrength.None);
     component.assignedSubthemePoints = 0;
+    component.subthemePointCap = 3;
     fixture.detectChanges();
   });
 
@@ -68,13 +69,18 @@ describe('SubthemeComponent', () => {
   });
 
   it('should be able to get the total subtheme points', () => {
-    expect(component.getTotalSubthemePoints()).toEqual(3, "start out with 3 possible");
+    expect(component.totalAssignableSubthemePoints()).toEqual(3, "start out with 3 possible");
     component.reloadSubtheme(new DropdownValueObject(ThemeStrength.Lesser));
-    expect(component.getTotalSubthemePoints()).toEqual(3, "assigning 2 doesn't change that");
+    expect(component.totalAssignableSubthemePoints()).toEqual(3, "assigning 2 doesn't change that");
     component.assignedSubthemePoints = 2;
-    expect(component.getTotalSubthemePoints()).toEqual(3, "assigned 2 just means that the 2 assigned belong to this.");
+    expect(component.totalAssignableSubthemePoints()).toEqual(3, "assigned 2 just means that the 2 assigned belong to this.");
     component.assignedSubthemePoints = 4;
-    expect(component.getTotalSubthemePoints()).toEqual(2);
+    expect(component.totalAssignableSubthemePoints()).toEqual(2);
+  });
+
+  it('more testing involving the ability to get the total number of assignable subthemePoints', () => {
+    component.subthemePointCap = 2;
+    expect(component.totalAssignableSubthemePoints()).toEqual(2);
   });
 
   it('should be able to determine remaining subtheme points to assign', () => {
@@ -143,10 +149,14 @@ describe('SubthemeComponent', () => {
     expect(component.subtheme.getThemeStrength()).toEqual(1);
 
     expect(component.getRemainingSubthemePointsToAssign()).toEqual(2);
-    expect(component.getTotalSubthemePoints()).toEqual(3);
+    expect(component.totalAssignableSubthemePoints()).toEqual(3);
   });
 
   fit('should limit max number of subtheme points to be equal to that of theme points', () => {
-    
+    const initalResult = component.totalAssignableSubthemePoints();
+    expect(initalResult).toEqual(3);
+    component.subtheme = new Subtheme(SubthemeTypes.Evasion, ThemeStrength.None);
+    const list = component.totalAssignableSubthemePoints();
+    expect(2).toEqual(2);
   });
 });

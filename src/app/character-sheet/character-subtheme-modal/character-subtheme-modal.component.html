@@ -12,6 +12,7 @@
           id="corpsSubtheme"
           [assignedSubthemePoints]="getAssignedSubthemes()"
           [subtheme]="selectedSubtheme"
+          [subthemePointCap]="getSubthemePointCap()"
           (submitter)="updateSubtheme($event)">
         </corps-subthemes>
       </div>

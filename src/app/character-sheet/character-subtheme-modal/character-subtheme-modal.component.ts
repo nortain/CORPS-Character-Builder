@@ -30,8 +30,8 @@ export class CharacterSubthemeModalComponent implements OnInit {
   }
 
   /**
-   * gets all available subthemes based on potentally available theme points.  Thus if the original themepoints container has 1 or more theme points in combat, stealth or magic, each will respectively return all subthemes that could potentally be selected.  If subtheme points have already been assigned to aparticular subtheme then this should be reflected in the array that is passed back.
-   * @returns {Subtheme[]}
+   * gets all available subthemes based on potentally available theme points.  Thus if the original themepoints container has 1 or more theme points in combat, stealth or magic, each will respectively return all subthemes that could potentally be selected.  If subtheme points have already been assigned to aparticular subtheme then this should be reflected in the array that gets assigned to subthemeButtonsArray
+   *
    */
   getAllPossibleSubthemes() {
 
@@ -52,7 +52,6 @@ export class CharacterSubthemeModalComponent implements OnInit {
   }
 
   getAssignedSubthemes(): number {
-
     return this.selectedSubtheme.themeStrength;
   }
 
@@ -66,7 +65,22 @@ export class CharacterSubthemeModalComponent implements OnInit {
         break;
       }
     }
+  }
 
+  /**
+   * this will get the subtheme cap point which is to say the maximum number of theme points that can the currently selected subtheme
+   * @returns {number}
+   */
+  getSubthemePointCap(): number {
+    const themeType = ThemeType[this.selectedSubtheme.themeType].toLowerCase();
+    let maximumSubthemeStrength = this.subthemePoints.themePoints[themeType].getStrength();
+    for (const sub of this.subthemeButtonsArray) {
+      if (sub.subthemeName !== this.selectedSubtheme.subthemeName
+        && sub.themeType === this.selectedSubtheme.themeType) {
+        maximumSubthemeStrength -= sub.themeStrength;
+      }
+    }
+    return maximumSubthemeStrength;
   }
 
 

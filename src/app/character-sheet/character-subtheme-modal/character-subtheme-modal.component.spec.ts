@@ -118,5 +118,10 @@ describe('CharacterSubthemeModalComponent', () => {
     expect(menuItems.length).toEqual(2);
   });
 
+  it('should be able to selected subtheme type as a string', () => {
+    const result = component.getSubthemePointCap();
+    expect(result).toEqual(1);
+  });
+
 
 });

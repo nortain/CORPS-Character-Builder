@@ -18,6 +18,7 @@ export class SubthemeComponent implements OnInit {
   @ViewChild(DropdownComponent) dropdown: DropdownComponent;
   @Input() subtheme: Subtheme;
   @Input() assignedSubthemePoints: number; // could be between 0 and 4
+  @Input() subthemePointCap: number; // could be between 0 and 3 as this is the most number of possible theme points that could be assigned
   @Output() submitter: EventEmitter<Subtheme>;
 
 
@@ -36,8 +37,6 @@ export class SubthemeComponent implements OnInit {
   getTextInfo(): string[] {
     return SUBTHEME_BONUS[this.subtheme.getSubthemeName()].text;
   }
-
-
 
 
   /**
@@ -86,22 +85,29 @@ export class SubthemeComponent implements OnInit {
    * @returns {number}
    */
   getRemainingSubthemePointsToAssign(): number {
-    const total = this.getTotalSubthemePoints();
+    const total = this.totalAssignableSubthemePoints();
     return total - this.subtheme.themeStrength;
+  }
+
+  maximumNumberOfAssignableSubthemePoints(): number {
+    let max = this.subtheme.getMaxThemeStrength();
+    if (max <= this.subthemePointCap) {
+      max = this.subtheme.getMaxThemeStrength();
+    } else {
+      max = STARTING_THEME_POINTS - this.subthemePointCap;
+    }
+    return max;
   }
 
   /**
    * return the total number of sub theme points that can be assigned to this sub theme.
    * @returns {number}
    */
-  getTotalSubthemePoints(): number {
-    const base = this.subtheme.getMaxThemeStrength();
-    const assigned = this.assignedSubthemePoints - this.subtheme.getThemeStrength();
-    let result;
-    if (assigned < base) {
-      result = STARTING_THEME_POINTS - assigned;
-    }
-    return result > base ? base : result;
+  totalAssignableSubthemePoints(): number {
+    const max = this.maximumNumberOfAssignableSubthemePoints();
+    let pointsAssignedElsewhere = this.assignedSubthemePoints - this.subtheme.getThemeStrength();
+    pointsAssignedElsewhere = pointsAssignedElsewhere < max ? max : pointsAssignedElsewhere;
+    return pointsAssignedElsewhere;
   }
 
   /**
@@ -118,9 +124,7 @@ export class SubthemeComponent implements OnInit {
    * @returns {DropdownValueObject[]}
    */
   getDropdownValues(): DropdownValueObject[] {
-    const max = 4 - this.subtheme.getMaxThemeStrength();
-    let pointsAssignedElsewhere = this.assignedSubthemePoints - this.subtheme.getThemeStrength();
-    pointsAssignedElsewhere = pointsAssignedElsewhere < max ? max : pointsAssignedElsewhere;
+    const pointsAssignedElsewhere = this.totalAssignableSubthemePoints();
     const result = this.attributeService.buildArrayAsDropdownArray(this.attributeService.getThemePointStrength(false, pointsAssignedElsewhere));
     console.log(result, " is the result.");
     return result;

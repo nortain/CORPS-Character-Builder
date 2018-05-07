@@ -45,6 +45,11 @@ export class AttributeService {
     return results;
   }
 
+  /**
+   * takes in an array and returns an array of dropdown objects with whatever is in the incoming array.
+   * @param {any[]} array
+   * @returns {DropdownValueObject[]}
+   */
   buildArrayAsDropdownArray(array: any[]) {
     const results: DropdownValueObject[] = [];
     for (const a of array) {
