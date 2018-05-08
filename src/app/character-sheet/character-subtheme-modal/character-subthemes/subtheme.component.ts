@@ -45,7 +45,7 @@ export class SubthemeComponent implements OnInit {
   getTableData() {
     const rows = [];
     let length = 1;
-    while (length <= this.subtheme.getMaxThemeStrength()) {
+    while (length <= this.subtheme.maxThemeStrength) {
       rows.push(SUBTHEME_BONUS[this.subtheme.getSubthemeName()][length]);
       length++;
     }
@@ -85,27 +85,27 @@ export class SubthemeComponent implements OnInit {
    * @returns {number}
    */
   getRemainingSubthemePointsToAssign(): number {
-    const total = this.totalAssignableSubthemePoints();
+    const total = STARTING_THEME_POINTS - this.totalAssignableSubthemePoints();
     return total - this.subtheme.themeStrength;
   }
 
-  maximumNumberOfAssignableSubthemePoints(): number {
-    let max = this.subtheme.getMaxThemeStrength();
-    if (max <= this.subthemePointCap) {
-      max = this.subtheme.getMaxThemeStrength();
-    } else {
-      max = STARTING_THEME_POINTS - this.subthemePointCap;
-    }
-    return max;
+  totalAssignableSubthemePointsForUI(): number {
+    return STARTING_THEME_POINTS - this.totalAssignableSubthemePoints();
   }
 
   /**
-   * return the total number of sub theme points that can be assigned to this sub theme.
+   * returns the INVERSE of the total number of sub theme points that can be assigned to this sub theme. With respect to all other subthemes of the same type.  Since there are only 4 subtheme points in total this should be used to find out how many of the total 4 can be assigned.  This means if 3 can be assigned instead of returning 3 this would return 1.  If only 1 could be assigned then a 3 would returned.
+   * EX: If there are 3 stealth subthemes points available and 2 are assigned to find weakness, and this is Riposte, only 1 can be assigned thus it would return 3.
    * @returns {number}
    */
   totalAssignableSubthemePoints(): number {
-    const max = this.maximumNumberOfAssignableSubthemePoints();
-    let pointsAssignedElsewhere = this.assignedSubthemePoints - this.subtheme.getThemeStrength();
+    let max = this.subtheme.maxThemeStrength;
+    if (max < this.subthemePointCap) {
+      max = STARTING_THEME_POINTS - this.subtheme.maxThemeStrength;
+    } else {
+      max = STARTING_THEME_POINTS - this.subthemePointCap;
+    }
+    let pointsAssignedElsewhere = this.assignedSubthemePoints - this.subtheme.themeStrength;
     pointsAssignedElsewhere = pointsAssignedElsewhere < max ? max : pointsAssignedElsewhere;
     return pointsAssignedElsewhere;
   }

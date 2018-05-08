@@ -18,12 +18,12 @@ describe('Subtheme', () => {
   });
 
   it('should be able to get themeStrength', () => {
-    expect(combat.getThemeStrength()).toEqual(ThemeStrength.Minor);
+    expect(combat.themeStrength).toEqual(ThemeStrength.Minor);
   });
 
   it('should limit theme strength to max', () => {
     magic = new Subtheme(SubthemeTypes.SpellWarden, ThemeStrength.Greater);
-    expect(magic.getThemeStrength()).toEqual(ThemeStrength.Minor);
+    expect(magic.themeStrength).toEqual(ThemeStrength.Minor);
   });
 
   it('should be able to get unique magic Id and name', () => {

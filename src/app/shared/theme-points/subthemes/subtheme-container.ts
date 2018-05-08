@@ -66,11 +66,11 @@ export class SubthemeContainer {
     let total = 0;
     if (themeType === "magic") {
       if (this.magic) {
-        total = this[themeType].getThemeStrength();
+        total = this[themeType].themeStrength;
       }
     } else {
       for (const sub of this[themeType]) {
-        total += sub.getThemeStrength();
+        total += sub.themeStrength;
       }
     }
     return total;
@@ -94,7 +94,7 @@ export class SubthemeContainer {
   assignSubtheme(subtheme: Subtheme) {
     switch (subtheme.getThemeType()) {
       case ThemeType.Combat: {
-        if (this.getAvailableSubthemePoints("combat") < subtheme.getThemeStrength()) {
+        if (this.getAvailableSubthemePoints("combat") < subtheme.themeStrength) {
           this.handleError("There aren't enough available combat theme points to assign the subtheme " + subtheme.getSubthemeFormattedName());
         } else {
           this.combat = this.buildNewArray(this.combat, subtheme);
@@ -102,7 +102,7 @@ export class SubthemeContainer {
         }
       }
       case ThemeType.Stealth: {
-        if (this.getAvailableSubthemePoints("stealth") < subtheme.getThemeStrength()) {
+        if (this.getAvailableSubthemePoints("stealth") < subtheme.themeStrength) {
           this.handleError("There aren't enough available stealth theme points to assign the subtheme " + subtheme.getSubthemeFormattedName());
         } else {
           this.stealth = this.buildNewArray(this.stealth, subtheme);
@@ -110,7 +110,7 @@ export class SubthemeContainer {
         }
       }
       case ThemeType.Magic: {
-        if (this.themePoints.magic.getStrength() < subtheme.getThemeStrength()) {
+        if (this.themePoints.magic.getStrength() < subtheme.themeStrength) {
           this.handleError("There aren't enough available magic theme points to assign the subtheme " + subtheme.getSubthemeFormattedName());
         } else {
           this.magic = subtheme;

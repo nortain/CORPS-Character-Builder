@@ -10,7 +10,7 @@ import {DropdownValueObject} from "../../../shared/ui/dropdown/dropdown-value-ob
 import {SUBTHEME_BONUS} from "../../../shared/constants/constants";
 import {actionClickDropdownItemX} from "../../../shared/constants/testing-constants";
 
-fdescribe('SubthemeComponent', () => {
+describe('SubthemeComponent', () => {
   let component: SubthemeComponent;
   let fixture: ComponentFixture<SubthemeComponent>;
 
@@ -64,16 +64,16 @@ fdescribe('SubthemeComponent', () => {
     component.subtheme = new Subtheme(SubthemeTypes.WeaponSpecialization, ThemeStrength.Lesser);
     component.assignedSubthemePoints = 2;
     component.reloadSubtheme(new DropdownValueObject(ThemeStrength.Greater));
-    expect(component.subtheme.getThemeStrength()).toEqual(ThemeStrength.Greater);
+    expect(component.subtheme.themeStrength).toEqual(ThemeStrength.Greater);
 
   });
 
   it('should be able to get the total subtheme points', () => {
-    expect(component.totalAssignableSubthemePoints()).toEqual(3, "start out with 3 possible");
+    expect(component.totalAssignableSubthemePoints()).toEqual(1, "start out with 3 possible");
     component.reloadSubtheme(new DropdownValueObject(ThemeStrength.Lesser));
-    expect(component.totalAssignableSubthemePoints()).toEqual(3, "assigning 2 doesn't change that");
+    expect(component.totalAssignableSubthemePoints()).toEqual(1, "assigning 2 doesn't change that");
     component.assignedSubthemePoints = 2;
-    expect(component.totalAssignableSubthemePoints()).toEqual(3, "assigned 2 just means that the 2 assigned belong to this.");
+    expect(component.totalAssignableSubthemePoints()).toEqual(1, "assigned 2 just means that the 2 assigned belong to this.");
     component.assignedSubthemePoints = 4;
     expect(component.totalAssignableSubthemePoints()).toEqual(2);
   });
@@ -144,19 +144,43 @@ fdescribe('SubthemeComponent', () => {
     expect(component.getRowData(SUBTHEME_BONUS["Protector"]["1"], "Thorns").length).toEqual(10);
   });
 
-  it('should update the subtheme when a new strenght is selected', () => {
+  it('should update the subtheme when a new strength is selected', () => {
     actionClickDropdownItemX(fixture, "#subthemeDropdown", 1); // should equate to  1
-    expect(component.subtheme.getThemeStrength()).toEqual(1);
+    expect(component.subtheme.themeStrength).toEqual(1);
 
     expect(component.getRemainingSubthemePointsToAssign()).toEqual(2);
-    expect(component.totalAssignableSubthemePoints()).toEqual(3);
+    expect(component.totalAssignableSubthemePointsForUI()).toEqual(3);
+
   });
 
-  fit('should limit max number of subtheme points to be equal to that of theme points', () => {
+  it('should be able to get the maximum number of themepoints that can be assigned', () => {
+
+  });
+
+  it('should be able to limit subtheme points based of simliar subthemes being assigned values', () => {
+    component.subtheme = new Subtheme(SubthemeTypes.Riposte, ThemeStrength.Minor);
+    component.assignedSubthemePoints = 4;
+    component.subthemePointCap = 1;
+    const result = component.totalAssignableSubthemePoints();
+    const uiResult = component.totalAssignableSubthemePointsForUI();
+    expect(result).toEqual(3);
+    expect(uiResult).toEqual(1);
+  });
+
+  it('should limit max number of subtheme points to be equal to that of theme points', () => {
     const initalResult = component.totalAssignableSubthemePoints();
-    expect(initalResult).toEqual(3);
+    expect(initalResult).toEqual(1);
     component.subtheme = new Subtheme(SubthemeTypes.Evasion, ThemeStrength.None);
+    component.subthemePointCap = 2;
     const list = component.totalAssignableSubthemePoints();
-    expect(2).toEqual(2);
+    expect(list).toEqual(3);
+  });
+
+  it('should repsect subtheme points assigned to subthemes of the same theme type', () => {
+    component.subthemePointCap = 1;
+    component.subtheme = new Subtheme(SubthemeTypes.Riposte, ThemeStrength.Minor);
+    component.assignedSubthemePoints = 3;
+    const result = component.totalAssignableSubthemePoints();
+    expect(result).toEqual(3);
   });
 });

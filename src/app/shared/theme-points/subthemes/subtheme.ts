@@ -15,25 +15,32 @@ export class Subtheme {
   pipe: SubthemePipe;
 
 
-  constructor(public subtheme: SubthemeTypes, public themeStrength = ThemeStrength.None) {
+
+  constructor(public subtheme: SubthemeTypes, private strength = ThemeStrength.None) {
     this.pipe = new SubthemePipe();
     const values = this.parseSubtheme(subtheme);
     this.assignValues(values);
-    this.setThemeStrength();
-
+    this.themeStrength = strength;
   }
+
+  // getters and setters
+  get themeStrength(): ThemeStrength {
+    return this.strength;
+  }
+
+  set themeStrength(strength) {
+    if (strength > this.maxThemeStrength) {
+      this.strength = this.maxThemeStrength;
+    } else {
+      this.strength = strength;
+    }
+  }
+
+  // end getters and setters
 
   parseSubtheme(subtheme: SubthemeTypes) {
     const values = subtheme.split(",");
     return values;
-  }
-
-  getThemeStrength(): ThemeStrength {
-    return this.themeStrength;
-  }
-
-  getMaxThemeStrength(): ThemeStrength {
-    return this.maxThemeStrength;
   }
 
   /**
@@ -100,14 +107,5 @@ export class Subtheme {
     this.themeType = ThemeType[values[0]];
     this.maxThemeStrength = ThemeStrength[values[1]];
     this.subthemeName = values[2];
-  }
-
-  /**
-   * sets the strength of the sub them to be no higher than the max theme strength.
-   */
-  private setThemeStrength() {
-    if (this.themeStrength > this.maxThemeStrength) {
-      this.themeStrength = this.maxThemeStrength;
-    }
   }
 }
