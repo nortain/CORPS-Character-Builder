@@ -4,7 +4,8 @@ import {Subtheme} from "./subtheme";
 import {SubthemeTypes} from "./subtheme-types.enum";
 import {ThemeStrength} from "../theme-strength.enum";
 import {ThemePointsContainer} from "../theme-points-container";
-import {getSubthemeObject} from "../../constants/constants";
+import {getSubthemeObject} from "../../constants/subtheme/subtheme-constants";
+
 
 describe('SubthemeContainer', () => {
   let st;
@@ -96,6 +97,5 @@ describe('SubthemeContainer', () => {
       magic: []
     });
   });
-
 
 });

@@ -1,11 +1,10 @@
 import {ThemePointsContainer} from "../theme-points-container";
 import {Subtheme} from "./subtheme";
 import {ThemeType} from "../theme-type.enum";
-import {getSubthemeObject, SubthemeObject} from "../../constants/constants";
+import {getSubthemeObject, SubthemeObject} from "../../constants/subtheme/subtheme-constants";
+
 
 export class SubthemeContainer {
-
-
   /**
    * subthemes based on theme type that contain subthemes
    */

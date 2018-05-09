@@ -123,5 +123,14 @@ describe('CharacterSubthemeModalComponent', () => {
     expect(result).toEqual(1);
   });
 
+  it('should show all subtheme points that are available within the subtheme-container dom', () => {
+    const combat = fixture.debugElement.query(By.css("#combatTracker"));
+    const stealth = fixture.debugElement.query(By.css("#stealthTracker"));
+    const magic = fixture.debugElement.query(By.css("#magicTracker"));
+    expect(combat.nativeElement.innerText).toContain(1);
+    expect(stealth.nativeElement.innerText).toContain(1);
+    expect(magic.nativeElement.innerText).toContain(1);
+  });
+
 
 });
