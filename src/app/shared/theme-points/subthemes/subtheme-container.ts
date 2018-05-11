@@ -30,13 +30,18 @@ export class SubthemeContainer {
     return so;
   }
 
+  /**
+   * Takes in a subtheme type of either stealth or combat and a subtheme object that contains all subthemes.  This will prune out any subthemes that don't have theme points
+   * @param {"combat" | "stealth"} subthemeTypes
+   * @param {SubthemeObject} so
+   */
   private filterSubtheme(subthemeTypes: "combat" | "stealth", so: SubthemeObject) {
     const subthemeBasedOnThemePoints = this.themePoints[subthemeTypes];
     const subtheme = this[subthemeTypes];
     if (subthemeBasedOnThemePoints.getStrength() < 1) {
       so[subthemeTypes] = [];
     } else if (subtheme.length > 0) {
-      for (const item of this.combat) {
+      for (const item of this[subthemeTypes]) {
         so[subthemeTypes].find((element, index, array) => {
           if (element.subthemeName === item.subthemeName) {
             array[index] = item;
@@ -91,7 +96,7 @@ export class SubthemeContainer {
    * @param {Subtheme} subtheme to be added
    */
   assignSubtheme(subtheme: Subtheme) {
-    switch (subtheme.getThemeType()) {
+    switch (subtheme.themeType) {
       case ThemeType.Combat: {
         if (this.getAvailableSubthemePoints("combat") < subtheme.themeStrength) {
           this.handleError("There aren't enough available combat theme points to assign the subtheme " + subtheme.getSubthemeFormattedName());

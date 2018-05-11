@@ -82,7 +82,7 @@ describe('SubthemeContainer', () => {
   it('should be able ot build a sub theme object for various inputs', () => {
     st = new SubthemeContainer(new ThemePointsContainer(2, 0, 2, 0));
     const mock = getSubthemeObject(2);
-    const so = st.buildSubthemeObject();
+    let so = st.buildSubthemeObject();
     expect(so.combat).toEqual(mock.combat);
     expect(so.stealth.length).toEqual(0);
     expect(so.magic).toEqual(mock.magic);
@@ -94,6 +94,19 @@ describe('SubthemeContainer', () => {
     expect(newSo).toEqual({
       combat: [so.combat[0], pro, so.combat[2]],
       stealth: [],
+      magic: []
+    });
+
+    st = new SubthemeContainer(new ThemePointsContainer(1, 2, 0, 1));
+    so = st.buildSubthemeObject();
+    const prot_minor = new Subtheme(SubthemeTypes.Protector, ThemeStrength.Minor);
+    const ripo_minor = new Subtheme(SubthemeTypes.Riposte, ThemeStrength.Minor);
+    st.assignSubtheme(prot_minor);
+    st.assignSubtheme(ripo_minor);
+    const newerSo = st.buildSubthemeObject();
+    expect(newerSo).toEqual({
+      combat: [so.combat[0], prot_minor, so.combat[2]],
+      stealth: [so.stealth[0], ripo_minor, so.stealth[2]],
       magic: []
     });
   });

@@ -133,4 +133,17 @@ describe('CharacterSubthemeModalComponent', () => {
   });
 
 
+  fit('should be able to update subtheme container', () => {
+    weapon.themeStrength = ThemeStrength.Minor;
+    riposte.themeStrength = ThemeStrength.Minor;
+    component.updateSubtheme(weapon);
+    component.updateSubtheme(riposte);
+    expect(component.subthemePoints.combat).toEqual(
+      [weapon, protector, juggernaut],
+    );
+    expect(component.subthemePoints.stealth).toEqual(
+      [find, riposte, evasion]
+    );
+  });
+
 });

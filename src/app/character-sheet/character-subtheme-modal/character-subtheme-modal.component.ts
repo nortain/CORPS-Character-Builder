@@ -5,6 +5,7 @@ import {ThemeStrength} from "../../shared/theme-points/theme-strength.enum";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {SubthemeContainer} from "../../shared/theme-points/subthemes/subtheme-container";
 import {ThemeType} from "../../shared/theme-points/theme-type.enum";
+import {ThemePointsContainer} from "../../shared/theme-points/theme-points-container";
 
 
 @Component({
@@ -61,6 +62,7 @@ export class CharacterSubthemeModalComponent implements OnInit {
       if (sub.subthemeName === updatedSubtheme.subthemeName) {
         const index = this.subthemeButtonsArray.indexOf(sub);
         this.subthemeButtonsArray[index] = updatedSubtheme;
+        this.subthemePoints.assignSubtheme(updatedSubtheme);
         this.selectedSubtheme = updatedSubtheme;
         break;
       }
@@ -93,7 +95,7 @@ export class CharacterSubthemeModalComponent implements OnInit {
   }
 
   dismiss() {
-    this.activeModal.dismiss("Uer Cancelled");
+    this.activeModal.dismiss("User Cancelled");
   }
 
 
