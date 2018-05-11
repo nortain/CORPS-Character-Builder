@@ -79,8 +79,6 @@ describe('CharacterSubthemeModalComponent', () => {
     expect(btn[0].nativeElement.innerText).toContain("Ranks: 2");
   });
 
-  // TODO need to test passing in varous sub themes
-
   it('should load up the subtheme that is first in the array of subthemes', () => {
     const subComponent = fixture.debugElement.query(By.directive(SubthemeComponent));
     expect(subComponent.nativeElement).toBeTruthy();
@@ -133,7 +131,7 @@ describe('CharacterSubthemeModalComponent', () => {
   });
 
 
-  fit('should be able to update subtheme container', () => {
+  it('should be able to update subtheme container', () => {
     weapon.themeStrength = ThemeStrength.Minor;
     riposte.themeStrength = ThemeStrength.Minor;
     component.updateSubtheme(weapon);
