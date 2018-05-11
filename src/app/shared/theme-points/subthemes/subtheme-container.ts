@@ -102,24 +102,25 @@ export class SubthemeContainer {
           this.handleError("There aren't enough available combat theme points to assign the subtheme " + subtheme.getSubthemeFormattedName());
         } else {
           this.combat = this.buildNewArray(this.combat, subtheme);
-          break;
         }
+        break;
       }
       case ThemeType.Stealth: {
         if (this.getAvailableSubthemePoints("stealth") < subtheme.themeStrength) {
           this.handleError("There aren't enough available stealth theme points to assign the subtheme " + subtheme.getSubthemeFormattedName());
         } else {
           this.stealth = this.buildNewArray(this.stealth, subtheme);
-          break;
+
         }
+        break;
       }
       case ThemeType.Magic: {
         if (this.themePoints.magic.getStrength() < subtheme.themeStrength) {
           this.handleError("There aren't enough available magic theme points to assign the subtheme " + subtheme.getSubthemeFormattedName());
         } else {
           this.magic = subtheme;
-          break;
         }
+        break;
 
       }
       default: // do nothing

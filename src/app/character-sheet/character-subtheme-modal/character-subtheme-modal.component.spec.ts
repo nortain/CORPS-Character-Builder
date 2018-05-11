@@ -139,10 +139,10 @@ describe('CharacterSubthemeModalComponent', () => {
     component.updateSubtheme(weapon);
     component.updateSubtheme(riposte);
     expect(component.subthemePoints.combat).toEqual(
-      [weapon, protector, juggernaut],
+      [weapon],
     );
     expect(component.subthemePoints.stealth).toEqual(
-      [find, riposte, evasion]
+      [riposte]
     );
   });
 
