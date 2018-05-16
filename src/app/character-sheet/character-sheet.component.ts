@@ -10,8 +10,8 @@ import {MagicDefenseType} from "../shared/character/magic-defense/magic-defense-
 import {AttributeBonus} from "../shared/attribute/character-attribute/attribute-bonus.enum";
 import {STARTING_HIT_POINTS, STARTING_RECOVERIES} from "../shared/constants/constants";
 import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
-import {SubthemeComponent} from "./character-subtheme-modal/character-subthemes/subtheme.component";
-import {CharacterSubthemeModalComponent} from "./character-subtheme-modal/character-subtheme-modal.component";
+import {SubthemeComponent} from "./character-subtheme-modal/subthemes/subtheme.component";
+import {CharacterSubthemeModalComponent} from "./character-subtheme-modal/character-subthemes/character-subtheme-modal.component";
 
 @Component({
   selector: 'corps-character-sheet',

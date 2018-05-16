@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Subtheme} from "../../../shared/theme-points/subthemes/subtheme";
 import {DropdownValueObject} from "../../../shared/ui/dropdown/dropdown-value-object";
 import {AttributeService} from "../../../shared/attribute/attribute.service";
@@ -27,15 +27,15 @@ export class SubthemeComponent implements OnInit {
 
   constructor(private  attributeService: AttributeService) {
     this.submitter = new EventEmitter<Subtheme>();
-    console.log("subtheme component was created");
+
   }
 
   ngOnInit() {
-    console.log("subtheme component was initialized");
+
   }
 
   getTextInfo(): string[] {
-    return SUBTHEME_BONUS[this.subtheme.getSubthemeName()].text;
+    return SUBTHEME_BONUS[this.subtheme.subthemeName].text;
   }
 
 
@@ -46,7 +46,7 @@ export class SubthemeComponent implements OnInit {
     const rows = [];
     let length = 1;
     while (length <= this.subtheme.maxThemeStrength) {
-      rows.push(SUBTHEME_BONUS[this.subtheme.getSubthemeName()][length]);
+      rows.push(SUBTHEME_BONUS[this.subtheme.subthemeName][length]);
       length++;
     }
     return rows;
@@ -115,7 +115,7 @@ export class SubthemeComponent implements OnInit {
    * @param {DropdownValueObject} dd
    */
   reloadSubtheme(dd: DropdownValueObject) {
-    this.subtheme = new Subtheme(SubthemeTypes[this.subtheme.getSubthemeName()], dd.value);
+    this.subtheme = new Subtheme(SubthemeTypes[this.subtheme.subthemeName], dd.value);
     this.submitter.emit(this.subtheme);
   }
 
@@ -126,7 +126,6 @@ export class SubthemeComponent implements OnInit {
   getDropdownValues(): DropdownValueObject[] {
     const pointsAssignedElsewhere = this.totalAssignableSubthemePoints();
     const result = this.attributeService.buildArrayAsDropdownArray(this.attributeService.getThemePointStrength(false, pointsAssignedElsewhere));
-    console.log(result, " is the result.");
     return result;
   }
 

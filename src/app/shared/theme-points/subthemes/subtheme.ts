@@ -59,14 +59,6 @@ export class Subtheme {
   }
 
   /**
-   * returns the unformated version of the sub theme name, this will match the enum key
-   * @returns {string}
-   */
-  getSubthemeName() {
-    return this.subthemeName;
-  }
-
-  /**
    * This will return a collection of spells for the given subtheme if the theme has spells
    * @returns {Spell[]}
    */

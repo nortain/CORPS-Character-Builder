@@ -1,18 +1,18 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {CharacterSubthemeModalComponent} from './character-subtheme-modal.component';
-import {SharedModule} from "../../shared/shared.module";
-import {SubthemeComponent} from "./character-subthemes/subtheme.component";
+import {SharedModule} from "../../../shared/shared.module";
+import {SubthemeComponent} from "../subthemes/subtheme.component";
 import {NgbActiveModal, NgbDropdownConfig} from "@ng-bootstrap/ng-bootstrap";
 import {NgbModalStack} from "@ng-bootstrap/ng-bootstrap/modal/modal-stack";
-import {actionClickDropdownItemX, actionGetDropdownValue, mockThemePoints} from "../../shared/constants/testing-constants";
-import {ThemeStrength} from "../../shared/theme-points/theme-strength.enum";
-import {ThemePointsContainer} from "../../shared/theme-points/theme-points-container";
-import {SubthemeContainer} from "../../shared/theme-points/subthemes/subtheme-container";
-import {SubthemeTypes} from "../../shared/theme-points/subthemes/subtheme-types.enum";
-import {Subtheme} from "../../shared/theme-points/subthemes/subtheme";
+import {actionClickDropdownItemX, actionGetDropdownValue, mockThemePoints} from "../../../shared/constants/testing-constants";
+import {ThemeStrength} from "../../../shared/theme-points/theme-strength.enum";
+import {ThemePointsContainer} from "../../../shared/theme-points/theme-points-container";
+import {SubthemeContainer} from "../../../shared/theme-points/subthemes/subtheme-container";
+import {SubthemeTypes} from "../../../shared/theme-points/subthemes/subtheme-types.enum";
+import {Subtheme} from "../../../shared/theme-points/subthemes/subtheme";
 import {By} from "@angular/platform-browser";
-import {DropdownComponent} from "../../shared/ui/dropdown/dropdown.component";
+import {DropdownComponent} from "../../../shared/ui/dropdown/dropdown.component";
 import {NgbDropdownMenu} from "@ng-bootstrap/ng-bootstrap/dropdown/dropdown";
 
 describe('CharacterSubthemeModalComponent', () => {

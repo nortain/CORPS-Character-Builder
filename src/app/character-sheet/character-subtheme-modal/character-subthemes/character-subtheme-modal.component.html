@@ -19,19 +19,25 @@
     </div>
     <div class="row">
       <div class="col-3">
-        <button id="{{sub.subthemeName}}" *ngFor="let sub of subthemeButtonsArray" class="btn btn-primary align-content-center col verticalSubthemeBtns" (click)="selectSubtheme(sub)">
+        <button id="{{sub.subthemeName}}" *ngFor="let sub of subthemeButtonsArray"
+                class="btn btn-primary align-content-center col verticalSubthemeBtns" (click)="selectSubtheme(sub)">
           {{sub.subthemeName | subthemes}}<br>
           ({{themeType[sub.themeType]}}) Ranks: {{sub.themeStrength}}
         </button>
       </div>
       <div class="col-9">
-        <corps-subthemes
-          id="corpsSubtheme"
-          [assignedSubthemePoints]="getAssignedSubthemes()"
-          [subtheme]="selectedSubtheme"
-          [subthemePointCap]="getSubthemePointCap()"
-          (submitter)="updateSubtheme($event)">
+        <corps-subthemes *ngIf="selectedSubtheme.themeType !== themeType.Magic"
+                         id="corpsSubtheme"
+                         [assignedSubthemePoints]="getAssignedSubthemes()"
+                         [subtheme]="selectedSubtheme"
+                         [subthemePointCap]="getSubthemePointCap()"
+                         (submitter)="updateSubtheme($event)">
         </corps-subthemes>
+        <corps-character-magic-subteheme
+          *ngIf="selectedSubtheme.themeType === themeType.Magic"
+          id="corpsMagicSubtheme"
+          [subtheme]="selectedSubtheme">
+        </corps-character-magic-subteheme>
       </div>
     </div>
   </div>

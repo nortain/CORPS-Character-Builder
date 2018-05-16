@@ -1,11 +1,9 @@
 import {ChangeDetectionStrategy, Component, Input, OnInit, ViewChild} from '@angular/core';
-import {Subtheme} from "../../shared/theme-points/subthemes/subtheme";
-import {SubthemeTypes} from "../../shared/theme-points/subthemes/subtheme-types.enum";
-import {ThemeStrength} from "../../shared/theme-points/theme-strength.enum";
+import {Subtheme} from "../../../shared/theme-points/subthemes/subtheme";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {SubthemeContainer} from "../../shared/theme-points/subthemes/subtheme-container";
-import {ThemeType} from "../../shared/theme-points/theme-type.enum";
-import {ThemePointsContainer} from "../../shared/theme-points/theme-points-container";
+import {SubthemeContainer} from "../../../shared/theme-points/subthemes/subtheme-container";
+import {ThemeType} from "../../../shared/theme-points/theme-type.enum";
+
 
 
 @Component({
@@ -56,10 +54,9 @@ export class CharacterSubthemeModalComponent implements OnInit {
     return this.selectedSubtheme.themeStrength;
   }
 
-
   updateSubtheme(updatedSubtheme: Subtheme) {
     for (const sub of this.subthemeButtonsArray) {
-      if (sub.subthemeName === updatedSubtheme.subthemeName) {
+      if (sub.subthemeName === updatedSubtheme.subthemeName && sub.themeStrength !== updatedSubtheme.themeStrength) {
         const index = this.subthemeButtonsArray.indexOf(sub);
         this.subthemeButtonsArray[index] = updatedSubtheme;
         this.subthemePoints.assignSubtheme(updatedSubtheme);
