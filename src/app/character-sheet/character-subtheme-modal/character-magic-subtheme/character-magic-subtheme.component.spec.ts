@@ -4,6 +4,8 @@ import { CharacterMagicSubthemeComponent } from './character-magic-subtheme.comp
 import {mockCharacter, mockSubtheme} from "../../../shared/constants/testing-constants";
 import {SubthemeTypes} from "../../../shared/theme-points/subthemes/subtheme-types.enum";
 import {ThemeStrength} from "../../../shared/theme-points/theme-strength.enum";
+import {MagicType} from "./magic-type.enum";
+import {ONE_MAGIC_SPELLS} from "../../../shared/constants/constants";
 
 fdescribe('CharacterMagicSubthemeComponent', () => {
   let component: CharacterMagicSubthemeComponent;
@@ -28,15 +30,19 @@ fdescribe('CharacterMagicSubthemeComponent', () => {
   });
 
   it('should be able to get magic text', () => {
-    expect(true).toBeFalsy();
+    const result = component.getMagicText(MagicType.FeatureBonus);
+    expect(result).toBe(ONE_MAGIC_SPELLS["Magent"].FeatureBonus);
   });
 
   it('should be able to get knackData', () => {
-    expect(true).toBeFalsy();
+    const result = component.getKnackData("CarpetBagger");
+    expect(result).toEqual(ONE_MAGIC_SPELLS["Magent"].ImplementKnacksData.Carpetbagger);
   });
 
   it('should be able to get knackText', () => {
-    expect(true).toBeFalsy();
+    const result = component.getKnackText()[0];
+    expect(result.name).toEqual("RangedDefender");
+    expect(result.text).toEqual(ONE_MAGIC_SPELLS["Magent"].ImplementKnacks.RangedDefender);
   });
 
   it('should not display a data table if no data is presented', () => {
