@@ -118,11 +118,19 @@ export const ONE_MAGIC_SPELLS = {
     Overview: "You are a bad ass magent",
     FeatureBonus: "You can have your attack spells use either your strength, agility or both as a balanced stat for determining your bonus damage",
     GeneralFeature: "If you have 1 theme point in general you gain 1 spell knack and 1 additional spell.",
+    GeneralFeatureRequirement: {
+      General: 1
+    },
     ImplementKnacks: {
       RangedDefender: "You can use your AD vs range, area, and line attacks.",
       Carpetbagger: "When you attack with a weapon or imbue spell and could gain bonus damage from the Find Weakness or the Riposte sub themes you can increase the damage of the attack to that target by the Carpetbagger value.",
       ElegantRetaliation: "Once per encounter as a free action when you are damaged by an threatened attacker you can reduce the damage taken by the Elegant Retaliation value below and return that much damage to the enemy.",
       Reprobate: "Once per round, whenever an enemy misses you with an attack, choose to have your next weapon or spell attack you make to have its damage increased by the value listed below against the first target hit."
+    },
+    ImplementKnacksData: {
+      Carpetbagger: [4, 4, 5, 6, 7, 7, 8, 9, 10, 11],
+      ElegantRetaliation: [4, 4, 5, 6, 7, 7, 8, 9, 10, 11],
+      Reprobate: [4, 4, 5, 6, 7, 7, 8, 9, 10, 11]
     },
     Spells: () => MagentSpellList()
   },

@@ -5,14 +5,14 @@ import {CharacterSheetComponent} from './character-sheet.component';
 import {CharacterThemePointsComponent} from './character-theme-points/character-theme-points.component';
 import {SubthemeComponent} from "./character-subtheme-modal/subthemes/subtheme.component";
 import { CharacterSubthemeModalComponent } from './character-subtheme-modal/character-subthemes/character-subtheme-modal.component';
-import { CharacterMagicSubtehemeComponent } from './character-subtheme-modal/character-magic-subteheme/character-magic-subteheme.component';
+import { CharacterMagicSubthemeComponent } from './character-subtheme-modal/character-magic-subtheme/character-magic-subtheme.component';
 
 
 @NgModule({
   imports: [
     SharedModule
   ],
-  declarations: [CharacterAttributesComponent, CharacterSheetComponent, CharacterThemePointsComponent, SubthemeComponent, CharacterSubthemeModalComponent, CharacterMagicSubtehemeComponent],
+  declarations: [CharacterAttributesComponent, CharacterSheetComponent, CharacterThemePointsComponent, SubthemeComponent, CharacterSubthemeModalComponent, CharacterMagicSubthemeComponent],
   entryComponents: [CharacterSubthemeModalComponent]
 
 })

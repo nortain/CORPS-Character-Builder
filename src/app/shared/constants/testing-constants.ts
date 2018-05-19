@@ -7,6 +7,8 @@ import {NgbDropdownMenu} from "@ng-bootstrap/ng-bootstrap/dropdown/dropdown";
 import {PhysicalDefense} from "../character/phsyical-defense/physical-defense";
 import {ThemePointsContainer} from "../theme-points/theme-points-container";
 import {ThemeStrength} from "../theme-points/theme-strength.enum";
+import {Subtheme} from "../theme-points/subthemes/subtheme";
+import {SubthemeTypes} from "../theme-points/subthemes/subtheme-types.enum";
 
 export function mockDropdownData() {
   return [
@@ -19,6 +21,15 @@ export function mockDropdownData() {
 export function mockCharacter(name = "Bob", raceType = RaceType.Altwani) {
   const character = new Character(name, raceType);
   return character;
+}
+
+export function mockSubtheme(subthemeType?: SubthemeTypes, str?: ThemeStrength): Subtheme {
+  if (!subthemeType) {
+    subthemeType = SubthemeTypes.Riposte;
+  }
+  str = !!str ? str : ThemeStrength.None;
+  const sub = new Subtheme(subthemeType, str);
+  return sub;
 }
 
 export function mockDefense() {

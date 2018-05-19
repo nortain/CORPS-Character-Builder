@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <label class="font-weight-bold">Subtheme Name: {{subtheme.subthemeName}}</label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <label class="font-weight-bold">Overview: </label> {{getMagicText(magicType.Overview)}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <label class="font-weight-bold">Feature Bonus: </label> {{getMagicText(magicType.FeatureBonus)}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <label class="font-weight-bold">General Feature: </label> {{getMagicText(magicType.GeneralFeature)}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <label class="font-weight-bold">Implement Knacks: </label>
+      <div class="col-lg-offset-1" *ngFor="let knack of getKnackText()">
+        <label class="font-weight-bold">Name:</label> {{knack.name}}<br>
+        <label class="font-weight-bold">Description:</label> {{knack.text}}
+        <table *ngIf="!!getKnackData(knack.name)" class="table table-bordered">
+          <thead>
+          <tr>
+            <th scope="col">Bonus</th>
+            <th scope="col">L 1</th>
+            <th scope="col">L 2</th>
+            <th scope="col">L 3</th>
+            <th scope="col">L 4</th>
+            <th scope="col">L 5</th>
+            <th scope="col">L 6</th>
+            <th scope="col">L 7</th>
+            <th scope="col">L 8</th>
+            <th scope="col">L 9</th>
+            <th scope="col">L 10</th>
+          </tr>
+          </thead>
+          <tr>
+            <th>{{knack.name}}</th>
+            <td *ngFor="let data of getKnackData(knack)">{{data}}</td>
+          </tr>
+        </table>
+        <br><br>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+

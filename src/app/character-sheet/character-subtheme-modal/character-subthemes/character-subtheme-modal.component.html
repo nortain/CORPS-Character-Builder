@@ -33,11 +33,11 @@
                          [subthemePointCap]="getSubthemePointCap()"
                          (submitter)="updateSubtheme($event)">
         </corps-subthemes>
-        <corps-character-magic-subteheme
+        <corps-character-magic-subtheme
           *ngIf="selectedSubtheme.themeType === themeType.Magic"
           id="corpsMagicSubtheme"
           [subtheme]="selectedSubtheme">
-        </corps-character-magic-subteheme>
+        </corps-character-magic-subtheme>
       </div>
     </div>
   </div>
