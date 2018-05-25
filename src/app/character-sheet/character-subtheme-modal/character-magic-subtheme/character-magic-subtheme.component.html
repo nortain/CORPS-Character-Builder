@@ -22,31 +22,37 @@
   <div class="row">
     <div class="col-12">
       <label class="font-weight-bold">Implement Knacks: </label>
-      <div class="col-lg-offset-1" *ngFor="let knack of getKnackText()">
-        <label class="font-weight-bold">Name:</label> {{knack.name}}<br>
-        <label class="font-weight-bold">Description:</label> {{knack.text}}
-        <table *ngIf="!!getKnackData(knack.name)" class="table table-bordered">
-          <thead>
-          <tr>
-            <th scope="col">Bonus</th>
-            <th scope="col">L 1</th>
-            <th scope="col">L 2</th>
-            <th scope="col">L 3</th>
-            <th scope="col">L 4</th>
-            <th scope="col">L 5</th>
-            <th scope="col">L 6</th>
-            <th scope="col">L 7</th>
-            <th scope="col">L 8</th>
-            <th scope="col">L 9</th>
-            <th scope="col">L 10</th>
-          </tr>
-          </thead>
-          <tr>
-            <th>{{knack.name}}</th>
-            <td *ngFor="let data of getKnackData(knack)">{{data}}</td>
-          </tr>
-        </table>
-        <br><br>
+      <button id="displayKnackButton" class="btn btn-primary" (click)="displayKnacks()">{{knackDisplayToggle ? 'Hide' : 'Show'}} Implement Knacks
+      </button>
+      <div *ngIf="knackDisplayToggle">
+        <div class="knackOffset" *ngFor="let knack of getKnackText()">
+          <label class="font-weight-bold">Name:</label> <span class="name">{{knack.name | castleCase}}</span><br>
+          <label class="font-weight-bold">Description:</label>
+          <span class="description"> {{knack.text}}</span>
+          <div *ngIf="!getKnackData(knack.name)"></div>
+          <table id="{{knack.name}}Table" *ngIf="!!getKnackData(knack.name)" class="table table-bordered">
+            <thead>
+            <tr>
+              <th scope="col">Bonus</th>
+              <th scope="col">L 1</th>
+              <th scope="col">L 2</th>
+              <th scope="col">L 3</th>
+              <th scope="col">L 4</th>
+              <th scope="col">L 5</th>
+              <th scope="col">L 6</th>
+              <th scope="col">L 7</th>
+              <th scope="col">L 8</th>
+              <th scope="col">L 9</th>
+              <th scope="col">L 10</th>
+            </tr>
+            </thead>
+            <tr>
+              <th class="knackDataName">{{knack.name | castleCase}}</th>
+              <td *ngFor="let data of getKnackData(knack.name)">{{data}}</td>
+            </tr>
+          </table>
+          <br>
+        </div>
       </div>
     </div>
   </div>

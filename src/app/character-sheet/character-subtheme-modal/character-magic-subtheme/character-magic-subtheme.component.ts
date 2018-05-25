@@ -12,12 +12,19 @@ export class CharacterMagicSubthemeComponent implements OnInit {
 
   @Input() subtheme: Subtheme;
   magicType = MagicType;
+  knackDisplayToggle: boolean;
 
   constructor() {
+    this.knackDisplayToggle = false;
   }
 
   ngOnInit() {
   }
+
+  displayKnacks() {
+    this.knackDisplayToggle = !this.knackDisplayToggle;
+  }
+
 
   getMagicText(propertyName: MagicType): string {
     return SUBTHEME_BONUS[this.subtheme.subthemeName][propertyName];

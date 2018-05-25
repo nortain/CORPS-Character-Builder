@@ -141,8 +141,13 @@ export const ONE_MAGIC_SPELLS = {
     ImplementKnacks: {
       RangedDefender: "You can use your AD vs range, area, and line attacks.",
       ImprovedWeaponSpells: "Increase the damage of your weapon and imbue spells by the amount listed below",
-    SpellAbsorption: "The first time in a combat when you are damaged by an attack that targets your magic defense or hit by a critical strike, after the attack resolves, you gain temporary hit points equal to the temp hp value below.  These temporary hit points stack with any temporary hit points you might already have.",
-    ShieldOfTheWarden: "If you have a protector’s aura or mark-like ability you can increase the damage inflicted with the mark or ability by the Mark bonus listed below."
+      SpellAbsorption: "The first time in a combat when you are damaged by an attack that targets your magic defense or hit by a critical strike, after the attack resolves, you gain temporary hit points equal to the temp hp value below.  These temporary hit points stack with any temporary hit points you might already have.",
+      ShieldOfTheWarden: "If you have a protector’s aura or mark-like ability you can increase the damage inflicted with the mark or ability by the Mark bonus listed below."
+    },
+    ImplementKnacksData: {
+      ImprovedWeaponSpells: [4, 4, 5, 6, 7, 7, 8, 9, 10, 11],
+      SpellAbsorption: [4, 4, 5, 6, 7, 7, 8, 9, 10, 11],
+      ShieldOfTheWarden: [4, 4, 5, 6, 7, 7, 8, 9, 10, 11]
     },
     Spells: () => SpellWardenSpellList()
   }
