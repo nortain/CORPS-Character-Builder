@@ -36,7 +36,8 @@
         <corps-character-magic-subtheme
           *ngIf="selectedSubtheme.themeType === themeType.Magic"
           id="corpsMagicSubtheme"
-          [subtheme]="selectedSubtheme">
+          [subtheme]="selectedSubtheme"
+          [generalThemePoint]="subthemePoints.themePoints.general.getStrength()">
         </corps-character-magic-subtheme>
       </div>
     </div>

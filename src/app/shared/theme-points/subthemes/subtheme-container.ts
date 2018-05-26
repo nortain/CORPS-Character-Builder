@@ -2,6 +2,7 @@ import {ThemePointsContainer} from "../theme-points-container";
 import {Subtheme} from "./subtheme";
 import {ThemeType} from "../theme-type.enum";
 import {getSubthemeObject, SubthemeObject} from "../../constants/subtheme/subtheme-constants";
+import {ThemeStrength} from "../theme-strength.enum";
 
 
 export class SubthemeContainer {

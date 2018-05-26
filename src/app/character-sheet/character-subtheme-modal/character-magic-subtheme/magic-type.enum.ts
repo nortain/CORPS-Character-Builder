@@ -4,6 +4,5 @@ export enum MagicType {
   GeneralFeature = "GeneralFeature",
   ImplementKnacks = "ImplementKnacks",
   ImplementKnacksData = "ImplementKnacksData",
-  GeneralFeatureRequirement = "GeneralFeatureRequirement",
   Spells = "Spells"
 }

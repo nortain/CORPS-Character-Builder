@@ -26,6 +26,7 @@ fdescribe('CharacterMagicSubthemeComponent', () => {
     component = fixture.componentInstance;
     component.subtheme = mockSubtheme(SubthemeTypes.Magent, ThemeStrength.Minor);
     component.knackDisplayToggle = true;
+    component.generalThemePoint = ThemeStrength.None;
     fixture.detectChanges();
 
   });
@@ -70,8 +71,23 @@ fdescribe('CharacterMagicSubthemeComponent', () => {
   });
 
   it('should have an option to choose a knack if knacks are displayed', () => {
-    // need a drop down with an options to select or maybe selected from the tables direactly
+    // use select knack to select or deselect a knack
     expect(true).toBeFalsy();
+  });
+
+  it('should alter the css to indicate a knack has been selected', () => {
+    // add css to show a color of the div surrounding the knack if it is selected.
+    expect(true).toBeFalsy();
+  });
+
+  it('should be able to determine how many knacks we can select', () => {
+    expect(component.numberOfKnacksToSelect).toEqual(0);
+    component.generalThemePoint = ThemeStrength.Minor;
+    component.ngOnChanges();
+    expect(component.numberOfKnacksToSelect).toEqual(1);
+    component.subtheme = mockSubtheme(SubthemeTypes.Mage, ThemeStrength.Greater);
+    component.ngOnChanges();
+    expect(component.numberOfKnacksToSelect).toEqual(2);
   });
 
 });

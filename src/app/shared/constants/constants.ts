@@ -118,9 +118,6 @@ export const ONE_MAGIC_SPELLS = {
     Overview: "You are a bad ass magent",
     FeatureBonus: "You can have your attack spells use either your strength, agility or both as a balanced stat for determining your bonus damage",
     GeneralFeature: "If you have 1 theme point in general you gain 1 spell knack and 1 additional spell.",
-    GeneralFeatureRequirement: {
-      General: 1
-    },
     ImplementKnacks: {
       RangedDefender: "You can use your AD vs range, area, and line attacks.",
       Carpetbagger: "When you attack with a weapon or imbue spell and could gain bonus damage from the Find Weakness or the Riposte sub themes you can increase the damage of the attack to that target by the Carpetbagger value.",
