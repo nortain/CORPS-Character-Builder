@@ -13,7 +13,7 @@ describe('CastleCasePipe', () => {
     expect(pipe.transform(mockString)).toBe(correctString);
   });
 
-  fit('should be able to handle other strings', () => {
+  it('should be able to handle other strings', () => {
     const mock = " asdfCoolnessAsIF I freaking care";
     const actual = "Asdf Coolness As I F  I freaking care";
     const pipe = new CastleCasePipe();

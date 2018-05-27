@@ -72,7 +72,13 @@ fdescribe('CharacterMagicSubthemeComponent', () => {
 
   it('should have an option to choose a knack if knacks are displayed', () => {
     // use select knack to select or deselect a knack
-    expect(true).toBeFalsy();
+    component.numberOfKnacksToSelect = 1;
+    const panels = fixture.debugElement.queryAll(By.css(".knackPanel"));
+    expect(panels.length).toEqual(4);
+    expect(component.selectedKnacks.length).toEqual(0);
+    panels[0].nativeElement.click();
+    fixture.detectChanges();
+    expect(component.selectedKnacks.length).toEqual(1);
   });
 
   it('should alter the css to indicate a knack has been selected', () => {
