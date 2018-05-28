@@ -576,5 +576,10 @@ export class StartingCharacterMagicDefense {
   Will = new MagicDefense(MagicDefenseType.Will, new Field(10));
 }
 
+export class Knack {
+  name: string;
+  text: string;
+}
+
 
 

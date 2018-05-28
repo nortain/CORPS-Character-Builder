@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {Subtheme} from "../../../shared/theme-points/subthemes/subtheme";
-import {SUBTHEME_BONUS} from "../../../shared/constants/constants";
+import {Knack, SUBTHEME_BONUS} from "../../../shared/constants/constants";
 import {MagicType} from "./magic-type.enum";
 import {ThemeStrength} from "../../../shared/theme-points/theme-strength.enum";
 
@@ -13,15 +13,29 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
 
   @Input() subtheme: Subtheme;
   @Input() generalThemePoint: ThemeStrength;
-  @Input() previouslySelectedKnacks: { name: string, text: string }[];
+  @Input() previouslySelectedKnacks: Knack[];
   magicType = MagicType;
+  /**
+   * a toggle switch to determine if knacks are being displayed or not
+   */
   knackDisplayToggle: boolean;
+  /**
+   * the number of knacks a character can select
+   */
   numberOfKnacksToSelect: number;
-  selectedKnacks: { name: string, text: string }[];
+  /**
+   * maintains an array of knacks that have been selected
+   */
+  selectedKnacks: Knack[];
+  /**
+   * maintains an array of knacks that are toggled open
+   */
+  openKnacks: Knack[];
 
   constructor() {
     this.knackDisplayToggle = false;
     this.selectedKnacks = [];
+    this.openKnacks = [];
   }
 
   ngOnInit() {
@@ -39,6 +53,33 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
     this.knackDisplayToggle = !this.knackDisplayToggle;
   }
 
+  openKnack(knack: Knack) {
+    const index = this.findIndexOfKnackByName(knack, this.openKnacks);
+    if (index > -1) {
+      this.openKnacks.splice(index, 1);
+    } else {
+      this.openKnacks.push(knack);
+    }
+  }
+
+  isKnackOpen(knack: Knack) {
+    return this.findIndexOfKnackByName(knack, this.openKnacks) > -1;
+  }
+
+  isKnackSelected(knack: Knack) {
+    return this.findIndexOfKnackByName(knack, this.selectedKnacks) > -1;
+  }
+
+  selectKnack(knack: Knack) {
+    if (this.selectedKnacks.length < this.numberOfKnacksToSelect) {
+      this.selectedKnacks.push(knack);
+    } else {
+      const index = this.findIndexOfKnackByName(knack, this.selectedKnacks);
+      if (index > -1) {
+        this.selectedKnacks.splice(index, 1);
+      }
+    }
+  }
 
   getMagicText(propertyName: MagicType): string {
     return SUBTHEME_BONUS[this.subtheme.subthemeName][propertyName];
@@ -49,7 +90,7 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
     return knacksObject[knackName];
   }
 
-  getKnackText(): { name: string, text: string }[] {
+  getKnackText(): Knack[] {
     const knacksObject = this.getMagicText(this.magicType.ImplementKnacks);
     const knacksArray = Object.keys(knacksObject);
     const result = [];
@@ -63,15 +104,13 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
 
   }
 
-  selectKnack(knack: { name: string, text: string }) {
-    if (this.selectedKnacks.length < this.numberOfKnacksToSelect) {
-      this.selectedKnacks.push(knack);
-    } else {
-      const index = this.selectedKnacks.indexOf(knack);
-      if (index > -1) {
-        this.selectedKnacks.splice(index, 1);
+  private findIndexOfKnackByName(element: Knack, array: Knack[]): number {
+    for (const index of Object.keys(array)) {
+      if (element.name === array[index].name) {
+        return parseInt(index, 10);
       }
     }
+    return -1;
   }
 
   private determineNumberOfSelectableKnacks() {

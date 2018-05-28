@@ -36,6 +36,13 @@ export function mockDefense() {
   return new PhysicalDefense();
 }
 
+export function mockKnack() {
+  return {
+    name: "Riposte",
+    text: "You get shanked"
+  };
+}
+
 export function mockThemePoints() {
   return new ThemePointsContainer(ThemeStrength.Minor, ThemeStrength.Minor, ThemeStrength.Minor, ThemeStrength.Minor);
 }
