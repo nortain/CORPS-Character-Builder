@@ -73,10 +73,11 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
     } else {
       const options = {
         backdrop: "static",
-        size: "sm"
+        size: "sm",
+        centered: true
       } as NgbModalOptions;
       const modalRef = this.modalService.open(ConfirmationComponent, options);
-      modalRef.componentInstance.bodyText = ["You will lose all your changes for this subtheme if you deselect it.  Continue?"];
+      modalRef.componentInstance.bodyText = ["You will lose all your changes for this subtheme if you deselect it.  Do you wish to continue?"];
       modalRef.result.then((result) => {
         if (result) {
           this.resetSubtheme();
