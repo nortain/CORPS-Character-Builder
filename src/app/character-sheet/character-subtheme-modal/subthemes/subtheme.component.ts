@@ -34,10 +34,13 @@ export class SubthemeComponent implements OnInit {
 
   }
 
+  /**
+   * get texts returned as an array of strings for the current subtheme from the constants SUBTHEME_BONUS constant
+   * @returns {string[]}
+   */
   getTextInfo(): string[] {
     return SUBTHEME_BONUS[this.subtheme.subthemeName].text;
   }
-
 
   /**
    * gets an array of arrays to represent the values that are gained from the sub theme and displayed in the subtheme component

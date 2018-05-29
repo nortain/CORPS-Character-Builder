@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {async, ComponentFixture, fakeAsync, inject, TestBed, tick} from '@angular/core/testing';
 
 import {CharacterMagicSubthemeComponent} from './character-magic-subtheme.component';
 import {mockCharacter, mockKnack, mockSubtheme} from "../../../shared/constants/testing-constants";
@@ -8,14 +8,27 @@ import {MagicType} from "./magic-type.enum";
 import {ONE_MAGIC_SPELLS} from "../../../shared/constants/constants";
 import {By} from "@angular/platform-browser";
 import {SharedModule} from "../../../shared/shared.module";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModalStack} from "@ng-bootstrap/ng-bootstrap/modal/modal-stack";
 
 fdescribe('CharacterMagicSubthemeComponent', () => {
   let component: CharacterMagicSubthemeComponent;
   let fixture: ComponentFixture<CharacterMagicSubthemeComponent>;
+  let modalService;
+
+
+  function unselectedSubthemeSetup() {
+    component = fixture.componentInstance;
+    component.subtheme = mockSubtheme(SubthemeTypes.Magent, ThemeStrength.None);
+    component.knackDisplayToggle = true;
+    component.generalThemePoint = ThemeStrength.None;
+    fixture.detectChanges();
+  }
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [SharedModule],
+      providers: [NgbModal, NgbModalStack],
       declarations: [CharacterMagicSubthemeComponent]
     })
       .compileComponents();
@@ -28,8 +41,11 @@ fdescribe('CharacterMagicSubthemeComponent', () => {
     component.knackDisplayToggle = true;
     component.generalThemePoint = ThemeStrength.None;
     fixture.detectChanges();
-
   });
+
+  beforeEach(inject([NgbModal], (svc: NgbModal) => {
+    modalService = svc;
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -143,12 +159,59 @@ fdescribe('CharacterMagicSubthemeComponent', () => {
   });
 
   it('should be able to actually selected a magic subtheme', () => {
-    // should have a button that will let to you actually choose a particular subtheme
+    unselectedSubthemeSetup();
+
+    const mock = mockSubtheme(SubthemeTypes.Magent, ThemeStrength.Minor);
+    spyOn(component.submitter, "emit");
+    let selectSubtheme = fixture.debugElement.queryAll(By.css(".subthemeSelectBtn"));
+    expect(selectSubtheme.length).toEqual(1);
+    expect(selectSubtheme[0].nativeElement.innerText).toBe("Select Subtheme");
+    selectSubtheme[0].nativeElement.click();
+    fixture.detectChanges();
+    selectSubtheme = fixture.debugElement.queryAll(By.css(".subthemeSelectBtn"));
+    expect(selectSubtheme[0].nativeElement.innerText).toBe("Deselect Subtheme");
+    expect(component.submitter.emit).toHaveBeenCalledWith(mock);
+  });
+
+  it('should prevent you from selecting knacks, builds and spells unless you have chosen the subtheme', () => {
+    unselectedSubthemeSetup();
+    let knacks = fixture.debugElement.queryAll(By.css(".knackButton"));
+    expect(knacks[0].nativeElement.classList.contains("disabled")).toBeTruthy();
+    const selectSubtheme = fixture.debugElement.query(By.css(".subthemeSelectBtn")).nativeElement;
+    selectSubtheme.click();
+    fixture.detectChanges();
+    knacks = fixture.debugElement.queryAll(By.css(".knackButton"));
+    expect(knacks[0].nativeElement.classList.contains("disabled")).toBeFalsy();
+  });
+
+  it('should reset any selected knacks/spells and builds when deselected a magical subtheme', () => {
+    component.selectedKnacks.push(mockKnack());
+    component.selectSubtheme(); // deselects the current subtheme
+    expect(component.selectedKnacks.length).toEqual(0);
+  });
+
+  it('should give the user a warning message when deselecting a subtheme that their selections will be lost', fakeAsync(() => {
+    spyOn(component, "resetSubtheme");
+    spyOn(modalService, "open").and.returnValue({
+      componentInstance: {
+        bodyText: "awesome"
+      },
+      result: Promise.resolve(true)
+
+    });
+    const selectSubtheme = fixture.debugElement.query(By.css(".subthemeSelectBtn")).nativeElement;
+    selectSubtheme.click();
+    fixture.detectChanges();
+    expect(modalService.open).toHaveBeenCalled();
+    tick();
+    expect(component.resetSubtheme).toHaveBeenCalled();
+  }));
+
+  it('should have knack buttons disabled if not knacks can be selected', () => {
     expect(true).toBeFalsy();
   });
 
-  it('should prevent you from selecting knacks, builds and spells unless you have choosen the subtheme', () => {
-    // If you haven't chosen a subtheme then disable all buttons within the magic-component
+  it('should only give a popup confirmation if some change has been made to a knack after selecting the knack', () => {
     expect(true).toBeFalsy();
   });
 

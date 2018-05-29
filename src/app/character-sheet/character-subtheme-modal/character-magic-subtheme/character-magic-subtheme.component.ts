@@ -1,8 +1,11 @@
-import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {Subtheme} from "../../../shared/theme-points/subthemes/subtheme";
 import {Knack, SUBTHEME_BONUS} from "../../../shared/constants/constants";
 import {MagicType} from "./magic-type.enum";
 import {ThemeStrength} from "../../../shared/theme-points/theme-strength.enum";
+import {SubthemeTypes} from "../../../shared/theme-points/subthemes/subtheme-types.enum";
+import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
+import {ConfirmationComponent} from "../../../shared/ui/confirmation/confirmation.component";
 
 @Component({
   selector: 'corps-character-magic-subtheme',
@@ -14,6 +17,7 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
   @Input() subtheme: Subtheme;
   @Input() generalThemePoint: ThemeStrength;
   @Input() previouslySelectedKnacks: Knack[];
+  @Output() submitter: EventEmitter<Subtheme>;
   magicType = MagicType;
   /**
    * a toggle switch to determine if knacks are being displayed or not
@@ -32,10 +36,10 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
    */
   openKnacks: Knack[];
 
-  constructor() {
+  constructor(private modalService: NgbModal, private ref: ChangeDetectorRef) {
+    this.resetSubtheme();
     this.knackDisplayToggle = false;
-    this.selectedKnacks = [];
-    this.openKnacks = [];
+    this.submitter = new EventEmitter<Subtheme>();
   }
 
   ngOnInit() {
@@ -49,8 +53,41 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
     this.determineNumberOfSelectableKnacks();
   }
 
+  resetSubtheme() {
+    this.selectedKnacks = [];
+    this.openKnacks = [];
+  }
+
   displayKnacks() {
     this.knackDisplayToggle = !this.knackDisplayToggle;
+  }
+
+  isSubthemeSelected() {
+    return this.subtheme.themeStrength !== ThemeStrength.None;
+  }
+
+  selectSubtheme() {
+    if (!this.isSubthemeSelected()) {
+      this.subtheme = new Subtheme(SubthemeTypes[this.subtheme.subthemeName], this.subtheme.maxThemeStrength);
+      this.submitter.emit(this.subtheme);
+    } else {
+      const options = {
+        backdrop: "static",
+        size: "sm"
+      } as NgbModalOptions;
+      const modalRef = this.modalService.open(ConfirmationComponent, options);
+      modalRef.componentInstance.bodyText = ["You will lose all your changes for this subtheme if you deselect it.  Continue?"];
+      modalRef.result.then((result) => {
+        if (result) {
+          this.resetSubtheme();
+          this.subtheme = new Subtheme(SubthemeTypes[this.subtheme.subthemeName]); // make new subtheme with 0 strength
+          this.submitter.emit(this.subtheme);
+          this.ref.detectChanges();
+        }
+      });
+    }
+
+
   }
 
   openKnack(knack: Knack) {
@@ -101,7 +138,6 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
       });
     }
     return result;
-
   }
 
   private findIndexOfKnackByName(element: Knack, array: Knack[]): number {

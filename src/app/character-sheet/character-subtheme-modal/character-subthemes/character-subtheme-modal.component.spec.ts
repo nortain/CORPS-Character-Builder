@@ -144,4 +144,8 @@ describe('CharacterSubthemeModalComponent', () => {
     );
   });
 
+  it('should be able to updateSubtheme after a magical subtheme has been selected', () => {
+    expect(true).toBeFalsy();
+  });
+
 });

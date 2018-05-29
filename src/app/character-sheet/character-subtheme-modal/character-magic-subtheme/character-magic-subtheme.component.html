@@ -1,7 +1,11 @@
 <div class="container">
   <div class="row">
     <div class="col-12">
-      <label class="font-weight-bold">{{subtheme.subthemeName}}</label>
+      <label class="font-weight-bold">{{subtheme.subthemeName | castleCase}}</label>
+      <button class="btn btn-sm float-right subthemeSelectBtn"
+              [ngClass]="{'btn-success': isSubthemeSelected(), 'btn-primary': !isSubthemeSelected()}"
+              (click)="selectSubtheme()">{{isSubthemeSelected() ? 'Deselect Subtheme' : 'Select Subtheme'}}
+      </button>
     </div>
   </div>
   <div class="row">
@@ -38,7 +42,9 @@
 
           <div class="card-header" (click)="openKnack(knack)"><span class="name font-weight-bold">{{knack.name | castleCase}}</span>
             <button class="btn btn-sm knackButton float-right"
-                    [ngClass]="{'btn-success': isKnackSelected(knack), 'btn-primary': !isKnackSelected(knack)}"
+                    [ngClass]="{'disabled': !isSubthemeSelected(), 'btn-success': isKnackSelected(knack) && isSubthemeSelected(), 'btn-primary': !isKnackSelected(knack) && isSubthemeSelected()
+                    }"
+                    [disabled]="!isSubthemeSelected()"
                     (click)="selectKnack(knack)">
               {{isKnackSelected(knack) ? 'Deselect' : 'Select'}} Knack
             </button>
