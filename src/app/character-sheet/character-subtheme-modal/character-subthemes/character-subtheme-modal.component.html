@@ -36,8 +36,9 @@
           *ngIf="selectedSubtheme.themeType === themeType.Magic"
           id="corpsMagicSubtheme"
           [subtheme]="selectedSubtheme"
+          [previouslySelectedKnacks]="subthemePoints.spellKnacks"
           [generalThemePoint]="subthemePoints.themePoints.general.getStrength()"
-          (submitter)="updateSubtheme($event)">
+          (submitter)="updateMagicSubtheme($event)">
         </corps-character-magic-subtheme>
       </div>
     </div>

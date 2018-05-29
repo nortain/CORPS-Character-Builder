@@ -3,7 +3,7 @@ import {Subtheme} from "../../../shared/theme-points/subthemes/subtheme";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {SubthemeContainer} from "../../../shared/theme-points/subthemes/subtheme-container";
 import {ThemeType} from "../../../shared/theme-points/theme-type.enum";
-
+import {Knack} from "../../../shared/constants/constants";
 
 
 @Component({
@@ -64,6 +64,11 @@ export class CharacterSubthemeModalComponent implements OnInit {
         break;
       }
     }
+  }
+
+  updateMagicSubtheme(updatedMagicSubtheme: { subtheme: Subtheme, knacks: Knack[] }) {
+    this.subthemePoints.spellKnacks = updatedMagicSubtheme.knacks;
+    this.updateSubtheme(updatedMagicSubtheme.subtheme);
   }
 
   /**

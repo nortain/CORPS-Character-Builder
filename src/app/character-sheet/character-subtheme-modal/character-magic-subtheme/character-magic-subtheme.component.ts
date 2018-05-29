@@ -17,7 +17,7 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
   @Input() subtheme: Subtheme;
   @Input() generalThemePoint: ThemeStrength;
   @Input() previouslySelectedKnacks: Knack[];
-  @Output() submitter: EventEmitter<Subtheme>;
+  @Output() submitter: EventEmitter<{ subtheme: Subtheme, knacks: Knack[] }>;
   magicType = MagicType;
   /**
    * a toggle switch to determine if knacks are being displayed or not
@@ -39,7 +39,8 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
   constructor(private modalService: NgbModal, private ref: ChangeDetectorRef) {
     this.resetSubtheme();
     this.knackDisplayToggle = false;
-    this.submitter = new EventEmitter<Subtheme>();
+    this.selectedKnacks = [];
+    this.submitter = new EventEmitter<{ subtheme: Subtheme, knacks: Knack[] }>();
   }
 
   ngOnInit() {
@@ -78,7 +79,10 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
   selectSubtheme() {
     if (!this.isSubthemeSelected()) {
       this.subtheme = new Subtheme(SubthemeTypes[this.subtheme.subthemeName], this.subtheme.maxThemeStrength);
-      this.submitter.emit(this.subtheme);
+      this.submitter.emit({
+        subtheme: this.subtheme,
+        knacks: this.selectedKnacks
+      });
     } else {
       if (this.isThisDirty()) {
         const options = {
@@ -92,7 +96,10 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
           if (result) {
             this.resetSubtheme();
             this.subtheme = new Subtheme(SubthemeTypes[this.subtheme.subthemeName]); // make new subtheme with 0 strength
-            this.submitter.emit(this.subtheme);
+            this.submitter.emit({
+              subtheme: this.subtheme,
+              knacks: this.selectedKnacks
+            });
             this.ref.detectChanges(); // needed cause we are resolving a promise THEN updating UI
           }
         }, (rejected) => {
@@ -101,7 +108,10 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
       } else { // if the form is not dirty just deselect the damn thing
         this.resetSubtheme();
         this.subtheme = new Subtheme(SubthemeTypes[this.subtheme.subthemeName]); // make new subtheme with 0 strength
-        this.submitter.emit(this.subtheme);
+        this.submitter.emit({
+          subtheme: this.subtheme,
+          knacks: this.selectedKnacks
+        });
       }
     }
 

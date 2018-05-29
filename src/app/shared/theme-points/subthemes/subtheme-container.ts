@@ -3,6 +3,7 @@ import {Subtheme} from "./subtheme";
 import {ThemeType} from "../theme-type.enum";
 import {getSubthemeObject, SubthemeObject} from "../../constants/subtheme/subtheme-constants";
 import {ThemeStrength} from "../theme-strength.enum";
+import {Knack} from "../../constants/constants";
 
 
 export class SubthemeContainer {
@@ -12,11 +13,13 @@ export class SubthemeContainer {
   combat: Subtheme[];
   stealth: Subtheme[];
   magic: Subtheme;
+  spellKnacks: Knack[];
 
   constructor(public themePoints: ThemePointsContainer) {
     this.combat = [];
     this.stealth = [];
     this.magic = null;
+    this.spellKnacks = [];
   }
 
 

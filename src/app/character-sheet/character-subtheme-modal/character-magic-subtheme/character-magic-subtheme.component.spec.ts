@@ -1,7 +1,7 @@
 import {async, ComponentFixture, fakeAsync, inject, TestBed, tick} from '@angular/core/testing';
 
 import {CharacterMagicSubthemeComponent} from './character-magic-subtheme.component';
-import {mockCharacter, mockKnack, mockSubtheme} from "../../../shared/constants/testing-constants";
+import {mockKnack, mockSubtheme} from "../../../shared/constants/testing-constants";
 import {SubthemeTypes} from "../../../shared/theme-points/subthemes/subtheme-types.enum";
 import {ThemeStrength} from "../../../shared/theme-points/theme-strength.enum";
 import {MagicType} from "./magic-type.enum";
@@ -169,7 +169,12 @@ describe('CharacterMagicSubthemeComponent', () => {
     fixture.detectChanges();
     selectSubtheme = fixture.debugElement.queryAll(By.css(".subthemeSelectBtn"));
     expect(selectSubtheme[0].nativeElement.innerText).toBe("Deselect Subtheme");
-    expect(component.submitter.emit).toHaveBeenCalledWith(mock);
+    expect(component.submitter.emit).toHaveBeenCalledWith(
+      {
+        subtheme: mock,
+        knacks: component.selectedKnacks
+      });
+
   });
 
   it('should prevent you from selecting knacks, builds and spells unless you have chosen the subtheme', () => {
@@ -233,6 +238,14 @@ describe('CharacterMagicSubthemeComponent', () => {
     selectSubtheme.click();
     fixture.detectChanges();
     expect(component.subtheme.themeStrength).toEqual(ThemeStrength.None);
+  });
+
+  it('should hide selected knack/spells/build when viewing a different spell sphere/ magic subtheme', () => {
+    expect(true).toBeFalsy();
+  });
+
+  it('should be able to select a character build within the magic subtheme', () => {
+    expect(true).toBeFalsy();
   });
 
 });
