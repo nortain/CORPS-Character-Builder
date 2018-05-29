@@ -42,7 +42,10 @@
 
           <div class="card-header" (click)="openKnack(knack)"><span class="name font-weight-bold">{{knack.name | castleCase}}</span>
             <button class="btn btn-sm knackButton float-right"
-                    [ngClass]="{'disabled': !isSubthemeSelected(), 'btn-success': isKnackSelected(knack) && isSubthemeSelected(), 'btn-primary': !isKnackSelected(knack) && isSubthemeSelected()
+                    [ngClass]="{'disabled': !isSubthemeSelected() ||
+                    numberOfKnacksToSelect === 0,
+                     'btn-success': isKnackSelected(knack),
+                     'btn-primary': !isKnackSelected(knack)
                     }"
                     [disabled]="!isSubthemeSelected()"
                     (click)="selectKnack(knack)">

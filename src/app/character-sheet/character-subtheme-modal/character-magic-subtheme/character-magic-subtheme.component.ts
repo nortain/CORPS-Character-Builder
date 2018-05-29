@@ -53,6 +53,15 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
     this.determineNumberOfSelectableKnacks();
   }
 
+  /**
+   * this should look at all user choices for a magic subtheme and return true if any have been made and false otherwise.  A user choice in this case is selecting a build option, a knack or selecting spells.
+   * @returns {boolean}
+   */
+  isThisDirty(): boolean {
+    const dirty = this.selectedKnacks.length > 0;
+    return dirty;
+  }
+
   resetSubtheme() {
     this.selectedKnacks = [];
     this.openKnacks = [];
@@ -71,21 +80,29 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
       this.subtheme = new Subtheme(SubthemeTypes[this.subtheme.subthemeName], this.subtheme.maxThemeStrength);
       this.submitter.emit(this.subtheme);
     } else {
-      const options = {
-        backdrop: "static",
-        size: "sm",
-        centered: true
-      } as NgbModalOptions;
-      const modalRef = this.modalService.open(ConfirmationComponent, options);
-      modalRef.componentInstance.bodyText = ["You will lose all your changes for this subtheme if you deselect it.  Do you wish to continue?"];
-      modalRef.result.then((result) => {
-        if (result) {
-          this.resetSubtheme();
-          this.subtheme = new Subtheme(SubthemeTypes[this.subtheme.subthemeName]); // make new subtheme with 0 strength
-          this.submitter.emit(this.subtheme);
-          this.ref.detectChanges();
-        }
-      });
+      if (this.isThisDirty()) {
+        const options = {
+          backdrop: "static",
+          size: "sm",
+          centered: true
+        } as NgbModalOptions;
+        const modalRef = this.modalService.open(ConfirmationComponent, options);
+        modalRef.componentInstance.bodyText = ["You will lose all your changes for this subtheme if you deselect it.  Do you wish to continue?"];
+        modalRef.result.then((result) => {
+          if (result) {
+            this.resetSubtheme();
+            this.subtheme = new Subtheme(SubthemeTypes[this.subtheme.subthemeName]); // make new subtheme with 0 strength
+            this.submitter.emit(this.subtheme);
+            this.ref.detectChanges(); // needed cause we are resolving a promise THEN updating UI
+          }
+        }, (rejected) => {
+          console.error("The user rejected the confirmation modal: ", rejected);
+        });
+      } else { // if the form is not dirty just deselect the damn thing
+        this.resetSubtheme();
+        this.subtheme = new Subtheme(SubthemeTypes[this.subtheme.subthemeName]); // make new subtheme with 0 strength
+        this.submitter.emit(this.subtheme);
+      }
     }
 
 

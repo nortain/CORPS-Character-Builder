@@ -11,7 +11,7 @@ import {SharedModule} from "../../../shared/shared.module";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {NgbModalStack} from "@ng-bootstrap/ng-bootstrap/modal/modal-stack";
 
-fdescribe('CharacterMagicSubthemeComponent', () => {
+describe('CharacterMagicSubthemeComponent', () => {
   let component: CharacterMagicSubthemeComponent;
   let fixture: ComponentFixture<CharacterMagicSubthemeComponent>;
   let modalService;
@@ -160,7 +160,6 @@ fdescribe('CharacterMagicSubthemeComponent', () => {
 
   it('should be able to actually selected a magic subtheme', () => {
     unselectedSubthemeSetup();
-
     const mock = mockSubtheme(SubthemeTypes.Magent, ThemeStrength.Minor);
     spyOn(component.submitter, "emit");
     let selectSubtheme = fixture.debugElement.queryAll(By.css(".subthemeSelectBtn"));
@@ -179,19 +178,13 @@ fdescribe('CharacterMagicSubthemeComponent', () => {
     expect(knacks[0].nativeElement.classList.contains("disabled")).toBeTruthy();
     const selectSubtheme = fixture.debugElement.query(By.css(".subthemeSelectBtn")).nativeElement;
     selectSubtheme.click();
+    component.numberOfKnacksToSelect = 1;
     fixture.detectChanges();
     knacks = fixture.debugElement.queryAll(By.css(".knackButton"));
     expect(knacks[0].nativeElement.classList.contains("disabled")).toBeFalsy();
   });
 
-  it('should reset any selected knacks/spells and builds when deselected a magical subtheme', () => {
-    component.selectedKnacks.push(mockKnack());
-    component.selectSubtheme(); // deselects the current subtheme
-    expect(component.selectedKnacks.length).toEqual(0);
-  });
-
-  it('should give the user a warning message when deselecting a subtheme that their selections will be lost', fakeAsync(() => {
-    spyOn(component, "resetSubtheme");
+  it('should reset any selected knacks/spells and builds when deselected a magical subtheme', fakeAsync(() => {
     spyOn(modalService, "open").and.returnValue({
       componentInstance: {
         bodyText: "awesome"
@@ -199,6 +192,24 @@ fdescribe('CharacterMagicSubthemeComponent', () => {
       result: Promise.resolve(true)
 
     });
+    component.selectedKnacks.push(mockKnack());
+    component.selectSubtheme(); // deselects the current subtheme
+    tick();
+    expect(component.selectedKnacks.length).toEqual(0);
+  }));
+
+   it('should give the user a warning message when deselecting a subtheme that their selections will be lost', fakeAsync(() => {
+    spyOn(component, "resetSubtheme");
+    spyOn(modalService, "open").and.returnValue({
+      componentInstance: {
+        bodyText: "awesome"
+      },
+      result: Promise.resolve(true)
+    });
+    component.numberOfKnacksToSelect = 1;
+    const knackBtn = fixture.debugElement.query(By.css(".knackButton")).nativeElement;
+    knackBtn.click();
+    fixture.detectChanges();
     const selectSubtheme = fixture.debugElement.query(By.css(".subthemeSelectBtn")).nativeElement;
     selectSubtheme.click();
     fixture.detectChanges();
@@ -207,12 +218,21 @@ fdescribe('CharacterMagicSubthemeComponent', () => {
     expect(component.resetSubtheme).toHaveBeenCalled();
   }));
 
-  it('should have knack buttons disabled if not knacks can be selected', () => {
-    expect(true).toBeFalsy();
+  it('should have knack buttons disabled if knacks can not be selected', () => {
+    let knacks = fixture.debugElement.queryAll(By.css(".knackButton"));
+    expect(knacks[0].nativeElement.classList.contains("disabled")).toBeTruthy();
+    component.generalThemePoint = ThemeStrength.Minor;
+    component.ngOnChanges();
+    fixture.detectChanges();
+    knacks = fixture.debugElement.queryAll(By.css(".knackButton"));
+    expect(knacks[0].nativeElement.classList.contains("disabled")).toBeFalsy();
   });
 
   it('should only give a popup confirmation if some change has been made to a knack after selecting the knack', () => {
-    expect(true).toBeFalsy();
+    const selectSubtheme = fixture.debugElement.query(By.css(".subthemeSelectBtn")).nativeElement;
+    selectSubtheme.click();
+    fixture.detectChanges();
+    expect(component.subtheme.themeStrength).toEqual(ThemeStrength.None);
   });
 
 });
