@@ -18,8 +18,12 @@ export class CharacterSubthemeModalComponent implements OnInit {
   subthemeButtonsArray: Subtheme[];
   themeType = ThemeType;
   selectedSubtheme: Subtheme;
+  // this feels like a hacky way of dealing with the model not updating but each time a new subtheme is selected these are to be toggled back forth.
+  subthemeToggle: boolean;
+
 
   constructor(private activeModal: NgbActiveModal) {
+    this.subthemeToggle = true;
   }
 
   ngOnInit() {
@@ -90,6 +94,7 @@ export class CharacterSubthemeModalComponent implements OnInit {
 
   selectSubtheme(selectedSubtheme: Subtheme) {
     this.selectedSubtheme = selectedSubtheme;
+    this.subthemeToggle = !this.subthemeToggle;
   }
 
   close() {

@@ -39,7 +39,8 @@ export function mockDefense() {
 export function mockKnack() {
   return {
     name: "Riposte",
-    text: "You get shanked"
+    text: "You get shanked",
+    subthemeName: "Riposte"
   };
 }
 

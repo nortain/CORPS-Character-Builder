@@ -17,7 +17,9 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
   @Input() subtheme: Subtheme;
   @Input() generalThemePoint: ThemeStrength;
   @Input() previouslySelectedKnacks: Knack[];
+  @Input() subthemePointCap: number;
   @Output() submitter: EventEmitter<{ subtheme: Subtheme, knacks: Knack[] }>;
+
   magicType = MagicType;
   /**
    * a toggle switch to determine if knacks are being displayed or not
@@ -39,13 +41,14 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
   constructor(private modalService: NgbModal, private ref: ChangeDetectorRef) {
     this.resetSubtheme();
     this.knackDisplayToggle = false;
-    this.selectedKnacks = [];
     this.submitter = new EventEmitter<{ subtheme: Subtheme, knacks: Knack[] }>();
   }
 
   ngOnInit() {
-    if (this.previouslySelectedKnacks) {
-      this.selectedKnacks = this.previouslySelectedKnacks;
+    if (this.previouslySelectedKnacks && this.previouslySelectedKnacks.length > 0) {
+      if (this.previouslySelectedKnacks[0].subthemeName === this.subtheme.subthemeName) {
+        this.selectedKnacks = this.previouslySelectedKnacks;
+      }
     }
     this.determineNumberOfSelectableKnacks();
   }
@@ -77,13 +80,13 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
   }
 
   selectSubtheme() {
-    if (!this.isSubthemeSelected()) {
+    if (!this.isSubthemeSelected() && this.subthemePointCap > 0) {
       this.subtheme = new Subtheme(SubthemeTypes[this.subtheme.subthemeName], this.subtheme.maxThemeStrength);
       this.submitter.emit({
         subtheme: this.subtheme,
         knacks: this.selectedKnacks
       });
-    } else {
+    } else if (this.isSubthemeSelected()) {
       if (this.isThisDirty()) {
         const options = {
           backdrop: "static",
@@ -113,9 +116,7 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
           knacks: this.selectedKnacks
         });
       }
-    }
-
-
+    }// else do nothing
   }
 
   openKnack(knack: Knack) {
@@ -162,7 +163,8 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
     for (const knack of knacksArray) {
       result.push({
         name: knack,
-        text: knacksObject[knack]
+        text: knacksObject[knack],
+        subthemeName: this.subtheme.subthemeName
       });
     }
     return result;

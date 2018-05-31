@@ -25,19 +25,36 @@
         </button>
       </div>
       <div class="col-9">
-        <corps-subthemes *ngIf="selectedSubtheme.themeType !== themeType.Magic"
+        <corps-subthemes *ngIf="selectedSubtheme.themeType !== themeType.Magic && subthemeToggle"
                          id="corpsSubtheme"
                          [assignedSubthemePoints]="getAssignedSubthemes()"
                          [subtheme]="selectedSubtheme"
                          [subthemePointCap]="getSubthemePointCap()"
                          (submitter)="updateSubtheme($event)">
         </corps-subthemes>
+        <corps-subthemes *ngIf="selectedSubtheme.themeType !== themeType.Magic && !subthemeToggle"
+                         id="corpsSubtheme1"
+                         [assignedSubthemePoints]="getAssignedSubthemes()"
+                         [subtheme]="selectedSubtheme"
+                         [subthemePointCap]="getSubthemePointCap()"
+                         (submitter)="updateSubtheme($event)">
+        </corps-subthemes>
         <corps-character-magic-subtheme
-          *ngIf="selectedSubtheme.themeType === themeType.Magic"
+          *ngIf="selectedSubtheme.themeType === themeType.Magic && subthemeToggle"
           id="corpsMagicSubtheme"
           [subtheme]="selectedSubtheme"
           [previouslySelectedKnacks]="subthemePoints.spellKnacks"
           [generalThemePoint]="subthemePoints.themePoints.general.getStrength()"
+          [subthemePointCap]="getSubthemePointCap()"
+          (submitter)="updateMagicSubtheme($event)">
+        </corps-character-magic-subtheme>
+        <corps-character-magic-subtheme
+          *ngIf="selectedSubtheme.themeType === themeType.Magic && !subthemeToggle"
+          id="corpsMagicSubtheme1"
+          [subtheme]="selectedSubtheme"
+          [previouslySelectedKnacks]="subthemePoints.spellKnacks"
+          [generalThemePoint]="subthemePoints.themePoints.general.getStrength()"
+          [subthemePointCap]="getSubthemePointCap()"
           (submitter)="updateMagicSubtheme($event)">
         </corps-character-magic-subtheme>
       </div>

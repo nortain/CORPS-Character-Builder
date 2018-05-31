@@ -8,6 +8,7 @@ import { CharacterSubthemeModalComponent } from './character-subtheme-modal/char
 import { CharacterMagicSubthemeComponent } from './character-subtheme-modal/character-magic-subtheme/character-magic-subtheme.component';
 
 
+
 @NgModule({
   imports: [
     SharedModule

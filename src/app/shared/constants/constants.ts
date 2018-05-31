@@ -579,6 +579,7 @@ export class StartingCharacterMagicDefense {
 export class Knack {
   name: string;
   text: string;
+  subthemeName: string;
 }
 
 

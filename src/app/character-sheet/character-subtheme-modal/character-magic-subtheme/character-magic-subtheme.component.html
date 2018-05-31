@@ -4,6 +4,7 @@
       <label class="font-weight-bold">{{subtheme.subthemeName | castleCase}}</label>
       <button class="btn btn-sm float-right subthemeSelectBtn"
               [ngClass]="{'btn-success': isSubthemeSelected(), 'btn-primary': !isSubthemeSelected()}"
+              [disabled]="subthemePointCap === 0 && subtheme.themeStrength === 0"
               (click)="selectSubtheme()">{{isSubthemeSelected() ? 'Deselect Subtheme' : 'Select Subtheme'}}
       </button>
     </div>
