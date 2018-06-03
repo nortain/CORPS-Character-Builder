@@ -10,7 +10,7 @@ import {VisionType} from "../character/race/vision-type.enum";
 import {AttributeName} from "../attribute/attribute-name.enum";
 import {ThemeType} from "../theme-points/theme-type.enum";
 import {SavingThrow} from "../character/saving-throw.enum";
-import {BonusByLevel} from "../character/bonus-by-level";
+import {BonusByLevel, NumberBonusByLevel} from "../character/bonus-by-level";
 import {Bonus} from "../character/bonus";
 import {Attribute} from "../attribute/attribute";
 import {AttributeStrength} from "../attribute/attribute-strength.enum";
@@ -118,7 +118,8 @@ export const ONE_MAGIC_SPELLS = {
     Overview: "You are a bad ass magent",
     FeatureBonus: {
       name: "Attack Spell Damage Bonus",
-      values: ["You can have your attack spells use either your strength, agility or both as a balanced stat for determining your bonus damage"]
+      values: ["You can have your attack spells use either your strength, agility or both as a balanced stat for determining your bonus damage",
+        "You can pick 3 spells.  This value increases by 1 at levels 2 and 6"]
     },
     GeneralFeature: {
       name: "If you have 1 theme point in general you gain: ",
@@ -128,7 +129,6 @@ export const ONE_MAGIC_SPELLS = {
           "1 spell knack",
           " 1 additional spell"]
       }]
-
     },
     ImplementKnacks: {
       RangedDefender: "You can use your AD vs range, area, and line attacks.",
@@ -140,13 +140,29 @@ export const ONE_MAGIC_SPELLS = {
       Carpetbagger: [4, 4, 5, 6, 7, 7, 8, 9, 10, 11],
       ElegantRetaliation: [4, 4, 5, 6, 7, 7, 8, 9, 10, 11],
       Reprobate: [4, 4, 5, 6, 7, 7, 8, 9, 10, 11]
-    },
+    } as NumberBonusByLevel,
+    AdrenalinePowers: null,
+    PowerPointAbilities: null,
+    SpecialPowers: null,
+    ImplementAttack: null,
     Spells: () => MagentSpellList()
-  },
+  } as SpellSphere,
   SpellWarden: {
-    Overview: "",
-    FeatureBonus: "",
-    GeneralBonus: "",
+    Overview: "Spell Wardens were an ancient sect of Warriors who long ago discovered they could enhance their martial skills with the powers now known today as the essence of magic.  Although the order has all but been forgotten there are a rare few who have learned the secrets of Spell Warden and have passed those secrets down to others through the generations.  Although their magical capabilities aren’t nearly as strong as that of spell casters their sheer physical fortitude required to master this training style makes them a deadly foe on any battlefield.",
+    FeatureBonus: {
+      name: "Attack Spell Damage Bonus",
+      values: ["You can have your attack spells use either your strength, agility or both as a balanced stat for determining your bonus damage",
+        "You can pick 3 spells.  This value increases by 1 at levels 2 and 6"]
+    },
+    GeneralFeature: {
+      name: "If you have 1 theme point in general you gain: ",
+      values: [{
+        name: "General Spell Bonus",
+        values: [
+          "1 spell knack",
+          " 1 additional spell"]
+      }]
+    },
     ImplementKnacks: {
       RangedDefender: "You can use your AD vs range, area, and line attacks.",
       ImprovedWeaponSpells: "Increase the damage of your weapon and imbue spells by the amount listed below",
@@ -157,9 +173,13 @@ export const ONE_MAGIC_SPELLS = {
       ImprovedWeaponSpells: [4, 4, 5, 6, 7, 7, 8, 9, 10, 11],
       SpellAbsorption: [4, 4, 5, 6, 7, 7, 8, 9, 10, 11],
       ShieldOfTheWarden: [4, 4, 5, 6, 7, 7, 8, 9, 10, 11]
-    },
+    } as NumberBonusByLevel,
+    AdrenalinePowers: null,
+    PowerPointAbilities: null,
+    SpecialPowers: null,
+    ImplementAttack: null,
     Spells: () => SpellWardenSpellList()
-  }
+  } as SpellSphere
 
 
 };
@@ -206,15 +226,23 @@ export const TWO_MAGIC_SPELLS = {
     },
     ImplementKnacks: {
       RangedDefender: "You can use your AD vs range, area, and line attacks.",
-      Carpetbagger: "When you attack with a weapon or imbue spell and could gain bonus damage from the Find Weakness or the Riposte sub themes you can increase the damage of the attack to that target by the Carpetbagger value.",
-      ElegantRetaliation: "Once per encounter as a free action when you are damaged by an threatened attacker you can reduce the damage taken by the Elegant Retaliation value below and return that much damage to the enemy.",
-      Reprobate: "Once per round, whenever an enemy misses you with an attack, choose to have your next weapon or spell attack you make to have its damage increased by the value listed below against the first target hit."
+      PhantomChain: "Phantom Blades gains the forced movement keyword and if you hit a target with phantom blades that has your sigil on them you can slide them one square.  You can also increase the damage of phantom blades by the amount listed below.",
+      EmpoweredOvercast: "When overcasting an attack spell you can increase the damage of the spell to the first target hit by the amount listed below.",
+      GiftedMagi: "Once per round, whenever an enemy misses you with an attack, choose to have your next weapon or spell attack you make to have its damage increased by the value listed below against the first target hit.",
+      EmpoweredSigil: "Once per round, whenever an enemy misses you with an attack, choose to have your next weapon or spell attack you make to have its damage increased by the value listed below against the first target hit."
     },
     ImplementKnacksData: {
-      Carpetbagger: ["3"],
-      ElegantRetaliation: ["3"],
-      Reprobate: ["3"]
-    } as BonusByLevel,
+      PhantomChain: [3],
+      EmpoweredOvercast: [3],
+      GiftedMagi: [3],
+      ForceField: [3],
+      Rebuke: [3],
+      Revenge: [3]
+    } as NumberBonusByLevel,
+    AdrenalinePowers: [],
+    PowerPointAbilities: [],
+    SpecialPowers: null,
+    ImplementAttack: new Spell(),
     Spells: () => MagentSpellList()
   } as SpellSphere,
 };
@@ -650,6 +678,10 @@ export class Knack {
 }
 
 
+export class KeyValuePair {
+  [s: string]: string;
+}
+
 // https://basarat.gitbooks.io/typescript/docs/types/index-signatures.html
 
 export class Feature {
@@ -662,8 +694,13 @@ export interface SpellSphere {
   Overview: string;
   FeatureBonus: Feature;
   GeneralFeature: Feature;
-  ImplementKnacks: Object;
-  ImplementKnacksData: BonusByLevel;
+  ImplementKnacks: KeyValuePair;
+  ImplementKnacksData: NumberBonusByLevel;
+  AdrenalinePowers: Spell[];
+  PowerPointAbilities: Spell[];
+  SpecialPowers: { name: string, powers: Spell[] };
+  ImplementAttack: Spell;
+
   Spells(): Spell[];
 }
 
