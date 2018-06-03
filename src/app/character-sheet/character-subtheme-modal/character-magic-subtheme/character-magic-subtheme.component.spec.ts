@@ -259,7 +259,6 @@ fdescribe('CharacterMagicSubthemeComponent', () => {
   });
 
   it('should hide selected knack/spells/build when viewing a different spell sphere/ magic subtheme', () => {
-
     fixture = TestBed.createComponent(CharacterMagicSubthemeComponent);
     component = fixture.componentInstance;
     component.subtheme = mockSubtheme(SubthemeTypes.Magent, ThemeStrength.Minor);
@@ -268,12 +267,19 @@ fdescribe('CharacterMagicSubthemeComponent', () => {
     component.generalThemePoint = ThemeStrength.None;
     fixture.detectChanges();
     expect(component.selectedKnacks.length).toEqual(0);
-
-
   });
 
   it('should not be able to select a subtheme if the subthemePointCap and the subtheme strength are both 0', () => {
-    expect(true).toBeFalsy();
+    component.subtheme = new Subtheme(SubthemeTypes.Magent, ThemeStrength.None);
+    expect(component.subtheme.themeStrength).toEqual(0);
+    component.subthemePointCap = 0;
+    fixture.detectChanges();
+    spyOn(component, "selectSubtheme");
+    const themeBtn = fixture.debugElement.query(By.css(".subthemeSelectBtn"));
+    themeBtn.nativeElement.click();
+    fixture.detectChanges();
+    expect(themeBtn.nativeElement.innerText).toBe("Select Subtheme");
+    expect(component.selectSubtheme).not.toHaveBeenCalled();
   });
 
   it('should be able to select a character build within the magic subtheme', () => {
