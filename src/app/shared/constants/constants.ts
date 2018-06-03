@@ -116,8 +116,20 @@ export const IN_THP_BONUS = [
 export const ONE_MAGIC_SPELLS = {
   Magent: {
     Overview: "You are a bad ass magent",
-    FeatureBonus: "You can have your attack spells use either your strength, agility or both as a balanced stat for determining your bonus damage",
-    GeneralFeature: "If you have 1 theme point in general you gain 1 spell knack and 1 additional spell.",
+    FeatureBonus: {
+      name: "Attack Spell Damage Bonus",
+      values: ["You can have your attack spells use either your strength, agility or both as a balanced stat for determining your bonus damage"]
+    },
+    GeneralFeature: {
+      name: "If you have 1 theme point in general you gain: ",
+      values: [{
+        name: "General Spell Bonus",
+        values: [
+          "1 spell knack",
+          " 1 additional spell"]
+      }]
+
+    },
     ImplementKnacks: {
       RangedDefender: "You can use your AD vs range, area, and line attacks.",
       Carpetbagger: "When you attack with a weapon or imbue spell and could gain bonus damage from the Find Weakness or the Riposte sub themes you can increase the damage of the attack to that target by the Carpetbagger value.",
@@ -150,6 +162,61 @@ export const ONE_MAGIC_SPELLS = {
   }
 
 
+};
+
+export const TWO_MAGIC_SPELLS = {
+  WarriorMage: {
+    Overview: "As a part of selecting the warrior mage sphere you can choose one of the following trainings.  Each training comes with passive bonuses, unique sphere specific ability and dictates the effects of your adrenaline points.",
+    FeatureBonus: {
+      name: "Training of the Balanced Warrior",
+      values: [
+        "You gain the Warrior’s Sigil Ability and 1 Sigil power",
+        "You can select 4 spells from the Warrior Mage Sphere",
+        "Gain +1 damage to weapon and imbue spells. Increase by 1 at levels 5 and 9",
+        "Gain the Fury ability",
+        "Increase the damage done by your spells by 1 per stat point in Brawn and Agility."
+      ]
+    },
+    GeneralFeature: {
+      name: "If you have 1 theme point in general you can choose between the following Trainings",
+      values: [
+        {
+          name: "Training of the Provoking Psychic",
+          values: [
+            "The Phantom Blade implement attack and 1 implement knack",
+            "The Warrior’s Sigil Ability and 1 Sigil power",
+            "Visions of the Mind Power",
+            "5 spells from the Warrior Mage Sphere",
+            "Force of Control Ability",
+            "Magic attack bonus increased by your Reasoning bonus"
+          ]
+        },
+        {
+          name: "Training of the Ravaging Magi",
+          values: [
+            "The Phantom Blade implement attack and 1 implement knack",
+            "The Warrior’s Sigil Ability and 1 Sigil power",
+            "Ravaging Assault Power",
+            "5 spells from the Warrior Mage Sphere",
+            "Force of the Aggression Ability",
+            "Magic attack bonus increased by your Reasoning bonus"
+          ]
+        }
+      ]
+    },
+    ImplementKnacks: {
+      RangedDefender: "You can use your AD vs range, area, and line attacks.",
+      Carpetbagger: "When you attack with a weapon or imbue spell and could gain bonus damage from the Find Weakness or the Riposte sub themes you can increase the damage of the attack to that target by the Carpetbagger value.",
+      ElegantRetaliation: "Once per encounter as a free action when you are damaged by an threatened attacker you can reduce the damage taken by the Elegant Retaliation value below and return that much damage to the enemy.",
+      Reprobate: "Once per round, whenever an enemy misses you with an attack, choose to have your next weapon or spell attack you make to have its damage increased by the value listed below against the first target hit."
+    },
+    ImplementKnacksData: {
+      Carpetbagger: ["3"],
+      ElegantRetaliation: ["3"],
+      Reprobate: ["3"]
+    } as BonusByLevel,
+    Spells: () => MagentSpellList()
+  } as SpellSphere,
 };
 
 export const SUBTHEME_BONUS = {
@@ -581,6 +648,25 @@ export class Knack {
   text: string;
   subthemeName: string;
 }
+
+
+// https://basarat.gitbooks.io/typescript/docs/types/index-signatures.html
+
+export class Feature {
+  name: string;
+  values: any[];
+}
+
+
+export interface SpellSphere {
+  Overview: string;
+  FeatureBonus: Feature;
+  GeneralFeature: Feature;
+  ImplementKnacks: Object;
+  ImplementKnacksData: BonusByLevel;
+  Spells(): Spell[];
+}
+
 
 
 
