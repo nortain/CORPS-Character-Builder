@@ -4,5 +4,9 @@ export enum MagicType {
   GeneralFeature = "GeneralFeature",
   ImplementKnacks = "ImplementKnacks",
   ImplementKnacksData = "ImplementKnacksData",
+  AdrenalinePowers = "AdrenalinePowers",
+  PowerPointAbilities = "PowerPointAbilities",
+  SpecialPowers = "SpecialPowers",
+  ImplementAttack = "ImplementAttack",
   Spells = "Spells"
 }

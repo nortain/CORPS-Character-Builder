@@ -19,6 +19,7 @@ import {ThemeStrength} from "../theme-points/theme-strength.enum";
 import {Subtheme} from "../theme-points/subthemes/subtheme";
 import {MagentSpellList, SpellWardenSpellList} from "./spells/minor-spell-constants";
 import {Spell} from "../spells/spell";
+import {AssassinSpellList, ClericSpellList, DruidSpellList, WarriorMageSpellList} from "./spells/lesser-spell-constants";
 
 
 export const NON_HUMAN_AVAILABLE_ATTRIBUTE_POINTS = 4;
@@ -122,7 +123,7 @@ export const ONE_MAGIC_SPELLS = {
         "You can pick 3 spells.  This value increases by 1 at levels 2 and 6"]
     },
     GeneralFeature: {
-      name: "If you have 1 theme point in general you gain: ",
+      name: "If you have 1 theme point in general you gain ",
       values: [{
         name: "General Spell Bonus",
         values: [
@@ -227,6 +228,183 @@ export const TWO_MAGIC_SPELLS = {
     ImplementKnacks: {
       RangedDefender: "You can use your AD vs range, area, and line attacks.",
       PhantomChain: "Phantom Blades gains the forced movement keyword and if you hit a target with phantom blades that has your sigil on them you can slide them one square.  You can also increase the damage of phantom blades by the amount listed below.",
+      EmpoweredOvercast: " When overcasting an attack spell you can increase the damage of the spell to the first target hit by the amount listed below.",
+      GiftedMagi: "When your sigil is on an enemy, spells with the forced movement keyword have their distances increased by 1.  When your sigil is on an ally they can decrease the distance of forced movement effects against them by 1.  You can also increase the damage of all of your attack spells and implement attacks to the first target hit by the amount listed below.",
+      EmpoweredSigil: "If your sigil is on an enemy you can increase the damage of the your Revenge or Rebuke by the amount listed below under Empowered Sigil.  If your sigil is on an ally you can increase the amount of damage reduced by your Force field power by the amount listed under force field."
+    },
+    ImplementKnacksData: {
+      PhantomChain: [3, 3, 4, 4, 5, 5, 6, 6, 7, 8],
+      EmpoweredOvercast: [6, 7, 8, 9, 10, 12, 13, 14, 15, 17],
+      GiftedMagi: [2, 2, 2, 3, 3, 3, 4, 4, 4, 5],
+      ForceField: [3, 3, 4, 5, 5, 6, 7, 7, 8, 9],
+      Rebuke: [6, 7, 8, 9, 10, 12, 13, 14, 15, 17],
+      Revenge: [6, 7, 8, 9, 10, 12, 13, 14, 15, 17]
+    } as NumberBonusByLevel,
+    AdrenalinePowers: [],
+    PowerPointAbilities: [],
+    SpecialPowers: null,
+    ImplementAttack: new Spell(),
+    Spells: () => WarriorMageSpellList()
+  } as SpellSphere,
+  Assassin: {
+    Overview: "As a part of selecting the assassin sphere you can you choose one of the following paths.  Each path comes with passive bonuses, a unique sphere specific ability and dictates the effects of your adrenaline points.",
+    FeatureBonus: {
+      name: "Path of the Cutthroat",
+      values: [
+        "You gain the Veil of Shadows Ability",
+        "You can select 4 spells from the Assassin Sphere",
+        "Gain +1 damage to weapon spells. Increase this bonus 1 at levels 5 and 9",
+        " Gain +1 damage to your Veil of Shadows effect at levels 2, and 6",
+        "Gain the Fury ability",
+        "Increase the attack damage done by your spells by 1 per stat point in Brawn and Agility"
+
+      ]
+    },
+    GeneralFeature: {
+      name: "If you have 1 theme point in general you can choose between the following Trainings",
+      values: [
+        {
+          name: "Path of the Shadow",
+          values: [
+            "You gain the Shadow Stab Implement Attack and 1 implement knack",
+            "You gain the Veil of Shadows Ability",
+            "You can select 5 spells from the Assassin Sphere",
+            "You gain the Swallowed by Shadows Ability",
+            "You gain the Empowered Veil Ability",
+            "Increase your magic attack bonus by your Presence bonus"
+          ]
+        },
+        {
+          name: "Path of Chilling Vengeance",
+          values: [
+            "You gain the Shadow Stab Implement Attack and 1 implement knack",
+            "You gain the Veil of Shadows Ability",
+            "You can select 5 spells from the Assassin Sphere",
+            "You gain the Eternal Frost Ability",
+            "You gain the Payback Ability",
+            "Increase your magic attack bonus by your Presence bonus"
+          ]
+        }
+      ]
+    },
+    ImplementKnacks: {
+      RangedDefender: "You can use your AD vs range, area, and line attacks.",
+      EmpoweredImplement: "You can increase the distance you can teleport using Shadow Stab by 1 square and you can increase the damage of your implement attack by 1.  This damage bonus increases by 1 at levels 4 and 8.",
+      LethalShadows: "Increase the additional damage bonus provided by your Veil of Shadows by the damage bonus listed below.",
+      VeiledImplement: "Increase the damage of your implement by the amount listed for the Veiled Implement value.",
+      AssassinsContract: "Once per combat when you or ongoing damage kills a creature with your veil of shadows on it you can place ongoing damage onto the next target of your VoS when you cast it.  This bonus is unaffected by the talents, items or abilities that might increase ongoing damage."
+    },
+    ImplementKnacksData: {
+      LethalShadows: [3, 3, 4, 4, 5, 5, 6, 6, 7, 8],
+      VeiledImplement: [5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+      AssassinsContract: [7, 8, 9, 11, 12, 14, 15, 17, 18, 20]
+    } as NumberBonusByLevel,
+    AdrenalinePowers: [],
+    PowerPointAbilities: [],
+    SpecialPowers: null,
+    ImplementAttack: new Spell(),
+    Spells: () => AssassinSpellList()
+  } as SpellSphere,
+  Cleric: {
+    Overview: "As a part of selecting the Cleric sphere you can choose one of the following ways.  Each way comes with passive bonuses, a unique sphere specific ability and dictates the effects of your adrenaline points.\n" +
+    "The cleric uses a resource called blessings.  Depending on your order you start each combat with a certain number of blessings.  When you invoke the blessings of your order you spend all of the blessings you have.  The result of what your blessing does is dependant on the order you choose.  If you have 1 theme point in general you also gain 1 blessing when you hit an enemy with an attack, cast a utility spell or successfully spend a move action to maintain a concentration spell.  A cleric may not gain more than 1 blessing per round in this manner, however other powers or abilities may allow a cleric to gain additional blessings beyond this limit.",
+    FeatureBonus: {
+      name: "Order of the Chosen",
+      values: [
+        "You gain the Blessings Feature of either the Order of the Stalwart or Order of the Holy, you start each combat with 5 blessings",
+        "You can select 4 spells from the Cleric Sphere",
+        "Gain +1 damage to weapon spells. This bonus increases by 1 at levels 5 and 9",
+        "Gain the Fury Ability",
+        "Increase the damage done by your spells by 1 per stat point in Brawn and Agility."
+      ]
+    },
+    GeneralFeature: {
+      name: "If you have 1 theme point in general you can choose between the following Orders",
+      values: [
+        {
+          name: "Order of the Stalwart",
+          values: [
+            "Gain Order’s Implement as an implement attack and 1 Cleric knack",
+            "Use your Presence stat to increase your magical attack bonus",
+            "You can select 5 spells from the Cleric Sphere",
+            "You gain the Blessings Feature for Order of the Stalwart and start combat with 5 blessings.",
+            "Gain the Repentance Adrenaline Power",
+            "Gain the Inner Resolve Power Point ability"
+          ]
+        },
+        {
+          name: "Order of the Holy",
+          values: [
+            "Gain Order’s Implement as an implement attack and 1 Cleric knack",
+            "Use your Presence stat to increase your magical attack bonus",
+            "You can select 5 spells from the Cleric Sphere",
+            "You gain the Blessings Feature for Order of the Stalwart and start combat with 4 blessings.",
+            "Gain the Divine Aid Adrenaline Power",
+            "Gain the Favor Power Point Ability"
+          ]
+        }
+      ]
+    },
+    ImplementKnacks: {
+      RangedDefender: "You can use your AD vs range, area, and line attacks.",
+      GracefulBonus: "Once per encounter as a swift action you can a cast the blessing of your order as if you had exactly 2 blessings.  This blessing doesn’t affect any current blessings you might already have.",
+      ProtectionBonus: "Once per combat as a free action you can immediately reduce the damage of an attack against yourself or a friendly ally within 10 by the protection bonus listed below",
+      Reverence: "Once per combat as a minor action you can cause all targets hit by the next attack you make this turn to get knocked prone and take additional damage equal to the Reverence bonus below.",
+      ConcentratedFortune: "Increase the damage you deal when paying a spell’s concentration cost by the amount listed below."
+    },
+    ImplementKnacksData: {
+      ProtectionBonus: [3],
+      Reverence: [3],
+      ConcentratedFortune: [3],
+    } as NumberBonusByLevel,
+    AdrenalinePowers: [],
+    PowerPointAbilities: [],
+    SpecialPowers: null,
+    ImplementAttack: new Spell(),
+    Spells: () => ClericSpellList()
+  } as SpellSphere,
+  Druid: {
+    Overview: "As a part of selecting the warrior mage sphere you can choose one of the following trainings.  Each training comes with passive bonuses, unique sphere specific ability and dictates the effects of your adrenaline points.",
+    FeatureBonus: {
+      name: "Training of the Balanced Warrior",
+      values: [
+        "You gain the Warrior’s Sigil Ability and 1 Sigil power",
+        "You can select 4 spells from the Warrior Mage Sphere",
+        "Gain +1 damage to weapon and imbue spells. Increase by 1 at levels 5 and 9",
+        "Gain the Fury ability",
+        "Increase the damage done by your spells by 1 per stat point in Brawn and Agility."
+      ]
+    },
+    GeneralFeature: {
+      name: "If you have 1 theme point in general you can choose between the following Trainings",
+      values: [
+        {
+          name: "Training of the Provoking Psychic",
+          values: [
+            "The Phantom Blade implement attack and 1 implement knack",
+            "The Warrior’s Sigil Ability and 1 Sigil power",
+            "Visions of the Mind Power",
+            "5 spells from the Warrior Mage Sphere",
+            "Force of Control Ability",
+            "Magic attack bonus increased by your Reasoning bonus"
+          ]
+        },
+        {
+          name: "Training of the Ravaging Magi",
+          values: [
+            "The Phantom Blade implement attack and 1 implement knack",
+            "The Warrior’s Sigil Ability and 1 Sigil power",
+            "Ravaging Assault Power",
+            "5 spells from the Warrior Mage Sphere",
+            "Force of the Aggression Ability",
+            "Magic attack bonus increased by your Reasoning bonus"
+          ]
+        }
+      ]
+    },
+    ImplementKnacks: {
+      RangedDefender: "You can use your AD vs range, area, and line attacks.",
+      PhantomChain: "Phantom Blades gains the forced movement keyword and if you hit a target with phantom blades that has your sigil on them you can slide them one square.  You can also increase the damage of phantom blades by the amount listed below.",
       EmpoweredOvercast: "When overcasting an attack spell you can increase the damage of the spell to the first target hit by the amount listed below.",
       GiftedMagi: "Once per round, whenever an enemy misses you with an attack, choose to have your next weapon or spell attack you make to have its damage increased by the value listed below against the first target hit.",
       EmpoweredSigil: "Once per round, whenever an enemy misses you with an attack, choose to have your next weapon or spell attack you make to have its damage increased by the value listed below against the first target hit."
@@ -243,7 +421,7 @@ export const TWO_MAGIC_SPELLS = {
     PowerPointAbilities: [],
     SpecialPowers: null,
     ImplementAttack: new Spell(),
-    Spells: () => MagentSpellList()
+    Spells: () => DruidSpellList()
   } as SpellSphere,
 };
 
@@ -313,8 +491,11 @@ export const SUBTHEME_BONUS = {
     text: ["<b>Active Defense:</b> Increase your active defense by 1.", "<b>Critical Damage Reduction:</b>Reduce ongoing damage from critical hits by the reduction value listed in the table below"]
   },
   Magent: ONE_MAGIC_SPELLS["Magent"],
-  SpellWarden: ONE_MAGIC_SPELLS["SpellWarden"]
-
+  SpellWarden: ONE_MAGIC_SPELLS["SpellWarden"],
+  Druid: TWO_MAGIC_SPELLS["Druid"],
+  WarriorMage: TWO_MAGIC_SPELLS["WarriorMage"],
+  Assassin: TWO_MAGIC_SPELLS["Assassin"],
+  Cleric: TWO_MAGIC_SPELLS["Cleric"]
 };
 
 export const STARTING_PLAYER_RACES = {

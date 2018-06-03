@@ -13,8 +13,8 @@ import {SpellChart} from "../../spells/spell-chart";
 import {SpellType} from "../../spells/enums/spell-type.enum";
 import {SpellDamageKeyword} from "../../spells/enums/spell-damage-keyword.enum";
 
-export function ClericSpellList(): Spell {
-  return {
+export function ClericSpellList(): Spell[] {
+  return [{
     ...new Spell(),
     name: "Fierce Devotion",
     defenseType: PhysicalDefenseType.Missile,
@@ -49,5 +49,122 @@ export function ClericSpellList(): Spell {
       }]
 
 
-  };
+  }];
+}
+
+export function DruidSpellList(): Spell[] {
+  return [{
+    ...new Spell(),
+    name: "Fierce Devotion",
+    defenseType: PhysicalDefenseType.Missile,
+    spellType: SpellType.DirectEffect,
+    spellKeywords: [SpellKeywords.Concentration],
+    damageKeywords: SpellDamageKeyword.Wild,
+    areaOfEffect: {
+      numberOfTargets: 1,
+      range: 1,
+      type: AreaOfEffectTypes.Ranged
+    },
+    castAction: ActionType.Standard,
+    critRoll: new Dice(1, DiceSize.d10, 2),
+    duration: [DurationType.Immediate, DurationType.Concentration],
+    spellEffectText: "On hit: Target takes wild damage equal to the attack table below + magical attack bonus.  The target also gains the devotion effect that lasts so long as you maintain concentration.  At the start of your next turn after you cast this spell you must spend your move action to maintain concentration or this spell’s effect is removed.  You may only have 1 concentration effect active at a time.",
+    afterEffect: "Each time you pay the concentration cost of this spell the target with the devotion effect takes wild damage equal to the concentration table’s damage value below + global damage bonus",
+    spellChart: [{
+      ...new SpellChart(),
+      rowName: SpellDamageKeyword.Wild,
+      levelRange: LevelRange.FIFTHTEEN,
+      dieSize: DiceSize.d8,
+      minValue: 13.33,
+      maxValue: 53.74
+    },
+      {
+        ...new SpellChart(),
+        rowName: SpellKeywords.Concentration,
+        levelRange: LevelRange.FIFTHTEEN,
+        dieSize: DiceSize.None,
+        minValue: 10.38,
+        maxValue: 34.81
+      }]
+
+
+  }];
+}
+
+export function AssassinSpellList(): Spell[] {
+  return [{
+    ...new Spell(),
+    name: "Fierce Devotion",
+    defenseType: PhysicalDefenseType.Missile,
+    spellType: SpellType.DirectEffect,
+    spellKeywords: [SpellKeywords.Concentration],
+    damageKeywords: SpellDamageKeyword.Wild,
+    areaOfEffect: {
+      numberOfTargets: 1,
+      range: 1,
+      type: AreaOfEffectTypes.Ranged
+    },
+    castAction: ActionType.Standard,
+    critRoll: new Dice(1, DiceSize.d10, 2),
+    duration: [DurationType.Immediate, DurationType.Concentration],
+    spellEffectText: "On hit: Target takes wild damage equal to the attack table below + magical attack bonus.  The target also gains the devotion effect that lasts so long as you maintain concentration.  At the start of your next turn after you cast this spell you must spend your move action to maintain concentration or this spell’s effect is removed.  You may only have 1 concentration effect active at a time.",
+    afterEffect: "Each time you pay the concentration cost of this spell the target with the devotion effect takes wild damage equal to the concentration table’s damage value below + global damage bonus",
+    spellChart: [{
+      ...new SpellChart(),
+      rowName: SpellDamageKeyword.Wild,
+      levelRange: LevelRange.FIFTHTEEN,
+      dieSize: DiceSize.d8,
+      minValue: 13.33,
+      maxValue: 53.74
+    },
+      {
+        ...new SpellChart(),
+        rowName: SpellKeywords.Concentration,
+        levelRange: LevelRange.FIFTHTEEN,
+        dieSize: DiceSize.None,
+        minValue: 10.38,
+        maxValue: 34.81
+      }]
+
+
+  }];
+}
+
+export function WarriorMageSpellList(): Spell[] {
+  return [{
+    ...new Spell(),
+    name: "Fierce Devotion",
+    defenseType: PhysicalDefenseType.Missile,
+    spellType: SpellType.DirectEffect,
+    spellKeywords: [SpellKeywords.Concentration],
+    damageKeywords: SpellDamageKeyword.Wild,
+    areaOfEffect: {
+      numberOfTargets: 1,
+      range: 1,
+      type: AreaOfEffectTypes.Ranged
+    },
+    castAction: ActionType.Standard,
+    critRoll: new Dice(1, DiceSize.d10, 2),
+    duration: [DurationType.Immediate, DurationType.Concentration],
+    spellEffectText: "On hit: Target takes wild damage equal to the attack table below + magical attack bonus.  The target also gains the devotion effect that lasts so long as you maintain concentration.  At the start of your next turn after you cast this spell you must spend your move action to maintain concentration or this spell’s effect is removed.  You may only have 1 concentration effect active at a time.",
+    afterEffect: "Each time you pay the concentration cost of this spell the target with the devotion effect takes wild damage equal to the concentration table’s damage value below + global damage bonus",
+    spellChart: [{
+      ...new SpellChart(),
+      rowName: SpellDamageKeyword.Wild,
+      levelRange: LevelRange.FIFTHTEEN,
+      dieSize: DiceSize.d8,
+      minValue: 13.33,
+      maxValue: 53.74
+    },
+      {
+        ...new SpellChart(),
+        rowName: SpellKeywords.Concentration,
+        levelRange: LevelRange.FIFTHTEEN,
+        dieSize: DiceSize.None,
+        minValue: 10.38,
+        maxValue: 34.81
+      }]
+
+
+  }];
 }

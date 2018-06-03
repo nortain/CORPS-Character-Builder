@@ -11,17 +11,35 @@
   </div>
   <div class="row">
     <div class="col-12">
-      <label class="font-weight-bold">Overview: </label> {{getMagicText(magicType.Overview)}}
+      <div>
+        {{getOverviewText()}}
+      </div>
     </div>
   </div>
   <div class="row">
     <div class="col-12">
-      <label class="font-weight-bold">Feature Bonus: </label> {{getMagicText(magicType.FeatureBonus)}}
+      <label class="font-weight-bold">Feature Bonus: </label>
+      <div>{{getMagicText(magicType.FeatureBonus).name}}</div>
+      <ul>
+        <li *ngFor="let item of getMagicText(magicType.FeatureBonus).values">
+          {{item}}
+        </li>
+      </ul>
     </div>
   </div>
   <div class="row">
     <div class="col-12">
-      <label class="font-weight-bold">General Feature: </label> {{getMagicText(magicType.GeneralFeature)}}
+      <label class="font-weight-bold">General Feature: </label>
+      <div> {{getMagicText(magicType.GeneralFeature).name}}</div>
+      <div *ngFor="let item of getMagicText(magicType.GeneralFeature).values" class="px-2">
+        {{item.name}}
+        <ul>
+          <li *ngFor="let value of item.values">
+            {{value}}
+          </li>
+        </ul>
+      </div>
+
     </div>
   </div>
   <div class="row">

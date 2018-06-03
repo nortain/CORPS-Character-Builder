@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {Subtheme} from "../../../shared/theme-points/subthemes/subtheme";
-import {Knack, SUBTHEME_BONUS} from "../../../shared/constants/constants";
+import {Feature, Knack, SUBTHEME_BONUS} from "../../../shared/constants/constants";
 import {MagicType} from "./magic-type.enum";
 import {ThemeStrength} from "../../../shared/theme-points/theme-strength.enum";
 import {SubthemeTypes} from "../../../shared/theme-points/subthemes/subtheme-types.enum";
@@ -147,7 +147,16 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
     }
   }
 
-  getMagicText(propertyName: MagicType): string {
+  getOverviewText(): string {
+    return SUBTHEME_BONUS[this.subtheme.subthemeName].Overview;
+  }
+
+  /**
+   * Gets text from the SpellSphere interface
+   * @param {MagicType} propertyName
+   * @returns {string}
+   */
+  getMagicText(propertyName: MagicType): Feature {
     return SUBTHEME_BONUS[this.subtheme.subthemeName][propertyName];
   }
 
