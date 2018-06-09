@@ -12,11 +12,6 @@ import {ThemeType} from "../theme-points/theme-type.enum";
 import {SavingThrow} from "../character/saving-throw.enum";
 import {BonusByLevel, NumberBonusByLevel} from "../character/bonus-by-level";
 import {Bonus} from "../character/bonus";
-import {Attribute} from "../attribute/attribute";
-import {AttributeStrength} from "../attribute/attribute-strength.enum";
-import {SubthemeTypes} from "../theme-points/subthemes/subtheme-types.enum";
-import {ThemeStrength} from "../theme-points/theme-strength.enum";
-import {Subtheme} from "../theme-points/subthemes/subtheme";
 import {MagentSpellList, SpellWardenSpellList} from "./spells/minor-spell-constants";
 import {Spell} from "../spells/spell";
 import {AssassinSpellList, ClericSpellList, DruidSpellList, WarriorMageSpellList} from "./spells/lesser-spell-constants";
@@ -189,14 +184,20 @@ export const TWO_MAGIC_SPELLS = {
   WarriorMage: {
     Overview: "As a part of selecting the warrior mage sphere you can choose one of the following trainings.  Each training comes with passive bonuses, unique sphere specific ability and dictates the effects of your adrenaline points.",
     FeatureBonus: {
-      name: "Training of the Balanced Warrior",
+      name: "If you have no ranks in general you gain the benefits from your training as a balanced warrior",
       values: [
-        "You gain the Warrior’s Sigil Ability and 1 Sigil power",
-        "You can select 4 spells from the Warrior Mage Sphere",
-        "Gain +1 damage to weapon and imbue spells. Increase by 1 at levels 5 and 9",
-        "Gain the Fury ability",
-        "Increase the damage done by your spells by 1 per stat point in Brawn and Agility."
+        {
+          name: "Training of the Balanced Warrior",
+          values: [
+            "You gain the Warrior’s Sigil Ability and 1 Sigil power",
+            "You can select 4 spells from the Warrior Mage Sphere",
+            "Gain +1 damage to weapon and imbue spells. Increase by 1 at levels 5 and 9",
+            "Gain the Fury ability",
+            "Increase the damage done by your spells by 1 per stat point in Brawn and Agility."
+          ]
+        }
       ]
+
     },
     GeneralFeature: {
       name: "If you have 1 theme point in general you can choose between the following Trainings",
@@ -306,16 +307,26 @@ export const TWO_MAGIC_SPELLS = {
     Spells: () => AssassinSpellList()
   } as SpellSphere,
   Cleric: {
-    Overview: "As a part of selecting the Cleric sphere you can choose one of the following ways.  Each way comes with passive bonuses, a unique sphere specific ability and dictates the effects of your adrenaline points.\n" +
-    "The cleric uses a resource called blessings.  Depending on your order you start each combat with a certain number of blessings.  When you invoke the blessings of your order you spend all of the blessings you have.  The result of what your blessing does is dependant on the order you choose.  If you have 1 theme point in general you also gain 1 blessing when you hit an enemy with an attack, cast a utility spell or successfully spend a move action to maintain a concentration spell.  A cleric may not gain more than 1 blessing per round in this manner, however other powers or abilities may allow a cleric to gain additional blessings beyond this limit.",
+    Overview: "As a part of selecting the Cleric sphere you can choose one of the following ways.  Each way comes with passive bonuses, a unique sphere specific ability and dictates the effects of your adrenaline points.",
     FeatureBonus: {
-      name: "Order of the Chosen",
+      name: "All cleric uses a resource called blessings. If you have no theme points in general you also gain the benefits of the Order of the Chosen",
       values: [
-        "You gain the Blessings Feature of either the Order of the Stalwart or Order of the Holy, you start each combat with 5 blessings",
-        "You can select 4 spells from the Cleric Sphere",
-        "Gain +1 damage to weapon spells. This bonus increases by 1 at levels 5 and 9",
-        "Gain the Fury Ability",
-        "Increase the damage done by your spells by 1 per stat point in Brawn and Agility."
+        {
+          name: "Blessings",
+          values: [
+            "Depending on your order you start each combat with a certain number of blessings.  When you invoke the blessings of your order you spend all of the blessings you have.  The result of what your blessing does is dependant on the order you choose.  If you have 1 theme point in general you also gain 1 blessing when you hit an enemy with an attack, cast a utility spell or successfully spend a move action to maintain a concentration spell.  A cleric may not gain more than 1 blessing per round in this manner, however other powers or abilities may allow a cleric to gain additional blessings beyond this limit."
+          ]
+        },
+        {
+          name: "Order of the Chosen",
+          values: [
+            "You gain the Blessings Feature of either the Order of the Stalwart or Order of the Holy, you start each combat with 5 blessings",
+            "You can select 4 spells from the Cleric Sphere",
+            "Gain +1 damage to weapon spells. This bonus increases by 1 at levels 5 and 9",
+            "Gain the Fury Ability",
+            "Increase the damage done by your spells by 1 per stat point in Brawn and Agility."
+          ]
+        }
       ]
     },
     GeneralFeature: {
@@ -353,9 +364,9 @@ export const TWO_MAGIC_SPELLS = {
       ConcentratedFortune: "Increase the damage you deal when paying a spell’s concentration cost by the amount listed below."
     },
     ImplementKnacksData: {
-      ProtectionBonus: [3],
-      Reverence: [3],
-      ConcentratedFortune: [3],
+      ProtectionBonus: [6, 7, 8, 10, 11, 12, 14, 15, 16, 18],
+      Reverence: [4, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      ConcentratedFortune: [4, 4, 5, 6, 7, 7, 8, 9, 10, 11],
     } as NumberBonusByLevel,
     AdrenalinePowers: [],
     PowerPointAbilities: [],

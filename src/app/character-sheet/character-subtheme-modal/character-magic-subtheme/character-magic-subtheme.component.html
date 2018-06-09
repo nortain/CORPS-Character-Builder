@@ -18,28 +18,42 @@
   </div>
   <div class="row">
     <div class="col-12">
-      <label class="font-weight-bold">Feature Bonus: </label>
+      <label class="font-weight-bold">Feature Bonuses: </label>
       <div>{{getMagicText(magicType.FeatureBonus).name}}</div>
-      <ul>
-        <li *ngFor="let item of getMagicText(magicType.FeatureBonus).values">
-          {{item}}
-        </li>
-      </ul>
+      <div *ngFor="let item of getMagicText(magicType.FeatureBonus).values" class="px-2 font-weight-bold">
+        {{item.name}}
+        <ul>
+          <li class="font-weight-normal" *ngFor="let value of item.values">
+            {{value}}
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
   <div class="row">
     <div class="col-12">
       <label class="font-weight-bold">General Feature: </label>
       <div> {{getMagicText(magicType.GeneralFeature).name}}</div>
-      <div *ngFor="let item of getMagicText(magicType.GeneralFeature).values" class="px-2">
+      <div *ngFor="let item of getMagicText(magicType.GeneralFeature).values" class="px-2 font-weight-bold">
         {{item.name}}
         <ul>
-          <li *ngFor="let value of item.values">
+          <li class="font-weight-normal" *ngFor="let value of item.values">
             {{value}}
           </li>
         </ul>
       </div>
 
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <label class="font-weight-bold">Sphere Abilities: </label>
+      <button id="displaySphereAbilities"
+              class="btn btn-outline-primary btn-sm"
+              (click)="displayKnacks()">
+        {{knackDisplayToggle ? 'Hide' :
+        'Show'}} Sphere Abilities
+      </button>
     </div>
   </div>
   <div class="row">
@@ -99,6 +113,28 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <label class="font-weight-bold">Implement Knacks: </label>
+      <button id="displayAdrenalinePointAbilities"
+              class="btn btn-outline-primary btn-sm"
+              (click)="displayKnacks()">
+        {{knackDisplayToggle ? 'Hide' :
+        'Show'}} Adrenaline Point Abilities
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <label class="font-weight-bold">Implement Knacks: </label>
+      <button id="displayPowerPointAbilities"
+              class="btn btn-outline-primary btn-sm"
+              (click)="displayKnacks()">
+        {{knackDisplayToggle ? 'Hide' :
+        'Show'}} Powerpoint Abilities
+      </button>
     </div>
   </div>
 </div>

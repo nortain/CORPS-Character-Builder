@@ -14,6 +14,7 @@ import {SpellChart} from "./spell-chart";
 
 export class Spell {
   name: string;
+  sphereName: string;
   defenseType: MagicDefenseType | PhysicalDefenseType | "Active" | "Passive";
   spellType: SpellType;
   spellKeywords: SpellKeywords[];
