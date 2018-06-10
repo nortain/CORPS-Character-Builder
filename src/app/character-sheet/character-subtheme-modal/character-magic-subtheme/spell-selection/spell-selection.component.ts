@@ -1,12 +1,10 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {Subtheme} from "../../../../shared/theme-points/subthemes/subtheme";
 import {ThemeStrength} from "../../../../shared/theme-points/theme-strength.enum";
-import {NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
-import {MagicType} from "../magic-type.enum";
-import {ConfirmationComponent} from "../../../../shared/ui/confirmation/confirmation.component";
-import {SubthemeTypes} from "../../../../shared/theme-points/subthemes/subtheme-types.enum";
+import {MagicType, SpellSelectionType} from "../magic-type.enum";
 import {Spell} from "../../../../shared/spells/spell";
-import {Feature, SUBTHEME_BONUS} from "../../../../shared/constants/constants";
+import {Feature, SpecialPower, SUBTHEME_BONUS} from "../../../../shared/constants/constants";
+import {ActionType} from "../../../../shared/action/action-type.enum";
 
 /**
  * This component is used to select powers or spells for the character
@@ -37,7 +35,7 @@ export class SpellSelectionComponent implements OnInit, OnChanges {
   /**
    * This tells the component where it is getting it's spell data from
    */
-  @Input() propertyType: MagicType;
+  @Input() propertyType: SpellSelectionType;
   /**
    * This is the text value of how we are referring to this property, if no value is given then we default to Spell
    */
@@ -60,9 +58,11 @@ export class SpellSelectionComponent implements OnInit, OnChanges {
    * maintain an array of which spells are open
    */
   openSpells: Spell[];
+  actionType = ActionType;
 
   constructor() {
     this.selectionDisplayToggle = false;
+    this.resetSpellSelection();
   }
 
   ngOnInit() {
@@ -92,7 +92,7 @@ export class SpellSelectionComponent implements OnInit, OnChanges {
   /**
    * clears out all selected and open spells
    */
-  resetSubtheme() {
+  resetSpellSelection() {
     this.selectedSpells = [];
     this.openSpells = [];
   }
@@ -104,7 +104,6 @@ export class SpellSelectionComponent implements OnInit, OnChanges {
   isSubthemeSelected() {
     return this.subtheme.themeStrength !== ThemeStrength.None;
   }
-
 
 
   openSpell(spell: Spell) {
@@ -140,25 +139,19 @@ export class SpellSelectionComponent implements OnInit, OnChanges {
    * @param {MagicType} propertyName
    * @returns {string}
    */
-  getMagicText(propertyName: MagicType): Feature {
+  getMagicText(propertyName: SpellSelectionType): Spell | Spell[] | SpecialPower {
     return SUBTHEME_BONUS[this.subtheme.subthemeName][propertyName];
   }
 
-  getSpellData(spellName: string): number[] {
-    const spellsObject = this.getMagicText(this.propertyType);
-    return spellsObject[spellName];
-  }
-
-  getSpellText(): Spell[] {
-    const spellsObject = this.getMagicText(this.propertyType);
-    const spellsArray = Object.keys(spellsObject);
-    const result = [];
-    for (const spell of spellsArray) {
-      result.push({
-        name: spell,
-        text: spellsObject[spell],
-        subthemeName: this.subtheme.subthemeName
-      });
+  getSpellData(): Spell[] {
+    const spellsArray = this.getMagicText(this.propertyType);
+    let result = [];
+    if (spellsArray instanceof Array) {
+      result = spellsArray;
+    } else if (spellsArray instanceof SpecialPower || !!spellsArray["powers"]) {
+      result = spellsArray["powers"];
+    } else if (spellsArray instanceof Spell || !!spellsArray["sphereName"]) {
+      result = [spellsArray];
     }
     return result;
   }

@@ -1,6 +1,6 @@
 import {ThemeStrength} from "../theme-strength.enum";
 import {ThemeType} from "../theme-type.enum";
-import {SubthemeTypes} from "./subtheme-types.enum";
+import {SubthemeType} from "./subtheme-types.enum";
 import {SubthemePipe} from "./subtheme.pipe";
 import {SubthemeBonus} from "./subtheme-bonus.enum";
 import {Level} from "../../character/level.enum";
@@ -15,7 +15,7 @@ export class Subtheme {
 
 
 
-  constructor(public subtheme: SubthemeTypes, private strength = ThemeStrength.None) {
+  constructor(public subtheme: SubthemeType, private strength = ThemeStrength.None) {
     this.pipe = new SubthemePipe();
     const values = this.parseSubtheme(subtheme);
     this.assignValues(values);
@@ -37,7 +37,7 @@ export class Subtheme {
 
   // end getters and setters
 
-  parseSubtheme(subtheme: SubthemeTypes) {
+  parseSubtheme(subtheme: SubthemeType) {
     const values = subtheme.split(",");
     return values;
   }
@@ -64,7 +64,7 @@ export class Subtheme {
    */
   getSpellList(): Spell[] {
     if (SUBTHEME_BONUS[this.subthemeName]["Spells"]) {
-      return SUBTHEME_BONUS[this.subthemeName].Spells();
+      return SUBTHEME_BONUS[this.subthemeName].Spells;
     } else {
       return null;
     }

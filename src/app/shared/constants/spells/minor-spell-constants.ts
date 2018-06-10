@@ -1,5 +1,5 @@
 import {Spell} from "../../spells/spell";
-import {PhysicalDefenseType} from "../../character/phsyical-defense/physical-defense-type.enum";
+import {PhysicalDefenseType} from "../../character/physical-defense/physical-defense-type.enum";
 import {SpellKeywords} from "../../spells/spell-keywords.enum";
 import {AreaOfEffect} from "../../area-of-effect/area-of-effect";
 import {AreaOfEffectTypes} from "../../area-of-effect/area-of-effect-types.enum";

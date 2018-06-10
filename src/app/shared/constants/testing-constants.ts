@@ -4,11 +4,25 @@ import {RaceType} from "../character/race/race-type.enum";
 import {ComponentFixture} from "@angular/core/testing";
 import {By} from "@angular/platform-browser";
 import {NgbDropdownMenu} from "@ng-bootstrap/ng-bootstrap/dropdown/dropdown";
-import {PhysicalDefense} from "../character/phsyical-defense/physical-defense";
+import {PhysicalDefense} from "../character/physical-defense/physical-defense";
 import {ThemePointsContainer} from "../theme-points/theme-points-container";
 import {ThemeStrength} from "../theme-points/theme-strength.enum";
 import {Subtheme} from "../theme-points/subthemes/subtheme";
-import {SubthemeTypes} from "../theme-points/subthemes/subtheme-types.enum";
+import {CasterType, SubthemeType} from "../theme-points/subthemes/subtheme-types.enum";
+import {SpellType} from "../spells/enums/spell-type.enum";
+import {SpellKeywords} from "../spells/spell-keywords.enum";
+import {SpellDamageKeyword} from "../spells/enums/spell-damage-keyword.enum";
+import {AreaOfEffect} from "../area-of-effect/area-of-effect";
+import {Spell} from "../spells/spell";
+import {ActionType} from "../action/action-type.enum";
+import {DurationType} from "../duration/duration-type.enum";
+import {Dice} from "../character/dice/dice";
+import {DiceSize} from "../character/dice/dice-size.enum";
+import {Minion} from "../minion/minion";
+import {SpellChart} from "../spells/spell-chart";
+import {AreaOfEffectTypes} from "../area-of-effect/area-of-effect-types.enum";
+import {LevelRange} from "../spells/enums/level-range.enum";
+import {AllDefenseType} from "../character/physical-defense/physical-defense-type.enum";
 
 export function mockDropdownData() {
   return [
@@ -23,9 +37,9 @@ export function mockCharacter(name = "Bob", raceType = RaceType.Altwani) {
   return character;
 }
 
-export function mockSubtheme(subthemeType?: SubthemeTypes, str?: ThemeStrength): Subtheme {
+export function mockSubtheme(subthemeType?: SubthemeType, str?: ThemeStrength): Subtheme {
   if (!subthemeType) {
-    subthemeType = SubthemeTypes.Riposte;
+    subthemeType = SubthemeType.Riposte;
   }
   str = !!str ? str : ThemeStrength.None;
   const sub = new Subtheme(subthemeType, str);
@@ -71,3 +85,48 @@ export function actionGetDropdownValue(fixture: ComponentFixture<any>, selector:
   const dropdownBtn = dropdown.query(By.css("button")).nativeElement;
   return dropdownBtn.innerText;
 }
+
+export function mockAreaOfEffect(): AreaOfEffect {
+  return {
+    numberOfTargets: 2,
+    range: 10,
+    type: AreaOfEffectTypes.Zone
+
+  } as AreaOfEffect;
+}
+
+export function mockSpellChart(): SpellChart {
+  return {
+    rowName: "Damage",
+    levelRange: LevelRange.FIFTHTEEN,
+    minValue: 12.11,
+    maxValue: 38.33
+  } as SpellChart;
+}
+
+export function mockSpell(): Spell {
+  return {
+    name: "Fireball",
+    sphereName: CasterType.Archmage,
+    defenseType: [AllDefenseType.Active],
+    spellType: SpellType.DirectAttack,
+    spellKeywords: [SpellKeywords.Manipulate],
+    damageKeywords: SpellDamageKeyword.Wild,
+    areaOfEffect: mockAreaOfEffect(),
+    castAction: ActionType.Standard,
+    duration: [DurationType.Immediate],
+    critRoll: new Dice(1, DiceSize.d6, 1),
+    special: [
+      "This can only be cast once per encounter"
+    ],
+    minion: new Minion(),
+    spellEffectText: "You launch a big ass ball of fiery death upon your foes",
+    afterEffect: "Everyone parties",
+    spellChart: [
+      mockSpellChart(),
+      mockSpellChart()
+    ]
+  } as Spell;
+}
+
+

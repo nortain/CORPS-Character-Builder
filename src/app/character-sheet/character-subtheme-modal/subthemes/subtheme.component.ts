@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angula
 import {Subtheme} from "../../../shared/theme-points/subthemes/subtheme";
 import {DropdownValueObject} from "../../../shared/ui/dropdown/dropdown-value-object";
 import {AttributeService} from "../../../shared/attribute/attribute.service";
-import {SubthemeTypes} from "../../../shared/theme-points/subthemes/subtheme-types.enum";
+import {SubthemeType} from "../../../shared/theme-points/subthemes/subtheme-types.enum";
 import {ThemeType} from "../../../shared/theme-points/theme-type.enum";
 import {STARTING_THEME_POINTS, SUBTHEME_BONUS} from "../../../shared/constants/constants";
 import {DropdownComponent} from "../../../shared/ui/dropdown/dropdown.component";
@@ -118,7 +118,7 @@ export class SubthemeComponent implements OnInit {
    * @param {DropdownValueObject} dd
    */
   reloadSubtheme(dd: DropdownValueObject) {
-    this.subtheme = new Subtheme(SubthemeTypes[this.subtheme.subthemeName], dd.value);
+    this.subtheme = new Subtheme(SubthemeType[this.subtheme.subthemeName], dd.value);
     this.submitter.emit(this.subtheme);
   }
 

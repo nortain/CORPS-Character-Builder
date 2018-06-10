@@ -11,7 +11,6 @@ export class PhysicalDefense {
   constructor(public armor: Armor = new Armor(ArmorType.None),
               public activeDefenses = <PhysicalDefenseType[]>[],
               public passiveDefenses = <PhysicalDefenseType[]>[
-                PhysicalDefenseType.Line,
                 PhysicalDefenseType.Missile,
                 PhysicalDefenseType.Unarmed,
                 PhysicalDefenseType.Zone]) {

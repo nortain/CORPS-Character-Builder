@@ -141,7 +141,7 @@ export const ONE_MAGIC_SPELLS = {
     PowerPointAbilities: null,
     SpecialPowers: null,
     ImplementAttack: null,
-    Spells: () => MagentSpellList()
+    Spells: MagentSpellList()
   } as SpellSphere,
   SpellWarden: {
     Overview: "Spell Wardens were an ancient sect of Warriors who long ago discovered they could enhance their martial skills with the powers now known today as the essence of magic.  Although the order has all but been forgotten there are a rare few who have learned the secrets of Spell Warden and have passed those secrets down to others through the generations.  Although their magical capabilities aren’t nearly as strong as that of spell casters their sheer physical fortitude required to master this training style makes them a deadly foe on any battlefield.",
@@ -174,7 +174,7 @@ export const ONE_MAGIC_SPELLS = {
     PowerPointAbilities: null,
     SpecialPowers: null,
     ImplementAttack: null,
-    Spells: () => SpellWardenSpellList()
+    Spells: SpellWardenSpellList()
   } as SpellSphere
 
 
@@ -190,7 +190,7 @@ export const TWO_MAGIC_SPELLS = {
           name: "Training of the Balanced Warrior",
           values: [
             "You gain the Warrior’s Sigil Ability and 1 Sigil power",
-            "You can select 4 spells from the Warrior Mage Sphere",
+            "You can select 4 spells from the Warrior Archmage Sphere",
             "Gain +1 damage to weapon and imbue spells. Increase by 1 at levels 5 and 9",
             "Gain the Fury ability",
             "Increase the damage done by your spells by 1 per stat point in Brawn and Agility."
@@ -208,7 +208,7 @@ export const TWO_MAGIC_SPELLS = {
             "The Phantom Blade implement attack and 1 implement knack",
             "The Warrior’s Sigil Ability and 1 Sigil power",
             "Visions of the Mind Power",
-            "5 spells from the Warrior Mage Sphere",
+            "5 spells from the Warrior Archmage Sphere",
             "Force of Control Ability",
             "Magic attack bonus increased by your Reasoning bonus"
           ]
@@ -219,7 +219,7 @@ export const TWO_MAGIC_SPELLS = {
             "The Phantom Blade implement attack and 1 implement knack",
             "The Warrior’s Sigil Ability and 1 Sigil power",
             "Ravaging Assault Power",
-            "5 spells from the Warrior Mage Sphere",
+            "5 spells from the Warrior Archmage Sphere",
             "Force of the Aggression Ability",
             "Magic attack bonus increased by your Reasoning bonus"
           ]
@@ -245,7 +245,7 @@ export const TWO_MAGIC_SPELLS = {
     PowerPointAbilities: [],
     SpecialPowers: null,
     ImplementAttack: new Spell(),
-    Spells: () => WarriorMageSpellList()
+    Spells: WarriorMageSpellList()
   } as SpellSphere,
   Assassin: {
     Overview: "As a part of selecting the assassin sphere you can you choose one of the following paths.  Each path comes with passive bonuses, a unique sphere specific ability and dictates the effects of your adrenaline points.",
@@ -304,7 +304,7 @@ export const TWO_MAGIC_SPELLS = {
     PowerPointAbilities: [],
     SpecialPowers: null,
     ImplementAttack: new Spell(),
-    Spells: () => AssassinSpellList()
+    Spells: AssassinSpellList()
   } as SpellSphere,
   Cleric: {
     Overview: "As a part of selecting the Cleric sphere you can choose one of the following ways.  Each way comes with passive bonuses, a unique sphere specific ability and dictates the effects of your adrenaline points.",
@@ -372,7 +372,7 @@ export const TWO_MAGIC_SPELLS = {
     PowerPointAbilities: [],
     SpecialPowers: null,
     ImplementAttack: new Spell(),
-    Spells: () => ClericSpellList()
+    Spells: ClericSpellList()
   } as SpellSphere,
   Druid: {
     Overview: "As a part of selecting the warrior mage sphere you can choose one of the following trainings.  Each training comes with passive bonuses, unique sphere specific ability and dictates the effects of your adrenaline points.",
@@ -380,7 +380,7 @@ export const TWO_MAGIC_SPELLS = {
       name: "Training of the Balanced Warrior",
       values: [
         "You gain the Warrior’s Sigil Ability and 1 Sigil power",
-        "You can select 4 spells from the Warrior Mage Sphere",
+        "You can select 4 spells from the Warrior Archmage Sphere",
         "Gain +1 damage to weapon and imbue spells. Increase by 1 at levels 5 and 9",
         "Gain the Fury ability",
         "Increase the damage done by your spells by 1 per stat point in Brawn and Agility."
@@ -395,7 +395,7 @@ export const TWO_MAGIC_SPELLS = {
             "The Phantom Blade implement attack and 1 implement knack",
             "The Warrior’s Sigil Ability and 1 Sigil power",
             "Visions of the Mind Power",
-            "5 spells from the Warrior Mage Sphere",
+            "5 spells from the Warrior Archmage Sphere",
             "Force of Control Ability",
             "Magic attack bonus increased by your Reasoning bonus"
           ]
@@ -406,7 +406,7 @@ export const TWO_MAGIC_SPELLS = {
             "The Phantom Blade implement attack and 1 implement knack",
             "The Warrior’s Sigil Ability and 1 Sigil power",
             "Ravaging Assault Power",
-            "5 spells from the Warrior Mage Sphere",
+            "5 spells from the Warrior Archmage Sphere",
             "Force of the Aggression Ability",
             "Magic attack bonus increased by your Reasoning bonus"
           ]
@@ -432,7 +432,7 @@ export const TWO_MAGIC_SPELLS = {
     PowerPointAbilities: [],
     SpecialPowers: null,
     ImplementAttack: new Spell(),
-    Spells: () => DruidSpellList()
+    Spells: DruidSpellList()
   } as SpellSphere,
 };
 
@@ -881,6 +881,10 @@ export class Feature {
   values: any[];
 }
 
+export class SpecialPower {
+  name: string;
+  powers: Spell[];
+}
 
 export interface SpellSphere {
   Overview: string;
@@ -890,10 +894,9 @@ export interface SpellSphere {
   ImplementKnacksData: NumberBonusByLevel;
   AdrenalinePowers: Spell[];
   PowerPointAbilities: Spell[];
-  SpecialPowers: { name: string, powers: Spell[] };
+  SpecialPowers: SpecialPower;
   ImplementAttack: Spell;
-
-  Spells(): Spell[];
+  Spells: Spell[];
 }
 
 

@@ -1,5 +1,5 @@
 import {Spell} from "../../spells/spell";
-import {PhysicalDefenseType} from "../../character/phsyical-defense/physical-defense-type.enum";
+import {AllDefenseType, PhysicalDefenseType} from "../../character/physical-defense/physical-defense-type.enum";
 import {SpellKeywords} from "../../spells/spell-keywords.enum";
 
 import {AreaOfEffect} from "../../area-of-effect/area-of-effect";
@@ -17,7 +17,7 @@ export function ClericSpellList(): Spell[] {
   return [{
     ...new Spell(),
     name: "Fierce Devotion",
-    defenseType: PhysicalDefenseType.Missile,
+    defenseType: [AllDefenseType.Missile],
     spellType: SpellType.DirectEffect,
     spellKeywords: [SpellKeywords.Concentration],
     damageKeywords: SpellDamageKeyword.Wild,
@@ -56,7 +56,7 @@ export function DruidSpellList(): Spell[] {
   return [{
     ...new Spell(),
     name: "Fierce Devotion",
-    defenseType: PhysicalDefenseType.Missile,
+    defenseType: [AllDefenseType.Missile],
     spellType: SpellType.DirectEffect,
     spellKeywords: [SpellKeywords.Concentration],
     damageKeywords: SpellDamageKeyword.Wild,
@@ -95,7 +95,7 @@ export function AssassinSpellList(): Spell[] {
   return [{
     ...new Spell(),
     name: "Fierce Devotion",
-    defenseType: PhysicalDefenseType.Missile,
+    defenseType: [AllDefenseType.Missile],
     spellType: SpellType.DirectEffect,
     spellKeywords: [SpellKeywords.Concentration],
     damageKeywords: SpellDamageKeyword.Wild,
@@ -134,7 +134,7 @@ export function WarriorMageSpellList(): Spell[] {
   return [{
     ...new Spell(),
     name: "Fierce Devotion",
-    defenseType: PhysicalDefenseType.Missile,
+    defenseType: [AllDefenseType.Missile],
     spellType: SpellType.DirectEffect,
     spellKeywords: [SpellKeywords.Concentration],
     damageKeywords: SpellDamageKeyword.Wild,

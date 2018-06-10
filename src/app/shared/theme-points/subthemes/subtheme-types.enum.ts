@@ -5,7 +5,7 @@
  */
 import {ThemeType} from "../theme-type.enum";
 
-export enum SubthemeTypes {
+export enum SubthemeType {
   WeaponSpecialization = "Combat,Greater,WeaponSpecialization",
   Protector = "Combat,Lesser,Protector",
   Juggernaut = "Combat,Minor,Juggernaut",
@@ -22,6 +22,22 @@ export enum SubthemeTypes {
   Elementalist = "Magic,Greater,Elementalist",
   Warlock = "Magic,Greater,Warlock",
   Shaman = "Magic,Greater,Shaman",
-  Mage = "Magic,Greater,Mage",
+  Archmage = "Magic,Greater,Archmage",
   Necromancer = "Magic,Greater,Necromancer"
+}
+
+export enum CasterType {
+  Magent = "Magent",
+  SpellWarden = "SpellWarden",
+  Cleric = "Cleric",
+  Druid = "Druid",
+  Assassin = "Assassin",
+  WarriorMage = "WarriorMage",
+  Elementalist = "Elementalist",
+  Warlock = "Warlock",
+  Shaman = "Shaman",
+  Necromancer = "Necromancer",
+  Priest = "Priest",
+  Archmage = "Archmage"
+
 }

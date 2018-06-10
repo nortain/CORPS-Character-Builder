@@ -1,9 +1,9 @@
 import {ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {Subtheme} from "../../../shared/theme-points/subthemes/subtheme";
 import {Feature, Knack, SUBTHEME_BONUS} from "../../../shared/constants/constants";
-import {MagicType} from "./magic-type.enum";
+import {MagicType, SpellSelectionType} from "./magic-type.enum";
 import {ThemeStrength} from "../../../shared/theme-points/theme-strength.enum";
-import {SubthemeTypes} from "../../../shared/theme-points/subthemes/subtheme-types.enum";
+import {SubthemeType} from "../../../shared/theme-points/subthemes/subtheme-types.enum";
 import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
 import {ConfirmationComponent} from "../../../shared/ui/confirmation/confirmation.component";
 
@@ -21,6 +21,7 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
   @Output() submitter: EventEmitter<{ subtheme: Subtheme, knacks: Knack[] }>;
 
   magicType = MagicType;
+  spellSelectionType = SpellSelectionType;
   /**
    * a toggle switch to determine if knacks are being displayed or not
    */
@@ -81,7 +82,7 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
 
   selectSubtheme() {
     if (!this.isSubthemeSelected() && this.subthemePointCap > 0) {
-      this.subtheme = new Subtheme(SubthemeTypes[this.subtheme.subthemeName], this.subtheme.maxThemeStrength);
+      this.subtheme = new Subtheme(SubthemeType[this.subtheme.subthemeName], this.subtheme.maxThemeStrength);
       this.submitter.emit({
         subtheme: this.subtheme,
         knacks: this.selectedKnacks
@@ -98,7 +99,7 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
         modalRef.result.then((result) => {
           if (result) {
             this.resetSubtheme();
-            this.subtheme = new Subtheme(SubthemeTypes[this.subtheme.subthemeName]); // make new subtheme with 0 strength
+            this.subtheme = new Subtheme(SubthemeType[this.subtheme.subthemeName]); // make new subtheme with 0 strength
             this.submitter.emit({
               subtheme: this.subtheme,
               knacks: this.selectedKnacks
@@ -110,7 +111,7 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
         });
       } else { // if the form is not dirty just deselect the damn thing
         this.resetSubtheme();
-        this.subtheme = new Subtheme(SubthemeTypes[this.subtheme.subthemeName]); // make new subtheme with 0 strength
+        this.subtheme = new Subtheme(SubthemeType[this.subtheme.subthemeName]); // make new subtheme with 0 strength
         this.submitter.emit({
           subtheme: this.subtheme,
           knacks: this.selectedKnacks

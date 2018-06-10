@@ -1,5 +1,5 @@
 export enum MagicDefenseType {
-  Fortitude,
-  Reflex,
-  Will
+  Fortitude = "Fortitude",
+  Reflex = "Reflex",
+  Will = "Will"
 }

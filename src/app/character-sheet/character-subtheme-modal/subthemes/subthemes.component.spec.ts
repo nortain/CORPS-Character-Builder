@@ -3,7 +3,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {SubthemeComponent} from './subtheme.component';
 import {SharedModule} from "../../../shared/shared.module";
 import {NgbActiveModal, NgbDropdownConfig} from "@ng-bootstrap/ng-bootstrap";
-import {SubthemeTypes} from "../../../shared/theme-points/subthemes/subtheme-types.enum";
+import {SubthemeType} from "../../../shared/theme-points/subthemes/subtheme-types.enum";
 import {ThemeStrength} from "../../../shared/theme-points/theme-strength.enum";
 import {Subtheme} from "../../../shared/theme-points/subthemes/subtheme";
 import {DropdownValueObject} from "../../../shared/ui/dropdown/dropdown-value-object";
@@ -26,7 +26,7 @@ describe('SubthemeComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SubthemeComponent);
     component = fixture.componentInstance;
-    component.subtheme = new Subtheme(SubthemeTypes.WeaponSpecialization, ThemeStrength.None);
+    component.subtheme = new Subtheme(SubthemeType.WeaponSpecialization, ThemeStrength.None);
     component.assignedSubthemePoints = 0;
     component.subthemePointCap = 3;
     fixture.detectChanges();
@@ -40,14 +40,14 @@ describe('SubthemeComponent', () => {
     let result = component.getDropdownValues();
     expect(result.length).toEqual(4);
     component.assignedSubthemePoints = 3;
-    component.subtheme = new Subtheme(SubthemeTypes.Protector, ThemeStrength.Lesser);
+    component.subtheme = new Subtheme(SubthemeType.Protector, ThemeStrength.Lesser);
     result = component.getDropdownValues();
     expect(result.length).toEqual(3);
     component.assignedSubthemePoints = 4;
-    component.subtheme = new Subtheme(SubthemeTypes.Evasion, ThemeStrength.None);
+    component.subtheme = new Subtheme(SubthemeType.Evasion, ThemeStrength.None);
     result = component.getDropdownValues();
     expect(result.length).toEqual(1);
-    component.subtheme = new Subtheme(SubthemeTypes.Evasion, ThemeStrength.Minor);
+    component.subtheme = new Subtheme(SubthemeType.Evasion, ThemeStrength.Minor);
     result = component.getDropdownValues();
     expect(result.length).toEqual(2);
   });
@@ -56,12 +56,12 @@ describe('SubthemeComponent', () => {
     const ddo = new DropdownValueObject(0);
     expect(component.loadSelectedDropdownValue()).toEqual(ddo);
     const otherDd = new DropdownValueObject(2);
-    component.subtheme = new Subtheme(SubthemeTypes.Protector, ThemeStrength.Lesser);
+    component.subtheme = new Subtheme(SubthemeType.Protector, ThemeStrength.Lesser);
     expect(component.loadSelectedDropdownValue()).toEqual(otherDd);
   });
 
   it('should be able to reloadSubtheme and get the correct assignedSubtheme points', () => {
-    component.subtheme = new Subtheme(SubthemeTypes.WeaponSpecialization, ThemeStrength.Lesser);
+    component.subtheme = new Subtheme(SubthemeType.WeaponSpecialization, ThemeStrength.Lesser);
     component.assignedSubthemePoints = 2;
     component.reloadSubtheme(new DropdownValueObject(ThemeStrength.Greater));
     expect(component.subtheme.themeStrength).toEqual(ThemeStrength.Greater);
@@ -97,7 +97,7 @@ describe('SubthemeComponent', () => {
         SUBTHEME_BONUS["WeaponSpecialization"]["2"],
         SUBTHEME_BONUS["WeaponSpecialization"]["3"]
       ]);
-    component.subtheme = new Subtheme(SubthemeTypes.Protector, ThemeStrength.None);
+    component.subtheme = new Subtheme(SubthemeType.Protector, ThemeStrength.None);
     fixture.detectChanges();
     expect(component.getTableData()).toEqual(
       [
@@ -113,7 +113,7 @@ describe('SubthemeComponent', () => {
         }
       ]
     );
-    component.subtheme = new Subtheme(SubthemeTypes.FindWeakness, ThemeStrength.None);
+    component.subtheme = new Subtheme(SubthemeType.FindWeakness, ThemeStrength.None);
     fixture.detectChanges();
     expect(component.getTableData()).toEqual(
       [
@@ -158,7 +158,7 @@ describe('SubthemeComponent', () => {
   });
 
   it('should be able to limit subtheme points based of simliar subthemes being assigned values', () => {
-    component.subtheme = new Subtheme(SubthemeTypes.Riposte, ThemeStrength.Minor);
+    component.subtheme = new Subtheme(SubthemeType.Riposte, ThemeStrength.Minor);
     component.assignedSubthemePoints = 4;
     component.subthemePointCap = 1;
     const result = component.totalAssignableSubthemePoints();
@@ -170,7 +170,7 @@ describe('SubthemeComponent', () => {
   it('should limit max number of subtheme points to be equal to that of theme points', () => {
     const initalResult = component.totalAssignableSubthemePoints();
     expect(initalResult).toEqual(1);
-    component.subtheme = new Subtheme(SubthemeTypes.Evasion, ThemeStrength.None);
+    component.subtheme = new Subtheme(SubthemeType.Evasion, ThemeStrength.None);
     component.subthemePointCap = 2;
     const list = component.totalAssignableSubthemePoints();
     expect(list).toEqual(3);
@@ -178,7 +178,7 @@ describe('SubthemeComponent', () => {
 
   it('should repsect subtheme points assigned to subthemes of the same theme type', () => {
     component.subthemePointCap = 1;
-    component.subtheme = new Subtheme(SubthemeTypes.Riposte, ThemeStrength.Minor);
+    component.subtheme = new Subtheme(SubthemeType.Riposte, ThemeStrength.Minor);
     component.assignedSubthemePoints = 3;
     const result = component.totalAssignableSubthemePoints();
     expect(result).toEqual(3);

@@ -9,13 +9,14 @@ import {actionClickDropdownItemX, actionGetDropdownValue, mockSubtheme, mockThem
 import {ThemeStrength} from "../../../shared/theme-points/theme-strength.enum";
 import {ThemePointsContainer} from "../../../shared/theme-points/theme-points-container";
 import {SubthemeContainer} from "../../../shared/theme-points/subthemes/subtheme-container";
-import {SubthemeTypes} from "../../../shared/theme-points/subthemes/subtheme-types.enum";
+import {SubthemeType} from "../../../shared/theme-points/subthemes/subtheme-types.enum";
 import {Subtheme} from "../../../shared/theme-points/subthemes/subtheme";
 import {By} from "@angular/platform-browser";
 import {DropdownComponent} from "../../../shared/ui/dropdown/dropdown.component";
 import {NgbDropdownMenu} from "@ng-bootstrap/ng-bootstrap/dropdown/dropdown";
 import {CharacterMagicSubthemeComponent} from "../character-magic-subtheme/character-magic-subtheme.component";
 import {nextTick} from "q";
+import {SpellSelectionComponent} from "../character-magic-subtheme/spell-selection/spell-selection.component";
 
 describe('CharacterSubthemeModalComponent', () => {
   let component: CharacterSubthemeModalComponent;
@@ -25,7 +26,7 @@ describe('CharacterSubthemeModalComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [SharedModule],
-      declarations: [SubthemeComponent, CharacterSubthemeModalComponent, CharacterMagicSubthemeComponent],
+      declarations: [SubthemeComponent, CharacterSubthemeModalComponent, CharacterMagicSubthemeComponent, SpellSelectionComponent],
       providers: [NgbDropdownConfig, NgbModal, NgbActiveModal, NgbModalStack]
     })
       .compileComponents();
@@ -36,13 +37,13 @@ describe('CharacterSubthemeModalComponent', () => {
     component = fixture.componentInstance;
     component.subthemePoints = new SubthemeContainer(mockThemePoints());
     component.getAllPossibleSubthemes();
-    weapon = new Subtheme(SubthemeTypes.WeaponSpecialization, 0);
-    protector = new Subtheme(SubthemeTypes.Protector, 0);
-    juggernaut = new Subtheme(SubthemeTypes.Juggernaut, 0);
-    find = new Subtheme(SubthemeTypes.FindWeakness, 0);
-    riposte = new Subtheme(SubthemeTypes.Riposte, 0);
-    evasion = new Subtheme(SubthemeTypes.Evasion, 0);
-    magent = new Subtheme(SubthemeTypes.Magent, 0);
+    weapon = new Subtheme(SubthemeType.WeaponSpecialization, 0);
+    protector = new Subtheme(SubthemeType.Protector, 0);
+    juggernaut = new Subtheme(SubthemeType.Juggernaut, 0);
+    find = new Subtheme(SubthemeType.FindWeakness, 0);
+    riposte = new Subtheme(SubthemeType.Riposte, 0);
+    evasion = new Subtheme(SubthemeType.Evasion, 0);
+    magent = new Subtheme(SubthemeType.Magent, 0);
     fixture.detectChanges();
   });
 
@@ -70,7 +71,7 @@ describe('CharacterSubthemeModalComponent', () => {
 
   it('should be able to load in subthemes that have already been assigned values', () => {
     const sc = new SubthemeContainer(new ThemePointsContainer(3, 0, 0, 1));
-    sc.assignSubtheme(new Subtheme(SubthemeTypes.Protector, ThemeStrength.Lesser));
+    sc.assignSubtheme(new Subtheme(SubthemeType.Protector, ThemeStrength.Lesser));
     component.subthemePoints = sc;
     component.getAllPossibleSubthemes();
 
@@ -149,7 +150,7 @@ describe('CharacterSubthemeModalComponent', () => {
 
   it('should be able to updateSubtheme after a magical subtheme has been selected', fakeAsync(() => {
     spyOn(component, "updateSubtheme");
-    const mock = mockSubtheme(SubthemeTypes.Magent, ThemeStrength.Minor);
+    const mock = mockSubtheme(SubthemeType.Magent, ThemeStrength.Minor);
 
     component.subthemePoints = new SubthemeContainer(new ThemePointsContainer(0, 0, 1, 1));
     component.getAllPossibleSubthemes();

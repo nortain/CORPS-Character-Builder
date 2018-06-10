@@ -1,9 +1,9 @@
 <div class="row">
   <div class="col-12">
-    <label class="font-weight-bold">Implement Spells: </label>
+    <label class="font-weight-bold">{{propertyName}}: </label>
     <button id="displaySpellButton" class="btn btn-outline-primary btn-sm" (click)="displaySpells()">
       {{selectionDisplayToggle ? 'Hide' :
-      'Show'}} Implement Spells
+      'Show'}} {{propertyName}}
     </button>
     <div class="selectedSpellDisplay float-right row" *ngIf="selectedSpells.length > 0">
       <label class="font-weight-bold col">Selected {{selectedSpells.length === 1 ? propertyName : propertyName+'s'}}:
@@ -15,9 +15,15 @@
     <div *ngIf="selectionDisplayToggle">
       <p>You can select {{numberOfSpellsToSelect}} {{numberOfSpellsToSelect === 1 ? propertyName : propertyName + 's'}}
       </p>
-      <div class="col-12" *ngFor="let spell of getSpellText()">
+      <div class="col-12" *ngFor="let spell of getSpellData()">
+        <div class="card-header" (click)="openSpell(spell)">
+          <span class="name font-weight-bold">
+            {{spell.name | castleCase}} ({{spell.spellType | castleCase}})
+          </span>
+          <span class="font-weight-bold" *ngIf="spell.castAction === actionType.Deliberate">*</span>
+          <span class="font-weight-bold" *ngIf="spell.castAction === actionType.Move">-</span>
+          <span class="font-weight-bold" *ngIf="spell.castAction === actionType.Minor">#</span>
 
-        <div class="card-header" (click)="openSpell(spell)"><span class="name font-weight-bold">{{spell.name | castleCase}}</span>
           <button class="btn btn-sm spellButton float-right"
                   [ngClass]="{'disabled': !isSubthemeSelected() ||
                     numberOfSpellsToSelect === 0,
@@ -30,30 +36,36 @@
           </button>
         </div>
         <div class="card-text spellWell" *ngIf="isSpellOpen(spell)">
-              <span class="description">
-                {{spell.name}}
-              </span><br><br *ngIf="!getSpellData(spell.name)">
-          <table id="{{spell.name}}Table" *ngIf="!!getSpellData(spell.name)" class="table table-bordered">
-            <thead>
-            <tr>
-              <th scope="col">Bonus</th>
-              <th scope="col">L 1</th>
-              <th scope="col">L 2</th>
-              <th scope="col">L 3</th>
-              <th scope="col">L 4</th>
-              <th scope="col">L 5</th>
-              <th scope="col">L 6</th>
-              <th scope="col">L 7</th>
-              <th scope="col">L 8</th>
-              <th scope="col">L 9</th>
-              <th scope="col">L 10</th>
-            </tr>
-            </thead>
-            <tr>
-              <th class="spellDataName">{{spell.name | castleCase}}</th>
-              <td *ngFor="let data of getSpellData(spell.name)">{{data}}</td>
-            </tr>
-          </table>
+          <div class="px-2">
+            <label for="keywords" class="font-weight-bold">Keywords</label>
+            <span id="keywords">{{spell.damageKeywords}}</span>
+            <span id="otherKeywords" *ngFor="let keyword of spell.spellKeywords">,{{keyword}}</span>
+          </div>
+          <div class="px-2">
+            <label for="defenseType" class="font-weight-bold">Defense Type</label>
+            <span id="defenseType" *ngFor="let defense of spell.defenseType let index=index">{{defense}}<span *ngIf="index < spell.defenseType.length-1">/</span></span>
+          </div>
+          <!--<table id="{{spell.name}}Table" *ngIf="!!getSpellData(spell.name)" class="table table-bordered">-->
+          <!--<thead>-->
+          <!--<tr>-->
+          <!--<th scope="col">Bonus</th>-->
+          <!--<th scope="col">L 1</th>-->
+          <!--<th scope="col">L 2</th>-->
+          <!--<th scope="col">L 3</th>-->
+          <!--<th scope="col">L 4</th>-->
+          <!--<th scope="col">L 5</th>-->
+          <!--<th scope="col">L 6</th>-->
+          <!--<th scope="col">L 7</th>-->
+          <!--<th scope="col">L 8</th>-->
+          <!--<th scope="col">L 9</th>-->
+          <!--<th scope="col">L 10</th>-->
+          <!--</tr>-->
+          <!--</thead>-->
+          <!--<tr>-->
+          <!--<th class="spellDataName">{{spell.name | castleCase}}</th>-->
+          <!--<td *ngFor="let data of getSpellData(spell.name)">{{data}}</td>-->
+          <!--</tr>-->
+          <!--</table>-->
         </div>
       </div>
     </div>
