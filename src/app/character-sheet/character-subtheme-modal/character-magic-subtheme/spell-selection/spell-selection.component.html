@@ -38,12 +38,16 @@
         <div class="card-text spellWell" *ngIf="isSpellOpen(spell)">
           <div class="px-2">
             <label for="keywords" class="font-weight-bold">Keywords</label>
-            <span id="keywords">{{spell.damageKeywords}}</span>
+            <span id="keywords">{{spell.damageKeyword}}</span>
             <span id="otherKeywords" *ngFor="let keyword of spell.spellKeywords">,{{keyword}}</span>
           </div>
           <div class="px-2">
             <label for="defenseType" class="font-weight-bold">Defense Type</label>
             <span id="defenseType" *ngFor="let defense of spell.defenseType let index=index">{{defense}}<span *ngIf="index < spell.defenseType.length-1">/</span></span>
+          </div>
+          <div class="px-2">
+            <label for="aoe" class="font-weight-bold">Area of Effect</label>
+            <span id="aoe">{{getAOEString(spell)}}</span>
           </div>
           <!--<table id="{{spell.name}}Table" *ngIf="!!getSpellData(spell.name)" class="table table-bordered">-->
           <!--<thead>-->

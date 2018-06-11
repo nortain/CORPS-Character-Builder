@@ -111,7 +111,7 @@ export function mockSpell(): Spell {
     defenseType: [AllDefenseType.Active],
     spellType: SpellType.DirectAttack,
     spellKeywords: [SpellKeywords.Manipulate],
-    damageKeywords: SpellDamageKeyword.Wild,
+    damageKeyword: SpellDamageKeyword.Wild,
     areaOfEffect: mockAreaOfEffect(),
     castAction: ActionType.Standard,
     duration: [DurationType.Immediate],

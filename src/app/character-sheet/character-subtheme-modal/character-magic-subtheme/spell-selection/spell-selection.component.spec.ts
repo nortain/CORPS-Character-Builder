@@ -8,8 +8,9 @@ import {SharedModule} from "../../../../shared/shared.module";
 import {NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {NgbModalStack} from "@ng-bootstrap/ng-bootstrap/modal/modal-stack";
 import {SubthemeType} from "../../../../shared/theme-points/subthemes/subtheme-types.enum";
+import {By} from "@angular/platform-browser";
 
-describe('SpellSelectionComponent', () => {
+fdescribe('SpellSelectionComponent', () => {
   let component: SpellSelectionComponent;
   let fixture: ComponentFixture<SpellSelectionComponent>;
 
@@ -72,5 +73,49 @@ describe('SpellSelectionComponent', () => {
     expect(component.getSpellData()[0]).toEqual(mockSpell());
   });
 
+  it('should be able to display a spells name', () => {
+    spyOn(component, "getMagicText").and.returnValue({name: "awesome", powers: [mockSpell()]});
+    fixture.detectChanges();
+    const name = fixture.debugElement.query(By.css(".name"));
+    expect(name.nativeElement.innerText.trim()).toBe(mockSpell().name + " (Direct Attack)");
+  });
+
+  it('should be able to display a spells keywords', () => {
+    spyOn(component, "getMagicText").and.returnValue([mockSpell()]);
+    component.openSpell(mockSpell());
+    fixture.detectChanges();
+    const keywords = fixture.debugElement.query(By.css("#keywords"));
+    expect(keywords.nativeElement.innerText).toBe(mockSpell().damageKeyword);
+  });
+
+
+  describe('', function () {
+
+
+    /*Same setup as above only now we open the spell and mock out the data coming back*/
+    beforeEach(() => {
+      fixture = TestBed.createComponent(SpellSelectionComponent);
+      component = fixture.componentInstance;
+      component.subtheme = mockSubtheme(SubthemeType.Magent, ThemeStrength.Minor);
+      component.generalThemePoint = ThemeStrength.None;
+      component.numberOfSpellsToSelect = 1;
+      component.propertyType = SpellSelectionType.Spells;
+      component.selectionDisplayToggle = true;
+      spyOn(component, "getMagicText").and.returnValue([mockSpell()]);
+      component.openSpell(mockSpell());
+      fixture.detectChanges();
+    });
+
+    it('should be able to show defense type', () => {
+      const defenseType = fixture.debugElement.query(By.css("#defenseType"));
+      expect(defenseType.nativeElement.innerText).toBe(mockSpell().defenseType[0]);
+    });
+
+    it('should be able to show area of effect', () => {
+      const result = "Zone 2 in 10";
+      const aoe = fixture.debugElement.query(By.css("#aoe"));
+      expect(aoe.nativeElement.innerText).toBe(result);
+    });
+  });
 
 });

@@ -1,5 +1,5 @@
 import {Spell} from "../../spells/spell";
-import {PhysicalDefenseType} from "../../character/physical-defense/physical-defense-type.enum";
+import {AllDefenseType, PhysicalDefenseType} from "../../character/physical-defense/physical-defense-type.enum";
 import {SpellKeywords} from "../../spells/spell-keywords.enum";
 import {AreaOfEffect} from "../../area-of-effect/area-of-effect";
 import {AreaOfEffectTypes} from "../../area-of-effect/area-of-effect-types.enum";
@@ -15,12 +15,11 @@ import {SpellDamageKeyword} from "../../spells/enums/spell-damage-keyword.enum";
 export function MagentSpellList(): Spell[] {
   return [
     {
-      ...new Spell(),
       name: "Acid Fang",
-      defenseType: PhysicalDefenseType.Missile,
+      defenseType: [AllDefenseType.Missile],
       spellType: SpellType.WeaponAttack,
       spellKeywords: [SpellKeywords.Weapon],
-      damageKeywords: SpellDamageKeyword.Acid,
+      damageKeyword: SpellDamageKeyword.Acid,
       areaOfEffect: {
         numberOfTargets: 1,
         range: 1,
@@ -42,7 +41,7 @@ export function MagentSpellList(): Spell[] {
         }
       ]
     }
-  ];
+  ] as Spell[];
 }
 
 export function SpellWardenSpellList(): Spell[] {

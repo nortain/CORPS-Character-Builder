@@ -19,7 +19,7 @@ export class Spell {
   defenseType: AllDefenseType[];
   spellType: SpellType;
   spellKeywords: SpellKeywords[];
-  damageKeywords: SpellDamageKeyword;
+  damageKeyword: SpellDamageKeyword;
   areaOfEffect: AreaOfEffect;
   castAction: ActionType;
   duration: DurationType[];

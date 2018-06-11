@@ -20,7 +20,7 @@ export function ClericSpellList(): Spell[] {
     defenseType: [AllDefenseType.Missile],
     spellType: SpellType.DirectEffect,
     spellKeywords: [SpellKeywords.Concentration],
-    damageKeywords: SpellDamageKeyword.Wild,
+    damageKeyword: SpellDamageKeyword.Wild,
     areaOfEffect: {
       numberOfTargets: 1,
       range: 1,
@@ -59,7 +59,7 @@ export function DruidSpellList(): Spell[] {
     defenseType: [AllDefenseType.Missile],
     spellType: SpellType.DirectEffect,
     spellKeywords: [SpellKeywords.Concentration],
-    damageKeywords: SpellDamageKeyword.Wild,
+    damageKeyword: SpellDamageKeyword.Wild,
     areaOfEffect: {
       numberOfTargets: 1,
       range: 1,
@@ -98,7 +98,7 @@ export function AssassinSpellList(): Spell[] {
     defenseType: [AllDefenseType.Missile],
     spellType: SpellType.DirectEffect,
     spellKeywords: [SpellKeywords.Concentration],
-    damageKeywords: SpellDamageKeyword.Wild,
+    damageKeyword: SpellDamageKeyword.Wild,
     areaOfEffect: {
       numberOfTargets: 1,
       range: 1,
@@ -137,7 +137,7 @@ export function WarriorMageSpellList(): Spell[] {
     defenseType: [AllDefenseType.Missile],
     spellType: SpellType.DirectEffect,
     spellKeywords: [SpellKeywords.Concentration],
-    damageKeywords: SpellDamageKeyword.Wild,
+    damageKeyword: SpellDamageKeyword.Wild,
     areaOfEffect: {
       numberOfTargets: 1,
       range: 1,
