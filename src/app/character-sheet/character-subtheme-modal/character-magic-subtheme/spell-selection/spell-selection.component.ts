@@ -6,6 +6,7 @@ import {Spell} from "../../../../shared/spells/spell";
 import {Feature, SpecialPower, SUBTHEME_BONUS} from "../../../../shared/constants/constants";
 import {ActionType} from "../../../../shared/action/action-type.enum";
 import {AreaOfEffectService} from "../../../../shared/area-of-effect/area-of-effect.service";
+import {ActionService} from "../../../../shared/action/action.service";
 
 /**
  * This component is used to select powers or spells for the character
@@ -61,7 +62,7 @@ export class SpellSelectionComponent implements OnInit, OnChanges {
   openSpells: Spell[];
   actionType = ActionType;
 
-  constructor(private aoeService: AreaOfEffectService) {
+  constructor(private aoeService: AreaOfEffectService, private actionService: ActionService) {
     this.selectionDisplayToggle = false;
     this.resetSpellSelection();
   }
@@ -122,6 +123,10 @@ export class SpellSelectionComponent implements OnInit, OnChanges {
 
   isSpellSelected(spell: Spell) {
     return this.findIndexOfSpellByName(spell, this.selectedSpells) > -1;
+  }
+
+  getCastActionString(actionType) {
+    return this.actionService.getActionAsString(actionType);
   }
 
   getAOEString(spell: Spell) {

@@ -116,6 +116,11 @@ fdescribe('SpellSelectionComponent', () => {
       const aoe = fixture.debugElement.query(By.css("#aoe"));
       expect(aoe.nativeElement.innerText).toBe(result);
     });
+
+    it('should be able to show cast action', () => {
+      const castAction = fixture.debugElement.query(By.css("#castAction"));
+      expect(castAction.nativeElement.innerText).toBe("Standard");
+    });
   });
 
 });

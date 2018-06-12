@@ -9,6 +9,7 @@ import {SubthemePipe} from './theme-points/subthemes/subtheme.pipe';
 import {CastleCasePipe} from './pipes/castle-case.pipe';
 import {ConfirmationComponent} from './ui/confirmation/confirmation.component';
 import {AreaOfEffectService} from "./area-of-effect/area-of-effect.service";
+import {ActionService} from "./action/action.service";
 
 @NgModule({
   imports: [
@@ -18,7 +19,7 @@ import {AreaOfEffectService} from "./area-of-effect/area-of-effect.service";
     NgbDropdownModule
   ],
   declarations: [DropdownComponent, InputComponent, SubthemePipe, CastleCasePipe, ConfirmationComponent],
-  providers: [AttributeService, AreaOfEffectService],
+  providers: [AttributeService, AreaOfEffectService, ActionService],
   exports: [CommonModule, FormsModule, DropdownComponent, InputComponent, SubthemePipe, CastleCasePipe, ConfirmationComponent],
   entryComponents: [ConfirmationComponent]
 })

@@ -49,6 +49,10 @@
             <label for="aoe" class="font-weight-bold">Area of Effect</label>
             <span id="aoe">{{getAOEString(spell)}}</span>
           </div>
+          <div class="px-2">
+            <label for="castAction" class="font-weight-bold">Cast Action</label>
+            <span id="castAction">{{getCastActionString(spell.castAction)}}</span>
+          </div>
           <!--<table id="{{spell.name}}Table" *ngIf="!!getSpellData(spell.name)" class="table table-bordered">-->
           <!--<thead>-->
           <!--<tr>-->
