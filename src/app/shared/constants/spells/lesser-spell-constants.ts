@@ -23,7 +23,7 @@ export function ClericSpellList(): Spell[] {
     damageKeyword: SpellDamageKeyword.Wild,
     areaOfEffect: {
       numberOfTargets: 1,
-      range: 1,
+      range: 10,
       type: AreaOfEffectTypes.Ranged
     },
     castAction: ActionType.Standard,

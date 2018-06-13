@@ -9,6 +9,8 @@ import {NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {NgbModalStack} from "@ng-bootstrap/ng-bootstrap/modal/modal-stack";
 import {SubthemeType} from "../../../../shared/theme-points/subthemes/subtheme-types.enum";
 import {By} from "@angular/platform-browser";
+import {AllDefenseType} from "../../../../shared/character/physical-defense/physical-defense-type.enum";
+import {Spell} from "../../../../shared/spells/spell";
 
 fdescribe('SpellSelectionComponent', () => {
   let component: SpellSelectionComponent;
@@ -84,8 +86,8 @@ fdescribe('SpellSelectionComponent', () => {
     spyOn(component, "getMagicText").and.returnValue([mockSpell()]);
     component.openSpell(mockSpell());
     fixture.detectChanges();
-    const keywords = fixture.debugElement.query(By.css("#keywords"));
-    expect(keywords.nativeElement.innerText).toBe(mockSpell().damageKeyword);
+    const keywords = fixture.debugElement.query(By.css("#keywordsHolder"));
+    expect(keywords.nativeElement.innerText).toBe("Keywords:" + mockSpell().damageKeyword + ", " + mockSpell().spellKeywords[0]);
   });
 
 
@@ -107,8 +109,8 @@ fdescribe('SpellSelectionComponent', () => {
     });
 
     it('should be able to show defense type', () => {
-      const defenseType = fixture.debugElement.query(By.css("#defenseType"));
-      expect(defenseType.nativeElement.innerText).toBe(mockSpell().defenseType[0]);
+      const defenseType = fixture.debugElement.query(By.css("#defenseTypeHolder"));
+      expect(defenseType.nativeElement.innerText).toBe("Defense Type: " + mockSpell().defenseType[0] + "/" + mockSpell().defenseType[1]);
     });
 
     it('should be able to show area of effect', () => {
@@ -120,6 +122,48 @@ fdescribe('SpellSelectionComponent', () => {
     it('should be able to show cast action', () => {
       const castAction = fixture.debugElement.query(By.css("#castAction"));
       expect(castAction.nativeElement.innerText).toBe("Standard");
+    });
+
+    it('should be able to display duration', () => {
+      const duration = fixture.debugElement.query(By.css("#durationHolder"));
+      expect(duration.nativeElement.innerText).toBe("Duration: Immediate/Encounter");
+    });
+
+  });
+
+  describe('testing that fields are hidden when empty', function () {
+
+    beforeEach(() => {
+      fixture = TestBed.createComponent(SpellSelectionComponent);
+      component = fixture.componentInstance;
+      component.subtheme = mockSubtheme(SubthemeType.Magent, ThemeStrength.Minor);
+      component.generalThemePoint = ThemeStrength.None;
+      component.numberOfSpellsToSelect = 1;
+      component.propertyType = SpellSelectionType.Spells;
+      component.selectionDisplayToggle = true;
+      spyOn(component, "getMagicText").and.returnValue([
+        {
+          name: "fireball",
+        }
+      ]);
+      component.openSpell({
+        name: "fireball"
+      } as Spell);
+      fixture.detectChanges();
+    });
+
+    it('shouldnt display fields if they arent present', () => {
+      const keywords = fixture.debugElement.queryAll(By.css("#keywordsHolder"));
+      const defenseType = fixture.debugElement.queryAll(By.css("#defenseTypeHolder"));
+      const aoe = fixture.debugElement.queryAll(By.css("#aoeHolder"));
+      const castAction = fixture.debugElement.queryAll(By.css("#castActionHolder"));
+      const duration = fixture.debugElement.queryAll(By.css("#durationHolder"));
+
+      expect(keywords.length).toEqual(0, "keywords should be hidden");
+      expect(defenseType.length).toEqual(0, "defense type should be hidden");
+      expect(aoe.length).toEqual(0, "aoe should be hidden");
+      expect(castAction.length).toEqual(0, "cast action should be hidden");
+      expect(duration.length).toEqual(0, "duration should be hidden");
     });
   });
 

@@ -36,22 +36,29 @@
           </button>
         </div>
         <div class="card-text spellWell" *ngIf="isSpellOpen(spell)">
-          <div class="px-2">
-            <label for="keywords" class="font-weight-bold">Keywords</label>
-            <span id="keywords">{{spell.damageKeyword}}</span>
-            <span id="otherKeywords" *ngFor="let keyword of spell.spellKeywords">,{{keyword}}</span>
+          <div id="keywordsHolder" class="px-2"
+               *ngIf="spell.spellKeywords && spell.spellKeywords.length > 0 || spell.damageKeyword">
+            <label for="keywords" class="font-weight-bold">Keywords:</label>
+            <span id="keywords">{{spell.damageKeyword}}<span id="otherKeywords"
+                                                             *ngFor="let keyword of spell.spellKeywords">, {{keyword}}</span></span>
           </div>
-          <div class="px-2">
-            <label for="defenseType" class="font-weight-bold">Defense Type</label>
-            <span id="defenseType" *ngFor="let defense of spell.defenseType let index=index">{{defense}}<span *ngIf="index < spell.defenseType.length-1">/</span></span>
+          <div id="defenseTypeHolder" class="px-2" *ngIf="!!spell.defenseType && spell.defenseType.length > 0">
+            <label for="defenseType" class="font-weight-bold">Defense Type:</label>
+            <span id="defenseType" *ngFor="let defense of spell.defenseType; let index=index">{{defense.toString().trim()}}<span
+              *ngIf="index < spell.defenseType.length - 1">/</span></span>
           </div>
-          <div class="px-2">
-            <label for="aoe" class="font-weight-bold">Area of Effect</label>
+          <div id="aoeHolder" class="px-2" *ngIf="!!spell.areaOfEffect">
+            <label for="aoe" class="font-weight-bold">Area of Effect:</label>
             <span id="aoe">{{getAOEString(spell)}}</span>
           </div>
-          <div class="px-2">
-            <label for="castAction" class="font-weight-bold">Cast Action</label>
+          <div id="castActionHolder" class="px-2" *ngIf="!!spell.castAction">
+            <label for="castAction" class="font-weight-bold">Cast Action:</label>
             <span id="castAction">{{getCastActionString(spell.castAction)}}</span>
+          </div>
+          <div id="durationHolder" class="px-2" *ngIf="!!spell.duration && spell.duration.length > 0">
+            <label for="duration" class="font-weight-bold">Duration:</label>
+            <span id="duration" *ngFor="let duration of spell.duration; let index=index">{{duration}}<span
+              *ngIf="index < spell.duration.length - 1">/</span></span>
           </div>
           <!--<table id="{{spell.name}}Table" *ngIf="!!getSpellData(spell.name)" class="table table-bordered">-->
           <!--<thead>-->

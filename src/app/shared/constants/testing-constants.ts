@@ -108,13 +108,13 @@ export function mockSpell(): Spell {
   return {
     name: "Fireball",
     sphereName: CasterType.Archmage,
-    defenseType: [AllDefenseType.Active],
+    defenseType: [AllDefenseType.Active, AllDefenseType.Passive],
     spellType: SpellType.DirectAttack,
     spellKeywords: [SpellKeywords.Manipulate],
     damageKeyword: SpellDamageKeyword.Wild,
     areaOfEffect: mockAreaOfEffect(),
     castAction: ActionType.Standard,
-    duration: [DurationType.Immediate],
+    duration: [DurationType.Immediate, DurationType.Encounter],
     critRoll: new Dice(1, DiceSize.d6, 1),
     special: [
       "This can only be cast once per encounter"
