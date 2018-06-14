@@ -10,7 +10,7 @@ import {NgbModalStack} from "@ng-bootstrap/ng-bootstrap/modal/modal-stack";
 import {SubthemeType} from "../../../../shared/theme-points/subthemes/subtheme-types.enum";
 import {By} from "@angular/platform-browser";
 import {AllDefenseType} from "../../../../shared/character/physical-defense/physical-defense-type.enum";
-import {Spell} from "../../../../shared/spells/spell";
+import {Spell, SpellEffectType} from "../../../../shared/spells/spell";
 
 fdescribe('SpellSelectionComponent', () => {
   let component: SpellSelectionComponent;
@@ -87,7 +87,7 @@ fdescribe('SpellSelectionComponent', () => {
     component.openSpell(mockSpell());
     fixture.detectChanges();
     const keywords = fixture.debugElement.query(By.css("#keywordsHolder"));
-    expect(keywords.nativeElement.innerText).toBe("Keywords:" + mockSpell().damageKeyword + ", " + mockSpell().spellKeywords[0]);
+    expect(keywords.nativeElement.innerText).toBe("Keywords: " + mockSpell().damageKeyword + ", " + mockSpell().spellKeywords[0]);
   });
 
 
@@ -129,6 +129,26 @@ fdescribe('SpellSelectionComponent', () => {
       expect(duration.nativeElement.innerText).toBe("Duration: Immediate/Encounter");
     });
 
+    it('should be able to display crit die as a roll', () => {
+      const critDie = fixture.debugElement.query(By.css("#critDie"));
+      expect(critDie.nativeElement.innerText).toBe("1d6+1");
+    });
+
+    it('should be able to display spell effect texts', () => {
+      const labelResults = ["Spell Effect", "On Hit", "Bounce",  "On Miss"];
+      const textResults = [mockSpell().spellEffectText[0].text, mockSpell().spellEffectText[1].text, mockSpell().spellEffectText[2].text, mockSpell().spellEffectText[3].text];
+      for (let i = 0; i < 4; i++) {
+        const selector = ".spellEffect" + i;
+        const labelSelector = ".label" + i;
+        const label = fixture.debugElement.query(By.css(labelSelector));
+        const spellText = fixture.debugElement.query(By.css(selector));
+        expect(label.nativeElement.innerText).toBe(labelResults[i] + ":");
+        expect(spellText.nativeElement.innerText).toBe(textResults[i]);
+
+      }
+
+    });
+
   });
 
   describe('testing that fields are hidden when empty', function () {
@@ -158,12 +178,14 @@ fdescribe('SpellSelectionComponent', () => {
       const aoe = fixture.debugElement.queryAll(By.css("#aoeHolder"));
       const castAction = fixture.debugElement.queryAll(By.css("#castActionHolder"));
       const duration = fixture.debugElement.queryAll(By.css("#durationHolder"));
+      const critDie = fixture.debugElement.queryAll(By.css("#critDie"));
 
       expect(keywords.length).toEqual(0, "keywords should be hidden");
       expect(defenseType.length).toEqual(0, "defense type should be hidden");
       expect(aoe.length).toEqual(0, "aoe should be hidden");
       expect(castAction.length).toEqual(0, "cast action should be hidden");
       expect(duration.length).toEqual(0, "duration should be hidden");
+      expect(critDie.length).toEqual(0, "crit die should be hidden");
     });
   });
 

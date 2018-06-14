@@ -13,7 +13,7 @@ import {SpellType} from "../spells/enums/spell-type.enum";
 import {SpellKeywords} from "../spells/spell-keywords.enum";
 import {SpellDamageKeyword} from "../spells/enums/spell-damage-keyword.enum";
 import {AreaOfEffect} from "../area-of-effect/area-of-effect";
-import {Spell} from "../spells/spell";
+import {Spell, SpellEffectType} from "../spells/spell";
 import {ActionType} from "../action/action-type.enum";
 import {DurationType} from "../duration/duration-type.enum";
 import {Dice} from "../character/dice/dice";
@@ -120,8 +120,25 @@ export function mockSpell(): Spell {
       "This can only be cast once per encounter"
     ],
     minion: new Minion(),
-    spellEffectText: "You launch a big ass ball of fiery death upon your foes",
-    afterEffect: "Everyone parties",
+    spellEffectText: [
+      {
+        type: SpellEffectType.SpellEffect,
+        text: "You spit on the ground."
+      }, {
+        type: SpellEffectType.OnHit,
+        text: "You launch a big ass ball of fiery death towards your enemies."
+      }, {
+        type: SpellEffectType.Bounce,
+        text: "When you kill someone with this attack you can bounce it."
+      }, {
+        type: SpellEffectType.OnMiss,
+        text: "Even if you miss you rock their face in."
+      }, {
+        type: SpellEffectType.AfterEffect,
+        text: "This bitch keeps going like the energizer bunny."
+      }
+
+    ],
     spellChart: [
       mockSpellChart(),
       mockSpellChart()

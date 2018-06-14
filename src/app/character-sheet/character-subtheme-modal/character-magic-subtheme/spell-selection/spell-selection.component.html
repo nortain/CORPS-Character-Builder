@@ -36,9 +36,11 @@
           </button>
         </div>
         <div class="card-text spellWell" *ngIf="isSpellOpen(spell)">
-          <div id="keywordsHolder" class="px-2"
-               *ngIf="spell.spellKeywords && spell.spellKeywords.length > 0 || spell.damageKeyword">
-            <label for="keywords" class="font-weight-bold">Keywords:</label>
+          <div id="keywordsHolder"
+               class="px-2"
+               *ngIf="spell.spellKeywords && spell.spellKeywords.length > 0 || spell.damageKeyword"
+          >
+            <label for="keywords" class="font-weight-bold">Keywords: </label>
             <span id="keywords">{{spell.damageKeyword}}<span id="otherKeywords"
                                                              *ngFor="let keyword of spell.spellKeywords">, {{keyword}}</span></span>
           </div>
@@ -59,6 +61,17 @@
             <label for="duration" class="font-weight-bold">Duration:</label>
             <span id="duration" *ngFor="let duration of spell.duration; let index=index">{{duration}}<span
               *ngIf="index < spell.duration.length - 1">/</span></span>
+          </div>
+          <div id="critDieHolder" class="px-2" *ngIf="!!spell.critRoll">
+            <label for="critDie" class="font-weight-bold">Crit Die:</label>
+            <span id="critDie">{{spell.critRoll.printRoll()}}</span>
+          </div>
+          <div id="spellEffectHolder"
+               class="px-2"
+               *ngFor="let effect of spell.spellEffectText; let index=index"
+          >
+            <label class="font-weight-bold label{{index}}">{{effect.type | castleCase}}:</label><br>
+            <span class="spellEffect{{index}}">{{effect.text}}</span>
           </div>
           <!--<table id="{{spell.name}}Table" *ngIf="!!getSpellData(spell.name)" class="table table-bordered">-->
           <!--<thead>-->

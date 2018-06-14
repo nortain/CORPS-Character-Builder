@@ -12,6 +12,20 @@ import {SpellType} from "./enums/spell-type.enum";
 import {SpellChart} from "./spell-chart";
 import {CasterType} from "../theme-points/subthemes/subtheme-types.enum";
 
+export enum SpellEffectType {
+  OnHit = "OnHit",
+  OnMiss = "OnMiss",
+  Bounce = "Bounce",
+  SpellEffect = "SpellEffect",
+  AfterEffect = "AfterEffect"
+}
+
+export interface SpellEffect {
+  type?: SpellEffectType;
+  text?: string;
+  spellChart?: SpellChart[];
+}
+
 
 export class Spell {
   name: string;
@@ -26,7 +40,6 @@ export class Spell {
   critRoll: Dice;
   special: string[];
   minion: Minion;
-  spellEffectText: string;
-  afterEffect: string;
+  spellEffectText: SpellEffect[]; // TODO move spell chart array into the spell effect interface
   spellChart: SpellChart[];
 }
