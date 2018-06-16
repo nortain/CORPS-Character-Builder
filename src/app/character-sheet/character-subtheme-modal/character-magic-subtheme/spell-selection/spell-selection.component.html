@@ -72,28 +72,17 @@
           >
             <label class="font-weight-bold label{{index}}">{{effect.type | castleCase}}:</label><br>
             <span class="spellEffect{{index}}">{{effect.text}}</span>
+            <table id="{{effect.type+index}}Table"
+                   class="table table-bordered"
+                   *ngFor="let chart of effect.spellChart; let chartIndex = index">
+              <tr>
+                <td *ngIf="chartIndex % 5 === 0">Level {{chartIndex+0}}-{{chartIndex+5}}<br>{{chart.rowName}}</td>
+                <td *ngIf="chartIndex % 6 === 1">{{getSpellRoll(chart.minValue, chart.maxValue, chart.dieSize, chart.levelRange)}}</td>
+              </tr>
+            </table>
           </div>
-          <!--<table id="{{spell.name}}Table" *ngIf="!!getSpellData(spell.name)" class="table table-bordered">-->
-          <!--<thead>-->
-          <!--<tr>-->
-          <!--<th scope="col">Bonus</th>-->
-          <!--<th scope="col">L 1</th>-->
-          <!--<th scope="col">L 2</th>-->
-          <!--<th scope="col">L 3</th>-->
-          <!--<th scope="col">L 4</th>-->
-          <!--<th scope="col">L 5</th>-->
-          <!--<th scope="col">L 6</th>-->
-          <!--<th scope="col">L 7</th>-->
-          <!--<th scope="col">L 8</th>-->
-          <!--<th scope="col">L 9</th>-->
-          <!--<th scope="col">L 10</th>-->
-          <!--</tr>-->
-          <!--</thead>-->
-          <!--<tr>-->
-          <!--<th class="spellDataName">{{spell.name | castleCase}}</th>-->
-          <!--<td *ngFor="let data of getSpellData(spell.name)">{{data}}</td>-->
-          <!--</tr>-->
-          <!--</table>-->
+
+
         </div>
       </div>
     </div>

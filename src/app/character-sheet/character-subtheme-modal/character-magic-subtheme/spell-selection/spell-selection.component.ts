@@ -7,6 +7,9 @@ import {Feature, SpecialPower, SUBTHEME_BONUS} from "../../../../shared/constant
 import {ActionType} from "../../../../shared/action/action-type.enum";
 import {AreaOfEffectService} from "../../../../shared/area-of-effect/area-of-effect.service";
 import {ActionService} from "../../../../shared/action/action.service";
+import {Dice} from "../../../../shared/character/dice/dice";
+import {DiceSize} from "../../../../shared/character/dice/dice-size.enum";
+import {LevelRange} from "../../../../shared/spells/enums/level-range.enum";
 
 /**
  * This component is used to select powers or spells for the character
@@ -164,6 +167,11 @@ export class SpellSelectionComponent implements OnInit, OnChanges {
       result = [spellsArray];
     }
     return result;
+  }
+
+  getSpellRoll(minValue: number, maxValue: number, dieSize: DiceSize, levelRange: LevelRange): string {
+    const spellDie = new Dice(numOfDice, sizeOfDice, modifier);
+    return spellDie.printRoll();
   }
 
   private findIndexOfSpellByName(element: Spell, array: Spell[]): number {
