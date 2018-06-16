@@ -1,4 +1,4 @@
-import {Spell} from "../../spells/spell";
+import {Spell, SpellEffectType} from "../../spells/spell";
 import {AllDefenseType, PhysicalDefenseType} from "../../character/physical-defense/physical-defense-type.enum";
 import {SpellKeywords} from "../../spells/spell-keywords.enum";
 import {AreaOfEffect} from "../../area-of-effect/area-of-effect";
@@ -27,19 +27,24 @@ export function MagentSpellList(): Spell[] {
       },
       castAction: ActionType.Standard,
       duration: [DurationType.Immediate],
-      spellEffectText: "Make a basic attack.  Regardless of your weapon type this attack is resolved as a ranged 1 in 10 attack. \n" +
-      "On hit: Deal normal weapon damage and add additional acid damage equal to the level chart below.\n",
-      special: ["At the time of picking this spell you can choose for this attack to have an AoE of either Melee 1 in 1 or Weapon Range 1 in Range."],
-      spellChart: [
+      spellEffectText: [
         {
-          ...new SpellChart(),
-          rowName: "Damage",
-          levelRange: LevelRange.TEN,
-          dieSize: DiceSize.None,
-          minValue: 2.22,
-          maxValue: 6.65
+          type: SpellEffectType.SpellEffect,
+          text: "Make a basic attack.  Regardless of your weapon type this attack is resolved as a ranged 1 in 10 attack. \n" +
+          "On hit: Deal normal weapon damage and add additional acid damage equal to the level chart below.\n",
+          spellChart: [
+            {
+              ...new SpellChart(),
+              rowName: "Damage",
+              levelRange: LevelRange.TEN,
+              dieSize: DiceSize.None,
+              minValue: 2.22,
+              maxValue: 6.65
+            }
+          ]
         }
-      ]
+      ],
+      special: ["At the time of picking this spell you can choose for this attack to have an AoE of either Melee 1 in 1 or Weapon Range 1 in Range."],
     }
   ] as Spell[];
 }

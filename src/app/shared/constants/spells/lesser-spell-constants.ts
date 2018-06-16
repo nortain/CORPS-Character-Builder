@@ -32,28 +32,30 @@ export function ClericSpellList(): Spell[] {
     spellEffectText: [
       {
         type: SpellEffectType.OnHit,
-        text: "Target takes wild damage equal to the attack table below + magical attack bonus.  The target also gains the devotion effect that lasts so long as you maintain concentration.  At the start of your next turn after you cast this spell you must spend your move action to maintain concentration or this spell’s effect is removed.  You may only have 1 concentration effect active at a time."
+        text: "Target takes wild damage equal to the attack table below + magical attack bonus.  The target also gains the devotion effect that lasts so long as you maintain concentration.  At the start of your next turn after you cast this spell you must spend your move action to maintain concentration or this spell’s effect is removed.  You may only have 1 concentration effect active at a time.",
+        spellChart: [
+          {
+            ...new SpellChart(),
+            rowName: SpellDamageKeyword.Wild,
+            levelRange: LevelRange.FIFTHTEEN,
+            dieSize: DiceSize.d8,
+            minValue: 13.33,
+            maxValue: 53.74
+          }
+        ]
       }, {
         type: SpellEffectType.AfterEffect,
-        text: "Each time you pay the concentration cost of this spell the target with the devotion effect takes wild damage equal to the concentration table’s damage value below + global damage bonus"
-      }
-    ],
-    spellChart: [
-      {
-        ...new SpellChart(),
-        rowName: SpellDamageKeyword.Wild,
-        levelRange: LevelRange.FIFTHTEEN,
-        dieSize: DiceSize.d8,
-        minValue: 13.33,
-        maxValue: 53.74
-      },
-      {
-        ...new SpellChart(),
-        rowName: SpellKeywords.Concentration,
-        levelRange: LevelRange.FIFTHTEEN,
-        dieSize: DiceSize.None,
-        minValue: 10.38,
-        maxValue: 34.81
+        text: "Each time you pay the concentration cost of this spell the target with the devotion effect takes wild damage equal to the concentration table’s damage value below + global damage bonus",
+        spellChart: [
+          {
+            ...new SpellChart(),
+            rowName: SpellKeywords.Concentration,
+            levelRange: LevelRange.FIFTHTEEN,
+            dieSize: DiceSize.None,
+            minValue: 10.38,
+            maxValue: 34.81
+          }
+        ]
       }
     ]
   }];
@@ -77,29 +79,27 @@ export function DruidSpellList(): Spell[] {
     duration: [DurationType.Immediate, DurationType.Concentration],
     spellEffectText: [{
       type: SpellEffectType.OnHit,
-      text: "Target takes wild damage equal to the attack table below + magical attack bonus.  The target also gains the devotion effect that lasts so long as you maintain concentration.  At the start of your next turn after you cast this spell you must spend your move action to maintain concentration or this spell’s effect is removed.  You may only have 1 concentration effect active at a time."
+      text: "Target takes wild damage equal to the attack table below + magical attack bonus.  The target also gains the devotion effect that lasts so long as you maintain concentration.  At the start of your next turn after you cast this spell you must spend your move action to maintain concentration or this spell’s effect is removed.  You may only have 1 concentration effect active at a time.",
+      spellChart: [{
+        ...new SpellChart(),
+        rowName: SpellDamageKeyword.Wild,
+        levelRange: LevelRange.FIFTHTEEN,
+        dieSize: DiceSize.d8,
+        minValue: 13.33,
+        maxValue: 53.74
+      },
+        {
+          ...new SpellChart(),
+          rowName: SpellKeywords.Concentration,
+          levelRange: LevelRange.FIFTHTEEN,
+          dieSize: DiceSize.None,
+          minValue: 10.38,
+          maxValue: 34.81
+        }]
     }, {
       type: SpellEffectType.AfterEffect,
       text: "Each time you pay the concentration cost of this spell the target with the devotion effect takes wild damage equal to the concentration table’s damage value below + global damage bonus",
     }],
-    spellChart: [{
-      ...new SpellChart(),
-      rowName: SpellDamageKeyword.Wild,
-      levelRange: LevelRange.FIFTHTEEN,
-      dieSize: DiceSize.d8,
-      minValue: 13.33,
-      maxValue: 53.74
-    },
-      {
-        ...new SpellChart(),
-        rowName: SpellKeywords.Concentration,
-        levelRange: LevelRange.FIFTHTEEN,
-        dieSize: DiceSize.None,
-        minValue: 10.38,
-        maxValue: 34.81
-      }]
-
-
   }];
 }
 
@@ -121,29 +121,27 @@ export function AssassinSpellList(): Spell[] {
     duration: [DurationType.Immediate, DurationType.Concentration],
     spellEffectText: [{
       type: SpellEffectType.OnHit,
-      text: "Target takes wild damage equal to the attack table below + magical attack bonus.  The target also gains the devotion effect that lasts so long as you maintain concentration.  At the start of your next turn after you cast this spell you must spend your move action to maintain concentration or this spell’s effect is removed.  You may only have 1 concentration effect active at a time."
+      text: "Target takes wild damage equal to the attack table below + magical attack bonus.  The target also gains the devotion effect that lasts so long as you maintain concentration.  At the start of your next turn after you cast this spell you must spend your move action to maintain concentration or this spell’s effect is removed.  You may only have 1 concentration effect active at a time.",
+      spellChart: [{
+        ...new SpellChart(),
+        rowName: SpellDamageKeyword.Wild,
+        levelRange: LevelRange.FIFTHTEEN,
+        dieSize: DiceSize.d8,
+        minValue: 13.33,
+        maxValue: 53.74
+      },
+        {
+          ...new SpellChart(),
+          rowName: SpellKeywords.Concentration,
+          levelRange: LevelRange.FIFTHTEEN,
+          dieSize: DiceSize.None,
+          minValue: 10.38,
+          maxValue: 34.81
+        }]
     }, {
       type: SpellEffectType.AfterEffect,
       text: "Each time you pay the concentration cost of this spell the target with the devotion effect takes wild damage equal to the concentration table’s damage value below + global damage bonus",
-    }],
-    spellChart: [{
-      ...new SpellChart(),
-      rowName: SpellDamageKeyword.Wild,
-      levelRange: LevelRange.FIFTHTEEN,
-      dieSize: DiceSize.d8,
-      minValue: 13.33,
-      maxValue: 53.74
-    },
-      {
-        ...new SpellChart(),
-        rowName: SpellKeywords.Concentration,
-        levelRange: LevelRange.FIFTHTEEN,
-        dieSize: DiceSize.None,
-        minValue: 10.38,
-        maxValue: 34.81
-      }]
-
-
+    }]
   }];
 }
 
@@ -165,28 +163,26 @@ export function WarriorMageSpellList(): Spell[] {
     duration: [DurationType.Immediate, DurationType.Concentration],
     spellEffectText: [{
       type: SpellEffectType.OnHit,
-      text: "Target takes wild damage equal to the attack table below + magical attack bonus.  The target also gains the devotion effect that lasts so long as you maintain concentration.  At the start of your next turn after you cast this spell you must spend your move action to maintain concentration or this spell’s effect is removed.  You may only have 1 concentration effect active at a time."
+      text: "Target takes wild damage equal to the attack table below + magical attack bonus.  The target also gains the devotion effect that lasts so long as you maintain concentration.  At the start of your next turn after you cast this spell you must spend your move action to maintain concentration or this spell’s effect is removed.  You may only have 1 concentration effect active at a time.",
+      spellChart: [{
+        ...new SpellChart(),
+        rowName: SpellDamageKeyword.Wild,
+        levelRange: LevelRange.FIFTHTEEN,
+        dieSize: DiceSize.d8,
+        minValue: 13.33,
+        maxValue: 53.74
+      },
+        {
+          ...new SpellChart(),
+          rowName: SpellKeywords.Concentration,
+          levelRange: LevelRange.FIFTHTEEN,
+          dieSize: DiceSize.None,
+          minValue: 10.38,
+          maxValue: 34.81
+        }]
     }, {
       type: SpellEffectType.AfterEffect,
       text: "Each time you pay the concentration cost of this spell the target with the devotion effect takes wild damage equal to the concentration table’s damage value below + global damage bonus",
-    }],
-    spellChart: [{
-      ...new SpellChart(),
-      rowName: SpellDamageKeyword.Wild,
-      levelRange: LevelRange.FIFTHTEEN,
-      dieSize: DiceSize.d8,
-      minValue: 13.33,
-      maxValue: 53.74
-    },
-      {
-        ...new SpellChart(),
-        rowName: SpellKeywords.Concentration,
-        levelRange: LevelRange.FIFTHTEEN,
-        dieSize: DiceSize.None,
-        minValue: 10.38,
-        maxValue: 34.81
-      }]
-
-
+    }]
   }];
 }

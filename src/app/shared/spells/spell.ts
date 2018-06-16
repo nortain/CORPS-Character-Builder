@@ -30,16 +30,15 @@ export interface SpellEffect {
 export class Spell {
   name: string;
   sphereName: CasterType;
-  defenseType: AllDefenseType[];
-  spellType: SpellType;
-  spellKeywords: SpellKeywords[];
-  damageKeyword: SpellDamageKeyword;
-  areaOfEffect: AreaOfEffect;
-  castAction: ActionType;
-  duration: DurationType[];
-  critRoll: Dice;
-  special: string[];
-  minion: Minion;
-  spellEffectText: SpellEffect[]; // TODO move spell chart array into the spell effect interface
-  spellChart: SpellChart[];
+  defenseType?: AllDefenseType[];
+  spellType?: SpellType;
+  spellKeywords?: SpellKeywords[];
+  damageKeyword?: SpellDamageKeyword;
+  areaOfEffect?: AreaOfEffect;
+  castAction?: ActionType;
+  duration?: DurationType[];
+  critRoll?: Dice;
+  special?: string[];
+  minion?: Minion;
+  spellEffectText?: SpellEffect[]; // TODO move spell chart array into the spell effect interface
 }
