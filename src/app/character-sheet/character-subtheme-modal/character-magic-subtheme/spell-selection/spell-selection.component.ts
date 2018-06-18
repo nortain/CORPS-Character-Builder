@@ -10,6 +10,7 @@ import {ActionService} from "../../../../shared/action/action.service";
 import {Dice} from "../../../../shared/character/dice/dice";
 import {DiceSize} from "../../../../shared/character/dice/dice-size.enum";
 import {LevelRange} from "../../../../shared/spells/enums/level-range.enum";
+import {DiceService} from "../../../../shared/character/dice/dice.service";
 
 /**
  * This component is used to select powers or spells for the character
@@ -65,7 +66,7 @@ export class SpellSelectionComponent implements OnInit, OnChanges {
   openSpells: Spell[];
   actionType = ActionType;
 
-  constructor(private aoeService: AreaOfEffectService, private actionService: ActionService) {
+  constructor(private aoeService: AreaOfEffectService, private actionService: ActionService, private diceService: DiceService) {
     this.selectionDisplayToggle = false;
     this.resetSpellSelection();
   }
@@ -170,7 +171,7 @@ export class SpellSelectionComponent implements OnInit, OnChanges {
   }
 
   getSpellRoll(minValue: number, maxValue: number, dieSize: DiceSize, levelRange: LevelRange): string {
-    const spellDie = new Dice(numOfDice, sizeOfDice, modifier);
+    const spellDie = new Dice();
     return spellDie.printRoll();
   }
 
