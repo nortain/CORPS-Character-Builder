@@ -10,7 +10,7 @@ import {ThemeStrength} from "../theme-points/theme-strength.enum";
 import {Subtheme} from "../theme-points/subthemes/subtheme";
 import {CasterType, SubthemeType} from "../theme-points/subthemes/subtheme-types.enum";
 import {SpellType} from "../spells/enums/spell-type.enum";
-import {SpellKeywords} from "../spells/spell-keywords.enum";
+import {SpellKeyword} from "../spells/enums/spell-keywords.enum";
 import {SpellDamageKeyword} from "../spells/enums/spell-damage-keyword.enum";
 import {AreaOfEffect} from "../area-of-effect/area-of-effect";
 import {Spell, SpellEffectType} from "../spells/spell";
@@ -110,7 +110,7 @@ export function mockSpell(): Spell {
     sphereName: CasterType.Archmage,
     defenseType: [AllDefenseType.Active, AllDefenseType.Passive],
     spellType: SpellType.DirectAttack,
-    spellKeywords: [SpellKeywords.Manipulate],
+    spellKeywords: [SpellKeyword.Manipulate],
     damageKeyword: SpellDamageKeyword.Wild,
     areaOfEffect: mockAreaOfEffect(),
     castAction: ActionType.Standard,

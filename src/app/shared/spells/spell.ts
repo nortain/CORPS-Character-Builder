@@ -2,7 +2,7 @@ import {Dice} from "../character/dice/dice";
 import {MagicDefenseType} from "../character/magic-defense/magic-defense-type.enum";
 import {AllDefenseType, PhysicalDefenseType} from "../character/physical-defense/physical-defense-type.enum";
 
-import {SpellKeywords} from "./spell-keywords.enum";
+import {SpellKeyword} from "./enums/spell-keywords.enum";
 import {AreaOfEffect} from "../area-of-effect/area-of-effect";
 import {ActionType} from "../action/action-type.enum";
 import {DurationType} from "../duration/duration-type.enum";
@@ -32,7 +32,7 @@ export class Spell {
   sphereName: CasterType;
   defenseType?: AllDefenseType[];
   spellType?: SpellType;
-  spellKeywords?: SpellKeywords[];
+  spellKeywords?: SpellKeyword[];
   damageKeyword?: SpellDamageKeyword;
   areaOfEffect?: AreaOfEffect;
   castAction?: ActionType;

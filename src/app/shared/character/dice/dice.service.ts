@@ -1,9 +1,15 @@
 import {Injectable} from '@angular/core';
 import {DiceSize} from "./dice-size.enum";
 import {Dice} from "./dice";
+import {LevelRange} from "../../spells/enums/level-range.enum";
+import {DamageKeywordModifier} from "../../spells/damage-keyword-modifier";
+import {SpellDamageKeyword} from "../../spells/enums/spell-damage-keyword.enum";
+import {SpellKeyword} from "../../spells/enums/spell-keywords.enum";
 
 @Injectable()
 export class DiceService {
+
+  readonly minimumDamageModifier = .15;
 
   constructor() {
   }
@@ -74,6 +80,30 @@ export class DiceService {
     return Math.round(remainder % 1);
   }
 
-  // getMap
+  getArrayOfDice(diceSize: DiceSize, minDamage: number, maxDamage: number, levelRange: LevelRange, modifier = 0, damageKeyword: SpellDamageKeyword | SpellKeyword): Dice[] {
+    const damageModifier = new DamageKeywordModifier(damageKeyword);
+    const adjustedModifier = modifier + damageModifier.staticDieMod;
+    minDamage = this.getAdjustedValue(diceSize, minDamage, modifier, damageModifier, false);
+    maxDamage = this.getAdjustedValue(diceSize, maxDamage, modifier, damageModifier, true);
+    const average = (maxDamage - minDamage) / (levelRange - 1);
+    const diceArray: Dice[] = [this.getNumOfDice(diceSize, adjustedModifier, minDamage)];
+    for (let i = 1; i < levelRange; i++) {
+      const damageValue = (average * i) + minDamage;
+      diceArray.push(this.getNumOfDice(diceSize, adjustedModifier, damageValue));
+    }
+    return diceArray;
+  }
 
+
+  getAdjustedValue(diceSize: DiceSize, damageValue: number, adjustedModifier: number, damageModifier: DamageKeywordModifier, isMax: boolean): number {
+    let adjustedDamageValue;
+    const maxMinDamageModifier = isMax ? damageModifier.maxAdj : damageModifier.minAdj;
+    if (diceSize === DiceSize.None) {
+      adjustedDamageValue = Math.round(damageValue + maxMinDamageModifier - this.minimumDamageModifier);
+    } else {
+      const remainder = this.getRemainder(diceSize, adjustedModifier, damageValue);
+      adjustedDamageValue = Math.floor(damageValue + maxMinDamageModifier + remainder / 2);
+    }
+    return adjustedDamageValue;
+  }
 }

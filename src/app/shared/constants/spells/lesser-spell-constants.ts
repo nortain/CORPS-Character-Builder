@@ -1,6 +1,6 @@
 import {Spell, SpellEffectType} from "../../spells/spell";
 import {AllDefenseType, PhysicalDefenseType} from "../../character/physical-defense/physical-defense-type.enum";
-import {SpellKeywords} from "../../spells/spell-keywords.enum";
+import {SpellKeyword} from "../../spells/enums/spell-keywords.enum";
 
 import {AreaOfEffect} from "../../area-of-effect/area-of-effect";
 import {AreaOfEffectTypes} from "../../area-of-effect/area-of-effect-types.enum";
@@ -19,7 +19,7 @@ export function ClericSpellList(): Spell[] {
     name: "Fierce Devotion",
     defenseType: [AllDefenseType.Missile],
     spellType: SpellType.DirectEffect,
-    spellKeywords: [SpellKeywords.Concentration],
+    spellKeywords: [SpellKeyword.Concentration],
     damageKeyword: SpellDamageKeyword.Wild,
     areaOfEffect: {
       numberOfTargets: 1,
@@ -49,7 +49,7 @@ export function ClericSpellList(): Spell[] {
         spellChart: [
           {
             ...new SpellChart(),
-            rowName: SpellKeywords.Concentration,
+            rowName: SpellKeyword.Concentration,
             levelRange: LevelRange.FIFTHTEEN,
             dieSize: DiceSize.None,
             minValue: 10.38,
@@ -67,7 +67,7 @@ export function DruidSpellList(): Spell[] {
     name: "Fierce Devotion",
     defenseType: [AllDefenseType.Missile],
     spellType: SpellType.DirectEffect,
-    spellKeywords: [SpellKeywords.Concentration],
+    spellKeywords: [SpellKeyword.Concentration],
     damageKeyword: SpellDamageKeyword.Wild,
     areaOfEffect: {
       numberOfTargets: 1,
@@ -90,7 +90,7 @@ export function DruidSpellList(): Spell[] {
       },
         {
           ...new SpellChart(),
-          rowName: SpellKeywords.Concentration,
+          rowName: SpellKeyword.Concentration,
           levelRange: LevelRange.FIFTHTEEN,
           dieSize: DiceSize.None,
           minValue: 10.38,
@@ -109,7 +109,7 @@ export function AssassinSpellList(): Spell[] {
     name: "Fierce Devotion",
     defenseType: [AllDefenseType.Missile],
     spellType: SpellType.DirectEffect,
-    spellKeywords: [SpellKeywords.Concentration],
+    spellKeywords: [SpellKeyword.Concentration],
     damageKeyword: SpellDamageKeyword.Wild,
     areaOfEffect: {
       numberOfTargets: 1,
@@ -132,7 +132,7 @@ export function AssassinSpellList(): Spell[] {
       },
         {
           ...new SpellChart(),
-          rowName: SpellKeywords.Concentration,
+          rowName: SpellKeyword.Concentration,
           levelRange: LevelRange.FIFTHTEEN,
           dieSize: DiceSize.None,
           minValue: 10.38,
@@ -151,7 +151,7 @@ export function WarriorMageSpellList(): Spell[] {
     name: "Fierce Devotion",
     defenseType: [AllDefenseType.Missile],
     spellType: SpellType.DirectEffect,
-    spellKeywords: [SpellKeywords.Concentration],
+    spellKeywords: [SpellKeyword.Concentration],
     damageKeyword: SpellDamageKeyword.Wild,
     areaOfEffect: {
       numberOfTargets: 1,
@@ -174,7 +174,7 @@ export function WarriorMageSpellList(): Spell[] {
       },
         {
           ...new SpellChart(),
-          rowName: SpellKeywords.Concentration,
+          rowName: SpellKeyword.Concentration,
           levelRange: LevelRange.FIFTHTEEN,
           dieSize: DiceSize.None,
           minValue: 10.38,

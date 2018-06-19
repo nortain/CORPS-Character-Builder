@@ -1,5 +1,5 @@
 import {Spell, SpellEffect, SpellEffectType} from "../../spells/spell";
-import {SpellKeywords} from "../../spells/spell-keywords.enum";
+import {SpellKeyword} from "../../spells/enums/spell-keywords.enum";
 import {AreaOfEffectTypes} from "../../area-of-effect/area-of-effect-types.enum";
 import {ActionType} from "../../action/action-type.enum";
 import {DurationType} from "../../duration/duration-type.enum";
@@ -15,7 +15,7 @@ export function ShamanSpellList(): Spell[] {
       ...new Spell(),
       name: "Healing Winds",
       spellType: SpellType.FriendlyUtility,
-      spellKeywords: [SpellKeywords.Regeneration, SpellKeywords.FriendlyMovement],
+      spellKeywords: [SpellKeyword.Regeneration, SpellKeyword.FriendlyMovement],
       areaOfEffect: {
         numberOfTargets: 1,
         range: 1,

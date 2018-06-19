@@ -12,7 +12,7 @@ import {By} from "@angular/platform-browser";
 import {AllDefenseType} from "../../../../shared/character/physical-defense/physical-defense-type.enum";
 import {Spell, SpellEffectType} from "../../../../shared/spells/spell";
 
-fdescribe('SpellSelectionComponent', () => {
+describe('SpellSelectionComponent', () => {
   let component: SpellSelectionComponent;
   let fixture: ComponentFixture<SpellSelectionComponent>;
 

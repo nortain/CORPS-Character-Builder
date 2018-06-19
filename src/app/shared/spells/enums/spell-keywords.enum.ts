@@ -1,4 +1,4 @@
-export enum SpellKeywords {
+export enum SpellKeyword {
   Aura = "Aura",
   Manipulate = "Manipulate",
   Thorns = "Thorns",

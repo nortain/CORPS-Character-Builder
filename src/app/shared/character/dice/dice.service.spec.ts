@@ -1,8 +1,12 @@
-import { TestBed, inject } from '@angular/core/testing';
+import {TestBed, inject} from '@angular/core/testing';
 
-import { DiceService } from './dice.service';
+import {DiceService} from './dice.service';
 import {DiceSize} from "./dice-size.enum";
 import {Dice} from "./dice";
+import {LevelRange} from "../../spells/enums/level-range.enum";
+import {SpellDamageKeyword} from "../../spells/enums/spell-damage-keyword.enum";
+import {DamageKeywordModifier} from "../../spells/damage-keyword-modifier";
+import {isMetadataSymbolicIfExpression} from "@angular/compiler-cli";
 
 fdescribe('DiceService', () => {
   let diceService;
@@ -58,8 +62,59 @@ fdescribe('DiceService', () => {
     expect(diceService.getRemainder(DiceSize.d10, 0, 66.5)).toEqual(0, "test 8");
   });
 
+  it('should be able to get the adjusted value for a particular dice', () => {
+    const result = 66;
+    const damModifier = new DamageKeywordModifier(SpellDamageKeyword.Shadow);
+    expect(diceService.getAdjustedValue(DiceSize.d10, 66.5, 0, damModifier, true)).toBe(result);
+  });
+
+  it('should be able to get the adjusted value for 3.6', () => {
+    const result = 4;
+    const damModifier = new DamageKeywordModifier(SpellDamageKeyword.Shadow);
+    expect(diceService.getAdjustedValue(DiceSize.d10, 3.6, 0, damModifier, false)).toBe(result);
+  });
+
   it('should be able to turn a min, max level range into an array of dice', () => {
-    expect(true).toBeFalsy();
+    const result = ["3", "1d10+2", "1d10+6", "1d10+11", "2d10+10",
+      "2d10+14", "2d10+19", "3d10+18", "3d10+22", "4d10+21",
+      "4d10+26", "4d10+30", "5d10+29", "5d10+34", "5d10+38"];
+    const answer = diceService.getArrayOfDice(DiceSize.d10, 3, 66.5, LevelRange.FIFTHTEEN);
+    answer.forEach((item: Dice, index: number) => {
+      console.log(index + " is the index and roll: ", item.printRoll());
+      expect(item.printRoll()).toBe(result[index]);
+    });
+  });
+
+  it('should be able to build an array of dice from d6s', () => {
+    const result = ["1d6", "1d6+3", "1d6+6", "2d6+5", "2d6+8",
+      "2d6+10", "3d6+10", "3d6+12", "3d6+15", "4d6+15"];
+    const answer = diceService.getArrayOfDice(DiceSize.d6, 4, 29.45, LevelRange.TEN);
+    answer.forEach((item: Dice, index: number) => {
+      expect(item.printRoll()).toBe(result[index]);
+    });
+
+    /**
+     * implement the rest of these for the love of god!
+     */
+    it('should be able to account for the all unique spell damage keywords', () => {
+      expect(true).toBeFalsy();
+    });
+
+    it('should be able to build an array table from d8s', () => {
+
+    });
+
+    it('should be able to build an array table from d12s', () => {
+
+    });
+
+    it('should be able to build an array table from implment as d8s', () => {
+
+    });
+
+    it('should be able to build an array from minions', () => {
+
+    });
   });
 
 });
