@@ -40,14 +40,14 @@ export class DiceService {
   /**
    * gets the number of dice needed for a particular spell
    * @param {DiceSize} diceSize
-   * @param {number} modifier
+   * @param {number} adjustedModifier
    * @param {number} damage
    * @returns {any}
    */
-  getNumOfDice(diceSize: DiceSize, modifier: number, damage: number): Dice {
+  getNumOfDice(diceSize: DiceSize, adjustedModifier: number, damage: number): Dice {
     let numOfDice = 0;
     let totalModifierValue = 0;
-    modifier += this.getDieStatic(diceSize);
+    adjustedModifier += this.getDieStatic(diceSize);
     const dieAverage = this.getDieAverage(diceSize);
     if (damage < 1) {
       return null;
@@ -59,8 +59,8 @@ export class DiceService {
     do {
       damage -= dieAverage;
       numOfDice++;
-      damage -= modifier;
-      totalModifierValue += modifier;
+      damage -= adjustedModifier;
+      totalModifierValue += adjustedModifier;
     } while (damage >= dieAverage && numOfDice < 9);
     totalModifierValue += damage;
     return new Dice(numOfDice, diceSize, totalModifierValue);
@@ -69,22 +69,22 @@ export class DiceService {
   /**
    * gets the remainder damage value to determine if there is roll over
    * @param {DiceSize} diceSize
-   * @param {number} modifier
+   * @param {number} adjustedModifier
    * @param {number} damage
    * @returns {number}
    */
-  getRemainder(diceSize: DiceSize, modifier: number, damage: number) {
+  getRemainder(diceSize: DiceSize, adjustedModifier: number, damage: number) {
     const dieAverage = this.getDieAverage(diceSize);
-    const numOfDice: Dice = this.getNumOfDice(diceSize, modifier, damage);
+    const numOfDice: Dice = this.getNumOfDice(diceSize, adjustedModifier, damage);
     const remainder = damage - (numOfDice.numOfDice.value() * dieAverage);
     return Math.round(remainder % 1);
   }
 
-  getArrayOfDice(diceSize: DiceSize, minDamage: number, maxDamage: number, levelRange: LevelRange, modifier = 0, damageKeyword: SpellDamageKeyword | SpellKeyword): Dice[] {
+  getArrayOfDice(diceSize: DiceSize, minDamage: number, maxDamage: number, levelRange: LevelRange, damageKeyword: SpellDamageKeyword | SpellKeyword, modifier = 0): Dice[] {
     const damageModifier = new DamageKeywordModifier(damageKeyword);
     const adjustedModifier = modifier + damageModifier.staticDieMod;
-    minDamage = this.getAdjustedValue(diceSize, minDamage, modifier, damageModifier, false);
-    maxDamage = this.getAdjustedValue(diceSize, maxDamage, modifier, damageModifier, true);
+    minDamage = this.getAdjustedValue(diceSize, minDamage, adjustedModifier, damageModifier, false);
+    maxDamage = this.getAdjustedValue(diceSize, maxDamage, adjustedModifier, damageModifier, true);
     const average = (maxDamage - minDamage) / (levelRange - 1);
     const diceArray: Dice[] = [this.getNumOfDice(diceSize, adjustedModifier, minDamage)];
     for (let i = 1; i < levelRange; i++) {

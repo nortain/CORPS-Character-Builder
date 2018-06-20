@@ -23,11 +23,11 @@ export class Dice {
     const size = this.sizeOfDice.value();
     const mod = this.modifierOfDice.value();
     if (size === DiceSize.None || num === 0) {
-      return "" + Math.round(mod);
+      return "" + mod;
     } else if (size > DiceSize.None && mod > 0) {
-      return num + "d" + size + "+" + Math.round(mod);
+      return num + "d" + size + "+" + mod;
     } else if (size > DiceSize.None && mod < 0) {
-      return num + "d" + size + Math.round(mod);
+      return num + "d" + size + mod;
     } else {
       return num + "d" + size;
     }

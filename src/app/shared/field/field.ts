@@ -71,7 +71,7 @@ export class Field {
   /**Rounding function that is using a preset of determined precision values based off of the enum by the same name.*/
   round(value: any, precision: Precision = Precision.None): any {
     if (typeof value === "number") {
-      return Math.floor(precision * value) / precision;
+      return Math.round(precision * value) / precision;
     } else {
       return value;
     }
