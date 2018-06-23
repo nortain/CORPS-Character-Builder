@@ -38,5 +38,5 @@ export class Spell {
   duration?: DurationType[];
   critRoll?: Dice;
   special?: string[];
-  spellEffectText?: SpellEffect[]; // TODO move spell chart array into the spell effect interface
+  spellEffectText?: SpellEffect[];
 }

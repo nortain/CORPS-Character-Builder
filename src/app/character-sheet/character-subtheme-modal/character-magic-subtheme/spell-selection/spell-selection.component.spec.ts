@@ -135,7 +135,7 @@ describe('SpellSelectionComponent', () => {
     });
 
     it('should be able to display spell effect texts', () => {
-      const labelResults = ["Spell Effect", "On Hit", "Bounce",  "On Miss"];
+      const labelResults = ["Spell Effect", "On Hit", "Bounce", "On Miss"];
       const textResults = [mockSpell().spellEffectText[0].text, mockSpell().spellEffectText[1].text, mockSpell().spellEffectText[2].text, mockSpell().spellEffectText[3].text];
       for (let i = 0; i < 4; i++) {
         const selector = ".spellEffect" + i;
@@ -144,9 +144,19 @@ describe('SpellSelectionComponent', () => {
         const spellText = fixture.debugElement.query(By.css(selector));
         expect(label.nativeElement.innerText).toBe(labelResults[i] + ":");
         expect(spellText.nativeElement.innerText).toBe(textResults[i]);
-
       }
 
+    });
+
+    fit('should be able to display a hit chart for the default spell effect', () => {
+      const labelResults = ["Spell Effect", "On Hit", "Bounce", "On Miss"];
+      const textResults = [mockSpell().spellEffectText[0].text, mockSpell().spellEffectText[1].text, mockSpell().spellEffectText[2].text, mockSpell().spellEffectText[3].text];
+      for (let i = 0; i < 4; i++) {
+        const tableSelector = labelResults[i] + i + "Table";
+        const table = fixture.debugElement.queryAll(By.css(tableSelector));
+        expect(table.length).toEqual(1);
+
+      }
     });
 
   });

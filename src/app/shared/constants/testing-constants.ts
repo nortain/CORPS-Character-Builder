@@ -121,21 +121,25 @@ export function mockSpell(): Spell {
     spellEffectText: [
       {
         type: SpellEffectType.SpellEffect,
-        text: "You spit on the ground."
+        text: "You spit on the ground.",
+        spellChart: [mockSpellChart()]
       }, {
         type: SpellEffectType.OnHit,
-        text: "You launch a big ass ball of fiery death towards your enemies."
+        text: "You launch a big ass ball of fiery death towards your enemies.",
+        spellChart: [mockSpellChart()]
       }, {
         type: SpellEffectType.Bounce,
-        text: "When you kill someone with this attack you can bounce it."
+        text: "When you kill someone with this attack you can bounce it.",
+        spellChart: [mockSpellChart()]
       }, {
         type: SpellEffectType.OnMiss,
-        text: "Even if you miss you rock their face in."
+        text: "Even if you miss you rock their face in.",
+        spellChart: [mockSpellChart()]
       }, {
         type: SpellEffectType.AfterEffect,
-        text: "This bitch keeps going like the energizer bunny."
+        text: "This bitch keeps going like the energizer bunny.",
+        spellChart: [mockSpellChart()]
       }
-
     ],
     spellChart: [
       mockSpellChart(),

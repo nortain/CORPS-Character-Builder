@@ -76,7 +76,7 @@
                    class="table table-bordered"
                    *ngFor="let chart of effect.spellChart; let chartIndex = index">
               <tr>
-                <td *ngIf="chartIndex % 5 === 0">Level {{chartIndex+0}}-{{chartIndex+5}}<br>{{chart.rowName}}</td>
+                <td class="{{effect.type+index}}TableLevel" *ngIf="chartIndex % 5 === 0">Level {{chartIndex+0}}-{{chartIndex+5}}<br>{{chart.rowName}}</td>
                 <td *ngIf="chartIndex % 6 === 1">{{getSpellRoll(chart.minValue, chart.maxValue, chart.dieSize, chart.levelRange)}}</td>
               </tr>
             </table>

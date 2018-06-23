@@ -11,6 +11,8 @@ import {Dice} from "../../../../shared/character/dice/dice";
 import {DiceSize} from "../../../../shared/character/dice/dice-size.enum";
 import {LevelRange} from "../../../../shared/spells/enums/level-range.enum";
 import {DiceService} from "../../../../shared/character/dice/dice.service";
+import {SpellKeyword} from "../../../../shared/spells/enums/spell-keywords.enum";
+import {SpellDamageKeyword} from "../../../../shared/spells/enums/spell-damage-keyword.enum";
 
 /**
  * This component is used to select powers or spells for the character
@@ -170,9 +172,9 @@ export class SpellSelectionComponent implements OnInit, OnChanges {
     return result;
   }
 
-  getSpellRoll(minValue: number, maxValue: number, dieSize: DiceSize, levelRange: LevelRange): string {
-    const spellDie = new Dice();
-    return spellDie.printRoll();
+  getSpellRoll(dieSize: DiceSize, minValue: number, maxValue: number, levelRange: LevelRange, damageKeyword?: SpellKeyword | SpellDamageKeyword, modifier = 0): Dice[] {
+    const spellDice = this.diceService.getArrayOfDice(dieSize, minValue, maxValue, levelRange, damageKeyword, modifier);
+    return spellDice;
   }
 
   private findIndexOfSpellByName(element: Spell, array: Spell[]): number {
