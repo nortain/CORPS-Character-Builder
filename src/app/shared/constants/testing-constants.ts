@@ -18,7 +18,6 @@ import {ActionType} from "../action/action-type.enum";
 import {DurationType} from "../duration/duration-type.enum";
 import {Dice} from "../character/dice/dice";
 import {DiceSize} from "../character/dice/dice-size.enum";
-import {Minion} from "../minion/minion";
 import {SpellChart} from "../spells/spell-chart";
 import {AreaOfEffectTypes} from "../area-of-effect/area-of-effect-types.enum";
 import {LevelRange} from "../spells/enums/level-range.enum";
@@ -119,7 +118,6 @@ export function mockSpell(): Spell {
     special: [
       "This can only be cast once per encounter"
     ],
-    minion: new Minion(),
     spellEffectText: [
       {
         type: SpellEffectType.SpellEffect,

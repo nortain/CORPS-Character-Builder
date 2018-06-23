@@ -3,7 +3,7 @@ import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/t
 import {CharacterSubthemeModalComponent} from './character-subtheme-modal.component';
 import {SharedModule} from "../../../shared/shared.module";
 import {SubthemeComponent} from "../subthemes/subtheme.component";
-import {NgbActiveModal, NgbDropdownConfig, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbActiveModal, NgbDropdownConfig, NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {NgbModalStack} from "@ng-bootstrap/ng-bootstrap/modal/modal-stack";
 import {actionClickDropdownItemX, actionGetDropdownValue, mockSubtheme, mockThemePoints} from "../../../shared/constants/testing-constants";
 import {ThemeStrength} from "../../../shared/theme-points/theme-strength.enum";
@@ -25,7 +25,7 @@ describe('CharacterSubthemeModalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [SharedModule],
+      imports: [SharedModule, NgbModule.forRoot()],
       declarations: [SubthemeComponent, CharacterSubthemeModalComponent, CharacterMagicSubthemeComponent, SpellSelectionComponent],
       providers: [NgbDropdownConfig, NgbModal, NgbActiveModal, NgbModalStack]
     })

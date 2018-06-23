@@ -6,7 +6,6 @@ import {SpellKeyword} from "./enums/spell-keywords.enum";
 import {AreaOfEffect} from "../area-of-effect/area-of-effect";
 import {ActionType} from "../action/action-type.enum";
 import {DurationType} from "../duration/duration-type.enum";
-import {Minion} from "../minion/minion";
 import {SpellDamageKeyword} from "./enums/spell-damage-keyword.enum";
 import {SpellType} from "./enums/spell-type.enum";
 import {SpellChart} from "./spell-chart";
@@ -39,6 +38,5 @@ export class Spell {
   duration?: DurationType[];
   critRoll?: Dice;
   special?: string[];
-  minion?: Minion;
   spellEffectText?: SpellEffect[]; // TODO move spell chart array into the spell effect interface
 }

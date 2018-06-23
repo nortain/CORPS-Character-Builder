@@ -80,9 +80,9 @@ export class DiceService {
     return Math.round(remainder % 1);
   }
 
-  getArrayOfDice(diceSize: DiceSize, minDamage: number, maxDamage: number, levelRange: LevelRange, damageKeyword: SpellDamageKeyword | SpellKeyword, modifier = 0): Dice[] {
+  getArrayOfDice(diceSize: DiceSize, minDamage: number, maxDamage: number, levelRange: LevelRange, damageKeyword?: SpellDamageKeyword | SpellKeyword, modifier = 0): Dice[] {
     const damageModifier = new DamageKeywordModifier(damageKeyword);
-    const adjustedModifier = modifier + damageModifier.staticDieMod;
+    const adjustedModifier: number = modifier + damageModifier.staticDieMod;
     minDamage = this.getAdjustedValue(diceSize, minDamage, adjustedModifier, damageModifier, false);
     maxDamage = this.getAdjustedValue(diceSize, maxDamage, adjustedModifier, damageModifier, true);
     const average = (maxDamage - minDamage) / (levelRange - 1);

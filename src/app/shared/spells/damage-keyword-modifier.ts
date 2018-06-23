@@ -6,12 +6,14 @@ export class DamageKeywordModifier {
   maxAdj: number;
   staticDieMod: number;
   critMod: number;
+  isMinion: boolean;
 
   constructor(damageKeyword: SpellDamageKeyword | SpellKeyword) {
     this.minAdj = 0;
     this.maxAdj = 0;
     this.staticDieMod = 0;
     this.critMod = 0;
+    this.isMinion = false;
     this.assignValues(damageKeyword);
   }
 
@@ -43,7 +45,14 @@ export class DamageKeywordModifier {
         this.critMod = 2;
         break;
       case SpellKeyword.Implement:
-        this.maxAdj = -3;
+        this.staticDieMod = -3;
+        break;
+      case SpellDamageKeyword.Cold:
+        this.staticDieMod = 2;
+        this.maxAdj = 1;
+        break;
+      case SpellKeyword.Minion:
+        this.isMinion = true;
         break;
       default:
         break;
