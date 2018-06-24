@@ -99,7 +99,9 @@ export function mockSpellChart(): SpellChart {
     rowName: "Damage",
     levelRange: LevelRange.FIFTHTEEN,
     minValue: 12.11,
-    maxValue: 38.33
+    maxValue: 38.33,
+    dieSize: DiceSize.d8,
+    damageKeyword: SpellDamageKeyword.Arcane
   } as SpellChart;
 }
 

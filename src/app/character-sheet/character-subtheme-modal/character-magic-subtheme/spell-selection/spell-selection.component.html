@@ -74,15 +74,30 @@
             <span class="spellEffect{{index}}">{{effect.text}}</span>
             <table id="{{effect.type+index}}Table"
                    class="table table-bordered"
-                   *ngFor="let chart of effect.spellChart; let chartIndex = index">
+                   *ngFor="let chart of getSpellRoll(effect.spellChart); let chartIndex = index">
               <tr>
-                <td class="{{effect.type+index}}TableLevel" *ngIf="chartIndex % 5 === 0">Level {{chartIndex+0}}-{{chartIndex+5}}<br>{{chart.rowName}}</td>
-                <td *ngIf="chartIndex % 6 === 1">{{getSpellRoll(chart.minValue, chart.maxValue, chart.dieSize, chart.levelRange)}}</td>
+                <td class="{{effect.type+index}}TableLevel col-auto" *ngIf="chartIndex % 5 === 0">Level {{chartIndex+1}}-{{chartIndex+5}}<br>{{effect.spellChart.rowName}}</td>
+                <td class="{{effect.type}}TableChart1 col-auto" *ngFor="let row of chart | slice:0:5; let rowIndex = index">
+                  <div class="row1{{rowIndex}}" *ngIf="effect.spellChart.damageKeyword !== minion">{{row.printRoll()}}</div>
+                  <div *ngIf="effect.spellChart.damageKeyword === minion">{{row.printMinionRoll(rowIndex+1, effect.spellChart.modifier)}}</div>
+                </td>
+              </tr>
+              <tr>
+                <td class="{{effect.type+index}}TableLevel col-auto" *ngIf="chartIndex % 10 === 0">Level {{chartIndex+6}}-{{chartIndex+10}}<br>{{effect.spellChart.rowName}}</td>
+                <td class="{{effect.type}}TableChart2 col-auto" *ngFor="let row of chart | slice:5:10; let rowIndex = index">
+                  <div class="row2{{rowIndex}}" *ngIf="effect.spellChart.damageKeyword !== minion">{{row.printRoll()}}</div>
+                  <div *ngIf="effect.spellChart.damageKeyword === minion">{{row.printMinionRoll(rowIndex+1, effect.spellChart.modifier)}}</div>
+                </td>
+              </tr>
+              <tr>
+                <td class="{{effect.type+index}}TableLevel col-auto" *ngIf="chartIndex % 15 === 0">Level {{chartIndex+11}}-{{chartIndex+15}}<br>{{effect.spellChart.rowName}}</td>
+                <td class="{{effect.type}}TableChart3 col-auto" *ngFor="let row of chart | slice:10:15; let rowIndex = index">
+                  <div class="row3{{rowIndex}}" *ngIf="effect.spellChart.damageKeyword !== minion">{{row.printRoll()}}</div>
+                  <div *ngIf="effect.spellChart.damageKeyword === minion">{{row.printMinionRoll(rowIndex+1, effect.spellChart.modifier)}}</div>
+                </td>
               </tr>
             </table>
           </div>
-
-
         </div>
       </div>
     </div>

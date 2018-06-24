@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angula
 import {Subtheme} from "../../../../shared/theme-points/subthemes/subtheme";
 import {ThemeStrength} from "../../../../shared/theme-points/theme-strength.enum";
 import {MagicType, SpellSelectionType} from "../magic-type.enum";
-import {Spell} from "../../../../shared/spells/spell";
+import {Spell, SpellEffect} from "../../../../shared/spells/spell";
 import {Feature, SpecialPower, SUBTHEME_BONUS} from "../../../../shared/constants/constants";
 import {ActionType} from "../../../../shared/action/action-type.enum";
 import {AreaOfEffectService} from "../../../../shared/area-of-effect/area-of-effect.service";
@@ -13,6 +13,7 @@ import {LevelRange} from "../../../../shared/spells/enums/level-range.enum";
 import {DiceService} from "../../../../shared/character/dice/dice.service";
 import {SpellKeyword} from "../../../../shared/spells/enums/spell-keywords.enum";
 import {SpellDamageKeyword} from "../../../../shared/spells/enums/spell-damage-keyword.enum";
+import {SpellChart} from "../../../../shared/spells/spell-chart";
 
 /**
  * This component is used to select powers or spells for the character
@@ -67,6 +68,7 @@ export class SpellSelectionComponent implements OnInit, OnChanges {
    */
   openSpells: Spell[];
   actionType = ActionType;
+  minion = SpellKeyword.Minion;
 
   constructor(private aoeService: AreaOfEffectService, private actionService: ActionService, private diceService: DiceService) {
     this.selectionDisplayToggle = false;
@@ -172,8 +174,11 @@ export class SpellSelectionComponent implements OnInit, OnChanges {
     return result;
   }
 
-  getSpellRoll(dieSize: DiceSize, minValue: number, maxValue: number, levelRange: LevelRange, damageKeyword?: SpellKeyword | SpellDamageKeyword, modifier = 0): Dice[] {
-    const spellDice = this.diceService.getArrayOfDice(dieSize, minValue, maxValue, levelRange, damageKeyword, modifier);
+  getSpellRoll(spellChart: SpellChart[]): Dice[] {
+    const spellDice = [];
+    for (const chart of spellChart) {
+      spellDice.push(this.diceService.getArrayOfDice(chart.dieSize, chart.minValue, chart.maxValue, chart.levelRange, chart.damageKeyword, chart.modifier));
+    }
     return spellDice;
   }
 

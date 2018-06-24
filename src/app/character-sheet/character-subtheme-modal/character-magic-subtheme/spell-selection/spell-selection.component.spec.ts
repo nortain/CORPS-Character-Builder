@@ -11,6 +11,7 @@ import {SubthemeType} from "../../../../shared/theme-points/subthemes/subtheme-t
 import {By} from "@angular/platform-browser";
 import {AllDefenseType} from "../../../../shared/character/physical-defense/physical-defense-type.enum";
 import {Spell, SpellEffectType} from "../../../../shared/spells/spell";
+import {DebugElement} from "@angular/core";
 
 describe('SpellSelectionComponent', () => {
   let component: SpellSelectionComponent;
@@ -149,12 +150,29 @@ describe('SpellSelectionComponent', () => {
     });
 
     fit('should be able to display a hit chart for the default spell effect', () => {
-      const labelResults = ["Spell Effect", "On Hit", "Bounce", "On Miss"];
-      const textResults = [mockSpell().spellEffectText[0].text, mockSpell().spellEffectText[1].text, mockSpell().spellEffectText[2].text, mockSpell().spellEffectText[3].text];
+      const labelResults = ["SpellEffect", "OnHit", "Bounce", "OnMiss"];
+      const ans1 = ["1d8+8",	"1d8+9",	"2d8+7",	"2d8+9",	"2d8+10"];
+      const ans2 = ["2d8+12",	"2d8+14",	"2d8+16",	"3d8+13",	"3d8+15"];
+      const ans3 = ["3d8+17",	"3d8+19",	"3d8+21",	"4d8+18",	"4d8+20"];
       for (let i = 0; i < 4; i++) {
-        const tableSelector = labelResults[i] + i + "Table";
+        const tableSelector = "#" + labelResults[i].trim() + i + "Table";
+        const rowSelector1 = "." + labelResults[i].trim() + "TableChart1";
+        const rowSelector2 = "." + labelResults[i].trim() + "TableChart2";
+        const rowSelector3 = "." + labelResults[i].trim() + "TableChart3";
         const table = fixture.debugElement.queryAll(By.css(tableSelector));
         expect(table.length).toEqual(1);
+        const row1 = table[0].queryAll(By.css(rowSelector1));
+        const row2 = table[0].queryAll(By.css(rowSelector2));
+        const row3 = table[0].queryAll(By.css(rowSelector3));
+        row1.forEach((item: DebugElement, index: number) => {
+          expect(item.nativeElement.innerText.trim()).toBe(ans1[index]);
+        });
+        row2.forEach((item: DebugElement, index: number) => {
+          expect(item.nativeElement.innerText.trim()).toBe(ans2[index]);
+        });
+        row3.forEach((item: DebugElement, index: number) => {
+          expect(item.nativeElement.innerText.trim()).toBe(ans3[index]);
+        });
 
       }
     });
