@@ -17,6 +17,7 @@ import {NgbDropdownMenu} from "@ng-bootstrap/ng-bootstrap/dropdown/dropdown";
 import {CharacterMagicSubthemeComponent} from "../character-magic-subtheme/character-magic-subtheme.component";
 import {nextTick} from "q";
 import {SpellSelectionComponent} from "../character-magic-subtheme/spell-selection/spell-selection.component";
+import {SpellChartComponent} from "../character-magic-subtheme/spell-selection/spell-chart/spell-chart.component";
 
 describe('CharacterSubthemeModalComponent', () => {
   let component: CharacterSubthemeModalComponent;
@@ -26,7 +27,7 @@ describe('CharacterSubthemeModalComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [SharedModule, NgbModule.forRoot()],
-      declarations: [SubthemeComponent, CharacterSubthemeModalComponent, CharacterMagicSubthemeComponent, SpellSelectionComponent],
+      declarations: [SubthemeComponent, CharacterSubthemeModalComponent, CharacterMagicSubthemeComponent, SpellSelectionComponent, SpellChartComponent],
       providers: [NgbDropdownConfig, NgbModal, NgbActiveModal, NgbModalStack]
     })
       .compileComponents();

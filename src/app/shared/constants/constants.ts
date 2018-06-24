@@ -370,7 +370,7 @@ export const TWO_MAGIC_SPELLS = {
     } as NumberBonusByLevel,
     AdrenalinePowers: [],
     PowerPointAbilities: [],
-    SpecialPowers: null,
+    SpecialPowers: null, // TODO add blsssing here
     ImplementAttack: new Spell(),
     Spells: ClericSpellList()
   } as SpellSphere,

@@ -12,6 +12,7 @@ import {By} from "@angular/platform-browser";
 import {AllDefenseType} from "../../../../shared/character/physical-defense/physical-defense-type.enum";
 import {Spell, SpellEffectType} from "../../../../shared/spells/spell";
 import {DebugElement} from "@angular/core";
+import {SpellChartComponent} from "./spell-chart/spell-chart.component";
 
 describe('SpellSelectionComponent', () => {
   let component: SpellSelectionComponent;
@@ -21,7 +22,7 @@ describe('SpellSelectionComponent', () => {
     TestBed.configureTestingModule({
       imports: [SharedModule, NgbModule.forRoot()],
       providers: [NgbModal, NgbModalStack],
-      declarations: [SpellSelectionComponent],
+      declarations: [SpellSelectionComponent, SpellChartComponent],
     })
       .compileComponents();
   }));
@@ -173,10 +174,8 @@ describe('SpellSelectionComponent', () => {
         row3.forEach((item: DebugElement, index: number) => {
           expect(item.nativeElement.innerText.trim()).toBe(ans3[index]);
         });
-
       }
     });
-
   });
 
   describe('testing that fields are hidden when empty', function () {

@@ -47,12 +47,36 @@
   </div>
   <div class="row">
     <div class="col-12">
-      <label class="font-weight-bold">Sphere Abilities: </label>
-      <button id="displaySphereAbilities"
+      <corps-spell-selection
+        [propertyName]="getMagicText(magicType.SpecialPowers).name"
+        [subtheme]="subtheme"
+        [generalThemePoint]="generalThemePoint"
+        [previouslySelectedSpell]="null"
+        [numberOfSpellsToSelect]="1"
+        [propertyType]="spellSelectionType.SpecialPowers"
+      >
+      </corps-spell-selection>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <label class="font-weight-bold">Implement Knacks: </label>
+      <button id="displayAdrenalinePointAbilities"
               class="btn btn-outline-primary btn-sm"
               (click)="displayKnacks()">
         {{knackDisplayToggle ? 'Hide' :
-        'Show'}} Sphere Abilities
+        'Show'}} Adrenaline Point Abilities
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <label class="font-weight-bold">Implement Knacks: </label>
+      <button id="displayPowerPointAbilities"
+              class="btn btn-outline-primary btn-sm"
+              (click)="displayKnacks()">
+        {{knackDisplayToggle ? 'Hide' :
+        'Show'}} Powerpoint Abilities
       </button>
     </div>
   </div>
@@ -117,34 +141,12 @@
   </div>
   <div class="row">
     <div class="col-12">
-      <label class="font-weight-bold">Implement Knacks: </label>
-      <button id="displayAdrenalinePointAbilities"
-              class="btn btn-outline-primary btn-sm"
-              (click)="displayKnacks()">
-        {{knackDisplayToggle ? 'Hide' :
-        'Show'}} Adrenaline Point Abilities
-      </button>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12">
-      <label class="font-weight-bold">Implement Knacks: </label>
-      <button id="displayPowerPointAbilities"
-              class="btn btn-outline-primary btn-sm"
-              (click)="displayKnacks()">
-        {{knackDisplayToggle ? 'Hide' :
-        'Show'}} Powerpoint Abilities
-      </button>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12">
       <corps-spell-selection
-      [subtheme]="subtheme"
-      [generalThemePoint]="generalThemePoint"
-      [previouslySelectedSpell]="null"
-      [numberOfSpellsToSelect]="3"
-      [propertyType]="spellSelectionType.Spells"
+        [subtheme]="subtheme"
+        [generalThemePoint]="generalThemePoint"
+        [previouslySelectedSpell]="null"
+        [numberOfSpellsToSelect]="3"
+        [propertyType]="spellSelectionType.Spells"
       >
       </corps-spell-selection>
     </div>

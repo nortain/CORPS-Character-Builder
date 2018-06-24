@@ -12,6 +12,7 @@ import {NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {NgbModalStack} from "@ng-bootstrap/ng-bootstrap/modal/modal-stack";
 import {Subtheme} from "../../../shared/theme-points/subthemes/subtheme";
 import {SpellSelectionComponent} from "./spell-selection/spell-selection.component";
+import {SpellChartComponent} from "./spell-selection/spell-chart/spell-chart.component";
 
 describe('CharacterMagicSubthemeComponent', () => {
   let component: CharacterMagicSubthemeComponent;
@@ -31,7 +32,7 @@ describe('CharacterMagicSubthemeComponent', () => {
     TestBed.configureTestingModule({
       imports: [SharedModule, NgbModule.forRoot()],
       providers: [NgbModal, NgbModalStack],
-      declarations: [CharacterMagicSubthemeComponent, SpellSelectionComponent],
+      declarations: [CharacterMagicSubthemeComponent, SpellSelectionComponent, SpellChartComponent],
     })
       .compileComponents();
   }));
