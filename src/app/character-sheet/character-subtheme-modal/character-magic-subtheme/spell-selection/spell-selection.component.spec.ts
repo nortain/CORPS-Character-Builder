@@ -149,7 +149,7 @@ describe('SpellSelectionComponent', () => {
 
     });
 
-    fit('should be able to display a hit chart for the default spell effect', () => {
+    it('should be able to display a hit chart for the default spell effect', () => {
       const labelResults = ["SpellEffect", "OnHit", "Bounce", "OnMiss"];
       const ans1 = ["1d8+8",	"1d8+9",	"2d8+7",	"2d8+9",	"2d8+10"];
       const ans2 = ["2d8+12",	"2d8+14",	"2d8+16",	"3d8+13",	"3d8+15"];

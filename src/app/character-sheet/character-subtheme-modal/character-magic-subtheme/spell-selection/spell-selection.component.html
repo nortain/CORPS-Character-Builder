@@ -39,32 +39,33 @@
           </div>
           <div class="card-text spellWell" *ngIf="isSpellOpen(spell)">
             <div id="keywordsHolder"
-                 class="px-2"
+                 class="px-2 spellHeight"
                  *ngIf="spell.spellKeywords && spell.spellKeywords.length > 0 || spell.damageKeyword"
             >
               <label for="keywords" class="font-weight-bold">Keywords: </label>
               <span id="keywords">{{spell.damageKeyword}}<span id="otherKeywords"
-                                                               *ngFor="let keyword of spell.spellKeywords">, {{keyword}}</span></span>
+                                                               *ngFor="let keyword of spell.spellKeywords">, {{keyword}}</span>
+              </span>
             </div>
-            <div id="defenseTypeHolder" class="px-2" *ngIf="!!spell.defenseType && spell.defenseType.length > 0">
+            <div id="defenseTypeHolder" class="px-2 spellHeight" *ngIf="!!spell.defenseType && spell.defenseType.length > 0">
               <label for="defenseType" class="font-weight-bold">Defense Type:</label>
               <span id="defenseType" *ngFor="let defense of spell.defenseType; let index=index">{{defense.toString().trim()}}<span
                 *ngIf="index < spell.defenseType.length - 1">/</span></span>
             </div>
-            <div id="aoeHolder" class="px-2" *ngIf="!!spell.areaOfEffect">
+            <div id="aoeHolder" class="px-2 spellHeight" *ngIf="!!spell.areaOfEffect">
               <label for="aoe" class="font-weight-bold">Area of Effect:</label>
               <span id="aoe">{{getAOEString(spell)}}</span>
             </div>
-            <div id="castActionHolder" class="px-2" *ngIf="!!spell.castAction">
+            <div id="castActionHolder" class="px-2 spellHeight" *ngIf="!!spell.castAction">
               <label for="castAction" class="font-weight-bold">Cast Action:</label>
               <span id="castAction">{{getCastActionString(spell.castAction)}}</span>
             </div>
-            <div id="durationHolder" class="px-2" *ngIf="!!spell.duration && spell.duration.length > 0">
+            <div id="durationHolder" class="px-2 spellHeight" *ngIf="!!spell.duration && spell.duration.length > 0">
               <label for="duration" class="font-weight-bold">Duration:</label>
               <span id="duration" *ngFor="let duration of spell.duration; let index=index">{{duration}}<span
                 *ngIf="index < spell.duration.length - 1">/</span></span>
             </div>
-            <div id="critDieHolder" class="px-2" *ngIf="!!spell.critRoll">
+            <div id="critDieHolder" class="px-2 spellHeight" *ngIf="!!spell.critRoll">
               <label for="critDie" class="font-weight-bold">Crit Die:</label>
               <span id="critDie">{{spell.critRoll.printRoll()}}</span>
             </div>
@@ -73,7 +74,7 @@
                  *ngFor="let effect of spell.spellEffectText; let index=index"
             >
               <label class="font-weight-bold label{{index}}">{{effect.type | castleCase}}:</label><br>
-              <span class="spellEffect{{index}}">{{effect.text}}</span>
+              <p class="spellEffect{{index}} spellTextMargin">{{effect.text}}</p>
               <table id="{{effect.type+index}}Table"
                      class="table table-bordered"
                      *ngFor="let chart of getSpellRoll(effect.spellChart); let chartIndex = index">
