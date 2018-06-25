@@ -46,13 +46,15 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-12">
+    <div class="col-12" *ngFor="let power of getSpecialPowers(); let powerIndex = index">
       <corps-spell-selection
-        [propertyName]="getMagicText(magicType.SpecialPowers).name"
+        *ngIf="power.requirement === generalThemePoint || power.requirement === spellRequirement.Always"
+        [propertyName]="power.name"
         [subtheme]="subtheme"
         [generalThemePoint]="generalThemePoint"
         [previouslySelectedSpell]="null"
-        [numberOfSpellsToSelect]="1"
+        [numberOfSpellsToSelect]="power.numberOfSelections - 1"
+        [propertyIndex]="powerIndex"
         [propertyType]="spellSelectionType.SpecialPowers"
       >
       </corps-spell-selection>

@@ -1,11 +1,12 @@
 import {ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {Subtheme} from "../../../shared/theme-points/subthemes/subtheme";
-import {Feature, Knack, SUBTHEME_BONUS} from "../../../shared/constants/constants";
+import {Feature, Knack, SpecialPower, SUBTHEME_BONUS} from "../../../shared/constants/constants";
 import {MagicType, SpellSelectionType} from "./magic-type.enum";
 import {ThemeStrength} from "../../../shared/theme-points/theme-strength.enum";
 import {SubthemeType} from "../../../shared/theme-points/subthemes/subtheme-types.enum";
 import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
 import {ConfirmationComponent} from "../../../shared/ui/confirmation/confirmation.component";
+import {SpellRequirement} from "../../../shared/spells/enums/spell-requirement.enum";
 
 @Component({
   selector: 'corps-character-magic-subtheme',
@@ -22,6 +23,8 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
 
   magicType = MagicType;
   spellSelectionType = SpellSelectionType;
+  spellRequirement = SpellRequirement;
+
   /**
    * a toggle switch to determine if knacks are being displayed or not
    */
@@ -159,6 +162,10 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
    */
   getMagicText(propertyName: MagicType): Feature {
     return SUBTHEME_BONUS[this.subtheme.subthemeName][propertyName];
+  }
+
+  getSpecialPowers(): SpecialPower {
+    return SUBTHEME_BONUS[this.subtheme.subthemeName][SpellSelectionType.SpecialPowers];
   }
 
   getKnackData(knackName: string): number[] {

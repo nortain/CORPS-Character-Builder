@@ -8,7 +8,7 @@ import {LevelRange} from "../../../../../shared/spells/enums/level-range.enum";
 import {SpellEffectType} from "../../../../../shared/spells/spell";
 import {By} from "@angular/platform-browser";
 
-fdescribe('SpellChartComponent', () => {
+describe('SpellChartComponent', () => {
   let component: SpellChartComponent;
   let fixture: ComponentFixture<SpellChartComponent>;
 
@@ -45,8 +45,6 @@ fdescribe('SpellChartComponent', () => {
     fixture.detectChanges();
     const rows = fixture.debugElement.queryAll(By.css(".SpellEffect0TableLevel"));
     expect(rows.length).toEqual(2);
-
-
   });
 
 });

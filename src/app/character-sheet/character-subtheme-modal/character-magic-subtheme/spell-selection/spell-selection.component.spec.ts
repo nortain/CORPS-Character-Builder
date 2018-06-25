@@ -176,6 +176,10 @@ describe('SpellSelectionComponent', () => {
         });
       }
     });
+
+    it('should display the correct subtheme options based on their theme points', () => {
+      expect(true).toBeFalsy();
+    });
   });
 
   describe('testing that fields are hidden when empty', function () {

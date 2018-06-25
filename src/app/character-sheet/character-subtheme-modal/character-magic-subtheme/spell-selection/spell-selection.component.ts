@@ -37,6 +37,10 @@ export class SpellSelectionComponent implements OnInit, OnChanges {
    */
   @Input() numberOfSpellsToSelect: number;
   /**
+   * This is an optional index of the special power we want to load
+   */
+  @Input() propertyIndex: number;
+  /**
    * This tells the component where it is getting it's spell data from
    */
   @Input() propertyType: SpellSelectionType;
@@ -159,9 +163,12 @@ export class SpellSelectionComponent implements OnInit, OnChanges {
     const spellsArray = this.getMagicText(this.propertyType);
     let result = [];
     if (spellsArray instanceof Array) {
-      result = spellsArray;
-    } else if (spellsArray instanceof SpecialPower || !!spellsArray["powers"]) {
-      result = spellsArray["powers"];
+      if (this.propertyIndex && spellsArray[this.propertyIndex] instanceof SpecialPower ||
+        !!spellsArray[this.propertyIndex]["powers"]) {
+        result = spellsArray[this.propertyIndex]["powers"];
+      } else {
+        result = spellsArray;
+      }
     } else if (spellsArray instanceof Spell || !!spellsArray["sphereName"]) {
       result = [spellsArray];
     }

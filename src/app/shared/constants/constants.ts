@@ -15,6 +15,7 @@ import {Bonus} from "../character/bonus";
 import {MagentSpellList, SpellWardenSpellList} from "./spells/minor-spell-constants";
 import {Spell} from "../spells/spell";
 import {AssassinSpellList, ClericBlessings, ClericSpellList, DruidSpellList, WarriorMageSpellList} from "./spells/lesser-spell-constants";
+import {SpellRequirement} from "../spells/enums/spell-requirement.enum";
 
 
 export const NON_HUMAN_AVAILABLE_ATTRIBUTE_POINTS = 4;
@@ -368,12 +369,17 @@ export const TWO_MAGIC_SPELLS = {
       Reverence: [4, 4, 5, 6, 7, 8, 9, 10, 11, 12],
       ConcentratedFortune: [4, 4, 5, 6, 7, 7, 8, 9, 10, 11],
     } as NumberBonusByLevel,
-    AdrenalinePowers: [],
-    PowerPointAbilities: [],
-    SpecialPowers: {
+    SpecialPowers: [{
       name: "Blessing",
-      powers: ClericBlessings()
-    },
+      powers: ClericBlessings(),
+      numberOfSelections: 2,
+      requirement: SpellRequirement.ZeroGeneral
+    }, {
+      name: "Blessing 2",
+      powers: ClericBlessings(),
+      numberOfSelections: 2,
+      requirement: SpellRequirement.OneGeneral
+    }],
     ImplementAttack: new Spell(),
     Spells: ClericSpellList()
   } as SpellSphere,
@@ -887,6 +893,9 @@ export class Feature {
 export class SpecialPower {
   name: string;
   powers: Spell[];
+  numberOfSelections: number;
+  requirement: SpellRequirement;
+
 }
 
 export interface SpellSphere {
@@ -895,9 +904,7 @@ export interface SpellSphere {
   GeneralFeature: Feature;
   ImplementKnacks: KeyValuePair;
   ImplementKnacksData: NumberBonusByLevel;
-  AdrenalinePowers: Spell[];
-  PowerPointAbilities: Spell[];
-  SpecialPowers: SpecialPower;
+  SpecialPowers: SpecialPower[];
   ImplementAttack: Spell;
   Spells: Spell[];
 }
