@@ -163,8 +163,10 @@ export class SpellSelectionComponent implements OnInit, OnChanges {
     const spellsArray = this.getMagicText(this.propertyType);
     let result = [];
     if (spellsArray instanceof Array) {
-      if (this.propertyIndex && spellsArray[this.propertyIndex] instanceof SpecialPower ||
-        !!spellsArray[this.propertyIndex]["powers"]) {
+      const hasIndex = this.propertyIndex !== undefined;
+      const isSpecialPower = spellsArray[this.propertyIndex] instanceof SpecialPower;
+      const hasPowerProp = !!spellsArray[this.propertyIndex]["powers"];
+      if (hasIndex && (isSpecialPower || hasPowerProp)) {
         result = spellsArray[this.propertyIndex]["powers"];
       } else {
         result = spellsArray;

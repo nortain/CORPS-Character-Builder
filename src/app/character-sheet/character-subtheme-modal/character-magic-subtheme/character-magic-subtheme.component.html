@@ -62,80 +62,60 @@
   </div>
   <div class="row">
     <div class="col-12">
-      <label class="font-weight-bold">Implement Knacks: </label>
-      <button id="displayAdrenalinePointAbilities"
-              class="btn btn-outline-primary btn-sm"
-              (click)="displayKnacks()">
-        {{knackDisplayToggle ? 'Hide' :
-        'Show'}} Adrenaline Point Abilities
-      </button>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12">
-      <label class="font-weight-bold">Implement Knacks: </label>
-      <button id="displayPowerPointAbilities"
-              class="btn btn-outline-primary btn-sm"
-              (click)="displayKnacks()">
-        {{knackDisplayToggle ? 'Hide' :
-        'Show'}} Powerpoint Abilities
-      </button>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12">
-      <label class="font-weight-bold">Implement Knacks: </label>
-      <button id="displayKnackButton" class="btn btn-outline-primary btn-sm" (click)="displayKnacks()">
-        {{knackDisplayToggle ? 'Hide' :
-        'Show'}} Implement Knacks
-      </button>
-      <div class="selectedKnackDisplay float-right row" *ngIf="selectedKnacks.length > 0">
-        <label class="font-weight-bold col">Selected {{selectedKnacks.length === 1 ? 'Knack' : 'Knacks'}}:</label>
-        <div class="btn-sm bg-success" *ngFor="let selectDisplayKnack of selectedKnacks">
-          {{selectDisplayKnack.name | castleCase}}
+      <div class="container">
+        <label class="font-weight-bold">Implement Knacks: </label>
+        <button id="displayKnackButton" class="btn btn-outline-primary btn-sm" (click)="displayKnacks()">
+          {{knackDisplayToggle ? 'Hide' :
+          'Show'}} Implement Knacks
+        </button>
+        <div class="selectedKnackDisplay float-right row" *ngIf="selectedKnacks.length > 0">
+          <label class="font-weight-bold col">Selected {{selectedKnacks.length === 1 ? 'Knack' : 'Knacks'}}:</label>
+          <div class="btn-sm bg-success" *ngFor="let selectDisplayKnack of selectedKnacks">
+            {{selectDisplayKnack.name | castleCase}}
+          </div>
         </div>
-      </div>
-      <div *ngIf="knackDisplayToggle">
-        <p>You can select {{numberOfKnacksToSelect}} {{numberOfKnacksToSelect === 1 ? 'knack' : 'knacks' }}</p>
-        <div class="col-12" *ngFor="let knack of getKnackText()">
+        <div *ngIf="knackDisplayToggle">
+          <p>You can select {{numberOfKnacksToSelect}} {{numberOfKnacksToSelect === 1 ? 'knack' : 'knacks' }}</p>
+          <div class="col-12" *ngFor="let knack of getKnackText()">
 
-          <div class="card-header" (click)="openKnack(knack)"><span class="name font-weight-bold">{{knack.name | castleCase}}</span>
-            <button class="btn btn-sm knackButton float-right"
-                    [ngClass]="{'disabled': !isSubthemeSelected() ||
+            <div class="card-header" (click)="openKnack(knack)"><span class="name font-weight-bold">{{knack.name | castleCase}}</span>
+              <button class="btn btn-sm knackButton float-right"
+                      [ngClass]="{'disabled': !isSubthemeSelected() ||
                     numberOfKnacksToSelect === 0,
                      'btn-success': isKnackSelected(knack),
                      'btn-primary': !isKnackSelected(knack)
                     }"
-                    [disabled]="!isSubthemeSelected()"
-                    (click)="selectKnack(knack)">
-              {{isKnackSelected(knack) ? 'Deselect' : 'Select'}} Knack
-            </button>
-          </div>
-          <div class="card-text knackWell" *ngIf="isKnackOpen(knack)">
+                      [disabled]="!isSubthemeSelected()"
+                      (click)="selectKnack(knack)">
+                {{isKnackSelected(knack) ? 'Deselect' : 'Select'}} Knack
+              </button>
+            </div>
+            <div class="card-text knackWell" *ngIf="isKnackOpen(knack)">
               <span class="description">
                 {{knack.text}}
               </span><br><br *ngIf="!getKnackData(knack.name)">
-            <table id="{{knack.name}}Table" *ngIf="!!getKnackData(knack.name)" class="table table-bordered">
-              <thead>
-              <tr>
-                <th scope="col">Bonus</th>
-                <th scope="col">L 1</th>
-                <th scope="col">L 2</th>
-                <th scope="col">L 3</th>
-                <th scope="col">L 4</th>
-                <th scope="col">L 5</th>
-                <th scope="col">L 6</th>
-                <th scope="col">L 7</th>
-                <th scope="col">L 8</th>
-                <th scope="col">L 9</th>
-                <th scope="col">L 10</th>
-              </tr>
-              </thead>
-              <tr>
-                <th class="knackDataName">{{knack.name | castleCase}}</th>
-                <td *ngFor="let data of getKnackData(knack.name)">{{data}}</td>
-              </tr>
-            </table>
+              <table id="{{knack.name}}Table" *ngIf="!!getKnackData(knack.name)" class="table table-bordered">
+                <thead>
+                <tr>
+                  <th scope="col">Bonus</th>
+                  <th scope="col">L 1</th>
+                  <th scope="col">L 2</th>
+                  <th scope="col">L 3</th>
+                  <th scope="col">L 4</th>
+                  <th scope="col">L 5</th>
+                  <th scope="col">L 6</th>
+                  <th scope="col">L 7</th>
+                  <th scope="col">L 8</th>
+                  <th scope="col">L 9</th>
+                  <th scope="col">L 10</th>
+                </tr>
+                </thead>
+                <tr>
+                  <th class="knackDataName">{{knack.name | castleCase}}</th>
+                  <td *ngFor="let data of getKnackData(knack.name)">{{data}}</td>
+                </tr>
+              </table>
+            </div>
           </div>
         </div>
       </div>
