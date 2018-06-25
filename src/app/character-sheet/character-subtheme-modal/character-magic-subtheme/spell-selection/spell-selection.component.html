@@ -71,6 +71,10 @@
               <span id="duration" *ngFor="let duration of spell.duration; let index=index">{{duration}}<span
                 *ngIf="index < spell.duration.length - 1">/</span></span>
             </div>
+            <div id="specialHolder" class="px-2 spellHeight" *ngIf="spell.special && spell.special.length > 0">
+              <label for="special" class="font-weight-bold">Special:</label>
+              <span id="special" *ngFor="let special of spell.special; let index=index">{{special}}</span>
+            </div>
             <div id="critDieHolder" class="px-2 spellHeight" *ngIf="!!spell.critRoll">
               <label for="critDie" class="font-weight-bold">Crit Die:</label>
               <span id="critDie">{{spell.critRoll.printRoll()}}</span>
