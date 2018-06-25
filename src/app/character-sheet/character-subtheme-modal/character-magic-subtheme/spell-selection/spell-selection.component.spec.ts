@@ -13,6 +13,7 @@ import {AllDefenseType} from "../../../../shared/character/physical-defense/phys
 import {Spell, SpellEffectType} from "../../../../shared/spells/spell";
 import {DebugElement} from "@angular/core";
 import {SpellChartComponent} from "./spell-chart/spell-chart.component";
+import {SpellRequirement} from "../../../../shared/spells/enums/spell-requirement.enum";
 
 describe('SpellSelectionComponent', () => {
   let component: SpellSelectionComponent;
@@ -73,12 +74,19 @@ describe('SpellSelectionComponent', () => {
 
 
   it('should be able to get the spell text from a special power', () => {
-    spyOn(component, "getMagicText").and.returnValue({name: "awesome", powers: [mockSpell()]});
+    component.numberOfSpellsToSelect = 1;
+    component.propertyIndex = 0;
+    component.propertyType = SpellSelectionType.SpecialPowers;
+    spyOn(component, "getMagicText").and.returnValue([{name: "awesome", powers: [mockSpell()], requirement: SpellRequirement.Always}]);
+    fixture.detectChanges();
     expect(component.getSpellData()[0]).toEqual(mockSpell());
   });
 
-  it('should be able to display a spells name', () => {
-    spyOn(component, "getMagicText").and.returnValue({name: "awesome", powers: [mockSpell()]});
+  it('should be able to display a spells name from a special power', () => {
+    component.numberOfSpellsToSelect = 1;
+    component.propertyIndex = 0;
+    component.propertyType = SpellSelectionType.SpecialPowers;
+    spyOn(component, "getMagicText").and.returnValue([{name: "awesome", powers: [mockSpell()], requirement: SpellRequirement.Always}]);
     fixture.detectChanges();
     const name = fixture.debugElement.query(By.css(".name"));
     expect(name.nativeElement.innerText.trim()).toBe(mockSpell().name + " (Direct Attack)");

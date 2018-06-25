@@ -165,7 +165,7 @@ export class SpellSelectionComponent implements OnInit, OnChanges {
     if (spellsArray instanceof Array) {
       const hasIndex = this.propertyIndex !== undefined;
       const isSpecialPower = spellsArray[this.propertyIndex] instanceof SpecialPower;
-      const hasPowerProp = !!spellsArray[this.propertyIndex]["powers"];
+      const hasPowerProp = !!spellsArray[this.propertyIndex] && spellsArray[this.propertyIndex]["powers"];
       if (hasIndex && (isSpecialPower || hasPowerProp)) {
         result = spellsArray[this.propertyIndex]["powers"];
       } else {
