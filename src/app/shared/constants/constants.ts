@@ -14,7 +14,7 @@ import {BonusByLevel, NumberBonusByLevel} from "../character/bonus-by-level";
 import {Bonus} from "../character/bonus";
 import {MagentSpellList, SpellWardenSpellList} from "./spells/minor-spell-constants";
 import {Spell} from "../spells/spell";
-import {AssassinSpellList, ClericSpellList, DruidSpellList, WarriorMageSpellList} from "./spells/lesser-spell-constants";
+import {AssassinSpellList, ClericBlessings, ClericSpellList, DruidSpellList, WarriorMageSpellList} from "./spells/lesser-spell-constants";
 
 
 export const NON_HUMAN_AVAILABLE_ATTRIBUTE_POINTS = 4;
@@ -370,7 +370,10 @@ export const TWO_MAGIC_SPELLS = {
     } as NumberBonusByLevel,
     AdrenalinePowers: [],
     PowerPointAbilities: [],
-    SpecialPowers: null, // TODO add blsssing here
+    SpecialPowers: {
+      name: "Blessing",
+      powers: ClericBlessings()
+    },
     ImplementAttack: new Spell(),
     Spells: ClericSpellList()
   } as SpellSphere,

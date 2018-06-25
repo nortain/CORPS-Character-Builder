@@ -13,6 +13,69 @@ import {SpellChart} from "../../spells/spell-chart";
 import {SpellType} from "../../spells/enums/spell-type.enum";
 import {SpellDamageKeyword} from "../../spells/enums/spell-damage-keyword.enum";
 
+export function ClericBlessings(): Spell[] {
+  return [{
+    ...new Spell(),
+    name: "Blessing of the Holy",
+    spellType: SpellType.FriendlyUtility,
+    spellKeywords: [SpellKeyword.Healing],
+    areaOfEffect: {
+      numberOfTargets: 1,
+      range: 10,
+      type: AreaOfEffectTypes.Burst
+    },
+    castAction: ActionType.Minor,
+    duration: [DurationType.Immediate],
+    special: ["You must have 2 or more blessings to activate this ability"],
+    spellEffectText: [
+      {
+        type: SpellEffectType.SpellEffect,
+        text: "Spend all of your blessings to heal a friendly creature within range for a number of hit points equal to the healing chart below per blessing spent. They may also choose to spend a recovery to gain additional hit points",
+        spellChart: [
+          {
+            ...new SpellChart(),
+            rowName: SpellKeyword.Healing,
+            levelRange: LevelRange.TEN,
+            dieSize: DiceSize.None,
+            minValue: 2,
+            maxValue: 6
+          }
+        ]
+      }
+    ]
+  }, {
+    ...new Spell(),
+    name: "Blessing of the Stalwart",
+    spellType: SpellType.DirectEffect,
+    spellKeywords: [SpellKeyword.ForcedMovement],
+    damageKeyword: SpellDamageKeyword.Radiant,
+    areaOfEffect: {
+      numberOfTargets: 1,
+      range: 10,
+      type: AreaOfEffectTypes.Burst
+    },
+    castAction: ActionType.Minor,
+    duration: [DurationType.Immediate],
+    special: ["You must have 2 or more blessings to activate this ability"],
+    spellEffectText: [
+      {
+        type: SpellEffectType.SpellEffect,
+        text: "Spend all of your blessings to an enemy creature take radiant damage equal to the damage chart below per blessing spent.  If the creature is also adjacent to a friendly creature other than yourself you can slide them 1 square",
+        spellChart: [
+          {
+            ...new SpellChart(),
+            rowName: SpellDamageKeyword.Radiant,
+            levelRange: LevelRange.TEN,
+            dieSize: DiceSize.None,
+            minValue: 3.33,
+            maxValue: 9.99
+          }
+        ]
+      }
+    ]
+  }];
+}
+
 export function ClericSpellList(): Spell[] {
   return [{
     ...new Spell(),

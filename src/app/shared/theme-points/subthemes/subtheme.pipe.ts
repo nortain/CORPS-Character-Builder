@@ -1,7 +1,11 @@
 import {Pipe, PipeTransform} from '@angular/core';
 
+/**
+ * This is responsible for adding a space between all capitalized letters.
+ * TimmyTommyTaughtUS would be Timmy Tommy Taught U S
+ */
 @Pipe({
-  name: 'subthemes'
+  name: 'subthemesPipe'
 })
 export class SubthemePipe implements PipeTransform {
 

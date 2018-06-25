@@ -28,13 +28,14 @@
 
             <button class="btn btn-sm spellButton float-right"
                     [ngClass]="{'disabled': !isSubthemeSelected() ||
-                    numberOfSpellsToSelect === 0,
+                    (numberOfSpellsToSelect - selectedSpells.length === 0 &&
+                    selectedSpells.indexOf(spell) === -1),
                      'btn-success': isSpellSelected(spell),
                      'btn-primary': !isSpellSelected(spell)
                     }"
                     [disabled]="!isSubthemeSelected()"
                     (click)="selectSpell(spell)">
-              {{isSpellSelected(spell) ? 'Deselect' : 'Select'}} Spell
+              {{isSpellSelected(spell) ? 'Deselect' : 'Select'}} {{propertyName}}
             </button>
           </div>
           <div class="card-text spellWell" *ngIf="isSpellOpen(spell)">
@@ -43,11 +44,16 @@
                  *ngIf="spell.spellKeywords && spell.spellKeywords.length > 0 || spell.damageKeyword"
             >
               <label for="keywords" class="font-weight-bold">Keywords: </label>
-              <span id="keywords">{{spell.damageKeyword}}<span id="otherKeywords"
-                                                               *ngFor="let keyword of spell.spellKeywords">, {{keyword}}</span>
+              <span id="keywords">{{spell.damageKeyword}}<span
+                *ngIf="spell.damageKeyword && spell.spellKeywords.length > 0">, </span>
+                <span id="otherKeywords"
+                      *ngFor="let keyword of spell.spellKeywords; let keywordIndex = index">
+                {{keyword | subthemesPipe}}<span *ngIf="spell.spellKeywords[keywordIndex+1]">, </span>
+                </span>
               </span>
             </div>
-            <div id="defenseTypeHolder" class="px-2 spellHeight" *ngIf="!!spell.defenseType && spell.defenseType.length > 0">
+            <div id="defenseTypeHolder" class="px-2 spellHeight"
+                 *ngIf="!!spell.defenseType && spell.defenseType.length > 0">
               <label for="defenseType" class="font-weight-bold">Defense Type:</label>
               <span id="defenseType" *ngFor="let defense of spell.defenseType; let index=index">{{defense.toString().trim()}}<span
                 *ngIf="index < spell.defenseType.length - 1">/</span></span>
