@@ -5,6 +5,7 @@ import {Spell} from "../../../../../shared/spells/spell";
 import {SpellKeyword} from "../../../../../shared/spells/enums/spell-keywords.enum";
 import {SpellChart} from "../../../../../shared/spells/spell-chart";
 import {SpellDamageKeyword} from "../../../../../shared/spells/enums/spell-damage-keyword.enum";
+import {LevelRange} from "../../../../../shared/spells/enums/level-range.enum";
 
 
 @Component({
@@ -14,6 +15,7 @@ import {SpellDamageKeyword} from "../../../../../shared/spells/enums/spell-damag
 })
 export class SpellChartComponent implements OnInit {
   minion: SpellKeyword | SpellDamageKeyword = SpellKeyword.Minion;
+  levelRange = LevelRange;
 
   @Input() spell: Spell;
 
