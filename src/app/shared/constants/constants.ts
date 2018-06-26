@@ -16,6 +16,7 @@ import {MagentSpellList, SpellWardenSpellList} from "./spells/minor-spell-consta
 import {Spell} from "../spells/spell";
 import {AssassinSpellList, ClericBlessings, ClericSpellList, DruidSpellList, WarriorMageSpellList} from "./spells/lesser-spell-constants";
 import {SpellRequirement} from "../spells/enums/spell-requirement.enum";
+import {ShamanSpellList} from "./spells/greater-spell-constants";
 
 
 export const NON_HUMAN_AVAILABLE_ATTRIBUTE_POINTS = 4;
@@ -445,6 +446,83 @@ export const TWO_MAGIC_SPELLS = {
   } as SpellSphere,
 };
 
+export const THREE_MAGIC_SPELL = {
+  Shaman: {
+    Overview: "Wise man, witch doctor, practitioner of spiritual arts.  The shaman is known by many names but what all of these roles have in common is that they have deep roots in the spiritual world.  Through concentration and ritual they commune with the great spirits beyond to protect and lead those who follow them.  In combat shaman are fiercely protective of those who show devotion to them.  Whether they are on the front lines protecting their allies by physically blocking blows or in the background strengthening and healing shaman are always a welcome addition to any adventuring party.",
+    FeatureBonus: {
+      name: "As a part of selecting the shaman sphere you can choose one of the following teachings.  Each way comes with passive bonuses, a unique sphere specific powers and abilities.",
+      values: [
+        {
+          name: "Teach of the Sky Spirit",
+          values: [
+            "You gain the Spirit Touch Implement Attack and 1 implement knack",
+            "You gain Ancestral Aura of the Sky Spirit",
+            "You know the Essence of the Sky Spirit feature power and start with 0 Essence.  You also gain 1 Essence each time you cast any kind of utility spell or a spell with the Essence keyword",
+            "You gain the Breath of Life Rare Feature",
+            "You gain the Nurture Feature Ability",
+            "Increase your magic attack bonus by your Reasoning bonus"
+          ]
+        },
+        {
+          name: "Teach of the Earth Totem",
+          values: [
+            "You gain the Spirit Touch Implement Attack and 1 implement knack",
+            "You gain Ancestral Aura of the Earth Totem",
+            "You know the Essence of the Earth Totem feature power and start with 0 Essence.  You also gain 1 Essence each time you cast an attack spell, or a spell with the Essence keyword",
+            "You gain the Call of the Earth Rare Feature",
+            "You gain the Nurture Feature Ability",
+            "Increase your magic attack bonus by your Reasoning bonus"
+          ]
+        }
+      ]
+    },
+    GeneralFeature: {
+      name: "As a part of selecting the shaman sphere you can choose one of the following teachings.  Each way comes with passive bonuses, a unique sphere specific powers and abilities.",
+      values: [
+        {
+          name: "Teach of the Sky Spirit",
+          values: [
+            "You gain the Spirit Touch Implement Attack and 2 implement knack",
+            "You gain Ancestral Aura of the Sky Spirit",
+            "You know the Essence of the Sky Spirit feature power and start with 0 Essence.  You also gain 1 Essence each time you cast any kind of utility spell or a spell with the Essence keyword",
+            "You gain the Breath of Life Rare Feature",
+            "You gain the Nurture Feature Ability",
+            "Increase your magic attack bonus by your Reasoning bonus"
+          ]
+        },
+        {
+          name: "Teach of the Earth Totem",
+          values: [
+            "You gain the Spirit Touch Implement Attack and 2 implement knack",
+            "You gain Ancestral Aura of the Earth Totem",
+            "You know the Essence of the Earth Totem feature power and start with 0 Essence.  You also gain 1 Essence each time you cast an attack spell, or a spell with the Essence keyword",
+            "You gain the Call of the Earth Rare Feature",
+            "You gain the Nurture Feature Ability",
+            "Increase your magic attack bonus by your Reasoning bonus"
+          ]
+        }
+      ]
+    },
+    ImplementKnacks: {
+      RangedDefender: "You can use your AD vs range, area, and line attacks.",
+      EnlightenedTouch: "You start combat with 1 essence and can increase the damage of your implement attacks by the amount listed below.",
+      RenewedSpirit: "Once per encounter you can increase the temporary hit point value of a spell granted to 1 target of your spells with the fortify or regeneration keywords by Temporary Hit Point bonus listed below.",
+      ResilientSpirit: "Whenever you activate an essence power you gain a decaying 1 bonus to defense.  This bonus increases all your defenses by 1.",
+      HastenedRitual: "Once per combat you can activate your default essence power as a swift action.  When you do, you can also increase the damage stored within your ancestral aura by the amount listed below.",
+      DevoteShaman: "Once per combat, when you have 3 essence and cast a spell with the essence keyword you can spend 3 Essence and a minor action instead of 2 and a minor action to activate both your default essence power as well as the spells’ essence power.  You can also immediately increase the damage stored by your ancestral aura by the value below."
+    },
+    ImplementKnacksData: {
+      EnlightenedTouch: [3, 3, 4, 5, 6, 6, 7, 8, 9, 10],
+      DevoteShaman: [3, 3, 4, 4, 5, 5, 6, 6, 7, 8],
+      RenewedSpirit: [6, 7, 8, 10, 11, 12, 14, 15, 16, 18],
+      HastenedRitual: [6, 7, 8, 10, 11, 13, 14, 16, 17, 19],
+    } as NumberBonusByLevel,
+    SpecialPowers: null,
+    ImplementAttack: new Spell(),
+    Spells: ShamanSpellList()
+  } as SpellSphere,
+};
+
 export const SUBTHEME_BONUS = {
   WeaponSpecialization: {
     "1": {BonusDamage: [2, 3, 3, 4, 4, 5, 5, 6, 6, 7]},
@@ -515,7 +593,8 @@ export const SUBTHEME_BONUS = {
   Druid: TWO_MAGIC_SPELLS["Druid"],
   WarriorMage: TWO_MAGIC_SPELLS["WarriorMage"],
   Assassin: TWO_MAGIC_SPELLS["Assassin"],
-  Cleric: TWO_MAGIC_SPELLS["Cleric"]
+  Cleric: TWO_MAGIC_SPELLS["Cleric"],
+  Shaman: THREE_MAGIC_SPELL["Shaman"]
 };
 
 export const STARTING_PLAYER_RACES = {

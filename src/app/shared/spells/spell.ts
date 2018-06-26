@@ -16,7 +16,10 @@ export enum SpellEffectType {
   OnMiss = "OnMiss",
   Bounce = "Bounce",
   SpellEffect = "SpellEffect",
-  AfterEffect = "AfterEffect"
+  AfterEffect = "AfterEffect",
+  AdrenalinePoint = "AdrenalinePoint",
+  PowerPoint = "PowerPoint"
+
 }
 
 export interface SpellEffect {

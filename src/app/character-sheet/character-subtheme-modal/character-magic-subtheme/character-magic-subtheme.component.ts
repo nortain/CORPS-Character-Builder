@@ -26,7 +26,7 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
   spellRequirement = SpellRequirement;
 
   /**
-   * a toggle switch to determine if knacks are being displayed or not
+   * a toggle switch to determine if knacks are open or not
    */
   knackDisplayToggle: boolean;
   /**

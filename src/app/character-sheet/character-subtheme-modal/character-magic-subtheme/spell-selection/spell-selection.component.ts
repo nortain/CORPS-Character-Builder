@@ -85,7 +85,6 @@ export class SpellSelectionComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    console.log("Something was changed");
   }
 
   /**

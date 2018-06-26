@@ -284,7 +284,47 @@ describe('CharacterMagicSubthemeComponent', () => {
     expect(component.selectSubtheme).not.toHaveBeenCalled();
   });
 
+  it('should only display feature bonus if they are 0g', () => {
+    const feature = fixture.debugElement.queryAll(By.css("#featureRow"));
+    const general = fixture.debugElement.queryAll(By.css("#generalRow"));
+    expect(feature.length).toEqual(1);
+    expect(general.length).toEqual(0);
+  });
+
+  it('general bonus if they have 1 general', () => {
+    component.generalThemePoint = ThemeStrength.Minor;
+    fixture.detectChanges();
+    const feature = fixture.debugElement.queryAll(By.css("#featureRow"));
+    const general = fixture.debugElement.queryAll(By.css("#generalRow"));
+    expect(feature.length).toEqual(0);
+    expect(general.length).toEqual(1);
+  });
+
+  it('should be able to hide knacks if the character cannot select knacks', () => {
+    const knackButton = fixture.debugElement.queryAll(By.css("#displayKnackButton"));
+    expect(knackButton.length).toEqual(0);
+  });
+
+  it('should be able to display knacks if they are a 1g', () => {
+    component.generalThemePoint = ThemeStrength.Minor;
+    fixture.detectChanges();
+    const knackButton = fixture.debugElement.queryAll(By.css("#displayKnackButton"));
+    expect(knackButton.length).toEqual(1);
+  });
+
+  it('should be able to display knacks if they are a 3m', () => {
+    component.subtheme = mockSubtheme(SubthemeType.Shaman, ThemeStrength.None);
+    component.subthemePointCap = 3;
+    fixture.detectChanges();
+    const knackButton = fixture.debugElement.queryAll(By.css("#displayKnackButton"));
+    expect(knackButton.length).toEqual(1);
+  });
+
   it('should be able to select a character build within the magic subtheme', () => {
+    expect(true).toBeFalsy();
+  });
+
+  it('should be able to increment the number of spells they can pick if they are 1g 1m', () => {
     expect(true).toBeFalsy();
   });
 

@@ -16,7 +16,7 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <div class="row" id="featureRow" *ngIf="generalThemePoint === 0">
     <div class="col-12">
       <label class="font-weight-bold">Feature Bonuses: </label>
       <div>{{getMagicText(magicType.FeatureBonus).name}}</div>
@@ -30,7 +30,7 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <div class="row" id="generalRow" *ngIf="generalThemePoint !== 0">
     <div class="col-12">
       <label class="font-weight-bold">General Feature: </label>
       <div> {{getMagicText(magicType.GeneralFeature).name}}</div>
@@ -60,7 +60,7 @@
       </corps-spell-selection>
     </div>
   </div>
-  <div class="row">
+  <div class="row" *ngIf="generalThemePoint > 0 || subthemePointCap === 3">
     <div class="col-12">
       <div class="container">
         <label class="font-weight-bold">Implement Knacks: </label>

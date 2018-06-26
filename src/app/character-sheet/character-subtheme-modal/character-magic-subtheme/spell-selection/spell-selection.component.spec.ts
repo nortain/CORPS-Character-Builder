@@ -9,7 +9,7 @@ import {NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {NgbModalStack} from "@ng-bootstrap/ng-bootstrap/modal/modal-stack";
 import {SubthemeType} from "../../../../shared/theme-points/subthemes/subtheme-types.enum";
 import {By} from "@angular/platform-browser";
-import {AllDefenseType} from "../../../../shared/character/physical-defense/physical-defense-type.enum";
+
 import {Spell, SpellEffectType} from "../../../../shared/spells/spell";
 import {DebugElement} from "@angular/core";
 import {SpellChartComponent} from "./spell-chart/spell-chart.component";
@@ -101,7 +101,7 @@ describe('SpellSelectionComponent', () => {
   });
 
 
-  describe('', function () {
+  describe('while openning the spell and mocking out the data coming back', function () {
 
 
     /*Same setup as above only now we open the spell and mock out the data coming back*/
@@ -185,9 +185,12 @@ describe('SpellSelectionComponent', () => {
       }
     });
 
-    it('should display the correct subtheme options based on their theme points', () => {
+    it('should be able to choose a build if they are 0g and 1m', () => {
       expect(true).toBeFalsy();
     });
+
+
+
   });
 
   describe('testing that fields are hidden when empty', function () {
