@@ -1,12 +1,13 @@
 import {ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {Subtheme} from "../../../shared/theme-points/subthemes/subtheme";
 import {Feature, Knack, SpecialPower, SUBTHEME_BONUS} from "../../../shared/constants/constants";
-import {MagicType, SpellSelectionType} from "./magic-type.enum";
+import {MagicType, NumberToSelect, SpellSelectionType} from "./magic-type.enum";
 import {ThemeStrength} from "../../../shared/theme-points/theme-strength.enum";
 import {SubthemeType} from "../../../shared/theme-points/subthemes/subtheme-types.enum";
 import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
 import {ConfirmationComponent} from "../../../shared/ui/confirmation/confirmation.component";
 import {SpellRequirement} from "../../../shared/spells/enums/spell-requirement.enum";
+import {Level} from "../../../shared/character/level.enum";
 
 @Component({
   selector: 'corps-character-magic-subtheme',
@@ -19,6 +20,7 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
   @Input() generalThemePoint: ThemeStrength;
   @Input() previouslySelectedKnacks: Knack[];
   @Input() subthemePointCap: number;
+  @Input() characterLevel: Level;
   @Output() submitter: EventEmitter<{ subtheme: Subtheme, knacks: Knack[] }>;
 
   magicType = MagicType;
@@ -152,7 +154,8 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
   }
 
   getOverviewText(): string {
-    return SUBTHEME_BONUS[this.subtheme.subthemeName].Overview;
+    const result = SUBTHEME_BONUS[this.subtheme.subthemeName].Overview;
+    return result;
   }
 
   /**
@@ -161,11 +164,21 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
    * @returns {string}
    */
   getMagicText(propertyName: MagicType): Feature {
-    return SUBTHEME_BONUS[this.subtheme.subthemeName][propertyName];
+    const result = SUBTHEME_BONUS[this.subtheme.subthemeName][propertyName];
+    return result;
+  }
+
+  getNumberOfSpells(): number {
+    let result = SUBTHEME_BONUS[this.subtheme.subthemeName][NumberToSelect.NumberOfSpellsToSelect][this.characterLevel - 1];
+    if (this.subthemePointCap !== ThemeStrength.Greater && this.generalThemePoint === ThemeStrength.Minor) {
+      result++;
+    }
+    return result;
   }
 
   getSpecialPowers(): SpecialPower {
-    return SUBTHEME_BONUS[this.subtheme.subthemeName][SpellSelectionType.SpecialPowers];
+    const result = SUBTHEME_BONUS[this.subtheme.subthemeName][SpellSelectionType.SpecialPowers];
+    return result;
   }
 
   getKnackData(knackName: string): number[] {
@@ -197,13 +210,7 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
   }
 
   private determineNumberOfSelectableKnacks() {
-    this.numberOfKnacksToSelect = 0;
-    if (this.generalThemePoint > 0) {
-      this.numberOfKnacksToSelect++;
-    }
-    if (this.subtheme.maxThemeStrength === ThemeStrength.Greater) {
-      this.numberOfKnacksToSelect++;
-    }
+    this.numberOfKnacksToSelect = SUBTHEME_BONUS[this.subtheme.subthemeName][NumberToSelect.NumberOfKnacksToSelect][this.generalThemePoint];
   }
 }
 

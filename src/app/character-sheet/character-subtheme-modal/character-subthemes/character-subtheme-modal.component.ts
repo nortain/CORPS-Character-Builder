@@ -4,6 +4,7 @@ import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {SubthemeContainer} from "../../../shared/theme-points/subthemes/subtheme-container";
 import {ThemeType} from "../../../shared/theme-points/theme-type.enum";
 import {Knack} from "../../../shared/constants/constants";
+import {Level} from "../../../shared/character/level.enum";
 
 
 @Component({
@@ -15,6 +16,7 @@ import {Knack} from "../../../shared/constants/constants";
 export class CharacterSubthemeModalComponent implements OnInit {
 
   @Input() subthemePoints: SubthemeContainer;
+  @Input() characterLevel: Level;
   subthemeButtonsArray: Subtheme[];
   themeType = ThemeType;
   selectedSubtheme: Subtheme;

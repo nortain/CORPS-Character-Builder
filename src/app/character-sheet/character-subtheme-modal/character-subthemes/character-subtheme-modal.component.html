@@ -30,6 +30,7 @@
                          [assignedSubthemePoints]="getAssignedSubthemes()"
                          [subtheme]="selectedSubtheme"
                          [subthemePointCap]="getSubthemePointCap()"
+                         [characterLevel]="characterLevel"
                          (submitter)="updateSubtheme($event)">
         </corps-subthemes>
         <corps-subthemes *ngIf="selectedSubtheme.themeType !== themeType.Magic && !subthemeToggle"
@@ -37,6 +38,7 @@
                          [assignedSubthemePoints]="getAssignedSubthemes()"
                          [subtheme]="selectedSubtheme"
                          [subthemePointCap]="getSubthemePointCap()"
+                         [characterLevel]="characterLevel"
                          (submitter)="updateSubtheme($event)">
         </corps-subthemes>
         <corps-character-magic-subtheme
@@ -46,6 +48,7 @@
           [previouslySelectedKnacks]="subthemePoints.spellKnacks"
           [generalThemePoint]="subthemePoints.themePoints.general.getStrength()"
           [subthemePointCap]="getSubthemePointCap()"
+          [characterLevel]="characterLevel"
           (submitter)="updateMagicSubtheme($event)">
         </corps-character-magic-subtheme>
         <corps-character-magic-subtheme
@@ -55,6 +58,7 @@
           [previouslySelectedKnacks]="subthemePoints.spellKnacks"
           [generalThemePoint]="subthemePoints.themePoints.general.getStrength()"
           [subthemePointCap]="getSubthemePointCap()"
+          [characterLevel]="characterLevel"
           (submitter)="updateMagicSubtheme($event)">
         </corps-character-magic-subtheme>
       </div>

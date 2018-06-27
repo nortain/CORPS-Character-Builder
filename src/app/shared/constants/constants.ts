@@ -143,7 +143,9 @@ export const ONE_MAGIC_SPELLS = {
     PowerPointAbilities: null,
     SpecialPowers: null,
     ImplementAttack: null,
-    Spells: MagentSpellList()
+    Spells: MagentSpellList(),
+    NumberOfSpellsToSelect: [3, 4, 4, 4, 4, 4, 5, 5, 5, 5],
+    NumberOfKnacksToSelect: [0, 1]
   } as SpellSphere,
   SpellWarden: {
     Overview: "Spell Wardens were an ancient sect of Warriors who long ago discovered they could enhance their martial skills with the powers now known today as the essence of magic.  Although the order has all but been forgotten there are a rare few who have learned the secrets of Spell Warden and have passed those secrets down to others through the generations.  Although their magical capabilities aren’t nearly as strong as that of spell casters their sheer physical fortitude required to master this training style makes them a deadly foe on any battlefield.",
@@ -176,7 +178,9 @@ export const ONE_MAGIC_SPELLS = {
     PowerPointAbilities: null,
     SpecialPowers: null,
     ImplementAttack: null,
-    Spells: SpellWardenSpellList()
+    Spells: SpellWardenSpellList(),
+    NumberOfSpellsToSelect: [3, 4, 4, 4, 4, 4, 5, 5, 5, 5],
+    NumberOfKnacksToSelect: [0, 1]
   } as SpellSphere
 
 
@@ -247,7 +251,9 @@ export const TWO_MAGIC_SPELLS = {
     PowerPointAbilities: [],
     SpecialPowers: null,
     ImplementAttack: new Spell(),
-    Spells: WarriorMageSpellList()
+    Spells: WarriorMageSpellList(),
+    NumberOfSpellsToSelect: [4, 5, 5, 6, 6, 7, 7, 7, 7, 7],
+    NumberOfKnacksToSelect: [0, 1]
   } as SpellSphere,
   Assassin: {
     Overview: "As a part of selecting the assassin sphere you can you choose one of the following paths.  Each path comes with passive bonuses, a unique sphere specific ability and dictates the effects of your adrenaline points.",
@@ -306,7 +312,9 @@ export const TWO_MAGIC_SPELLS = {
     PowerPointAbilities: [],
     SpecialPowers: null,
     ImplementAttack: new Spell(),
-    Spells: AssassinSpellList()
+    Spells: AssassinSpellList(),
+    NumberOfSpellsToSelect: [4, 5, 5, 6, 6, 7, 7, 7, 7, 7],
+    NumberOfKnacksToSelect: [0, 1]
   } as SpellSphere,
   Cleric: {
     Overview: "As a part of selecting the Cleric sphere you can choose one of the following ways.  Each way comes with passive bonuses, a unique sphere specific ability and dictates the effects of your adrenaline points.",
@@ -382,7 +390,9 @@ export const TWO_MAGIC_SPELLS = {
       requirement: SpellRequirement.OneGeneral
     }],
     ImplementAttack: new Spell(),
-    Spells: ClericSpellList()
+    Spells: ClericSpellList(),
+    NumberOfSpellsToSelect: [4, 5, 5, 6, 6, 7, 7, 7, 7, 7],
+    NumberOfKnacksToSelect: [0, 1]
   } as SpellSphere,
   Druid: {
     Overview: "As a part of selecting the warrior mage sphere you can choose one of the following trainings.  Each training comes with passive bonuses, unique sphere specific ability and dictates the effects of your adrenaline points.",
@@ -442,7 +452,9 @@ export const TWO_MAGIC_SPELLS = {
     PowerPointAbilities: [],
     SpecialPowers: null,
     ImplementAttack: new Spell(),
-    Spells: DruidSpellList()
+    Spells: DruidSpellList(),
+    NumberOfSpellsToSelect: [4, 5, 5, 6, 6, 7, 7, 7, 7, 7],
+    NumberOfKnacksToSelect: [0, 1]
   } as SpellSphere,
 };
 
@@ -519,7 +531,9 @@ export const THREE_MAGIC_SPELL = {
     } as NumberBonusByLevel,
     SpecialPowers: null,
     ImplementAttack: new Spell(),
-    Spells: ShamanSpellList()
+    Spells: ShamanSpellList(),
+    NumberOfSpellsToSelect: [5, 6, 6, 7, 7, 8, 8, 9, 9, 9],
+    NumberOfKnacksToSelect: [1, 2]
   } as SpellSphere,
 };
 
@@ -969,6 +983,12 @@ export class Feature {
   values: any[];
 }
 
+/**
+ * name: of the special power
+ * powers: the list of all spells that make up this particular special power
+ * numberOfSelections: is the maximum number of choices that can be selected, assumption only 1 may be chosen
+ * requirement: acts a filter to designate if a one of the spells in the powers will show up for 0g, 1g or both
+ */
 export class SpecialPower {
   name: string;
   powers: Spell[];
@@ -986,6 +1006,8 @@ export interface SpellSphere {
   SpecialPowers: SpecialPower[];
   ImplementAttack: Spell;
   Spells: Spell[];
+  NumberOfSpellsToSelect: number[];
+  NumberOfKnacksToSelect: number[];
 }
 
 

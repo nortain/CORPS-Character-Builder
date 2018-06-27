@@ -6,6 +6,7 @@ import {SubthemeType} from "../../../shared/theme-points/subthemes/subtheme-type
 import {ThemeType} from "../../../shared/theme-points/theme-type.enum";
 import {STARTING_THEME_POINTS, SUBTHEME_BONUS} from "../../../shared/constants/constants";
 import {DropdownComponent} from "../../../shared/ui/dropdown/dropdown.component";
+import {Level} from "../../../shared/character/level.enum";
 
 
 @Component({
@@ -19,6 +20,7 @@ export class SubthemeComponent implements OnInit {
   @Input() subtheme: Subtheme;
   @Input() assignedSubthemePoints: number; // could be between 0 and 4
   @Input() subthemePointCap: number; // could be between 0 and 3 as this is the most number of possible theme points that could be assigned
+  @Input() characterLevel: Level;
   @Output() submitter: EventEmitter<Subtheme>;
 
 

@@ -4,7 +4,7 @@ import {CharacterMagicSubthemeComponent} from './character-magic-subtheme.compon
 import {mockKnack, mockSubtheme} from "../../../shared/constants/testing-constants";
 import {SubthemeType} from "../../../shared/theme-points/subthemes/subtheme-types.enum";
 import {ThemeStrength} from "../../../shared/theme-points/theme-strength.enum";
-import {MagicType} from "./magic-type.enum";
+import {MagicType, NumberToSelect} from "./magic-type.enum";
 import {ONE_MAGIC_SPELLS} from "../../../shared/constants/constants";
 import {By} from "@angular/platform-browser";
 import {SharedModule} from "../../../shared/shared.module";
@@ -13,6 +13,7 @@ import {NgbModalStack} from "@ng-bootstrap/ng-bootstrap/modal/modal-stack";
 import {Subtheme} from "../../../shared/theme-points/subthemes/subtheme";
 import {SpellSelectionComponent} from "./spell-selection/spell-selection.component";
 import {SpellChartComponent} from "./spell-selection/spell-chart/spell-chart.component";
+import {Level} from "../../../shared/character/level.enum";
 
 describe('CharacterMagicSubthemeComponent', () => {
   let component: CharacterMagicSubthemeComponent;
@@ -24,7 +25,6 @@ describe('CharacterMagicSubthemeComponent', () => {
     component = fixture.componentInstance;
     component.subtheme = mockSubtheme(SubthemeType.Magent, ThemeStrength.None);
     component.knackDisplayToggle = true;
-    component.generalThemePoint = ThemeStrength.None;
     fixture.detectChanges();
   }
 
@@ -41,6 +41,7 @@ describe('CharacterMagicSubthemeComponent', () => {
     fixture = TestBed.createComponent(CharacterMagicSubthemeComponent);
     component = fixture.componentInstance;
     component.subtheme = mockSubtheme(SubthemeType.Magent, ThemeStrength.Minor);
+    component.characterLevel = Level.One;
     component.knackDisplayToggle = true;
     component.generalThemePoint = ThemeStrength.None;
     fixture.detectChanges();
@@ -57,6 +58,210 @@ describe('CharacterMagicSubthemeComponent', () => {
   it('should be able to get magic text', () => {
     const result = component.getMagicText(MagicType.FeatureBonus);
     expect(result).toBe(ONE_MAGIC_SPELLS["Magent"].FeatureBonus);
+  });
+
+  it('should be able to actually selected a magic subtheme', () => {
+    unselectedSubthemeSetup();
+    const mock = mockSubtheme(SubthemeType.Magent, ThemeStrength.Minor);
+    component.subthemePointCap = 1;
+    spyOn(component.submitter, "emit");
+    let selectSubtheme = fixture.debugElement.queryAll(By.css(".subthemeSelectBtn"));
+    expect(selectSubtheme.length).toEqual(1);
+    expect(selectSubtheme[0].nativeElement.innerText).toBe("Select Subtheme");
+    selectSubtheme[0].nativeElement.click();
+    fixture.detectChanges();
+    selectSubtheme = fixture.debugElement.queryAll(By.css(".subthemeSelectBtn"));
+    expect(selectSubtheme[0].nativeElement.innerText).toBe("Deselect Subtheme");
+    expect(component.submitter.emit).toHaveBeenCalledWith(
+      {
+        subtheme: mock,
+        knacks: component.selectedKnacks
+      });
+
+  });
+
+  it('should reset any selected knacks/spells and builds when deselected a magical subtheme', fakeAsync(() => {
+    spyOn(modalService, "open").and.returnValue({
+      componentInstance: {
+        bodyText: "awesome"
+      },
+      result: Promise.resolve(true)
+
+    });
+    component.selectedKnacks.push(mockKnack());
+    component.selectSubtheme(); // deselects the current subtheme
+    tick();
+    expect(component.selectedKnacks.length).toEqual(0);
+  }));
+
+   it('should give the user a warning message when deselecting a subtheme that their selections will be lost', fakeAsync(() => {
+    spyOn(component, "resetSubtheme");
+    spyOn(modalService, "open").and.returnValue({
+      componentInstance: {
+        bodyText: "awesome"
+      },
+      result: Promise.resolve(true)
+    });
+    component.numberOfKnacksToSelect = 1;
+    const knackBtn = fixture.debugElement.query(By.css(".knackButton")).nativeElement;
+    knackBtn.click();
+    fixture.detectChanges();
+    const selectSubtheme = fixture.debugElement.query(By.css(".subthemeSelectBtn")).nativeElement;
+    selectSubtheme.click();
+    fixture.detectChanges();
+    expect(modalService.open).toHaveBeenCalled();
+    tick();
+    expect(component.resetSubtheme).toHaveBeenCalled();
+  }));
+
+  it('should have knack not displayed if knacks can not be selected', () => {
+    component.generalThemePoint = ThemeStrength.None;
+    fixture.detectChanges();
+    let knacks = fixture.debugElement.queryAll(By.css(".knackButton"));
+    expect(knacks.length).toEqual(0);
+    component.generalThemePoint = ThemeStrength.Minor;
+    component.ngOnChanges();
+    fixture.detectChanges();
+    knacks = fixture.debugElement.queryAll(By.css(".knackButton"));
+    expect(knacks[0].nativeElement.classList.contains("disabled")).toBeFalsy();
+  });
+
+  it('should have knacks disabled if the subtheme is not yet selected', () => {
+    component.subtheme = mockSubtheme(SubthemeType.Magent, ThemeStrength.None);
+    fixture.detectChanges();
+    let knacks = fixture.debugElement.queryAll(By.css(".knackButton"));
+    expect(knacks[0].nativeElement.classList.contains("disabled")).toBeTruthy();
+    component.subtheme = mockSubtheme(SubthemeType.Magent, ThemeStrength.Minor);
+    component.ngOnChanges();
+    fixture.detectChanges();
+    knacks = fixture.debugElement.queryAll(By.css(".knackButton"));
+    expect(knacks[0].nativeElement.classList.contains("disabled")).toBeFalsy();
+  });
+
+  it('should only give a popup confirmation if some change has been made to a knack after selecting the knack', () => {
+    const selectSubtheme = fixture.debugElement.query(By.css(".subthemeSelectBtn")).nativeElement;
+    selectSubtheme.click();
+    fixture.detectChanges();
+    expect(component.subtheme.themeStrength).toEqual(ThemeStrength.None);
+  });
+
+  it('should be able to load previously selected knacks', () => {
+    const mock = {
+      ...mockKnack(),
+      subthemeName: "Magent"
+    };
+    fixture = TestBed.createComponent(CharacterMagicSubthemeComponent);
+    component = fixture.componentInstance;
+    component.subtheme = mockSubtheme(SubthemeType.Magent, ThemeStrength.Minor);
+    component.previouslySelectedKnacks = [mock];
+    component.knackDisplayToggle = true;
+    component.generalThemePoint = ThemeStrength.None;
+    fixture.detectChanges();
+    expect(component.selectedKnacks.length).toEqual(1);
+  });
+
+  it('should hide selected knack/spells/build when viewing a different spell sphere/ magic subtheme', () => {
+    fixture = TestBed.createComponent(CharacterMagicSubthemeComponent);
+    component = fixture.componentInstance;
+    component.subtheme = mockSubtheme(SubthemeType.Magent, ThemeStrength.Minor);
+    component.previouslySelectedKnacks = [mockKnack()];
+    component.knackDisplayToggle = true;
+    component.generalThemePoint = ThemeStrength.None;
+    fixture.detectChanges();
+    expect(component.selectedKnacks.length).toEqual(0);
+  });
+
+  it('should not be able to select a subtheme if the subthemePointCap and the subtheme strength are both 0', () => {
+    component.subtheme = new Subtheme(SubthemeType.Magent, ThemeStrength.None);
+    expect(component.subtheme.themeStrength).toEqual(0);
+    component.subthemePointCap = 0;
+    fixture.detectChanges();
+    spyOn(component, "selectSubtheme");
+    const themeBtn = fixture.debugElement.query(By.css(".subthemeSelectBtn"));
+    themeBtn.nativeElement.click();
+    fixture.detectChanges();
+    expect(themeBtn.nativeElement.innerText).toBe("Select Subtheme");
+    expect(component.selectSubtheme).not.toHaveBeenCalled();
+  });
+
+  it('should only display feature bonus if they are 0g', () => {
+    component.generalThemePoint = ThemeStrength.None;
+    fixture.detectChanges();
+    const feature = fixture.debugElement.queryAll(By.css("#featureRow"));
+    const general = fixture.debugElement.queryAll(By.css("#generalRow"));
+    expect(feature.length).toEqual(1);
+    expect(general.length).toEqual(0);
+  });
+
+  it('general bonus if they have 1 general', () => {
+    component.generalThemePoint = ThemeStrength.Minor;
+    fixture.detectChanges();
+    const feature = fixture.debugElement.queryAll(By.css("#featureRow"));
+    const general = fixture.debugElement.queryAll(By.css("#generalRow"));
+    expect(feature.length).toEqual(0);
+    expect(general.length).toEqual(1);
+  });
+
+  it('should be able to hide knacks if the character cannot select knacks', () => {
+    component.generalThemePoint = ThemeStrength.None;
+    fixture.detectChanges();
+    const knackButton = fixture.debugElement.queryAll(By.css("#displayKnackButton"));
+    expect(knackButton.length).toEqual(0);
+  });
+
+  it('should be able to display knacks if they are a 1g', () => {
+    component.generalThemePoint = ThemeStrength.Minor;
+    fixture.detectChanges();
+    const knackButton = fixture.debugElement.queryAll(By.css("#displayKnackButton"));
+    expect(knackButton.length).toEqual(1);
+  });
+
+  it('should be able to display knacks if they are a 3m', () => {
+    component.subtheme = mockSubtheme(SubthemeType.Shaman, ThemeStrength.None);
+    component.subthemePointCap = 3;
+    fixture.detectChanges();
+    const knackButton = fixture.debugElement.queryAll(By.css("#displayKnackButton"));
+    expect(knackButton.length).toEqual(1);
+  });
+
+  it('should be able to select a character build within the magic subtheme', () => {
+    expect(true).toBeFalsy();
+  });
+
+  it('should be able to increment the number of spells they can pick if they are a 2m', () => {
+    component.characterLevel = Level.One;
+    component.subtheme = mockSubtheme(SubthemeType.Cleric, ThemeStrength.None);
+    component.subthemePointCap = 2;
+    component.generalThemePoint = ThemeStrength.None;
+    fixture.detectChanges();
+    expect(component.getNumberOfSpells()).toEqual(4);
+    component.generalThemePoint = ThemeStrength.Minor;
+    fixture.detectChanges();
+    expect(component.getNumberOfSpells()).toEqual(5);
+
+  });
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(CharacterMagicSubthemeComponent);
+    component = fixture.componentInstance;
+    component.subtheme = mockSubtheme(SubthemeType.Magent, ThemeStrength.Minor); // this means subtheme is selected
+    component.characterLevel = Level.One;
+    component.knackDisplayToggle = true;
+    component.generalThemePoint = ThemeStrength.Minor;
+    fixture.detectChanges();
+  });
+
+  it('should prevent you from selecting knacks, builds and spells unless you have chosen the subtheme', () => {
+    unselectedSubthemeSetup();
+    component.subthemePointCap = 1;
+    let knacks = fixture.debugElement.queryAll(By.css(".knackButton"));
+    expect(knacks[0].nativeElement.classList.contains("disabled")).toBeTruthy();
+    const selectSubtheme = fixture.debugElement.query(By.css(".subthemeSelectBtn")).nativeElement;
+    selectSubtheme.click();
+    component.numberOfKnacksToSelect = 1;
+    fixture.detectChanges();
+    knacks = fixture.debugElement.queryAll(By.css(".knackButton"));
+    expect(knacks[0].nativeElement.classList.contains("disabled")).toBeFalsy();
   });
 
   it('should be able to get knackData', () => {
@@ -119,11 +324,13 @@ describe('CharacterMagicSubthemeComponent', () => {
   });
 
   it('should be able to determine how many knacks we can select', () => {
+    component.generalThemePoint = ThemeStrength.None;
+    component.ngOnChanges();
     expect(component.numberOfKnacksToSelect).toEqual(0);
     component.generalThemePoint = ThemeStrength.Minor;
     component.ngOnChanges();
     expect(component.numberOfKnacksToSelect).toEqual(1);
-    component.subtheme = mockSubtheme(SubthemeType.Archmage, ThemeStrength.Greater);
+    component.subtheme = mockSubtheme(SubthemeType.Shaman, ThemeStrength.Greater);
     component.ngOnChanges();
     expect(component.numberOfKnacksToSelect).toEqual(2);
   });
@@ -159,173 +366,6 @@ describe('CharacterMagicSubthemeComponent', () => {
     selectorDisplay = fixture.debugElement.queryAll(By.css(".selectedKnackDisplay"));
     expect(selectorDisplay.length).toEqual(1);
     expect(selectorDisplay[0].nativeElement.innerText).toContain(mock.name);
-  });
-
-  it('should be able to actually selected a magic subtheme', () => {
-    unselectedSubthemeSetup();
-    const mock = mockSubtheme(SubthemeType.Magent, ThemeStrength.Minor);
-    component.subthemePointCap = 1;
-    spyOn(component.submitter, "emit");
-    let selectSubtheme = fixture.debugElement.queryAll(By.css(".subthemeSelectBtn"));
-    expect(selectSubtheme.length).toEqual(1);
-    expect(selectSubtheme[0].nativeElement.innerText).toBe("Select Subtheme");
-    selectSubtheme[0].nativeElement.click();
-    fixture.detectChanges();
-    selectSubtheme = fixture.debugElement.queryAll(By.css(".subthemeSelectBtn"));
-    expect(selectSubtheme[0].nativeElement.innerText).toBe("Deselect Subtheme");
-    expect(component.submitter.emit).toHaveBeenCalledWith(
-      {
-        subtheme: mock,
-        knacks: component.selectedKnacks
-      });
-
-  });
-
-  it('should prevent you from selecting knacks, builds and spells unless you have chosen the subtheme', () => {
-    unselectedSubthemeSetup();
-    component.subthemePointCap = 1;
-    let knacks = fixture.debugElement.queryAll(By.css(".knackButton"));
-    expect(knacks[0].nativeElement.classList.contains("disabled")).toBeTruthy();
-    const selectSubtheme = fixture.debugElement.query(By.css(".subthemeSelectBtn")).nativeElement;
-    selectSubtheme.click();
-    component.numberOfKnacksToSelect = 1;
-    fixture.detectChanges();
-    knacks = fixture.debugElement.queryAll(By.css(".knackButton"));
-    expect(knacks[0].nativeElement.classList.contains("disabled")).toBeFalsy();
-  });
-
-  it('should reset any selected knacks/spells and builds when deselected a magical subtheme', fakeAsync(() => {
-    spyOn(modalService, "open").and.returnValue({
-      componentInstance: {
-        bodyText: "awesome"
-      },
-      result: Promise.resolve(true)
-
-    });
-    component.selectedKnacks.push(mockKnack());
-    component.selectSubtheme(); // deselects the current subtheme
-    tick();
-    expect(component.selectedKnacks.length).toEqual(0);
-  }));
-
-   it('should give the user a warning message when deselecting a subtheme that their selections will be lost', fakeAsync(() => {
-    spyOn(component, "resetSubtheme");
-    spyOn(modalService, "open").and.returnValue({
-      componentInstance: {
-        bodyText: "awesome"
-      },
-      result: Promise.resolve(true)
-    });
-    component.numberOfKnacksToSelect = 1;
-    const knackBtn = fixture.debugElement.query(By.css(".knackButton")).nativeElement;
-    knackBtn.click();
-    fixture.detectChanges();
-    const selectSubtheme = fixture.debugElement.query(By.css(".subthemeSelectBtn")).nativeElement;
-    selectSubtheme.click();
-    fixture.detectChanges();
-    expect(modalService.open).toHaveBeenCalled();
-    tick();
-    expect(component.resetSubtheme).toHaveBeenCalled();
-  }));
-
-  it('should have knack buttons disabled if knacks can not be selected', () => {
-    let knacks = fixture.debugElement.queryAll(By.css(".knackButton"));
-    expect(knacks[0].nativeElement.classList.contains("disabled")).toBeTruthy();
-    component.generalThemePoint = ThemeStrength.Minor;
-    component.ngOnChanges();
-    fixture.detectChanges();
-    knacks = fixture.debugElement.queryAll(By.css(".knackButton"));
-    expect(knacks[0].nativeElement.classList.contains("disabled")).toBeFalsy();
-  });
-
-  it('should only give a popup confirmation if some change has been made to a knack after selecting the knack', () => {
-    const selectSubtheme = fixture.debugElement.query(By.css(".subthemeSelectBtn")).nativeElement;
-    selectSubtheme.click();
-    fixture.detectChanges();
-    expect(component.subtheme.themeStrength).toEqual(ThemeStrength.None);
-  });
-
-  it('should be able to load previously selected knacks', () => {
-    const mock = {
-      ...mockKnack(),
-      subthemeName: "Magent"
-    };
-    fixture = TestBed.createComponent(CharacterMagicSubthemeComponent);
-    component = fixture.componentInstance;
-    component.subtheme = mockSubtheme(SubthemeType.Magent, ThemeStrength.Minor);
-    component.previouslySelectedKnacks = [mock];
-    component.knackDisplayToggle = true;
-    component.generalThemePoint = ThemeStrength.None;
-    fixture.detectChanges();
-    expect(component.selectedKnacks.length).toEqual(1);
-  });
-
-  it('should hide selected knack/spells/build when viewing a different spell sphere/ magic subtheme', () => {
-    fixture = TestBed.createComponent(CharacterMagicSubthemeComponent);
-    component = fixture.componentInstance;
-    component.subtheme = mockSubtheme(SubthemeType.Magent, ThemeStrength.Minor);
-    component.previouslySelectedKnacks = [mockKnack()];
-    component.knackDisplayToggle = true;
-    component.generalThemePoint = ThemeStrength.None;
-    fixture.detectChanges();
-    expect(component.selectedKnacks.length).toEqual(0);
-  });
-
-  it('should not be able to select a subtheme if the subthemePointCap and the subtheme strength are both 0', () => {
-    component.subtheme = new Subtheme(SubthemeType.Magent, ThemeStrength.None);
-    expect(component.subtheme.themeStrength).toEqual(0);
-    component.subthemePointCap = 0;
-    fixture.detectChanges();
-    spyOn(component, "selectSubtheme");
-    const themeBtn = fixture.debugElement.query(By.css(".subthemeSelectBtn"));
-    themeBtn.nativeElement.click();
-    fixture.detectChanges();
-    expect(themeBtn.nativeElement.innerText).toBe("Select Subtheme");
-    expect(component.selectSubtheme).not.toHaveBeenCalled();
-  });
-
-  it('should only display feature bonus if they are 0g', () => {
-    const feature = fixture.debugElement.queryAll(By.css("#featureRow"));
-    const general = fixture.debugElement.queryAll(By.css("#generalRow"));
-    expect(feature.length).toEqual(1);
-    expect(general.length).toEqual(0);
-  });
-
-  it('general bonus if they have 1 general', () => {
-    component.generalThemePoint = ThemeStrength.Minor;
-    fixture.detectChanges();
-    const feature = fixture.debugElement.queryAll(By.css("#featureRow"));
-    const general = fixture.debugElement.queryAll(By.css("#generalRow"));
-    expect(feature.length).toEqual(0);
-    expect(general.length).toEqual(1);
-  });
-
-  it('should be able to hide knacks if the character cannot select knacks', () => {
-    const knackButton = fixture.debugElement.queryAll(By.css("#displayKnackButton"));
-    expect(knackButton.length).toEqual(0);
-  });
-
-  it('should be able to display knacks if they are a 1g', () => {
-    component.generalThemePoint = ThemeStrength.Minor;
-    fixture.detectChanges();
-    const knackButton = fixture.debugElement.queryAll(By.css("#displayKnackButton"));
-    expect(knackButton.length).toEqual(1);
-  });
-
-  it('should be able to display knacks if they are a 3m', () => {
-    component.subtheme = mockSubtheme(SubthemeType.Shaman, ThemeStrength.None);
-    component.subthemePointCap = 3;
-    fixture.detectChanges();
-    const knackButton = fixture.debugElement.queryAll(By.css("#displayKnackButton"));
-    expect(knackButton.length).toEqual(1);
-  });
-
-  it('should be able to select a character build within the magic subtheme', () => {
-    expect(true).toBeFalsy();
-  });
-
-  it('should be able to increment the number of spells they can pick if they are 1g 1m', () => {
-    expect(true).toBeFalsy();
   });
 
 });
