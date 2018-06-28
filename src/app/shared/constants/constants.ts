@@ -14,7 +14,7 @@ import {BonusByLevel, NumberBonusByLevel} from "../character/bonus-by-level";
 import {Bonus} from "../character/bonus";
 import {MagentSpellList, SpellWardenSpellList} from "./spells/minor-spell-constants";
 import {Spell} from "../spells/spell";
-import {AssassinSpellList, ClericBlessings, ClericSpellList, DruidSpellList, WarriorMageSpellList} from "./spells/lesser-spell-constants";
+import {AssassinSpellList, ClericBlessingOfTheHoly, ClericBlessingOfTheStalwart, ClericHolyBuild, ClericSpellList, ClericStalwartBuild, DruidSpellList, WarriorMageSigilPowers, WarriorMageSpellList} from "./spells/lesser-spell-constants";
 import {SpellRequirement} from "../spells/enums/spell-requirement.enum";
 import {ShamanSpellList} from "./spells/greater-spell-constants";
 
@@ -249,7 +249,13 @@ export const TWO_MAGIC_SPELLS = {
     } as NumberBonusByLevel,
     AdrenalinePowers: [],
     PowerPointAbilities: [],
-    SpecialPowers: null,
+    SpecialPowers: [
+      {
+        name: "Blessing of the Stalwart",
+        powers: WarriorMageSigilPowers(),
+        requirement: SpellRequirement.Special
+      } as SpecialPower
+    ],
     ImplementAttack: new Spell(),
     Spells: WarriorMageSpellList(),
     NumberOfSpellsToSelect: [4, 5, 5, 6, 6, 7, 7, 7, 7, 7],
@@ -378,17 +384,24 @@ export const TWO_MAGIC_SPELLS = {
       Reverence: [4, 4, 5, 6, 7, 8, 9, 10, 11, 12],
       ConcentratedFortune: [4, 4, 5, 6, 7, 7, 8, 9, 10, 11],
     } as NumberBonusByLevel,
-    SpecialPowers: [{
-      name: "Blessing",
-      powers: ClericBlessings(),
-      numberOfSelections: 2,
-      requirement: SpellRequirement.ZeroGeneral
-    }, {
-      name: "Blessing 2",
-      powers: ClericBlessings(),
-      numberOfSelections: 2,
-      requirement: SpellRequirement.OneGeneral
-    }],
+    SpecialPowers: [
+      {
+        name: "Blessing of the Holy",
+        powers: [ClericBlessingOfTheHoly()],
+        requirement: SpellRequirement.ZeroGeneral
+      }, {
+        name: "Blessing of the Stalwart",
+        powers: [ClericBlessingOfTheStalwart()],
+        requirement: SpellRequirement.ZeroGeneral
+      }, {
+        name: "Order of the Holy",
+        powers: ClericHolyBuild(),
+        requirement: SpellRequirement.OneGeneral
+      }, {
+        name: "Order of the Stalwart",
+        powers: ClericStalwartBuild(),
+        requirement: SpellRequirement.OneGeneral
+      }],
     ImplementAttack: new Spell(),
     Spells: ClericSpellList(),
     NumberOfSpellsToSelect: [4, 5, 5, 6, 6, 7, 7, 7, 7, 7],
@@ -992,9 +1005,7 @@ export class Feature {
 export class SpecialPower {
   name: string;
   powers: Spell[];
-  numberOfSelections: number;
   requirement: SpellRequirement;
-
 }
 
 export interface SpellSphere {

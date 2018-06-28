@@ -176,7 +176,7 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
     return result;
   }
 
-  getSpecialPowers(): SpecialPower {
+  getSpecialPowers(): SpecialPower[] {
     const result = SUBTHEME_BONUS[this.subtheme.subthemeName][SpellSelectionType.SpecialPowers];
     return result;
   }
@@ -198,6 +198,21 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
       });
     }
     return result;
+  }
+
+  /**
+   * cycles through all special powers of a sphere to see if any are special, if they are this returns true.  Special powers are a special kind of build that is similiar to a build but needs to be done in parallel.  Examples are the necromancer's minion spell choice of the warrior mage's sigil power
+   * @returns {boolean}
+   */
+  isSphereSpecial(): boolean {
+    if (this.getSpecialPowers()) {
+      for (const power of this.getSpecialPowers()) {
+        if (power.requirement === SpellRequirement.Special) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   private findIndexOfKnackByName(element: Knack, array: Knack[]): number {

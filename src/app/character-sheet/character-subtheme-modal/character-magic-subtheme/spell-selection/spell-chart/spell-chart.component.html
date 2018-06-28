@@ -2,8 +2,8 @@
      class="px-2"
      *ngFor="let effect of spell.spellEffectText; let index=index"
 >
-  <label class="font-weight-bold label{{index}}">{{effect.type | castleCase}}:</label><br>
-  <p class="spellEffect{{index}} spellTextMargin">{{effect.text}}</p>
+  <label class="font-weight-bold label{{index}}" *ngIf="effect.type">{{effect.type | castleCase}}:</label><br>
+  <p class="spellEffect{{index}} spellTextMargin" *ngIf="effect.text">{{effect.text}}</p>
   <table id="{{effect.type+index}}Table"
          class="table table-bordered"
          *ngFor="let chart of getSpellRoll(effect.spellChart); let chartIndex = index">

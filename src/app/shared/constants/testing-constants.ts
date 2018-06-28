@@ -22,6 +22,8 @@ import {SpellChart} from "../spells/spell-chart";
 import {AreaOfEffectTypes} from "../area-of-effect/area-of-effect-types.enum";
 import {LevelRange} from "../spells/enums/level-range.enum";
 import {AllDefenseType} from "../character/physical-defense/physical-defense-type.enum";
+import {SpecialPower} from "./constants";
+import {SpellRequirement} from "../spells/enums/spell-requirement.enum";
 
 export function mockDropdownData() {
   return [
@@ -55,6 +57,14 @@ export function mockKnack() {
     text: "You get shanked",
     subthemeName: "Riposte"
   };
+}
+
+export function mockSpecialPower(): SpecialPower {
+  return {
+    name: "Order of awesome",
+    powers: [mockSpell(), mockSpell()],
+    requirement: SpellRequirement.Always
+  } as SpecialPower;
 }
 
 export function mockThemePoints() {

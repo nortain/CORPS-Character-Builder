@@ -1,7 +1,7 @@
 import {async, ComponentFixture, fakeAsync, inject, TestBed, tick} from '@angular/core/testing';
 
 import {CharacterMagicSubthemeComponent} from './character-magic-subtheme.component';
-import {mockKnack, mockSubtheme} from "../../../shared/constants/testing-constants";
+import {mockKnack, mockSpecialPower, mockSubtheme} from "../../../shared/constants/testing-constants";
 import {SubthemeType} from "../../../shared/theme-points/subthemes/subtheme-types.enum";
 import {ThemeStrength} from "../../../shared/theme-points/theme-strength.enum";
 import {MagicType, NumberToSelect} from "./magic-type.enum";
@@ -14,6 +14,7 @@ import {Subtheme} from "../../../shared/theme-points/subthemes/subtheme";
 import {SpellSelectionComponent} from "./spell-selection/spell-selection.component";
 import {SpellChartComponent} from "./spell-selection/spell-chart/spell-chart.component";
 import {Level} from "../../../shared/character/level.enum";
+import {BuildSelectionComponent} from "./spell-selection/build-selection/build-selection.component";
 
 describe('CharacterMagicSubthemeComponent', () => {
   let component: CharacterMagicSubthemeComponent;
@@ -32,7 +33,7 @@ describe('CharacterMagicSubthemeComponent', () => {
     TestBed.configureTestingModule({
       imports: [SharedModule, NgbModule.forRoot()],
       providers: [NgbModal, NgbModalStack],
-      declarations: [CharacterMagicSubthemeComponent, SpellSelectionComponent, SpellChartComponent],
+      declarations: [CharacterMagicSubthemeComponent, SpellSelectionComponent, SpellChartComponent, BuildSelectionComponent],
     })
       .compileComponents();
   }));
@@ -366,6 +367,16 @@ describe('CharacterMagicSubthemeComponent', () => {
     selectorDisplay = fixture.debugElement.queryAll(By.css(".selectedKnackDisplay"));
     expect(selectorDisplay.length).toEqual(1);
     expect(selectorDisplay[0].nativeElement.innerText).toContain(mock.name);
+  });
+
+  it('should be able to determine if a sphere has a special power', () => {
+    component.subtheme = mockSubtheme(SubthemeType.Magent, ThemeStrength.Minor);
+    fixture.detectChanges();
+    expect(component.isSphereSpecial()).toBeFalsy();
+    component.subtheme = mockSubtheme(SubthemeType.WarriorMage, ThemeStrength.Lesser);
+    fixture.detectChanges();
+    expect(component.isSphereSpecial()).toBeTruthy();
+
   });
 
 });

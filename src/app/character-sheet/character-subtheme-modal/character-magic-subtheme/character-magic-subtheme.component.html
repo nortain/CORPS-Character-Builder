@@ -46,18 +46,25 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-12" *ngFor="let power of getSpecialPowers(); let powerIndex = index">
-      <corps-spell-selection
-        *ngIf="power.requirement === generalThemePoint || power.requirement === spellRequirement.Always"
-        [propertyName]="power.name"
+    <div class="col-12">
+      <corps-build-selection *ngIf="isSphereSpecial()"
+        [propertyName]="'Special'"
         [subtheme]="subtheme"
         [generalThemePoint]="generalThemePoint"
-        [previouslySelectedSpell]="null"
-        [numberOfSpellsToSelect]="power.numberOfSelections - 1"
-        [propertyIndex]="powerIndex"
-        [propertyType]="spellSelectionType.SpecialPowers"
+        [previouslySelectedBuild]="null"
+        [buildsToChooseFrom]="getSpecialPowers()"
+        [isSpecialOnly]="spellRequirement.Special"
       >
-      </corps-spell-selection>
+      </corps-build-selection>
+      <corps-build-selection
+        [propertyName]="'Build'"
+        [subtheme]="subtheme"
+        [generalThemePoint]="generalThemePoint"
+        [previouslySelectedBuild]="null"
+        [buildsToChooseFrom]="getSpecialPowers()"
+        [isSpecialOnly]="null"
+      >
+      </corps-build-selection>
     </div>
   </div>
   <div class="row" *ngIf="generalThemePoint > 0 || subthemePointCap === 3">
@@ -127,7 +134,7 @@
         [subtheme]="subtheme"
         [generalThemePoint]="generalThemePoint"
         [previouslySelectedSpell]="null"
-        [numberOfSpellsToSelect]="getMagicText(magicType.NumberOfSpellsToSelect)"
+        [numberOfSpellsToSelect]="getNumberOfSpells()"
         [propertyType]="spellSelectionType.Spells"
       >
       </corps-spell-selection>

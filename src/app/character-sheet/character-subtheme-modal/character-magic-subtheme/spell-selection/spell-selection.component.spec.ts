@@ -29,7 +29,7 @@ describe('SpellSelectionComponent', () => {
   }));
 
   /**
-   * By default we assume we're using a mock subtheme with no general theme point, can select 1 spell of type Spells and that the display toggle button has been clicked
+   * By default we assume we're using a mock subtheme with no general theme point, can select 1 build of type Spells and that the display toggle button has been clicked
    */
   beforeEach(() => {
     fixture = TestBed.createComponent(SpellSelectionComponent);
@@ -104,7 +104,7 @@ describe('SpellSelectionComponent', () => {
   describe('while openning the spell and mocking out the data coming back', function () {
 
 
-    /*Same setup as above only now we open the spell and mock out the data coming back*/
+    /*Same setup as above only now we open the build and mock out the data coming back*/
     beforeEach(() => {
       fixture = TestBed.createComponent(SpellSelectionComponent);
       component = fixture.componentInstance;
@@ -184,13 +184,6 @@ describe('SpellSelectionComponent', () => {
         });
       }
     });
-
-    it('should be able to choose a build if they are 0g and 1m', () => {
-      expect(true).toBeFalsy();
-    });
-
-
-
   });
 
   describe('testing that fields are hidden when empty', function () {

@@ -28,10 +28,13 @@ export class SpellChartComponent implements OnInit {
 
   getSpellRoll(spellChart: SpellChart[]): Dice[] {
     const spellDice = [];
-    for (const chart of spellChart) {
-      spellDice.push(this.diceService.getArrayOfDice(chart.dieSize, chart.minValue, chart.maxValue, chart.levelRange, chart.damageKeyword, chart.modifier));
+    if (spellChart) {
+      for (const chart of spellChart) {
+        spellDice.push(this.diceService.getArrayOfDice(chart.dieSize, chart.minValue, chart.maxValue, chart.levelRange, chart.damageKeyword, chart.modifier));
+      }
+      return spellDice;
     }
-    return spellDice;
+    return null;
   }
 
 }

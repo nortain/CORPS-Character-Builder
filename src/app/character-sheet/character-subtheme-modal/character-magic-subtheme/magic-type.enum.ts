@@ -5,7 +5,7 @@ export enum MagicType {
   ImplementKnacks = "ImplementKnacks",
   ImplementKnacksData = "ImplementKnacksData",
   ImplementAttack = "ImplementAttack",
-  Spells = "Spells",
+  Spells = "Spells"
 }
 
 export enum NumberToSelect {

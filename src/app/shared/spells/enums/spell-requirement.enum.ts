@@ -1,5 +1,6 @@
 export enum SpellRequirement {
-  ZeroGeneral,
-  OneGeneral,
-  Always
+  ZeroGeneral = 0,
+  OneGeneral = 1,
+  Always,
+  Special
 }
