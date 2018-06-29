@@ -18,6 +18,7 @@ import {CharacterMagicSubthemeComponent} from "../character-magic-subtheme/chara
 import {nextTick} from "q";
 import {SpellSelectionComponent} from "../character-magic-subtheme/spell-selection/spell-selection.component";
 import {SpellChartComponent} from "../character-magic-subtheme/spell-selection/spell-chart/spell-chart.component";
+import {BuildSelectionComponent} from "../character-magic-subtheme/spell-selection/build-selection/build-selection.component";
 
 describe('CharacterSubthemeModalComponent', () => {
   let component: CharacterSubthemeModalComponent;
@@ -27,7 +28,7 @@ describe('CharacterSubthemeModalComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [SharedModule, NgbModule.forRoot()],
-      declarations: [SubthemeComponent, CharacterSubthemeModalComponent, CharacterMagicSubthemeComponent, SpellSelectionComponent, SpellChartComponent],
+      declarations: [SubthemeComponent, CharacterSubthemeModalComponent, CharacterMagicSubthemeComponent, SpellSelectionComponent, SpellChartComponent, BuildSelectionComponent],
       providers: [NgbDropdownConfig, NgbModal, NgbActiveModal, NgbModalStack]
     })
       .compileComponents();
