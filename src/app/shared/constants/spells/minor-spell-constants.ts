@@ -2,7 +2,7 @@ import {Spell, SpellEffectType} from "../../spells/spell";
 import {AllDefenseType, PhysicalDefenseType} from "../../character/physical-defense/physical-defense-type.enum";
 import {SpellKeyword} from "../../spells/enums/spell-keywords.enum";
 import {AreaOfEffect} from "../../area-of-effect/area-of-effect";
-import {AreaOfEffectTypes} from "../../area-of-effect/area-of-effect-types.enum";
+import {AreaOfEffectType} from "../../area-of-effect/area-of-effect-type.enum";
 import {ActionType} from "../../action/action-type.enum";
 import {DurationType} from "../../duration/duration-type.enum";
 import {Dice} from "../../character/dice/dice";
@@ -23,7 +23,7 @@ export function MagentSpellList(): Spell[] {
       areaOfEffect: {
         numberOfTargets: 1,
         range: 1,
-        type: AreaOfEffectTypes.Ranged
+        type: AreaOfEffectType.Ranged
       },
       castAction: ActionType.Standard,
       duration: [DurationType.Immediate],

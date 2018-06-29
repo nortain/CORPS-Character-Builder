@@ -1,6 +1,6 @@
 import {ThemeStrength} from "../theme-strength.enum";
 import {ThemeType} from "../theme-type.enum";
-import {SubthemeType} from "./subtheme-types.enum";
+import {SubthemeType} from "./subtheme-type.enum";
 import {SubthemePipe} from "./subtheme.pipe";
 import {SubthemeBonus} from "./subtheme-bonus.enum";
 import {Level} from "../../character/level.enum";

@@ -7,7 +7,7 @@ import {MagicType, SpellSelectionType} from "../magic-type.enum";
 import {SharedModule} from "../../../../shared/shared.module";
 import {NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {NgbModalStack} from "@ng-bootstrap/ng-bootstrap/modal/modal-stack";
-import {SubthemeType} from "../../../../shared/theme-points/subthemes/subtheme-types.enum";
+import {SubthemeType} from "../../../../shared/theme-points/subthemes/subtheme-type.enum";
 import {By} from "@angular/platform-browser";
 
 import {Spell, SpellEffectType} from "../../../../shared/spells/spell";

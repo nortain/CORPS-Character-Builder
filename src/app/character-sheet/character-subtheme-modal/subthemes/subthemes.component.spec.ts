@@ -3,7 +3,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {SubthemeComponent} from './subtheme.component';
 import {SharedModule} from "../../../shared/shared.module";
 import {NgbActiveModal, NgbDropdownConfig} from "@ng-bootstrap/ng-bootstrap";
-import {SubthemeType} from "../../../shared/theme-points/subthemes/subtheme-types.enum";
+import {SubthemeType} from "../../../shared/theme-points/subthemes/subtheme-type.enum";
 import {ThemeStrength} from "../../../shared/theme-points/theme-strength.enum";
 import {Subtheme} from "../../../shared/theme-points/subthemes/subtheme";
 import {DropdownValueObject} from "../../../shared/ui/dropdown/dropdown-value-object";

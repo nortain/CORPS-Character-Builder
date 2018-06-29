@@ -3,7 +3,7 @@
  * second value is max strength assignable to sub theme
  * third value, the name of the subtheme type for easy self referencing
  */
-import {ThemeType} from "../theme-type.enum";
+
 
 export enum SubthemeType {
   WeaponSpecialization = "Combat,Greater,WeaponSpecialization",

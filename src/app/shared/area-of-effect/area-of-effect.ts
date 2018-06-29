@@ -1,9 +1,9 @@
-import {AreaOfEffectTypes} from "./area-of-effect-types.enum";
+import {AreaOfEffectType} from "./area-of-effect-type.enum";
 
 
 export class AreaOfEffect {
   numberOfTargets: number;
   range: number;
-  type: AreaOfEffectTypes;
+  type: AreaOfEffectType;
 
 }

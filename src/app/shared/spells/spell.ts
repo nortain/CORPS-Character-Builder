@@ -9,7 +9,7 @@ import {DurationType} from "../duration/duration-type.enum";
 import {SpellDamageKeyword} from "./enums/spell-damage-keyword.enum";
 import {SpellType} from "./enums/spell-type.enum";
 import {SpellChart} from "./spell-chart";
-import {CasterType} from "../theme-points/subthemes/subtheme-types.enum";
+import {CasterType} from "../theme-points/subthemes/subtheme-type.enum";
 
 export enum SpellEffectType {
   OnHit = "OnHit",

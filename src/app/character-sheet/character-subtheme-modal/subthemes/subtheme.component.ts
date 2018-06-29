@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angula
 import {Subtheme} from "../../../shared/theme-points/subthemes/subtheme";
 import {DropdownValueObject} from "../../../shared/ui/dropdown/dropdown-value-object";
 import {AttributeService} from "../../../shared/attribute/attribute.service";
-import {SubthemeType} from "../../../shared/theme-points/subthemes/subtheme-types.enum";
+import {SubthemeType} from "../../../shared/theme-points/subthemes/subtheme-type.enum";
 import {ThemeType} from "../../../shared/theme-points/theme-type.enum";
 import {STARTING_THEME_POINTS, SUBTHEME_BONUS} from "../../../shared/constants/constants";
 import {DropdownComponent} from "../../../shared/ui/dropdown/dropdown.component";

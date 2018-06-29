@@ -45,7 +45,7 @@
             >
               <label for="keywords" class="font-weight-bold">Keywords: </label>
               <span id="keywords">{{spell.damageKeyword}}<span
-                *ngIf="spell.damageKeyword && spell.spellKeywords.length > 0">, </span>
+                *ngIf="spell.damageKeyword && spell.spellKeywords && spell.spellKeywords.length > 0">, </span>
                 <span id="otherKeywords"
                       *ngFor="let keyword of spell.spellKeywords; let keywordIndex = index">
                 {{keyword | subthemesPipe}}<span *ngIf="spell.spellKeywords[keywordIndex+1]">, </span>

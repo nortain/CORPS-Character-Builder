@@ -3,7 +3,7 @@ import {Subtheme} from "../../../shared/theme-points/subthemes/subtheme";
 import {Feature, Knack, SpecialPower, SUBTHEME_BONUS} from "../../../shared/constants/constants";
 import {MagicType, NumberToSelect, SpellSelectionType} from "./magic-type.enum";
 import {ThemeStrength} from "../../../shared/theme-points/theme-strength.enum";
-import {SubthemeType} from "../../../shared/theme-points/subthemes/subtheme-types.enum";
+import {SubthemeType} from "../../../shared/theme-points/subthemes/subtheme-type.enum";
 import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
 import {ConfirmationComponent} from "../../../shared/ui/confirmation/confirmation.component";
 import {SpellRequirement} from "../../../shared/spells/enums/spell-requirement.enum";

@@ -8,7 +8,7 @@ import {PhysicalDefense} from "../character/physical-defense/physical-defense";
 import {ThemePointsContainer} from "../theme-points/theme-points-container";
 import {ThemeStrength} from "../theme-points/theme-strength.enum";
 import {Subtheme} from "../theme-points/subthemes/subtheme";
-import {CasterType, SubthemeType} from "../theme-points/subthemes/subtheme-types.enum";
+import {CasterType, SubthemeType} from "../theme-points/subthemes/subtheme-type.enum";
 import {SpellType} from "../spells/enums/spell-type.enum";
 import {SpellKeyword} from "../spells/enums/spell-keywords.enum";
 import {SpellDamageKeyword} from "../spells/enums/spell-damage-keyword.enum";
@@ -19,7 +19,7 @@ import {DurationType} from "../duration/duration-type.enum";
 import {Dice} from "../character/dice/dice";
 import {DiceSize} from "../character/dice/dice-size.enum";
 import {SpellChart} from "../spells/spell-chart";
-import {AreaOfEffectTypes} from "../area-of-effect/area-of-effect-types.enum";
+import {AreaOfEffectType} from "../area-of-effect/area-of-effect-type.enum";
 import {LevelRange} from "../spells/enums/level-range.enum";
 import {AllDefenseType} from "../character/physical-defense/physical-defense-type.enum";
 import {SpecialPower} from "./constants";
@@ -99,7 +99,7 @@ export function mockAreaOfEffect(): AreaOfEffect {
   return {
     numberOfTargets: 2,
     range: 10,
-    type: AreaOfEffectTypes.Zone
+    type: AreaOfEffectType.Zone
 
   } as AreaOfEffect;
 }

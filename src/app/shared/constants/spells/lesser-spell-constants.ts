@@ -3,7 +3,7 @@ import {AllDefenseType, PhysicalDefenseType} from "../../character/physical-defe
 import {SpellKeyword} from "../../spells/enums/spell-keywords.enum";
 
 import {AreaOfEffect} from "../../area-of-effect/area-of-effect";
-import {AreaOfEffectTypes} from "../../area-of-effect/area-of-effect-types.enum";
+import {AreaOfEffectType} from "../../area-of-effect/area-of-effect-type.enum";
 import {ActionType} from "../../action/action-type.enum";
 import {DurationType} from "../../duration/duration-type.enum";
 import {Dice} from "../../character/dice/dice";
@@ -24,7 +24,7 @@ export function ClericHolyBuild(): Spell[] {
       areaOfEffect: {
         numberOfTargets: 1,
         range: 3,
-        type: AreaOfEffectTypes.Burst
+        type: AreaOfEffectType.Burst
       },
       castAction: ActionType.Standard,
       duration: [DurationType.Immediate, DurationType.UntilTriggered],
@@ -66,7 +66,7 @@ export function ClericHolyBuild(): Spell[] {
       areaOfEffect: {
         numberOfTargets: 1,
         range: 1,
-        type: AreaOfEffectTypes.Self
+        type: AreaOfEffectType.Self
       },
       castAction: ActionType.Minor,
       duration: [DurationType.Immediate],
@@ -83,58 +83,48 @@ export function ClericHolyBuild(): Spell[] {
 
 export function ClericStalwartBuild(): Spell[] {
   return [
-    ClericBlessingOfTheHoly(),
+    ClericBlessingOfTheStalwart(),
     {
       ...new Spell(),
-      name: "Divine Aid",
-      spellType: SpellType.FriendlyUtility,
-      spellKeywords: [SpellKeyword.Fortify],
+      name: "Repentance",
+      spellType: SpellType.DirectEffect,
+      damageKeyword: SpellDamageKeyword.Radiant,
       areaOfEffect: {
         numberOfTargets: 1,
         range: 3,
-        type: AreaOfEffectTypes.Burst
+        type: AreaOfEffectType.Burst
       },
-      castAction: ActionType.Standard,
-      duration: [DurationType.Immediate, DurationType.UntilTriggered],
-      special: ["You must spend 1 adrenaline point to cast this spell"],
+      castAction: ActionType.Move,
+      duration: [DurationType.Decaying],
+      critRoll: new Dice(1, DiceSize.d8, 0),
+      special: ["You must spend 1 adrenaline point to cast this spell",
+        "If you have paid the concentration cost of a spell you are concentrating this turn you can cast this spell as a minor action"],
       spellEffectText: [
         {
           type: SpellEffectType.AdrenalinePoint,
-          text: "A friendly creature gains temporary hit points equal to the fortify value below and can spend a recovery to gain additional hit points.  The creature also gains a +2 to their next attack roll they make this combat.  If that attack hits it deals bonus damage equal to the bonus damage value",
+          text: "Make an attack that deals radiant damage equal to the amount listed below + Magic attack bonus and applies daze 2",
           spellChart: [
             {
               ...new SpellChart(),
-              rowName: SpellKeyword.Fortify,
+              rowName: "Damage",
               levelRange: LevelRange.FIFTHTEEN,
-              dieSize: DiceSize.None,
-              minValue: 7.67,
-              maxValue: 23.01
+              dieSize: DiceSize.d10,
+              minValue: 8.52,
+              maxValue: 35.29
             },
-          ]
-        },
-        {
-          spellChart: [
-            {
-              ...new SpellChart(),
-              rowName: "Damage Bonus",
-              levelRange: LevelRange.FIFTHTEEN,
-              dieSize: DiceSize.None,
-              minValue: 9,
-              maxValue: 49
-            }
           ]
         }
       ]
     },
     {
       ...new Spell(),
-      name: "Favor",
+      name: "Inner Resolve",
       spellType: SpellType.FriendlyUtility,
       spellKeywords: [SpellKeyword.Manipulate],
       areaOfEffect: {
         numberOfTargets: 1,
         range: 1,
-        type: AreaOfEffectTypes.Self
+        type: AreaOfEffectType.Self
       },
       castAction: ActionType.Minor,
       duration: [DurationType.Immediate],
@@ -142,12 +132,23 @@ export function ClericStalwartBuild(): Spell[] {
       spellEffectText: [
         {
           type: SpellEffectType.PowerPoint,
-          text: "Gain 2 additional blessings that does not count towards your 1 blessing per turn limit"
+          text: "If you have 2 or more blessings you can invoke your blessing as a swift action this turn.  If you do, you can increase the slide distance by 1 and slide the target even if they are not adjacent to another ally.  You can also increase the total damage you deal when invoking your blessing by the amount listed below limit",
+          spellChart: [
+            {
+              ...new SpellChart(),
+              rowName: "Bonus Damage",
+              levelRange: LevelRange.TEN,
+              dieSize: DiceSize.None,
+              minValue: 3.33,
+              maxValue: 9.99
+            }
+          ]
         }
       ]
     }
   ];
 }
+
 
 export function ClericBlessingOfTheHoly(): Spell {
   return {
@@ -158,7 +159,7 @@ export function ClericBlessingOfTheHoly(): Spell {
     areaOfEffect: {
       numberOfTargets: 1,
       range: 10,
-      type: AreaOfEffectTypes.Burst
+      type: AreaOfEffectType.Burst
     },
     castAction: ActionType.Minor,
     duration: [DurationType.Immediate],
@@ -192,7 +193,7 @@ export function ClericBlessingOfTheStalwart(): Spell {
     areaOfEffect: {
       numberOfTargets: 1,
       range: 10,
-      type: AreaOfEffectTypes.Burst
+      type: AreaOfEffectType.Burst
     },
     castAction: ActionType.Minor,
     duration: [DurationType.Immediate],
@@ -228,7 +229,7 @@ export function ClericSpellList(): Spell[] {
     areaOfEffect: {
       numberOfTargets: 1,
       range: 10,
-      type: AreaOfEffectTypes.Ranged
+      type: AreaOfEffectType.Ranged
     },
     castAction: ActionType.Standard,
     critRoll: new Dice(1, DiceSize.d10, 2),
@@ -276,7 +277,7 @@ export function DruidSpellList(): Spell[] {
     areaOfEffect: {
       numberOfTargets: 1,
       range: 1,
-      type: AreaOfEffectTypes.Ranged
+      type: AreaOfEffectType.Ranged
     },
     castAction: ActionType.Standard,
     critRoll: new Dice(1, DiceSize.d10, 2),
@@ -318,7 +319,7 @@ export function AssassinSpellList(): Spell[] {
     areaOfEffect: {
       numberOfTargets: 1,
       range: 1,
-      type: AreaOfEffectTypes.Ranged
+      type: AreaOfEffectType.Ranged
     },
     castAction: ActionType.Standard,
     critRoll: new Dice(1, DiceSize.d10, 2),
@@ -360,7 +361,7 @@ export function WarriorMageSigilPowers(): Spell[] {
     areaOfEffect: {
       numberOfTargets: 1,
       range: 1,
-      type: AreaOfEffectTypes.Ranged
+      type: AreaOfEffectType.Ranged
     },
     castAction: ActionType.Standard,
     critRoll: new Dice(1, DiceSize.d10, 2),
@@ -402,7 +403,7 @@ export function WarriorMageSpellList(): Spell[] {
     areaOfEffect: {
       numberOfTargets: 1,
       range: 1,
-      type: AreaOfEffectTypes.Ranged
+      type: AreaOfEffectType.Ranged
     },
     castAction: ActionType.Standard,
     critRoll: new Dice(1, DiceSize.d10, 2),

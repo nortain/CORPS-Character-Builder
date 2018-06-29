@@ -2,7 +2,7 @@ import {async, ComponentFixture, fakeAsync, inject, TestBed, tick} from '@angula
 
 import {CharacterMagicSubthemeComponent} from './character-magic-subtheme.component';
 import {mockKnack, mockSpecialPower, mockSubtheme} from "../../../shared/constants/testing-constants";
-import {SubthemeType} from "../../../shared/theme-points/subthemes/subtheme-types.enum";
+import {SubthemeType} from "../../../shared/theme-points/subthemes/subtheme-type.enum";
 import {ThemeStrength} from "../../../shared/theme-points/theme-strength.enum";
 import {MagicType, NumberToSelect} from "./magic-type.enum";
 import {ONE_MAGIC_SPELLS} from "../../../shared/constants/constants";

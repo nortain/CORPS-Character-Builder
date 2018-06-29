@@ -9,7 +9,7 @@ import {actionClickDropdownItemX, actionGetDropdownValue, mockSubtheme, mockThem
 import {ThemeStrength} from "../../../shared/theme-points/theme-strength.enum";
 import {ThemePointsContainer} from "../../../shared/theme-points/theme-points-container";
 import {SubthemeContainer} from "../../../shared/theme-points/subthemes/subtheme-container";
-import {SubthemeType} from "../../../shared/theme-points/subthemes/subtheme-types.enum";
+import {SubthemeType} from "../../../shared/theme-points/subthemes/subtheme-type.enum";
 import {Subtheme} from "../../../shared/theme-points/subthemes/subtheme";
 import {By} from "@angular/platform-browser";
 import {DropdownComponent} from "../../../shared/ui/dropdown/dropdown.component";

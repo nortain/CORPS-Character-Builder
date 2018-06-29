@@ -1,6 +1,6 @@
 import {Spell, SpellEffect, SpellEffectType} from "../../spells/spell";
 import {SpellKeyword} from "../../spells/enums/spell-keywords.enum";
-import {AreaOfEffectTypes} from "../../area-of-effect/area-of-effect-types.enum";
+import {AreaOfEffectType} from "../../area-of-effect/area-of-effect-type.enum";
 import {ActionType} from "../../action/action-type.enum";
 import {DurationType} from "../../duration/duration-type.enum";
 import {LevelRange} from "../../spells/enums/level-range.enum";
@@ -19,7 +19,7 @@ export function ShamanSpellList(): Spell[] {
       areaOfEffect: {
         numberOfTargets: 1,
         range: 1,
-        type: AreaOfEffectTypes.Ranged
+        type: AreaOfEffectType.Ranged
       },
       castAction: ActionType.Deliberate,
       duration: [DurationType.Immediate],

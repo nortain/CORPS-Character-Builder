@@ -1,5 +1,5 @@
 import {Subtheme} from "../../theme-points/subthemes/subtheme";
-import {SubthemeType} from "../../theme-points/subthemes/subtheme-types.enum";
+import {SubthemeType} from "../../theme-points/subthemes/subtheme-type.enum";
 
 export interface SubthemeObject {
   combat: Subtheme[];
