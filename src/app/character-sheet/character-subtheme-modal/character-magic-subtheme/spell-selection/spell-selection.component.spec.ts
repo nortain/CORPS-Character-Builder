@@ -7,7 +7,7 @@ import {MagicType, SpellSelectionType} from "../magic-type.enum";
 import {SharedModule} from "../../../../shared/shared.module";
 import {NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {NgbModalStack} from "@ng-bootstrap/ng-bootstrap/modal/modal-stack";
-import {SubthemeType} from "../../../../shared/theme-points/subthemes/subtheme-type.enum";
+import {CasterType, SubthemeType} from "../../../../shared/theme-points/subthemes/subtheme-type.enum";
 import {By} from "@angular/platform-browser";
 
 import {Spell, SpellEffectType} from "../../../../shared/spells/spell";
@@ -160,9 +160,9 @@ describe('SpellSelectionComponent', () => {
 
     it('should be able to display a hit chart for the default spell effect', () => {
       const labelResults = ["SpellEffect", "OnHit", "Bounce", "OnMiss"];
-      const ans1 = ["1d8+8",	"1d8+9",	"2d8+7",	"2d8+9",	"2d8+10"];
-      const ans2 = ["2d8+12",	"2d8+14",	"2d8+16",	"3d8+13",	"3d8+15"];
-      const ans3 = ["3d8+17",	"3d8+19",	"3d8+21",	"4d8+18",	"4d8+20"];
+      const ans1 = ["1d8+8", "1d8+9", "2d8+7", "2d8+9", "2d8+10"];
+      const ans2 = ["2d8+12", "2d8+14", "2d8+16", "3d8+13", "3d8+15"];
+      const ans3 = ["3d8+17", "3d8+19", "3d8+21", "4d8+18", "4d8+20"];
       for (let i = 0; i < 4; i++) {
         const tableSelector = "#" + labelResults[i].trim() + i + "Table";
         const rowSelector1 = "." + labelResults[i].trim() + "TableChart1";
@@ -184,7 +184,27 @@ describe('SpellSelectionComponent', () => {
         });
       }
     });
+
+    it('should send all selections to parent each time a new selection or deselection is made', () => {
+      const spell = mockSpell();
+      spyOn(component.submitter, "emit");
+      component.selectSpell(spell);
+      expect(component.submitter.emit).toHaveBeenCalledWith({
+        subtheme: component.subtheme,
+        spells: component.selectedSpells
+      });
+    });
+
+    it('should be able to load previously selected spells', () => {
+      const fakoSpell = mockSpell();
+      fakoSpell.sphereName = CasterType.Magent;
+      const previousSpells = [fakoSpell];
+      component.previouslySelectedSpell = previousSpells;
+      component.ngOnInit();
+      expect(component.selectedSpells).toBe(previousSpells);
+    });
   });
+
 
   describe('testing that fields are hidden when empty', function () {
 

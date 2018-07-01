@@ -68,9 +68,10 @@ export class SpellSelectionComponent implements OnInit, OnChanges {
   openSpells: Spell[];
   actionType = ActionType;
 
-  constructor(private aoeService: AreaOfEffectService, private actionService: ActionService, private diceService: DiceService) {
+  constructor(private aoeService: AreaOfEffectService, private actionService: ActionService) {
     this.selectionDisplayToggle = false;
     this.resetSpellSelection();
+    this.submitter = new EventEmitter<{ subtheme: Subtheme, spells: Spell[]}>();
   }
 
   ngOnInit() {
@@ -147,6 +148,7 @@ export class SpellSelectionComponent implements OnInit, OnChanges {
         this.selectedSpells.splice(index, 1);
       }
     }
+    this.submitter.emit({subtheme: this.subtheme, spells: this.selectedSpells});
   }
 
   /**
