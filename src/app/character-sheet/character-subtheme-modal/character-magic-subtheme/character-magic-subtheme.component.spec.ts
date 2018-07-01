@@ -1,7 +1,7 @@
 import {async, ComponentFixture, fakeAsync, inject, TestBed, tick} from '@angular/core/testing';
 
 import {CharacterMagicSubthemeComponent} from './character-magic-subtheme.component';
-import {mockKnack, mockSpecialPower, mockSubtheme} from "../../../shared/constants/testing-constants";
+import {mockKnack, mockPreviouslySelectedBuild, mockSpecialPower, mockSubtheme} from "../../../shared/constants/testing-constants";
 import {SubthemeType} from "../../../shared/theme-points/subthemes/subtheme-type.enum";
 import {ThemeStrength} from "../../../shared/theme-points/theme-strength.enum";
 import {MagicType, NumberToSelect} from "./magic-type.enum";
@@ -154,7 +154,7 @@ describe('CharacterMagicSubthemeComponent', () => {
     fixture = TestBed.createComponent(CharacterMagicSubthemeComponent);
     component = fixture.componentInstance;
     component.subtheme = mockSubtheme(SubthemeType.Magent, ThemeStrength.Minor);
-    component.previouslySelectedKnacks = [mock];
+    component.previouslySelectedBuild = [mock];
     component.knackDisplayToggle = true;
     component.generalThemePoint = ThemeStrength.None;
     fixture.detectChanges();
@@ -165,7 +165,7 @@ describe('CharacterMagicSubthemeComponent', () => {
     fixture = TestBed.createComponent(CharacterMagicSubthemeComponent);
     component = fixture.componentInstance;
     component.subtheme = mockSubtheme(SubthemeType.Magent, ThemeStrength.Minor);
-    component.previouslySelectedKnacks = [mockKnack()];
+    component.previouslySelectedBuild = [mockKnack()];
     component.knackDisplayToggle = true;
     component.generalThemePoint = ThemeStrength.None;
     fixture.detectChanges();
@@ -376,6 +376,29 @@ describe('CharacterMagicSubthemeComponent', () => {
     component.subtheme = mockSubtheme(SubthemeType.WarriorMage, ThemeStrength.Lesser);
     fixture.detectChanges();
     expect(component.isSphereSpecial()).toBeTruthy();
+
+  });
+
+  it('should be able to load previously selected spells', () => {
+    const mock = mockPreviouslySelectedBuild();
+    component.previouslySelectedBuild = mock;
+    component.ngOnInit();
+    expect(component.isSubthemeSelected()).toBeTruthy();
+    expect(component.selectedKnacks).toBe(mock.knacks);
+    // expect(component)
+
+
+  });
+
+  it('should be able to saving selected spells', () => {
+
+  });
+
+  it('should be able to load previously selected builds', () => {
+
+  });
+
+  it('should be able to save selected builds', () => {
 
   });
 

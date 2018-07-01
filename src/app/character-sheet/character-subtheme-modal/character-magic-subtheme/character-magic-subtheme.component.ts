@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {Subtheme} from "../../../shared/theme-points/subthemes/subtheme";
-import {Feature, Knack, SpecialPower, SUBTHEME_BONUS} from "../../../shared/constants/constants";
+import {CasterBuild, Feature, Knack, SpecialPower, SUBTHEME_BONUS} from "../../../shared/constants/constants";
 import {MagicType, NumberToSelect, SpellSelectionType} from "./magic-type.enum";
 import {ThemeStrength} from "../../../shared/theme-points/theme-strength.enum";
 import {SubthemeType} from "../../../shared/theme-points/subthemes/subtheme-type.enum";
@@ -8,6 +8,7 @@ import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
 import {ConfirmationComponent} from "../../../shared/ui/confirmation/confirmation.component";
 import {SpellRequirement} from "../../../shared/spells/enums/spell-requirement.enum";
 import {Level} from "../../../shared/character/level.enum";
+import {Spell} from "../../../shared/spells/spell";
 
 @Component({
   selector: 'corps-character-magic-subtheme',
@@ -18,10 +19,15 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
 
   @Input() subtheme: Subtheme;
   @Input() generalThemePoint: ThemeStrength;
-  @Input() previouslySelectedKnacks: Knack[];
+  @Input() previouslySelectedBuild: {
+    knacks: Knack[],
+    build: SpecialPower,
+    spells: Spell[],
+    specialBuild: SpecialPower
+  };
   @Input() subthemePointCap: number;
   @Input() characterLevel: Level;
-  @Output() submitter: EventEmitter<{ subtheme: Subtheme, knacks: Knack[] }>;
+  @Output() submitter: EventEmitter<CasterBuild>;
 
   magicType = MagicType;
   spellSelectionType = SpellSelectionType;
@@ -40,6 +46,12 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
    */
   selectedKnacks: Knack[];
   /**
+   * maintains an array of spells that have been selected
+   */
+  selectedSpells: Spell[];
+  selectedBuild: SpecialPower;
+  selectedSpecialBuild: SpecialPower;
+  /**
    * maintains an array of knacks that are toggled open
    */
   openKnacks: Knack[];
@@ -51,9 +63,9 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    if (this.previouslySelectedKnacks && this.previouslySelectedKnacks.length > 0) {
-      if (this.previouslySelectedKnacks[0].subthemeName === this.subtheme.subthemeName) {
-        this.selectedKnacks = this.previouslySelectedKnacks;
+    if (this.previouslySelectedBuild && this.previouslySelectedBuild.length > 0) {
+      if (this.previouslySelectedBuild[0].subthemeName === this.subtheme.subthemeName) {
+        this.selectedKnacks = this.previouslySelectedBuild;
       }
     }
     this.determineNumberOfSelectableKnacks();

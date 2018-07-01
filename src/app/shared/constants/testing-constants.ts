@@ -59,6 +59,24 @@ export function mockKnack() {
   };
 }
 
+export function mockPreviouslySelectedBuild() {
+  const mock = {
+    ...mockKnack(),
+    subthemeName: "Magent"
+  };
+  const build = mockSpecialPower();
+  const special = mockSpecialPower();
+  special.requirement = SpellRequirement.Special;
+  const spells = [mockSpell()];
+  return {
+    spells: spells,
+    build: build,
+    specialBuild: special,
+    knacks: [mock]
+  };
+
+}
+
 export function mockSpecialPower(): SpecialPower {
   return {
     name: "Order of awesome",

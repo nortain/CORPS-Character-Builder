@@ -17,6 +17,7 @@ import {Spell} from "../spells/spell";
 import {AssassinSpellList, ClericBlessingOfTheHoly, ClericBlessingOfTheStalwart, ClericHolyBuild, ClericSpellList, ClericStalwartBuild, DruidSpellList, WarriorMageSigilPowers, WarriorMageSpellList} from "./spells/lesser-spell-constants";
 import {SpellRequirement} from "../spells/enums/spell-requirement.enum";
 import {ShamanSpellList} from "./spells/greater-spell-constants";
+import {Subtheme} from "../theme-points/subthemes/subtheme";
 
 
 export const NON_HUMAN_AVAILABLE_ATTRIBUTE_POINTS = 4;
@@ -1006,6 +1007,14 @@ export class SpecialPower {
   name: string;
   powers: Spell[];
   requirement: SpellRequirement;
+}
+
+export class CasterBuild {
+  spells?: Spell[];
+  build?: SpecialPower;
+  specialBuild?: SpecialPower;
+  knacks?: Knack[];
+  subtheme?: Subtheme;
 }
 
 export interface SpellSphere {
