@@ -60,6 +60,7 @@ export class BuildSelectionComponent implements OnInit {
   constructor(private aoeService: AreaOfEffectService, private actionService: ActionService) {
     this.selectionDisplayToggle = false;
     this.resetSpellSelection();
+    this.submitter = new EventEmitter<{ subtheme: Subtheme, power: SpecialPower }>();
   }
 
   /**
@@ -147,6 +148,7 @@ export class BuildSelectionComponent implements OnInit {
         this.selectedBuild = null;
       }
     }
+    this.submitter.emit({subtheme: this.subtheme, power: this.selectedBuild});
   }
 
   isValidBuild(build: SpecialPower): boolean {
