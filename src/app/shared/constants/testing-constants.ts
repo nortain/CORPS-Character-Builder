@@ -22,7 +22,7 @@ import {SpellChart} from "../spells/spell-chart";
 import {AreaOfEffectType} from "../area-of-effect/area-of-effect-type.enum";
 import {LevelRange} from "../spells/enums/level-range.enum";
 import {AllDefenseType} from "../character/physical-defense/physical-defense-type.enum";
-import {SpecialPower} from "./constants";
+import {CasterBuild, SpecialPower} from "./constants";
 import {SpellRequirement} from "../spells/enums/spell-requirement.enum";
 
 export function mockDropdownData() {
@@ -59,11 +59,11 @@ export function mockKnack() {
   };
 }
 
-export function mockPreviouslySelectedBuild() {
-  const mock = {
+export function mockBuild(): CasterBuild {
+  const mock = [{
     ...mockKnack(),
     subthemeName: "Magent"
-  };
+  }];
   const build = mockSpecialPower();
   const special = mockSpecialPower();
   special.requirement = SpellRequirement.Special;
@@ -72,7 +72,8 @@ export function mockPreviouslySelectedBuild() {
     spells: spells,
     build: build,
     specialBuild: special,
-    knacks: [mock]
+    knacks: mock,
+    subtheme: mockSubtheme()
   };
 
 }

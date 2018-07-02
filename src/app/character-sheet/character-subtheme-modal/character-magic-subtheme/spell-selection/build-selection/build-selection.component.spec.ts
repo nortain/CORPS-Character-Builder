@@ -40,7 +40,7 @@ describe('BuildSelectionComponent', () => {
     expect(component.selectedBuild).toBeNull();
   });
 
-  fit('should send all selections to parent each time a new selection or deselection is made', () => {
+  it('should send all selections to parent each time a new selection or deselection is made', () => {
     const power = mockSpecialPower();
     spyOn(component.submitter, "emit");
     component.selectBuild(power);
@@ -50,7 +50,7 @@ describe('BuildSelectionComponent', () => {
     });
   });
 
-  fit('should be able to load previously selected spells', () => {
+  it('should be able to load previously selected spells', () => {
     const previousPower = mockSpecialPower();
     component.previouslySelectedBuild = previousPower;
     component.buildsToChooseFrom = [previousPower];

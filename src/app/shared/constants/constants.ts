@@ -1010,11 +1010,11 @@ export class SpecialPower {
 }
 
 export class CasterBuild {
-  spells?: Spell[];
-  build?: SpecialPower;
-  specialBuild?: SpecialPower;
-  knacks?: Knack[];
-  subtheme?: Subtheme;
+  spells: Spell[] = [];
+  build: SpecialPower = null;
+  specialBuild: SpecialPower = null;
+  knacks: Knack[] = [];
+  subtheme: Subtheme = null;
 }
 
 export interface SpellSphere {

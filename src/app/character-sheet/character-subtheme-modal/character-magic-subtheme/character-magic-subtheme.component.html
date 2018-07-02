@@ -51,7 +51,7 @@
         [propertyName]="'Special'"
         [subtheme]="subtheme"
         [generalThemePoint]="generalThemePoint"
-        [previouslySelectedBuild]="null"
+        [previouslySelectedBuild]="previouslySelectedBuild.specialBuild"
         [buildsToChooseFrom]="getSpecialPowers()"
         [isSpecialOnly]="spellRequirement.Special"
       >
@@ -60,7 +60,7 @@
         [propertyName]="'Build'"
         [subtheme]="subtheme"
         [generalThemePoint]="generalThemePoint"
-        [previouslySelectedBuild]="null"
+        [previouslySelectedBuild]="previouslySelectedBuild.build"
         [buildsToChooseFrom]="getSpecialPowers()"
         [isSpecialOnly]="null"
       >
@@ -75,9 +75,9 @@
           {{knackDisplayToggle ? 'Hide' :
           'Show'}} Implement Knacks
         </button>
-        <div class="selectedKnackDisplay float-right row" *ngIf="selectedKnacks.length > 0">
-          <label class="font-weight-bold col">Selected {{selectedKnacks.length === 1 ? 'Knack' : 'Knacks'}}:</label>
-          <div class="btn-sm bg-success" *ngFor="let selectDisplayKnack of selectedKnacks">
+        <div class="selectedKnackDisplay float-right row" *ngIf="selectedBuild?.knacks?.length > 0">
+          <label class="font-weight-bold col">Selected {{selectedBuild?.knacks?.length === 1 ? 'Knack' : 'Knacks'}}:</label>
+          <div class="btn-sm bg-success" *ngFor="let selectDisplayKnack of selectedBuild.knacks">
             {{selectDisplayKnack.name | castleCase}}
           </div>
         </div>
@@ -133,7 +133,7 @@
       <corps-spell-selection
         [subtheme]="subtheme"
         [generalThemePoint]="generalThemePoint"
-        [previouslySelectedSpell]="null"
+        [previouslySelectedSpell]="previouslySelectedBuild.spells"
         [numberOfSpellsToSelect]="getNumberOfSpells()"
         [propertyType]="spellSelectionType.Spells"
       >

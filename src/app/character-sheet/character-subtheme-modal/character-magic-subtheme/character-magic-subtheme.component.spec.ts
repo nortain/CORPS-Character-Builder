@@ -1,11 +1,11 @@
 import {async, ComponentFixture, fakeAsync, inject, TestBed, tick} from '@angular/core/testing';
 
 import {CharacterMagicSubthemeComponent} from './character-magic-subtheme.component';
-import {mockKnack, mockPreviouslySelectedBuild, mockSpecialPower, mockSubtheme} from "../../../shared/constants/testing-constants";
+import {mockKnack, mockBuild, mockSpecialPower, mockSubtheme, mockSpell} from "../../../shared/constants/testing-constants";
 import {SubthemeType} from "../../../shared/theme-points/subthemes/subtheme-type.enum";
 import {ThemeStrength} from "../../../shared/theme-points/theme-strength.enum";
 import {MagicType, NumberToSelect} from "./magic-type.enum";
-import {ONE_MAGIC_SPELLS} from "../../../shared/constants/constants";
+import {CasterBuild, Knack, ONE_MAGIC_SPELLS, SpecialPower} from "../../../shared/constants/constants";
 import {By} from "@angular/platform-browser";
 import {SharedModule} from "../../../shared/shared.module";
 import {NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
@@ -15,8 +15,10 @@ import {SpellSelectionComponent} from "./spell-selection/spell-selection.compone
 import {SpellChartComponent} from "./spell-selection/spell-chart/spell-chart.component";
 import {Level} from "../../../shared/character/level.enum";
 import {BuildSelectionComponent} from "./spell-selection/build-selection/build-selection.component";
+import {SpellRequirement} from "../../../shared/spells/enums/spell-requirement.enum";
 
-describe('CharacterMagicSubthemeComponent', () => {
+
+fdescribe('CharacterMagicSubthemeComponent', () => {
   let component: CharacterMagicSubthemeComponent;
   let fixture: ComponentFixture<CharacterMagicSubthemeComponent>;
   let modalService;
@@ -64,6 +66,8 @@ describe('CharacterMagicSubthemeComponent', () => {
   it('should be able to actually selected a magic subtheme', () => {
     unselectedSubthemeSetup();
     const mock = mockSubtheme(SubthemeType.Magent, ThemeStrength.Minor);
+    const build = mockBuild();
+    build.subtheme = mock;
     component.subthemePointCap = 1;
     spyOn(component.submitter, "emit");
     let selectSubtheme = fixture.debugElement.queryAll(By.css(".subthemeSelectBtn"));
@@ -71,12 +75,13 @@ describe('CharacterMagicSubthemeComponent', () => {
     expect(selectSubtheme[0].nativeElement.innerText).toBe("Select Subtheme");
     selectSubtheme[0].nativeElement.click();
     fixture.detectChanges();
+    component.ngOnChanges();
     selectSubtheme = fixture.debugElement.queryAll(By.css(".subthemeSelectBtn"));
     expect(selectSubtheme[0].nativeElement.innerText).toBe("Deselect Subtheme");
     expect(component.submitter.emit).toHaveBeenCalledWith(
       {
+        ...new CasterBuild(),
         subtheme: mock,
-        knacks: component.selectedKnacks
       });
 
   });
@@ -89,13 +94,13 @@ describe('CharacterMagicSubthemeComponent', () => {
       result: Promise.resolve(true)
 
     });
-    component.selectedKnacks.push(mockKnack());
+    component.selectedBuild.knacks.push(mockKnack());
     component.selectSubtheme(); // deselects the current subtheme
     tick();
-    expect(component.selectedKnacks.length).toEqual(0);
+    expect(component.selectedBuild.knacks.length).toEqual(0);
   }));
 
-   it('should give the user a warning message when deselecting a subtheme that their selections will be lost', fakeAsync(() => {
+  it('should give the user a warning message when deselecting a subtheme that their selections will be lost', fakeAsync(() => {
     spyOn(component, "resetSubtheme");
     spyOn(modalService, "open").and.returnValue({
       componentInstance: {
@@ -148,28 +153,32 @@ describe('CharacterMagicSubthemeComponent', () => {
 
   it('should be able to load previously selected knacks', () => {
     const mock = {
-      ...mockKnack(),
-      subthemeName: "Magent"
-    };
+      ...new CasterBuild(),
+      knacks: [mockKnack()],
+      subtheme: {
+        ...mockSubtheme(),
+        subthemeName: "Magent"
+      }
+    } as CasterBuild;
     fixture = TestBed.createComponent(CharacterMagicSubthemeComponent);
     component = fixture.componentInstance;
     component.subtheme = mockSubtheme(SubthemeType.Magent, ThemeStrength.Minor);
-    component.previouslySelectedBuild = [mock];
+    component.previouslySelectedBuild = mock;
     component.knackDisplayToggle = true;
-    component.generalThemePoint = ThemeStrength.None;
+    component.generalThemePoint = ThemeStrength.Minor;
     fixture.detectChanges();
-    expect(component.selectedKnacks.length).toEqual(1);
+    expect(component.selectedBuild.knacks.length).toEqual(1);
   });
 
-  it('should hide selected knack/spells/build when viewing a different spell sphere/ magic subtheme', () => {
+  it('should hide selected knack when viewing a different spell sphere/ magic subtheme', () => {
     fixture = TestBed.createComponent(CharacterMagicSubthemeComponent);
     component = fixture.componentInstance;
     component.subtheme = mockSubtheme(SubthemeType.Magent, ThemeStrength.Minor);
-    component.previouslySelectedBuild = [mockKnack()];
+    component.previouslySelectedBuild = {...new CasterBuild(), knacks: mockBuild().knacks};
     component.knackDisplayToggle = true;
     component.generalThemePoint = ThemeStrength.None;
     fixture.detectChanges();
-    expect(component.selectedKnacks.length).toEqual(0);
+    expect(component.selectedBuild.knacks.length).toEqual(0);
   });
 
   it('should not be able to select a subtheme if the subthemePointCap and the subtheme strength are both 0', () => {
@@ -226,7 +235,19 @@ describe('CharacterMagicSubthemeComponent', () => {
   });
 
   it('should be able to select a character build within the magic subtheme', () => {
-    expect(true).toBeFalsy();
+    const power = mockSpecialPower();
+    component.selectBuild(power);
+    fixture.detectChanges();
+    expect(component.selectedBuild.build).toBe(power);
+  });
+
+  it('should be able to select a characters unique special build', () => {
+    const specialBuild = mockSpecialPower();
+    specialBuild.requirement = SpellRequirement.Special;
+    component.selectBuild(specialBuild);
+    fixture.detectChanges();
+    expect(component.selectedBuild.specialBuild).toBe(specialBuild);
+
   });
 
   it('should be able to increment the number of spells they can pick if they are a 2m', () => {
@@ -307,10 +328,10 @@ describe('CharacterMagicSubthemeComponent', () => {
     component.numberOfKnacksToSelect = 1;
     const panels = fixture.debugElement.queryAll(By.css(".knackButton"));
     expect(panels.length).toEqual(4);
-    expect(component.selectedKnacks.length).toEqual(0);
+    expect(component.selectedBuild.knacks.length).toEqual(0);
     panels[0].nativeElement.click();
     fixture.detectChanges();
-    expect(component.selectedKnacks.length).toEqual(1);
+    expect(component.selectedBuild.knacks.length).toEqual(1);
   });
 
   it('should alter the css to indicate a knack has been selected', () => {
@@ -362,7 +383,7 @@ describe('CharacterMagicSubthemeComponent', () => {
     let selectorDisplay = fixture.debugElement.queryAll(By.css(".selectedKnackDisplay"));
     expect(selectorDisplay.length).toEqual(0);
     const mock = mockKnack();
-    component.selectedKnacks.push(mock);
+    component.selectedBuild.knacks.push(mock);
     fixture.detectChanges();
     selectorDisplay = fixture.debugElement.queryAll(By.css(".selectedKnackDisplay"));
     expect(selectorDisplay.length).toEqual(1);
@@ -379,27 +400,49 @@ describe('CharacterMagicSubthemeComponent', () => {
 
   });
 
-  it('should be able to load previously selected spells', () => {
-    const mock = mockPreviouslySelectedBuild();
+  it('should be able to load previously selected build', () => {
+    const mock = mockBuild();
+    mock.subtheme.subthemeName = "Magent";
     component.previouslySelectedBuild = mock;
     component.ngOnInit();
     expect(component.isSubthemeSelected()).toBeTruthy();
-    expect(component.selectedKnacks).toBe(mock.knacks);
-    // expect(component)
+    expect(component.selectedBuild.spells).toBe(mock.spells);
+    expect(component.selectedBuild.knacks).toBe(mock.knacks);
+    expect(component.selectedBuild.build).toBe(mock.build);
+    expect(component.selectedBuild.specialBuild).toBe(mock.specialBuild);
+    expect(component.selectedBuild.subtheme).toBe(mock.subtheme);
 
 
   });
 
   it('should be able to saving selected spells', () => {
+    spyOn(component.submitter, "emit");
+    const mock = [mockSpell()];
+    component.selectSpells(mock);
+    fixture.detectChanges();
+    component.ngOnChanges();
+    expect(component.selectedBuild.spells).toBe(mock);
+    expect(component.submitter.emit).toHaveBeenCalledWith({
+      ...new CasterBuild(),
+      spells: mock
+    });
 
   });
 
   it('should be able to load previously selected builds', () => {
-
+    const build = mockBuild();
+    build.subtheme.subthemeName = "Magent";
+    component.previouslySelectedBuild = build;
+    component.ngOnInit();
+    fixture.detectChanges();
+    expect(component.selectedBuild).toEqual(build);
   });
 
   it('should be able to save selected builds', () => {
-
+    spyOn(component.submitter, "emit");
+    const build = mockBuild();
+    component.selectedBuild = build;
+    component.ngOnChanges();
+    expect(component.submitter.emit).toHaveBeenCalledWith(build);
   });
-
 });
