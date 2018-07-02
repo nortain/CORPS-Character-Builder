@@ -144,7 +144,7 @@ describe('CharacterMagicSubthemeComponent', () => {
     expect(knacks[0].nativeElement.classList.contains("disabled")).toBeFalsy();
   });
 
-  fit('should disable knacks if you have reached your knack limit', () => {
+  it('should disable knacks if you have reached your knack limit', () => {
     component.generalThemePoint = ThemeStrength.Minor;
     fixture.detectChanges();
     let knacks = fixture.debugElement.queryAll(By.css(".knackButton"));
