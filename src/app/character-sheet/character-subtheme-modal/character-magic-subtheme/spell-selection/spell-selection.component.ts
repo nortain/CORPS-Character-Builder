@@ -71,7 +71,7 @@ export class SpellSelectionComponent implements OnInit, OnChanges {
   constructor(private aoeService: AreaOfEffectService, private actionService: ActionService) {
     this.selectionDisplayToggle = false;
     this.resetSpellSelection();
-    this.submitter = new EventEmitter<{ subtheme: Subtheme, spells: Spell[]}>();
+    this.submitter = new EventEmitter<{ subtheme: Subtheme, spells: Spell[] }>();
   }
 
   ngOnInit() {
@@ -140,13 +140,13 @@ export class SpellSelectionComponent implements OnInit, OnChanges {
   }
 
   selectSpell(spell: Spell) {
-    if (this.selectedSpells.length < this.numberOfSpellsToSelect) {
+    // can we select a spell
+    const index = this.findIndexOfSpellByName(spell, this.selectedSpells);
+    const hasThisSpellBeenSelected = index > -1;
+    if (hasThisSpellBeenSelected) {
+      this.selectedSpells.splice(index, 1);
+    } else if (this.selectedSpells.length < this.numberOfSpellsToSelect) {
       this.selectedSpells.push(spell);
-    } else {
-      const index = this.findIndexOfSpellByName(spell, this.selectedSpells);
-      if (index > -1) {
-        this.selectedSpells.splice(index, 1);
-      }
     }
     this.submitter.emit({subtheme: this.subtheme, spells: this.selectedSpells});
   }

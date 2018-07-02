@@ -203,6 +203,16 @@ describe('SpellSelectionComponent', () => {
       component.ngOnInit();
       expect(component.selectedSpells).toBe(previousSpells);
     });
+
+    fit('should deselect a spell if you try to select a spell that has already been selected', () => {
+      const fakoSpell = mockSpell();
+      component.numberOfSpellsToSelect = 5;
+      fakoSpell.sphereName = CasterType.Magent;
+      component.selectSpell(fakoSpell);
+      expect(component.selectedSpells).toEqual([fakoSpell]);
+      component.selectSpell(fakoSpell);
+      expect(component.selectedSpells).toEqual([]);
+    });
   });
 
 

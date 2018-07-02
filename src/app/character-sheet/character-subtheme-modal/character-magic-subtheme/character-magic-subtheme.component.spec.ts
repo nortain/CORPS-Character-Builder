@@ -18,7 +18,7 @@ import {BuildSelectionComponent} from "./spell-selection/build-selection/build-s
 import {SpellRequirement} from "../../../shared/spells/enums/spell-requirement.enum";
 
 
-fdescribe('CharacterMagicSubthemeComponent', () => {
+describe('CharacterMagicSubthemeComponent', () => {
   let component: CharacterMagicSubthemeComponent;
   let fixture: ComponentFixture<CharacterMagicSubthemeComponent>;
   let modalService;
