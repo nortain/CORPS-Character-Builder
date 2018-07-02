@@ -175,13 +175,12 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
   }
 
   selectKnack(knack: Knack) {
-    if (this.selectedBuild.knacks.length < this.numberOfKnacksToSelect) {
+    const index = this.findIndexOfKnackByName(knack, this.selectedBuild.knacks);
+    const hasKnackBeenSelected = index > -1;
+    if (hasKnackBeenSelected) {
+      this.selectedBuild.knacks.splice(index, 1);
+    } else if (this.selectedBuild.knacks.length < this.numberOfKnacksToSelect) {
       this.selectedBuild.knacks.push(knack);
-    } else {
-      const index = this.findIndexOfKnackByName(knack, this.selectedBuild.knacks);
-      if (index > -1) {
-        this.selectedBuild.knacks.splice(index, 1);
-      }
     }
   }
 

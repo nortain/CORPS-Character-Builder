@@ -48,12 +48,12 @@
   <div class="row">
     <div class="col-12">
       <corps-build-selection *ngIf="isSphereSpecial()"
-        [propertyName]="'Special'"
-        [subtheme]="subtheme"
-        [generalThemePoint]="generalThemePoint"
-        [previouslySelectedBuild]="previouslySelectedBuild.specialBuild"
-        [buildsToChooseFrom]="getSpecialPowers()"
-        [isSpecialOnly]="spellRequirement.Special"
+                             [propertyName]="'Special'"
+                             [subtheme]="subtheme"
+                             [generalThemePoint]="generalThemePoint"
+                             [previouslySelectedBuild]="previouslySelectedBuild.specialBuild"
+                             [buildsToChooseFrom]="getSpecialPowers()"
+                             [isSpecialOnly]="spellRequirement.Special"
       >
       </corps-build-selection>
       <corps-build-selection
@@ -88,7 +88,8 @@
             <div class="card-header" (click)="openKnack(knack)"><span class="name font-weight-bold">{{knack.name | castleCase}}</span>
               <button class="btn btn-sm knackButton float-right"
                       [ngClass]="{'disabled': !isSubthemeSelected() ||
-                    numberOfKnacksToSelect === 0,
+                    numberOfKnacksToSelect - selectedBuild.knacks.length === 0 &&
+                    !isKnackSelected(knack),
                      'btn-success': isKnackSelected(knack),
                      'btn-primary': !isKnackSelected(knack)
                     }"

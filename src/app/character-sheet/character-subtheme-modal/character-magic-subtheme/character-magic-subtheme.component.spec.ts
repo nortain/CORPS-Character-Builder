@@ -144,6 +144,17 @@ describe('CharacterMagicSubthemeComponent', () => {
     expect(knacks[0].nativeElement.classList.contains("disabled")).toBeFalsy();
   });
 
+  fit('should disable knacks if you have reached your knack limit', () => {
+    component.generalThemePoint = ThemeStrength.Minor;
+    fixture.detectChanges();
+    let knacks = fixture.debugElement.queryAll(By.css(".knackButton"));
+    knacks[0].nativeElement.click();
+    fixture.detectChanges();
+    knacks = fixture.debugElement.queryAll(By.css(".knackButton"));
+    expect(knacks[1].nativeElement.classList.contains("disabled")).toBeTruthy();
+    expect(knacks[0].nativeElement.classList.contains("disabled")).toBeFalsy();
+  });
+
   it('should only give a popup confirmation if some change has been made to a knack after selecting the knack', () => {
     const selectSubtheme = fixture.debugElement.query(By.css(".subthemeSelectBtn")).nativeElement;
     selectSubtheme.click();
