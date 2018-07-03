@@ -69,7 +69,7 @@ export class SpellSelectionComponent implements OnInit, OnChanges {
   actionType = ActionType;
 
   constructor(private aoeService: AreaOfEffectService, private actionService: ActionService) {
-    this.selectionDisplayToggle = false;
+    this.selectionDisplayToggle = true;
     this.resetSpellSelection();
     this.submitter = new EventEmitter<{ subtheme: Subtheme, spells: Spell[] }>();
   }

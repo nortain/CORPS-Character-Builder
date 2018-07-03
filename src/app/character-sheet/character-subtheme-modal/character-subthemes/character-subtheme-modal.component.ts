@@ -3,7 +3,7 @@ import {Subtheme} from "../../../shared/theme-points/subthemes/subtheme";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {SubthemeContainer} from "../../../shared/theme-points/subthemes/subtheme-container";
 import {ThemeType} from "../../../shared/theme-points/theme-type.enum";
-import {Knack} from "../../../shared/constants/constants";
+import {CasterBuild, Knack} from "../../../shared/constants/constants";
 import {Level} from "../../../shared/character/level.enum";
 
 
@@ -17,8 +17,11 @@ export class CharacterSubthemeModalComponent implements OnInit {
 
   @Input() subthemePoints: SubthemeContainer;
   @Input() characterLevel: Level;
+  @Input() previouslySelectedCasterBuild: CasterBuild;
   subthemeButtonsArray: Subtheme[];
   themeType = ThemeType;
+  selectedCasterBuild: CasterBuild;
+
   selectedSubtheme: Subtheme;
   // this feels like a hacky way of dealing with the model not updating but each time a new subtheme is selected these are to be toggled back forth.
   subthemeToggle: boolean;
@@ -32,6 +35,11 @@ export class CharacterSubthemeModalComponent implements OnInit {
     console.log("Out subthemePoints container at init of modal", this.subthemePoints);
     this.getAllPossibleSubthemes();
     this.selectedSubtheme = this.subthemeButtonsArray[0];
+    if (this.previouslySelectedCasterBuild) {
+      this.selectedCasterBuild = this.previouslySelectedCasterBuild;
+    } else {
+      this.selectedCasterBuild = new CasterBuild();
+    }
   }
 
   /**

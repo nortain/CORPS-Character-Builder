@@ -58,7 +58,7 @@ export class BuildSelectionComponent implements OnInit {
   vowelRegex = /[aeiou]/;
 
   constructor(private aoeService: AreaOfEffectService, private actionService: ActionService) {
-    this.selectionDisplayToggle = false;
+    this.selectionDisplayToggle = true;
     this.resetSpellSelection();
     this.submitter = new EventEmitter<{ subtheme: Subtheme, power: SpecialPower }>();
   }

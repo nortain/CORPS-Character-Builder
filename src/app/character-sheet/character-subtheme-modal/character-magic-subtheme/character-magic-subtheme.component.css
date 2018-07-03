@@ -6,3 +6,15 @@
   background-color: #ededed;
 }
 
+.rowEnder {
+  padding-bottom: 10px;
+}
+
+#displayKnackButton {
+  margin-top: -30px;
+}
+
+#openAllKnacks {
+  margin-top: -30px;
+}
+

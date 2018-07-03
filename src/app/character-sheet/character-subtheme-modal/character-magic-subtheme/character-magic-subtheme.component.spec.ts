@@ -43,10 +43,10 @@ describe('CharacterMagicSubthemeComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CharacterMagicSubthemeComponent);
     component = fixture.componentInstance;
-    component.subtheme = mockSubtheme(SubthemeType.Magent, ThemeStrength.Minor);
-    component.characterLevel = Level.One;
-    component.knackDisplayToggle = true;
-    component.generalThemePoint = ThemeStrength.None;
+    component.subtheme = mockSubtheme(SubthemeType.Magent, ThemeStrength.Minor); // we have selected magent
+    component.characterLevel = Level.One; // character level is one
+    component.knackDisplayToggle = true; // display knacks
+    component.generalThemePoint = ThemeStrength.None;  // no theme points in general so knacks should be hidden
     fixture.detectChanges();
   });
 
@@ -320,7 +320,7 @@ describe('CharacterMagicSubthemeComponent', () => {
   });
 
   it('should display the knack names correctly', () => {
-    const names = fixture.debugElement.queryAll(By.css(".name"));
+    const names = fixture.debugElement.queryAll(By.css(".knackName"));
     expect(names.length).toEqual(4);
     expect(names[0].nativeElement.innerText).toBe("Ranged Defender");
   });
@@ -455,5 +455,34 @@ describe('CharacterMagicSubthemeComponent', () => {
     component.selectedBuild = build;
     component.ngOnChanges();
     expect(component.submitter.emit).toHaveBeenCalledWith(build);
+  });
+
+  it('should be able to determine if all knacks are expanded or not', () => {
+    component.generalThemePoint = ThemeStrength.Minor;
+    fixture.detectChanges();
+    expect(component.shouldKnacksBeExpanded()).toBeTruthy();
+
+    const knackHeaders = fixture.debugElement.queryAll(By.css(".knackHeader"));
+    for (const knack of knackHeaders) { // open all of the headers
+      knack.nativeElement.click();
+    }
+    fixture.detectChanges();
+    expect(component.shouldKnacksBeExpanded()).toBeFalsy();
+  });
+
+  it('should be able to expand/collapse all knacks', () => {
+    component.generalThemePoint = ThemeStrength.Minor;
+    fixture.detectChanges();
+    expect(component.shouldKnacksBeExpanded()).toBeTruthy();
+    let expandAllBtn = fixture.debugElement.query(By.css("#openAllKnacks"));
+    expect(expandAllBtn.nativeElement.innerText).toBe("Expand All Knacks");
+    expandAllBtn.nativeElement.click();
+    fixture.detectChanges();
+    expect(component.shouldKnacksBeExpanded()).toBeFalsy();
+    expandAllBtn = fixture.debugElement.query(By.css("#openAllKnacks"));
+    expect(expandAllBtn.nativeElement.innerText).toBe("Collapse All Knacks");
+    expandAllBtn.nativeElement.click();
+    fixture.detectChanges();
+    expect(component.shouldKnacksBeExpanded()).toBeTruthy();
   });
 });

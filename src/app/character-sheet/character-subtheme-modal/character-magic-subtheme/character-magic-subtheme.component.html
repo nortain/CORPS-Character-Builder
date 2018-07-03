@@ -45,7 +45,7 @@
 
     </div>
   </div>
-  <div class="row">
+  <div class="row rowEnder">
     <div class="col-12">
       <corps-build-selection *ngIf="isSphereSpecial()"
                              [propertyName]="'Special'"
@@ -67,16 +67,22 @@
       </corps-build-selection>
     </div>
   </div>
-  <div class="row" *ngIf="generalThemePoint > 0 || subthemePointCap === 3">
+  <div class="row rowEnder" *ngIf="generalThemePoint > 0 || subthemePointCap === 3">
     <div class="col-12">
       <div class="container">
-        <label class="font-weight-bold">Implement Knacks: </label>
-        <button id="displayKnackButton" class="btn btn-outline-primary btn-sm" (click)="displayKnacks()">
+        <div class="row">
+          <label class="font-weight-bold">Implement Knacks: </label>
+        </div>
+        <button id="displayKnackButton" class="btn btn-outline-primary btn-sm float-right" (click)="displayKnacks()">
           {{knackDisplayToggle ? 'Hide' :
           'Show'}} Implement Knacks
         </button>
+        <button *ngIf="knackDisplayToggle" id="openAllKnacks" class="btn btn-outline-secondary btn-sm float-right" (click)="expandKnacks()">
+          {{shouldKnacksBeExpanded() ? 'Expand All Knacks' : 'Collapse All Knacks'}}
+        </button>
         <div class="selectedKnackDisplay float-right row" *ngIf="selectedBuild?.knacks?.length > 0">
-          <label class="font-weight-bold col">Selected {{selectedBuild?.knacks?.length === 1 ? 'Knack' : 'Knacks'}}:</label>
+          <label class="font-weight-bold col">Selected {{selectedBuild?.knacks?.length === 1 ? 'Knack' :
+            'Knacks'}}:</label>
           <div class="btn-sm bg-success" *ngFor="let selectDisplayKnack of selectedBuild.knacks">
             {{selectDisplayKnack.name | castleCase}}
           </div>
@@ -85,7 +91,7 @@
           <p>You can select {{numberOfKnacksToSelect}} {{numberOfKnacksToSelect === 1 ? 'knack' : 'knacks' }}</p>
           <div class="col-12" *ngFor="let knack of getKnackText()">
 
-            <div class="card-header" (click)="openKnack(knack)"><span class="name font-weight-bold">{{knack.name | castleCase}}</span>
+            <div class="card-header knackHeader" (click)="openKnack(knack)"><span class="knackName font-weight-bold">{{knack.name | castleCase}}</span>
               <button class="btn btn-sm knackButton float-right"
                       [ngClass]="{'disabled': !isSubthemeSelected() ||
                     numberOfKnacksToSelect - selectedBuild.knacks.length === 0 &&

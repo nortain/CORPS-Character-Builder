@@ -49,7 +49,7 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
 
   constructor(private modalService: NgbModal, private ref: ChangeDetectorRef) {
     this.resetSubtheme();
-    this.knackDisplayToggle = false;
+    this.knackDisplayToggle = true;
     this.submitter = new EventEmitter<CasterBuild>();
   }
 
@@ -90,6 +90,38 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
 
   displayKnacks() {
     this.knackDisplayToggle = !this.knackDisplayToggle;
+  }
+
+  /**
+   * this will return true if there is at least one knack that is not expanded.  Otherwise, if all knacks are expanded this will return false.  This is used to let the system know if the expandKnacks button/function should expand all knacks or collapse all knacks
+   * @returns {boolean}
+   */
+  shouldKnacksBeExpanded(): boolean {
+    for (const knack of this.getKnackText()) {
+      if (!this.isKnackOpen(knack)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * depending on if knacks should be expanded or not, this will cycle through all knacks and either close or open each in turn
+   */
+  expandKnacks() {
+    if (this.shouldKnacksBeExpanded()) {
+      for (const knack of this.getKnackText()) {
+        if (!this.isKnackOpen(knack)) {
+          this.openKnack(knack);
+        }
+      }
+    } else {
+      for (const knack of this.getKnackText()) {
+        if (this.isKnackOpen(knack)) {
+          this.openKnack(knack);
+        }
+      }
+    }
   }
 
   isSubthemeSelected() {
