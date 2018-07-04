@@ -59,7 +59,7 @@ export class BuildSelectionComponent implements OnInit {
 
   constructor(private aoeService: AreaOfEffectService, private actionService: ActionService) {
     this.selectionDisplayToggle = true;
-    this.resetSpellSelection();
+    this.resetBuildSelection();
     this.submitter = new EventEmitter<{ subtheme: Subtheme, power: SpecialPower }>();
   }
 
@@ -70,6 +70,9 @@ export class BuildSelectionComponent implements OnInit {
   ngOnInit() {
     if (!this.propertyName) {
       this.propertyName = "Build";
+    }
+    if (!this.isSpecialOnly) {
+      this.isSpecialOnly = null;
     }
     if (this.previouslySelectedBuild) {
       for (const build of this.buildsToChooseFrom) {
@@ -92,7 +95,7 @@ export class BuildSelectionComponent implements OnInit {
   /**
    * clears out all selected and open spells
    */
-  resetSpellSelection() {
+  resetBuildSelection() {
     this.selectedBuild = null;
     this.openBuilds = [];
   }
@@ -101,7 +104,34 @@ export class BuildSelectionComponent implements OnInit {
     this.selectionDisplayToggle = !this.selectionDisplayToggle;
   }
 
-  isSubthemeSelected() {
+  shouldBuildsBeExpanded(): boolean {
+    if (this.buildsToChooseFrom) {
+      for (const build of this.buildsToChooseFrom) {
+        if (!this.isBuildOpen(build)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  expandBuilds() {
+    if (this.shouldBuildsBeExpanded()) {
+      for (const build of this.buildsToChooseFrom) {
+        if (!this.isBuildOpen(build)) {
+          this.openBuild(build);
+        }
+      }
+    } else {
+      for (const build of this.buildsToChooseFrom) {
+        if (this.isBuildOpen(build)) {
+          this.openBuild(build);
+        }
+      }
+    }
+  }
+
+  isSubthemeSelected(): boolean {
     return this.subtheme.themeStrength !== ThemeStrength.None;
   }
 
@@ -143,10 +173,8 @@ export class BuildSelectionComponent implements OnInit {
   selectBuild(build: SpecialPower) {
     if (!this.selectedBuild) {
       this.selectedBuild = build;
-    } else {
-      if (this.isBuildSelected(build)) {
-        this.selectedBuild = null;
-      }
+    } else if (this.isBuildSelected(build)) {
+      this.selectedBuild = null;
     }
     this.submitter.emit({subtheme: this.subtheme, power: this.selectedBuild});
   }

@@ -9,3 +9,14 @@
 .aLittleOffTheTop {
   margin-top: -10px;
 }
+
+.selectedBuildDiv {
+  margin-bottom: 3px;
+  margin-top: -3px;
+  color: white;
+  font-weight: 500;
+}
+
+#displayBuildButton {
+  margin-left: 10px;
+}
