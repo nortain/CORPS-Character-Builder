@@ -1,7 +1,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {SpellSelectionComponent} from './spell-selection.component';
-import {mockSpell, mockSubtheme} from "../../../../shared/constants/testing-constants";
+import {mockSpecialPower, mockSpell, mockSubtheme} from "../../../../shared/constants/testing-constants";
 import {ThemeStrength} from "../../../../shared/theme-points/theme-strength.enum";
 import {MagicType, SpellSelectionType} from "../magic-type.enum";
 import {SharedModule} from "../../../../shared/shared.module";
@@ -213,6 +213,36 @@ describe('SpellSelectionComponent', () => {
       component.selectSpell(fakoSpell);
       expect(component.selectedSpells).toEqual([]);
     });
+  });
+
+  it('should be able to determine if all builds are expanded or not', () => {
+    const previousPower = mockSpell();
+    spyOn(component, "getSpellData").and.returnValue([previousPower]);
+    fixture.detectChanges();
+    expect(component.shouldSpellsBeExpanded()).toBeTruthy();
+    const buildHeader = fixture.debugElement.queryAll(By.css(".spellHeader"));
+    for (const build of buildHeader) { // open all of the headers
+      build.nativeElement.click();
+    }
+    fixture.detectChanges();
+    expect(component.shouldSpellsBeExpanded()).toBeFalsy();
+  });
+
+  it('should be able to expand/collapse all builds', () => {
+    const previousPower = mockSpell();
+    spyOn(component, "getSpellData").and.returnValue([previousPower]);
+    fixture.detectChanges();
+    expect(component.shouldSpellsBeExpanded()).toBeTruthy();
+    let expandAllBtn = fixture.debugElement.query(By.css("#openAllSpells"));
+    expect(expandAllBtn.nativeElement.innerText).toBe("Expand All Spells");
+    expandAllBtn.nativeElement.click();
+    fixture.detectChanges();
+    expect(component.shouldSpellsBeExpanded()).toBeFalsy();
+    expandAllBtn = fixture.debugElement.query(By.css("#openAllSpells"));
+    expect(expandAllBtn.nativeElement.innerText).toBe("Collapse All Spells");
+    expandAllBtn.nativeElement.click();
+    fixture.detectChanges();
+    expect(component.shouldSpellsBeExpanded()).toBeTruthy();
   });
 
 

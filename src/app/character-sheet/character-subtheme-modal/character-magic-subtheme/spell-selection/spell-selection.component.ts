@@ -76,7 +76,7 @@ export class SpellSelectionComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     if (!this.propertyName) {
-      this.propertyName = "Spell";
+      this.propertyName = "Spells";
     }
     if (this.previouslySelectedSpell && this.previouslySelectedSpell.length > 0) {
       if (this.previouslySelectedSpell[0].sphereName === this.subtheme.subthemeName) {
@@ -107,6 +107,31 @@ export class SpellSelectionComponent implements OnInit, OnChanges {
 
   displaySpells() {
     this.selectionDisplayToggle = !this.selectionDisplayToggle;
+  }
+
+  shouldSpellsBeExpanded(): boolean {
+    for (const spell of this.getSpellData()) {
+      if (!this.isSpellOpen(spell)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  expandSpells() {
+    if (this.shouldSpellsBeExpanded()) {
+      for (const spell of this.getSpellData()) {
+        if (!this.isSpellOpen(spell)) {
+          this.openSpell(spell);
+        }
+      }
+    } else {
+      for (const spell of this.getSpellData()) {
+        if (this.isSpellOpen(spell)) {
+          this.openSpell(spell);
+        }
+      }
+    }
   }
 
   isSubthemeSelected() {
@@ -160,6 +185,10 @@ export class SpellSelectionComponent implements OnInit, OnChanges {
     return SUBTHEME_BONUS[this.subtheme.subthemeName][propertyName];
   }
 
+  /**
+   * given parameters related to propertyType this will attempt to find a all of that type of selection and return it as a collection of spells
+   * @returns {Spell[]}
+   */
   getSpellData(): Spell[] {
     const spellsArray = this.getMagicText(this.propertyType);
     let result = [];

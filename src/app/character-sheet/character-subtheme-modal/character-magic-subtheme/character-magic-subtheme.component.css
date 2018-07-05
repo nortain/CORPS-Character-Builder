@@ -12,9 +12,18 @@
 
 #displayKnackButton {
   margin-top: -30px;
+  margin-left: 10px;
 }
 
 #openAllKnacks {
   margin-top: -30px;
+}
+
+
+.selectedKnackDiv {
+  margin-bottom: 3px;
+  margin-top: -3px;
+  color: white;
+  font-weight: 500;
 }
 

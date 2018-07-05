@@ -68,25 +68,27 @@
     </div>
   </div>
   <div class="row rowEnder" *ngIf="generalThemePoint > 0 || subthemePointCap === 3">
-    <div class="col-12">
-      <div class="container">
-        <div class="row">
-          <label class="font-weight-bold">Implement Knacks: </label>
+    <div class="container">
+      <div class="col-12">
+        <div class="notSelectedKnackDisplay row" *ngIf="selectedBuild.knacks.length ===0">
+          <label class="font-weight-bold col-auto">Implement Knacks: </label>
+        </div>
+        <div class="selectedKnackDisplay row" *ngIf="selectedBuild?.knacks?.length > 0">
+          <label class="font-weight-bold col-auto">Selected Implement {{selectedBuild?.knacks?.length === 1 ? 'Knack' :
+            'Knacks'}}:</label>
+          <div class="selectedKnackDiv btn-sm bg-success" *ngFor="let selectDisplayKnack of selectedBuild.knacks">
+            {{selectDisplayKnack.name | castleCase}}
+          </div>
         </div>
         <button id="displayKnackButton" class="btn btn-outline-primary btn-sm float-right" (click)="displayKnacks()">
           {{knackDisplayToggle ? 'Hide' :
           'Show'}} Implement Knacks
         </button>
-        <button *ngIf="knackDisplayToggle" id="openAllKnacks" class="btn btn-outline-secondary btn-sm float-right" (click)="expandKnacks()">
+        <button *ngIf="knackDisplayToggle" id="openAllKnacks" class="btn btn-outline-secondary btn-sm float-right"
+                (click)="expandKnacks()">
           {{shouldKnacksBeExpanded() ? 'Expand All Knacks' : 'Collapse All Knacks'}}
         </button>
-        <div class="selectedKnackDisplay float-right row" *ngIf="selectedBuild?.knacks?.length > 0">
-          <label class="font-weight-bold col">Selected {{selectedBuild?.knacks?.length === 1 ? 'Knack' :
-            'Knacks'}}:</label>
-          <div class="btn-sm bg-success" *ngFor="let selectDisplayKnack of selectedBuild.knacks">
-            {{selectDisplayKnack.name | castleCase}}
-          </div>
-        </div>
+
         <div *ngIf="knackDisplayToggle">
           <p>You can select {{numberOfKnacksToSelect}} {{numberOfKnacksToSelect === 1 ? 'knack' : 'knacks' }}</p>
           <div class="col-12" *ngFor="let knack of getKnackText()">
