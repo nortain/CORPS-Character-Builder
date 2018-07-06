@@ -82,11 +82,6 @@ export class CharacterSubthemeModalComponent implements OnInit {
     }
   }
 
-  updateMagicSubtheme(updatedMagicSubtheme: { subtheme: Subtheme, knacks: Knack[] }) {
-    this.subthemePoints.spellKnacks = updatedMagicSubtheme.knacks;
-    this.updateSubtheme(updatedMagicSubtheme.subtheme);
-  }
-
   /**
    * this will get the subtheme cap point which is to say the maximum number of theme points that can the currently selected subtheme
    * @returns {number}

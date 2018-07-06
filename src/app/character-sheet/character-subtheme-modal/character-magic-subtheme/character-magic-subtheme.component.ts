@@ -9,6 +9,7 @@ import {ConfirmationComponent} from "../../../shared/ui/confirmation/confirmatio
 import {SpellRequirement} from "../../../shared/spells/enums/spell-requirement.enum";
 import {Level} from "../../../shared/character/level.enum";
 import {Spell} from "../../../shared/spells/spell";
+import {mockSubtheme} from "../../../shared/constants/testing-constants";
 
 @Component({
   selector: 'corps-character-magic-subtheme',
@@ -19,10 +20,9 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
 
   @Input() subtheme: Subtheme;
   @Input() generalThemePoint: ThemeStrength;
-  @Input() previouslySelectedBuild: CasterBuild;
   @Input() subthemePointCap: number;
   @Input() characterLevel: Level;
-  @Output() submitter: EventEmitter<CasterBuild>;
+  @Output() submitter: EventEmitter<Subtheme>;
 
   magicType = MagicType;
   spellSelectionType = SpellSelectionType;
@@ -36,10 +36,6 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
    * the number of knacks a character can select
    */
   numberOfKnacksToSelect: number;
-  /**
-   * maintains the build information that have been selected
-   */
-  selectedBuild: CasterBuild;
 
 
   /**
@@ -50,25 +46,24 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
   constructor(private modalService: NgbModal, private ref: ChangeDetectorRef) {
     this.resetSubtheme();
     this.knackDisplayToggle = true;
-    this.submitter = new EventEmitter<CasterBuild>();
+    this.submitter = new EventEmitter<Subtheme>();
   }
 
   ngOnInit() {
-    if (this.previouslySelectedBuild && this.previouslySelectedBuild.subtheme) {
-      if (this.previouslySelectedBuild.subtheme.subthemeName === this.subtheme.subthemeName) {
-        this.selectedBuild = this.previouslySelectedBuild;
-      }
-    } else {// if we have nothing loaded set them all to the identical default value
-      this.selectedBuild = this.previouslySelectedBuild = new CasterBuild();
-    }
     this.determineNumberOfSelectableKnacks();
   }
 
   ngOnChanges() {
     this.determineNumberOfSelectableKnacks();
-    this.submitter.emit({
-      ...this.selectedBuild
-    });
+    if (this.subtheme &&
+      this.subtheme.casterBuild &&
+      this.subtheme.casterBuild !== new CasterBuild()) {
+      this.submitter.emit({
+        ...this.subtheme,
+        themeStrength: this.subtheme.themeStrength
+      } as Subtheme);
+    }
+
   }
 
   /**
@@ -76,15 +71,17 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
    * @returns {boolean}
    */
   isThisDirty(): boolean {
-    const dirtyKnacks = this.selectedBuild.knacks.length > 0;
-    const dirtySpells = this.selectedBuild.spells.length > 0;
-    const dirtyBuild = this.selectedBuild.build;
-    const dirtySpecialBuild = this.selectedBuild.specialBuild;
+    const dirtyKnacks = this.subtheme.casterBuild.knacks.length > 0;
+    const dirtySpells = this.subtheme.casterBuild.spells.length > 0;
+    const dirtyBuild = this.subtheme.casterBuild.build;
+    const dirtySpecialBuild = this.subtheme.casterBuild.specialBuild;
     return dirtyKnacks || dirtySpells || !!dirtyBuild || !!dirtySpecialBuild;
   }
 
   resetSubtheme() {
-    this.selectedBuild = new CasterBuild();
+    if (this.subtheme) {
+      this.subtheme.casterBuild = new CasterBuild();
+    }
     this.openKnacks = [];
   }
 
@@ -132,7 +129,6 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
     // if we don't have a subtheme selected, select it
     if (!this.isSubthemeSelected() && this.subthemePointCap > 0) {
       this.subtheme = new Subtheme(SubthemeType[this.subtheme.subthemeName], this.subtheme.maxThemeStrength);
-      this.selectedBuild.subtheme = this.subtheme;
       // else warn them we will lose our selected subtheme
     } else if (this.isSubthemeSelected()) {
       if (this.isThisDirty()) {
@@ -147,7 +143,6 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
           if (result) {
             this.resetSubtheme();
             this.subtheme = new Subtheme(SubthemeType[this.subtheme.subthemeName]); // make new subtheme with 0 strength
-            this.selectedBuild.subtheme = this.subtheme;
             this.ref.detectChanges(); // needed cause we are resolving a promise THEN updating UI
           }
         }, (rejected) => {
@@ -156,7 +151,6 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
       } else { // if the form is not dirty just deselect the damn thing
         this.resetSubtheme();
         this.subtheme = new Subtheme(SubthemeType[this.subtheme.subthemeName]); // make new subtheme with 0 strength
-        this.selectedBuild.subtheme = this.subtheme;
       }
     }// else do nothing
   }
@@ -175,8 +169,8 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
   }
 
   isKnackSelected(knack: Knack): boolean {
-    if (this.selectedBuild.knacks && this.selectedBuild.knacks.length > 0) {
-      return this.findIndexOfKnackByName(knack, this.selectedBuild.knacks) > -1;
+    if (this.subtheme.casterBuild.knacks && this.subtheme.casterBuild.knacks.length > 0) {
+      return this.findIndexOfKnackByName(knack, this.subtheme.casterBuild.knacks) > -1;
     } else {
       return false;
     }
@@ -185,34 +179,34 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
   }
 
   selectSpells(spells: Spell[]) {
-    this.selectedBuild.spells = spells;
+    this.subtheme.casterBuild.spells = spells;
   }
 
   selectBuild(build: SpecialPower) {
     if (build) {
       if (build.requirement === SpellRequirement.Special) {
-        if (!this.selectedBuild.specialBuild) { // select special build
-          this.selectedBuild.specialBuild = build;
-        } else if (this.selectedBuild.specialBuild.name === build.name) { // deselect special build
-          this.selectedBuild.specialBuild = null;
+        if (!this.subtheme.casterBuild.specialBuild) { // select special build
+          this.subtheme.casterBuild.specialBuild = build;
+        } else if (this.subtheme.casterBuild.specialBuild.name === build.name) { // deselect special build
+          this.subtheme.casterBuild.specialBuild = null;
         } // do nothing of consiquence
       } else { // normal build
-        if (!this.selectedBuild.build) { // select build
-          this.selectedBuild.build = build;
-        } else if (this.selectedBuild.build.name === build.name) { // deselcted build
-          this.selectedBuild.build = null;
+        if (!this.subtheme.casterBuild.build) { // select build
+          this.subtheme.casterBuild.build = build;
+        } else if (this.subtheme.casterBuild.build.name === build.name) { // deselcted build
+          this.subtheme.casterBuild.build = null;
         }// do nothing
       }
     }
   }
 
   selectKnack(knack: Knack) {
-    const index = this.findIndexOfKnackByName(knack, this.selectedBuild.knacks);
+    const index = this.findIndexOfKnackByName(knack, this.subtheme.casterBuild.knacks);
     const hasKnackBeenSelected = index > -1;
     if (hasKnackBeenSelected) {
-      this.selectedBuild.knacks.splice(index, 1);
-    } else if (this.selectedBuild.knacks.length < this.numberOfKnacksToSelect) {
-      this.selectedBuild.knacks.push(knack);
+      this.subtheme.casterBuild.knacks.splice(index, 1);
+    } else if (this.subtheme.casterBuild.knacks.length < this.numberOfKnacksToSelect) {
+      this.subtheme.casterBuild.knacks.push(knack);
     }
   }
 

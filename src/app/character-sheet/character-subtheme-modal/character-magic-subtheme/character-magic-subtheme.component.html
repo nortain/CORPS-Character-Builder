@@ -51,7 +51,6 @@
                              [propertyName]="'Special'"
                              [subtheme]="subtheme"
                              [generalThemePoint]="generalThemePoint"
-                             [previouslySelectedBuild]="previouslySelectedBuild.specialBuild"
                              [buildsToChooseFrom]="getSpecialPowers()"
                              [isSpecialOnly]="spellRequirement.Special"
       >
@@ -60,7 +59,6 @@
         [propertyName]="'Build'"
         [subtheme]="subtheme"
         [generalThemePoint]="generalThemePoint"
-        [previouslySelectedBuild]="previouslySelectedBuild.build"
         [buildsToChooseFrom]="getSpecialPowers()"
         [isSpecialOnly]="null"
       >
@@ -70,13 +68,15 @@
   <div class="row rowEnder" *ngIf="generalThemePoint > 0 || subthemePointCap === 3">
     <div class="container">
       <div class="col-12">
-        <div class="notSelectedKnackDisplay row" *ngIf="selectedBuild.knacks.length ===0">
+        <div class="notSelectedKnackDisplay row" *ngIf="subtheme.casterBuild?.knacks?.length ===0">
           <label class="font-weight-bold col-auto">Implement Knacks: </label>
         </div>
-        <div class="selectedKnackDisplay row" *ngIf="selectedBuild?.knacks?.length > 0">
-          <label class="font-weight-bold col-auto">Selected Implement {{selectedBuild?.knacks?.length === 1 ? 'Knack' :
+        <div class="selectedKnackDisplay row" *ngIf="subtheme.casterBuild?.knacks?.length > 0">
+          <label class="font-weight-bold col-auto">Selected Implement {{subtheme.casterBuild?.knacks?.length === 1 ?
+            'Knack' :
             'Knacks'}}:</label>
-          <div class="selectedKnackDiv btn-sm bg-success" *ngFor="let selectDisplayKnack of selectedBuild.knacks">
+          <div class="selectedKnackDiv btn-sm bg-success"
+               *ngFor="let selectDisplayKnack of subtheme.casterBuild.knacks">
             {{selectDisplayKnack.name | castleCase}}
           </div>
         </div>
@@ -97,7 +97,7 @@
               class="knackName font-weight-bold">{{knack.name | castleCase}}</span>
               <button type="button" class="btn btn-sm knackButton float-right"
                       [ngClass]="{'disabled': !isSubthemeSelected() ||
-                    numberOfKnacksToSelect - selectedBuild.knacks.length === 0 &&
+                    numberOfKnacksToSelect - subtheme.casterBuild.knacks.length === 0 &&
                     !isKnackSelected(knack),
                      'btn-success': isKnackSelected(knack),
                      'btn-primary': !isKnackSelected(knack)
@@ -143,10 +143,8 @@
       <corps-spell-selection
         [subtheme]="subtheme"
         [generalThemePoint]="generalThemePoint"
-        [previouslySelectedSpell]="previouslySelectedBuild.spells"
         [numberOfSpellsToSelect]="getNumberOfSpells()"
-        [propertyType]="spellSelectionType.Spells"
-      >
+        [propertyType]="spellSelectionType.Spells">
       </corps-spell-selection>
     </div>
   </div>

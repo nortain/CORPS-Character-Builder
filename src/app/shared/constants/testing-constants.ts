@@ -73,7 +73,6 @@ export function mockBuild(): CasterBuild {
     build: build,
     specialBuild: special,
     knacks: mock,
-    subtheme: mockSubtheme()
   };
 
 }

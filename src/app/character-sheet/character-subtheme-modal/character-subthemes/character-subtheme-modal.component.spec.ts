@@ -5,7 +5,7 @@ import {SharedModule} from "../../../shared/shared.module";
 import {SubthemeComponent} from "../subthemes/subtheme.component";
 import {NgbActiveModal, NgbDropdownConfig, NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {NgbModalStack} from "@ng-bootstrap/ng-bootstrap/modal/modal-stack";
-import {actionClickDropdownItemX, actionGetDropdownValue, mockSubtheme, mockThemePoints} from "../../../shared/constants/testing-constants";
+import {actionClickDropdownItemX, actionGetDropdownValue, mockBuild, mockSubtheme, mockThemePoints} from "../../../shared/constants/testing-constants";
 import {ThemeStrength} from "../../../shared/theme-points/theme-strength.enum";
 import {ThemePointsContainer} from "../../../shared/theme-points/theme-points-container";
 import {SubthemeContainer} from "../../../shared/theme-points/subthemes/subtheme-container";
@@ -169,5 +169,13 @@ describe('CharacterSubthemeModalComponent', () => {
     expect(component.updateSubtheme).toHaveBeenCalled();
 
   }));
+
+  it('should update a caster build', () => {
+    const build = mockBuild();
+    const sub = mockSubtheme();
+    sub.casterBuild = build;
+    component.selectSubtheme(sub);
+    expect(component.selectedSubtheme.casterBuild).toBe(build);
+  });
 
 });

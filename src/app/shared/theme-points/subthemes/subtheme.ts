@@ -4,15 +4,16 @@ import {SubthemeType} from "./subtheme-type.enum";
 import {SubthemePipe} from "./subtheme.pipe";
 import {SubthemeBonus} from "./subtheme-bonus.enum";
 import {Level} from "../../character/level.enum";
-import {Knack, SUBTHEME_BONUS} from "../../constants/constants";
+import {CasterBuild, Knack, SUBTHEME_BONUS} from "../../constants/constants";
 import {Spell} from "../../spells/spell";
 
 export class Subtheme {
   themeType: ThemeType;
   maxThemeStrength: ThemeStrength;
+  // themeStrength **** this is a getter/setter
   subthemeName: string;
   pipe: SubthemePipe;
-
+  casterBuild: CasterBuild;
 
 
   constructor(public subtheme: SubthemeType, private strength = ThemeStrength.None) {
@@ -20,6 +21,11 @@ export class Subtheme {
     const values = this.parseSubtheme(subtheme);
     this.assignValues(values);
     this.themeStrength = strength;
+    if (this.themeType !== ThemeType.Magic) {
+      this.casterBuild = null;
+    } else {
+      this.casterBuild = new CasterBuild();
+    }
   }
 
   // getters and setters

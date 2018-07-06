@@ -1014,7 +1014,6 @@ export class CasterBuild {
   build: SpecialPower = null;
   specialBuild: SpecialPower = null;
   knacks: Knack[] = [];
-  subtheme: Subtheme = null;
 }
 
 export interface SpellSphere {

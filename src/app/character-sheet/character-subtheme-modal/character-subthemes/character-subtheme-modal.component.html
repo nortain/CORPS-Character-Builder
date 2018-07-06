@@ -45,21 +45,19 @@
           *ngIf="selectedSubtheme.themeType === themeType.Magic && subthemeToggle"
           id="corpsMagicSubtheme"
           [subtheme]="selectedSubtheme"
-          [previouslySelectedBuild]="subthemePoints.spellKnacks"
           [generalThemePoint]="subthemePoints.themePoints.general.getStrength()"
           [subthemePointCap]="getSubthemePointCap()"
           [characterLevel]="characterLevel"
-          (submitter)="updateMagicSubtheme($event)">
+          (submitter)="updateSubtheme($event)">
         </corps-character-magic-subtheme>
         <corps-character-magic-subtheme
           *ngIf="selectedSubtheme.themeType === themeType.Magic && !subthemeToggle"
           id="corpsMagicSubtheme1"
           [subtheme]="selectedSubtheme"
-          [previouslySelectedBuild]="selectedCasterBuild"
           [generalThemePoint]="subthemePoints.themePoints.general.getStrength()"
           [subthemePointCap]="getSubthemePointCap()"
           [characterLevel]="characterLevel"
-          (submitter)="updateMagicSubtheme($event)">
+          (submitter)="updateSubtheme($event)">
         </corps-character-magic-subtheme>
       </div>
     </div>
