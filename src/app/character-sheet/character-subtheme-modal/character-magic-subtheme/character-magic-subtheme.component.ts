@@ -56,12 +56,12 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
   ngOnChanges() {
     this.determineNumberOfSelectableKnacks();
     if (this.subtheme &&
-      this.subtheme.casterBuild &&
-      this.subtheme.casterBuild !== new CasterBuild()) {
-      this.submitter.emit({
+      this.subtheme.casterBuild) {
+      const emitter = {
         ...this.subtheme,
         themeStrength: this.subtheme.themeStrength
-      } as Subtheme);
+      } as Subtheme;
+      this.submitter.emit(emitter);
     }
 
   }
@@ -100,6 +100,13 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
       }
     }
     return false;
+  }
+
+  isCasterBuildNew(): boolean {
+    return this.subtheme.casterBuild.build === null &&
+      this.subtheme.casterBuild.specialBuild === null &&
+      this.subtheme.casterBuild.knacks.length === 0 &&
+      this.subtheme.casterBuild.spells.length === 0;
   }
 
   /**

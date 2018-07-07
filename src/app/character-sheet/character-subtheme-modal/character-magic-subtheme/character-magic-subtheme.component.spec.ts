@@ -66,8 +66,7 @@ fdescribe('CharacterMagicSubthemeComponent', () => {
   it('should be able to actually selected a magic subtheme', () => {
     unselectedSubthemeSetup();
     const mock = mockSubtheme(SubthemeType.Magent, ThemeStrength.Minor);
-    const build = mockBuild();
-    mock.casterBuild = build;
+    mock.casterBuild = new CasterBuild();
     component.subthemePointCap = 1;
     spyOn(component.submitter, "emit");
     let selectSubtheme = fixture.debugElement.queryAll(By.css(".subthemeSelectBtn"));
@@ -80,8 +79,8 @@ fdescribe('CharacterMagicSubthemeComponent', () => {
     expect(selectSubtheme[0].nativeElement.innerText).toBe("Deselect Subtheme");
     expect(component.submitter.emit).toHaveBeenCalledWith(
       {
-        ...new CasterBuild(),
-        subtheme: mock,
+        ...mock,
+        themeStrength: mock.themeStrength
       });
 
   });
