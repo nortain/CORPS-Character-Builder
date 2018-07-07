@@ -2,7 +2,7 @@ import {async, ComponentFixture, fakeAsync, inject, TestBed, tick} from '@angula
 
 import {CharacterMagicSubthemeComponent} from './character-magic-subtheme.component';
 import {mockKnack, mockBuild, mockSpecialPower, mockSubtheme, mockSpell} from "../../../shared/constants/testing-constants";
-import {SubthemeType} from "../../../shared/theme-points/subthemes/subtheme-type.enum";
+import {CasterType, SubthemeType} from "../../../shared/theme-points/subthemes/subtheme-type.enum";
 import {ThemeStrength} from "../../../shared/theme-points/theme-strength.enum";
 import {MagicType, NumberToSelect} from "./magic-type.enum";
 import {CasterBuild, Knack, ONE_MAGIC_SPELLS, SpecialPower} from "../../../shared/constants/constants";
@@ -164,12 +164,9 @@ fdescribe('CharacterMagicSubthemeComponent', () => {
   it('should be able to load previously selected knacks', () => {
     const mock = {
       ...new CasterBuild(),
-      knacks: [mockKnack()],
-      subtheme: {
-        ...mockSubtheme(),
-        subthemeName: "Magent"
-      }
+      knacks: [mockKnack()]
     } as CasterBuild;
+    mock.knacks[0].subthemeName = CasterType.Magent;
     fixture = TestBed.createComponent(CharacterMagicSubthemeComponent);
     component = fixture.componentInstance;
     component.subtheme = mockSubtheme(SubthemeType.Magent, ThemeStrength.Minor);
@@ -183,7 +180,7 @@ fdescribe('CharacterMagicSubthemeComponent', () => {
   it('should hide selected knack when viewing a different spell sphere/ magic subtheme', () => {
     fixture = TestBed.createComponent(CharacterMagicSubthemeComponent);
     component = fixture.componentInstance;
-    component.subtheme = mockSubtheme(SubthemeType.Magent, ThemeStrength.Minor);
+    component.subtheme = mockSubtheme(SubthemeType.SpellWarden, ThemeStrength.Minor);
     component.subtheme.casterBuild = {...new CasterBuild(), knacks: mockBuild().knacks};
     component.knackDisplayToggle = true;
     component.generalThemePoint = ThemeStrength.None;
@@ -412,9 +409,16 @@ fdescribe('CharacterMagicSubthemeComponent', () => {
 
   it('should be able to load previously selected build', () => {
     const mock = mockBuild();
+    mock.spells = [
+      {
+        ...mockSpell(),
+        sphereName: CasterType.Magent
+      }];
     const sub = mockSubtheme();
     sub.casterBuild = mock;
     sub.subthemeName = "Magent";
+    sub.themeStrength = ThemeStrength.Minor;
+    component.subtheme = sub;
     component.ngOnInit();
     expect(component.isSubthemeSelected()).toBeTruthy();
     expect(component.subtheme.casterBuild.spells).toBe(mock.spells);
@@ -426,13 +430,14 @@ fdescribe('CharacterMagicSubthemeComponent', () => {
   it('should be able to saving selected spells', () => {
     spyOn(component.submitter, "emit");
     const mock = [mockSpell()];
+    mock[0].sphereName = CasterType.Magent;
     component.selectSpells(mock);
     fixture.detectChanges();
     component.ngOnChanges();
     expect(component.subtheme.casterBuild.spells).toBe(mock);
     expect(component.submitter.emit).toHaveBeenCalledWith({
-      ...new CasterBuild(),
-      spells: mock
+      ...component.subtheme,
+      themeStrength: component.subtheme.themeStrength
     });
 
   });
@@ -441,17 +446,23 @@ fdescribe('CharacterMagicSubthemeComponent', () => {
     const sub = mockSubtheme();
     const build = mockBuild();
     sub.subthemeName = "Magent";
+    sub.casterBuild = build;
+    sub.casterBuild.spells[0].sphereName = CasterType.Magent;
+    component.subtheme = sub;
     component.ngOnInit();
     fixture.detectChanges();
     expect(component.subtheme.casterBuild).toEqual(build);
   });
 
   it('should be able to save selected builds', () => {
-    spyOn(component.submitter, "emit");
+    spyOn(component, "resetSubtheme");
     const build = mockBuild();
+    build.spells[0].sphereName = CasterType.Magent;
     component.subtheme.casterBuild = build;
     component.ngOnChanges();
-    expect(component.submitter.emit).toHaveBeenCalledWith(build);
+    expect(component.resetSubtheme).not.toHaveBeenCalled();
+
+
   });
 
   it('should be able to determine if all knacks are expanded or not', () => {
@@ -482,4 +493,5 @@ fdescribe('CharacterMagicSubthemeComponent', () => {
     fixture.detectChanges();
     expect(component.shouldKnacksBeExpanded()).toBeTruthy();
   });
-});
+})
+;

@@ -51,7 +51,7 @@ export class SpellSelectionComponent implements OnInit, OnChanges {
   /**
    * output the subtheme and the selected spells with it
    */
-  @Output() submitter: EventEmitter<{ subtheme: Subtheme, spells: Spell[] }>;
+  @Output() submitter: EventEmitter<Spell[]>;
 
   /**
    * toggle to determine if content is displayed
@@ -71,7 +71,7 @@ export class SpellSelectionComponent implements OnInit, OnChanges {
   constructor(private aoeService: AreaOfEffectService, private actionService: ActionService) {
     this.selectionDisplayToggle = true;
     this.resetSpellSelection();
-    this.submitter = new EventEmitter<{ subtheme: Subtheme, spells: Spell[] }>();
+    this.submitter = new EventEmitter<Spell[]>();
   }
 
   ngOnInit() {
@@ -173,7 +173,7 @@ export class SpellSelectionComponent implements OnInit, OnChanges {
     } else if (this.selectedSpells.length < this.numberOfSpellsToSelect) {
       this.selectedSpells.push(spell);
     }
-    this.submitter.emit({subtheme: this.subtheme, spells: this.selectedSpells});
+    this.submitter.emit(this.selectedSpells);
   }
 
   /**

@@ -51,12 +51,16 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.determineNumberOfSelectableKnacks();
+    if (this.subtheme) {
+      this.checkCasterBuild(this.subtheme.casterBuild);
+    }
   }
 
   ngOnChanges() {
     this.determineNumberOfSelectableKnacks();
     if (this.subtheme &&
       this.subtheme.casterBuild) {
+      this.checkCasterBuild(this.subtheme.casterBuild);
       const emitter = {
         ...this.subtheme,
         themeStrength: this.subtheme.themeStrength
@@ -102,11 +106,20 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
     return false;
   }
 
-  isCasterBuildNew(): boolean {
-    return this.subtheme.casterBuild.build === null &&
-      this.subtheme.casterBuild.specialBuild === null &&
-      this.subtheme.casterBuild.knacks.length === 0 &&
-      this.subtheme.casterBuild.spells.length === 0;
+  checkCasterBuild(casterBuild: CasterBuild) {
+
+    for (const knack of casterBuild.knacks) {
+      if (knack.subthemeName !== this.subtheme.subthemeName) {
+        this.resetSubtheme();
+        return;
+      }
+    }
+    for (const spell of casterBuild.spells) {
+      if (spell.sphereName !== this.subtheme.subthemeName) {
+        this.resetSubtheme();
+        return;
+      }
+    }
   }
 
   /**
@@ -136,6 +149,7 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
     // if we don't have a subtheme selected, select it
     if (!this.isSubthemeSelected() && this.subthemePointCap > 0) {
       this.subtheme = new Subtheme(SubthemeType[this.subtheme.subthemeName], this.subtheme.maxThemeStrength);
+      this.ngOnChanges();
       // else warn them we will lose our selected subtheme
     } else if (this.isSubthemeSelected()) {
       if (this.isThisDirty()) {
@@ -151,6 +165,7 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
             this.resetSubtheme();
             this.subtheme = new Subtheme(SubthemeType[this.subtheme.subthemeName]); // make new subtheme with 0 strength
             this.ref.detectChanges(); // needed cause we are resolving a promise THEN updating UI
+            this.ngOnChanges();
           }
         }, (rejected) => {
           console.error("The user rejected the confirmation modal: ", rejected);
@@ -159,6 +174,7 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
         this.resetSubtheme();
         this.subtheme = new Subtheme(SubthemeType[this.subtheme.subthemeName]); // make new subtheme with 0 strength
       }
+
     }// else do nothing
   }
 

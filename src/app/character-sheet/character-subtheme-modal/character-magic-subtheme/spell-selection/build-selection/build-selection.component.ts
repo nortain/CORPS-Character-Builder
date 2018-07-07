@@ -37,7 +37,7 @@ export class BuildSelectionComponent implements OnInit {
   /**
    * output the subtheme and the selected spells with it
    */
-  @Output() submitter: EventEmitter<{ subtheme: Subtheme, power: SpecialPower }>;
+  @Output() submitter: EventEmitter<SpecialPower>;
   /**
    * toggle to determine if content is displayed
    */
@@ -60,7 +60,7 @@ export class BuildSelectionComponent implements OnInit {
   constructor(private aoeService: AreaOfEffectService, private actionService: ActionService) {
     this.selectionDisplayToggle = true;
     this.resetBuildSelection();
-    this.submitter = new EventEmitter<{ subtheme: Subtheme, power: SpecialPower }>();
+    this.submitter = new EventEmitter<SpecialPower>();
   }
 
   /**
@@ -176,7 +176,7 @@ export class BuildSelectionComponent implements OnInit {
     } else if (this.isBuildSelected(build)) {
       this.selectedBuild = null;
     }
-    this.submitter.emit({subtheme: this.subtheme, power: this.selectedBuild});
+    this.submitter.emit(this.selectedBuild);
   }
 
   isValidBuild(build: SpecialPower): boolean {
