@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: mydockerimage:latest
+      - image: circleci/node:7.10
       - env: CHROME_BIN=/usr/bin/google-chrome --no-sandbox
 
       # Specify service dependencies here if necessary
