@@ -2,10 +2,11 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angula
 import {Subtheme} from "../../../shared/theme-points/subthemes/subtheme";
 import {DropdownValueObject} from "../../../shared/ui/dropdown/dropdown-value-object";
 import {AttributeService} from "../../../shared/attribute/attribute.service";
-import {SubthemeTypes} from "../../../shared/theme-points/subthemes/subtheme-types.enum";
+import {SubthemeType} from "../../../shared/theme-points/subthemes/subtheme-type.enum";
 import {ThemeType} from "../../../shared/theme-points/theme-type.enum";
 import {STARTING_THEME_POINTS, SUBTHEME_BONUS} from "../../../shared/constants/constants";
 import {DropdownComponent} from "../../../shared/ui/dropdown/dropdown.component";
+import {Level} from "../../../shared/character/level.enum";
 
 
 @Component({
@@ -19,6 +20,7 @@ export class SubthemeComponent implements OnInit {
   @Input() subtheme: Subtheme;
   @Input() assignedSubthemePoints: number; // could be between 0 and 4
   @Input() subthemePointCap: number; // could be between 0 and 3 as this is the most number of possible theme points that could be assigned
+  @Input() characterLevel: Level;
   @Output() submitter: EventEmitter<Subtheme>;
 
 
@@ -34,10 +36,13 @@ export class SubthemeComponent implements OnInit {
 
   }
 
+  /**
+   * get texts returned as an array of strings for the current subtheme from the constants SUBTHEME_BONUS constant
+   * @returns {string[]}
+   */
   getTextInfo(): string[] {
     return SUBTHEME_BONUS[this.subtheme.subthemeName].text;
   }
-
 
   /**
    * gets an array of arrays to represent the values that are gained from the sub theme and displayed in the subtheme component
@@ -115,7 +120,7 @@ export class SubthemeComponent implements OnInit {
    * @param {DropdownValueObject} dd
    */
   reloadSubtheme(dd: DropdownValueObject) {
-    this.subtheme = new Subtheme(SubthemeTypes[this.subtheme.subthemeName], dd.value);
+    this.subtheme = new Subtheme(SubthemeType[this.subtheme.subthemeName], dd.value);
     this.submitter.emit(this.subtheme);
   }
 

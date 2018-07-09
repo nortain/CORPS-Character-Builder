@@ -82,6 +82,7 @@ export class CharacterSheetComponent implements OnInit, OnChanges {
     } as NgbModalOptions;
     const ref = this.modalService.open(CharacterSubthemeModalComponent, modalOptions);
     ref.componentInstance.subthemePoints = this.character.subthemes;
+    ref.componentInstance.characterLevel = this.character.level;
 
     ref.result.then((subthemeContainer) => {
       this.reloadCharacter("subthemes", subthemeContainer);

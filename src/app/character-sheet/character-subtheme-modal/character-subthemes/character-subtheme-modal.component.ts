@@ -3,7 +3,9 @@ import {Subtheme} from "../../../shared/theme-points/subthemes/subtheme";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {SubthemeContainer} from "../../../shared/theme-points/subthemes/subtheme-container";
 import {ThemeType} from "../../../shared/theme-points/theme-type.enum";
-
+import {CasterBuild, Knack} from "../../../shared/constants/constants";
+import {Level} from "../../../shared/character/level.enum";
+import {ThemeStrength} from "../../../shared/theme-points/theme-strength.enum";
 
 
 @Component({
@@ -15,17 +17,28 @@ import {ThemeType} from "../../../shared/theme-points/theme-type.enum";
 export class CharacterSubthemeModalComponent implements OnInit {
 
   @Input() subthemePoints: SubthemeContainer;
+  @Input() characterLevel: Level;
+  @Input() previouslySelectedCasterBuild: CasterBuild;
   subthemeButtonsArray: Subtheme[];
   themeType = ThemeType;
+
+  // Currently Loaded Subtheme
+  viewedSubtheme: Subtheme;
+
   selectedSubtheme: Subtheme;
 
+  // this feels like a hacky way of dealing with the model not updating but each time a new subtheme is selected these are to be toggled back forth.
+  subthemeToggle: boolean;
+
+
   constructor(private activeModal: NgbActiveModal) {
+    this.subthemeToggle = true;
   }
 
   ngOnInit() {
     console.log("Out subthemePoints container at init of modal", this.subthemePoints);
     this.getAllPossibleSubthemes();
-    this.selectedSubtheme = this.subthemeButtonsArray[0];
+    this.viewedSubtheme = this.subthemeButtonsArray[0];
   }
 
   /**
@@ -51,17 +64,27 @@ export class CharacterSubthemeModalComponent implements OnInit {
   }
 
   getAssignedSubthemes(): number {
-    return this.selectedSubtheme.themeStrength;
+    return this.viewedSubtheme.themeStrength;
   }
 
+  /**
+   * this is called whenever a selection to the currently selected subtheme is made.
+   * @param {Subtheme} updatedSubtheme
+   */
   updateSubtheme(updatedSubtheme: Subtheme) {
-    for (const sub of this.subthemeButtonsArray) {
-      if (sub.subthemeName === updatedSubtheme.subthemeName && sub.themeStrength !== updatedSubtheme.themeStrength) {
-        const index = this.subthemeButtonsArray.indexOf(sub);
-        this.subthemeButtonsArray[index] = updatedSubtheme;
-        this.subthemePoints.assignSubtheme(updatedSubtheme);
-        this.selectedSubtheme = updatedSubtheme;
-        break;
+    if (updatedSubtheme !== null) {
+      for (const sub of this.subthemeButtonsArray) {
+        const alreadyChooseButNowDeselecting = sub.themeStrength > ThemeStrength.None && sub.subthemeName === updatedSubtheme.subthemeName && updatedSubtheme.themeStrength === ThemeStrength.None;
+        const themeNamesMatchAndThemeIsBeingSelectedBecauseStrengthIsNotZero = sub.subthemeName === updatedSubtheme.subthemeName && updatedSubtheme.themeStrength !== ThemeStrength.None;
+        if (themeNamesMatchAndThemeIsBeingSelectedBecauseStrengthIsNotZero
+          || alreadyChooseButNowDeselecting) {
+          const index = this.subthemeButtonsArray.indexOf(sub);
+          this.subthemeButtonsArray[index] = updatedSubtheme;
+          this.subthemePoints.assignSubtheme(updatedSubtheme);
+          this.viewedSubtheme = updatedSubtheme;
+          this.selectedSubtheme = updatedSubtheme;
+          break;
+        }
       }
     }
   }
@@ -71,11 +94,11 @@ export class CharacterSubthemeModalComponent implements OnInit {
    * @returns {number}
    */
   getSubthemePointCap(): number {
-    const themeType = ThemeType[this.selectedSubtheme.themeType].toLowerCase();
+    const themeType = ThemeType[this.viewedSubtheme.themeType].toLowerCase();
     let maximumSubthemeStrength = this.subthemePoints.themePoints[themeType].getStrength();
     for (const sub of this.subthemeButtonsArray) {
-      if (sub.subthemeName !== this.selectedSubtheme.subthemeName
-        && sub.themeType === this.selectedSubtheme.themeType) {
+      if (sub.subthemeName !== this.viewedSubtheme.subthemeName
+        && sub.themeType === this.viewedSubtheme.themeType) {
         maximumSubthemeStrength -= sub.themeStrength;
       }
     }
@@ -83,8 +106,14 @@ export class CharacterSubthemeModalComponent implements OnInit {
   }
 
 
-  selectSubtheme(selectedSubtheme: Subtheme) {
-    this.selectedSubtheme = selectedSubtheme;
+  viewSubtheme(selectedSubtheme: Subtheme) {
+    this.viewedSubtheme = selectedSubtheme;
+    if (this.selectedSubtheme) {
+      if (this.viewedSubtheme.subthemeName === this.selectedSubtheme.subthemeName) {
+        this.viewedSubtheme = this.selectedSubtheme;
+      }
+    }
+    this.subthemeToggle = !this.subthemeToggle;
   }
 
   close() {

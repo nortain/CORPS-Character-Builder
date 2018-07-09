@@ -1,5 +1,5 @@
 import {Subtheme} from "../../theme-points/subthemes/subtheme";
-import {SubthemeTypes} from "../../theme-points/subthemes/subtheme-types.enum";
+import {SubthemeType} from "../../theme-points/subthemes/subtheme-type.enum";
 
 export interface SubthemeObject {
   combat: Subtheme[];
@@ -12,28 +12,28 @@ export function getSubthemeObject(magic: number): SubthemeObject {
   switch (magic) {
     case 1: {
       magicArray = [
-        new Subtheme(SubthemeTypes.SpellWarden),
-        new Subtheme(SubthemeTypes.Magent)
+        new Subtheme(SubthemeType.SpellWarden),
+        new Subtheme(SubthemeType.Magent)
       ];
       break;
     }
     case 2: {
       magicArray = [
-        new Subtheme(SubthemeTypes.Cleric),
-        new Subtheme(SubthemeTypes.Assassin),
-        new Subtheme(SubthemeTypes.Druid),
-        new Subtheme(SubthemeTypes.WarriorMage)
+        new Subtheme(SubthemeType.Cleric),
+        new Subtheme(SubthemeType.Assassin),
+        new Subtheme(SubthemeType.Druid),
+        new Subtheme(SubthemeType.WarriorMage)
       ];
       break;
     }
     case 3: {
       magicArray = [
-        new Subtheme(SubthemeTypes.Necromancer),
-        new Subtheme(SubthemeTypes.Mage),
-        new Subtheme(SubthemeTypes.Elementalist),
-        new Subtheme(SubthemeTypes.Priest),
-        new Subtheme(SubthemeTypes.Shaman),
-        new Subtheme(SubthemeTypes.Warlock)
+        new Subtheme(SubthemeType.Necromancer),
+        new Subtheme(SubthemeType.Archmage),
+        new Subtheme(SubthemeType.Elementalist),
+        new Subtheme(SubthemeType.Priest),
+        new Subtheme(SubthemeType.Shaman),
+        new Subtheme(SubthemeType.Warlock)
       ];
       break;
     }
@@ -43,14 +43,14 @@ export function getSubthemeObject(magic: number): SubthemeObject {
   }
   return {
     combat: [
-      new Subtheme(SubthemeTypes.WeaponSpecialization),
-      new Subtheme(SubthemeTypes.Protector),
-      new Subtheme(SubthemeTypes.Juggernaut)
+      new Subtheme(SubthemeType.WeaponSpecialization),
+      new Subtheme(SubthemeType.Protector),
+      new Subtheme(SubthemeType.Juggernaut)
     ],
     stealth: [
-      new Subtheme(SubthemeTypes.FindWeakness),
-      new Subtheme(SubthemeTypes.Riposte),
-      new Subtheme(SubthemeTypes.Evasion)
+      new Subtheme(SubthemeType.FindWeakness),
+      new Subtheme(SubthemeType.Riposte),
+      new Subtheme(SubthemeType.Evasion)
     ],
     magic: magicArray
   };

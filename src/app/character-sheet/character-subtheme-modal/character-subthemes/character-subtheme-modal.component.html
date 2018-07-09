@@ -3,7 +3,6 @@
     <div class="row">
       <div class="col-3">
         <b>Assignable Theme Points</b>
-
         <div class="row">
           <div id="combatTracker" class="col-auto">
             <b>Combat: </b>{{subthemePoints.themePoints.combat.getStrength()}}
@@ -20,23 +19,45 @@
     <div class="row">
       <div class="col-3">
         <button id="{{sub.subthemeName}}" *ngFor="let sub of subthemeButtonsArray"
-                class="btn btn-primary align-content-center col verticalSubthemeBtns" (click)="selectSubtheme(sub)">
-          {{sub.subthemeName | subthemes}}<br>
+                class="btn btn-primary align-content-center col verticalSubthemeBtns" (click)="viewSubtheme(sub)">
+          {{sub.subthemeName | subthemesPipe}}<br>
           ({{themeType[sub.themeType]}}) Ranks: {{sub.themeStrength}}
         </button>
       </div>
       <div class="col-9">
-        <corps-subthemes *ngIf="selectedSubtheme.themeType !== themeType.Magic"
+        <corps-subthemes *ngIf="viewedSubtheme.themeType !== themeType.Magic && subthemeToggle"
                          id="corpsSubtheme"
                          [assignedSubthemePoints]="getAssignedSubthemes()"
-                         [subtheme]="selectedSubtheme"
+                         [subtheme]="viewedSubtheme"
                          [subthemePointCap]="getSubthemePointCap()"
+                         [characterLevel]="characterLevel"
+                         (submitter)="updateSubtheme($event)">
+        </corps-subthemes>
+        <corps-subthemes *ngIf="viewedSubtheme.themeType !== themeType.Magic && !subthemeToggle"
+                         id="corpsSubtheme1"
+                         [assignedSubthemePoints]="getAssignedSubthemes()"
+                         [subtheme]="viewedSubtheme"
+                         [subthemePointCap]="getSubthemePointCap()"
+                         [characterLevel]="characterLevel"
                          (submitter)="updateSubtheme($event)">
         </corps-subthemes>
         <corps-character-magic-subtheme
-          *ngIf="selectedSubtheme.themeType === themeType.Magic"
+          *ngIf="viewedSubtheme.themeType === themeType.Magic && subthemeToggle"
           id="corpsMagicSubtheme"
-          [subtheme]="selectedSubtheme">
+          [subtheme]="viewedSubtheme"
+          [generalThemePoint]="subthemePoints.themePoints.general.getStrength()"
+          [subthemePointCap]="getSubthemePointCap()"
+          [characterLevel]="characterLevel"
+          (submitter)="updateSubtheme($event)">
+        </corps-character-magic-subtheme>
+        <corps-character-magic-subtheme
+          *ngIf="viewedSubtheme.themeType === themeType.Magic && !subthemeToggle"
+          id="corpsMagicSubtheme1"
+          [subtheme]="viewedSubtheme"
+          [generalThemePoint]="subthemePoints.themePoints.general.getStrength()"
+          [subthemePointCap]="getSubthemePointCap()"
+          [characterLevel]="characterLevel"
+          (submitter)="updateSubtheme($event)">
         </corps-character-magic-subtheme>
       </div>
     </div>

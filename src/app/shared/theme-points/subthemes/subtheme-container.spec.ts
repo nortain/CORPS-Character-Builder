@@ -1,7 +1,7 @@
 import {SubthemeContainer} from './subtheme-container';
 import {mockThemePoints} from "../../constants/testing-constants";
 import {Subtheme} from "./subtheme";
-import {SubthemeTypes} from "./subtheme-types.enum";
+import {SubthemeType} from "./subtheme-type.enum";
 import {ThemeStrength} from "../theme-strength.enum";
 import {ThemePointsContainer} from "../theme-points-container";
 import {getSubthemeObject} from "../../constants/subtheme/subtheme-constants";
@@ -18,34 +18,34 @@ describe('SubthemeContainer', () => {
 
   it('should be able to get available subthemes', () => {
     expect(st.getAvailableSubthemePoints("combat")).toEqual(1);
-    st.combat = [new Subtheme(SubthemeTypes.Juggernaut, ThemeStrength.Minor)];
+    st.combat = [new Subtheme(SubthemeType.Juggernaut, ThemeStrength.Minor)];
     expect(st.getAvailableSubthemePoints("combat")).toEqual(0);
     expect(st.getAvailableSubthemePoints("stealth")).toEqual(1);
-    st.stealth = [new Subtheme(SubthemeTypes.Riposte, ThemeStrength.Greater)];
+    st.stealth = [new Subtheme(SubthemeType.Riposte, ThemeStrength.Greater)];
     expect(st.getAvailableSubthemePoints("stealth")).toEqual(-1);
     expect(st.getAvailableSubthemePoints("magic")).toEqual(1);
-    st.magic = new Subtheme(SubthemeTypes.Magent, ThemeStrength.Minor);
+    st.magic = new Subtheme(SubthemeType.Magent, ThemeStrength.Minor);
     expect(st.getAvailableSubthemePoints("magic")).toEqual(0);
 
   });
 
   it('should be able to get the subthemeStrengh of all assigned combat themes', () => {
-    st.combat = [new Subtheme(SubthemeTypes.WeaponSpecialization, ThemeStrength.Minor)];
+    st.combat = [new Subtheme(SubthemeType.WeaponSpecialization, ThemeStrength.Minor)];
     expect(st.getSubthemeStrength("combat")).toEqual(ThemeStrength.Minor);
-    st.combat = [new Subtheme(SubthemeTypes.WeaponSpecialization, ThemeStrength.Minor),
-      new Subtheme(SubthemeTypes.Protector, ThemeStrength.Greater)];
+    st.combat = [new Subtheme(SubthemeType.WeaponSpecialization, ThemeStrength.Minor),
+      new Subtheme(SubthemeType.Protector, ThemeStrength.Greater)];
     expect(st.getSubthemeStrength("combat")).toEqual(ThemeStrength.Greater);
   });
 
   it('should be able to assign subthemes', () => {
-    const sub = new Subtheme(SubthemeTypes.Evasion, ThemeStrength.Minor);
+    const sub = new Subtheme(SubthemeType.Evasion, ThemeStrength.Minor);
     st.assignSubtheme(sub);
     expect(st.getSubthemeStrength("stealth")).toEqual(ThemeStrength.Minor);
   });
 
   it('should not be able to assign more subtheme strength than available theme points', () => {
-    const ele = new Subtheme(SubthemeTypes.Elementalist, ThemeStrength.Greater);
-    const ward = new Subtheme(SubthemeTypes.SpellWarden, ThemeStrength.Minor);
+    const ele = new Subtheme(SubthemeType.Elementalist, ThemeStrength.Greater);
+    const ward = new Subtheme(SubthemeType.SpellWarden, ThemeStrength.Minor);
     st.assignSubtheme(ele);
     expect(st.getSubthemeStrength("magic")).toEqual(0);
     st.assignSubtheme(ward);
@@ -53,8 +53,8 @@ describe('SubthemeContainer', () => {
   });
 
   it('should be able to assign the same subtheme twice and have the first be replaced by the 2nd', () => {
-    const pro = new Subtheme(SubthemeTypes.Protector, ThemeStrength.Minor);
-    const pro2 = new Subtheme(SubthemeTypes.Protector, ThemeStrength.Lesser);
+    const pro = new Subtheme(SubthemeType.Protector, ThemeStrength.Minor);
+    const pro2 = new Subtheme(SubthemeType.Protector, ThemeStrength.Lesser);
     st = new SubthemeContainer(new ThemePointsContainer(3, 0, 0, 1));
     st.assignSubtheme(pro);
     st.assignSubtheme(pro2);
@@ -62,8 +62,8 @@ describe('SubthemeContainer', () => {
   });
 
   it('shoudld be able to assign the same magic subtheme and have the first value replaced by the second', () => {
-    const magent = new Subtheme(SubthemeTypes.Magent, ThemeStrength.Minor);
-    const warden = new Subtheme(SubthemeTypes.SpellWarden, ThemeStrength.Minor);
+    const magent = new Subtheme(SubthemeType.Magent, ThemeStrength.Minor);
+    const warden = new Subtheme(SubthemeType.SpellWarden, ThemeStrength.Minor);
     st.assignSubtheme(magent);
     expect(st.getSubthemeStrength("magic")).toEqual(1);
     st.assignSubtheme(warden);
@@ -88,7 +88,7 @@ describe('SubthemeContainer', () => {
     expect(so.magic).toEqual(mock.magic);
 
     st = new SubthemeContainer(new ThemePointsContainer(3, 0, 0, 1));
-    const pro = new Subtheme(SubthemeTypes.Protector, ThemeStrength.Lesser);
+    const pro = new Subtheme(SubthemeType.Protector, ThemeStrength.Lesser);
     st.assignSubtheme(pro);
     const newSo = st.buildSubthemeObject();
     expect(newSo).toEqual({
@@ -99,8 +99,8 @@ describe('SubthemeContainer', () => {
 
     st = new SubthemeContainer(new ThemePointsContainer(1, 2, 0, 1));
     so = st.buildSubthemeObject();
-    const prot_minor = new Subtheme(SubthemeTypes.Protector, ThemeStrength.Minor);
-    const ripo_minor = new Subtheme(SubthemeTypes.Riposte, ThemeStrength.Minor);
+    const prot_minor = new Subtheme(SubthemeType.Protector, ThemeStrength.Minor);
+    const ripo_minor = new Subtheme(SubthemeType.Riposte, ThemeStrength.Minor);
     st.assignSubtheme(prot_minor);
     st.assignSubtheme(ripo_minor);
     const newerSo = st.buildSubthemeObject();

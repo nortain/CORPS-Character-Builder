@@ -13,7 +13,7 @@ import {WeaponClass} from "../weapon/weapon-class.enum";
 import {WeaponCategory} from "../weapon/weapon-category.enum";
 import {AttributeStrength} from "../attribute/attribute-strength.enum";
 import {AttributeName} from "../attribute/attribute-name.enum";
-import {PhysicalDefense} from "./phsyical-defense/physical-defense";
+import {PhysicalDefense} from "./physical-defense/physical-defense";
 import {SubthemeContainer} from "../theme-points/subthemes/subtheme-container";
 
 export class Character extends Race {

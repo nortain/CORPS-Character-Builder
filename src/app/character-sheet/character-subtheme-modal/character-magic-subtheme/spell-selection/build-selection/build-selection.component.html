@@ -1,0 +1,100 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="notSelectedBuildDisplay row" *ngIf="!selectedBuild">
+        <label class="font-weight-bold col-auto">{{propertyName}} </label>
+      </div>
+      <div class="selectedBuildDisplay row" *ngIf="selectedBuild">
+        <label class="font-weight-bold col-auto">Selected {{propertyName}}: </label>
+        <div class="selectedBuildDiv btn-sm bg-success">
+          {{selectedBuild.name | castleCase}}
+        </div>
+      </div>
+      <button id="displayBuildButton" class="btn btn-outline-primary btn-sm float-right" (click)="displayBuilds()">
+        {{selectionDisplayToggle ? 'Hide' :
+        'Show'}} {{propertyName}}
+      </button>
+      <button *ngIf="selectionDisplayToggle" id="openAllBuilds" class="btn btn-outline-secondary btn-sm float-right"
+              (click)="expandBuilds()">
+        {{shouldBuildsBeExpanded() ? 'Expand All Builds' : 'Collapse All Builds'}}
+      </button>
+      <div *ngIf="selectionDisplayToggle">
+        <p>Select {{propertyName.charAt(0).match(vowelRegex) ? 'an' : 'a'}} {{propertyName}}
+        </p>
+        <div *ngFor="let sphereBuild of buildsToChooseFrom">
+          <div *ngIf="isValidBuild(sphereBuild)" class="col-12">
+            <div type="button" class="card-header buildHeader" (click)="openBuild(sphereBuild)"><span
+              class="buildName font-weight-bold">{{sphereBuild.name | castleCase}}</span>
+              <button type="button" class="btn btn-sm buildButton float-right"
+                      [ngClass]="{'disabled': !isSubthemeSelected() || (isThisDirty() && !isBuildSelected(sphereBuild)),
+                     'btn-success': isBuildSelected(sphereBuild),
+                     'btn-primary': !isBuildSelected(sphereBuild)
+                    }"
+                      [disabled]="!isSubthemeSelected()"
+                      (click)="selectBuild(sphereBuild); $event.stopPropagation()">
+                {{isBuildSelected(sphereBuild) ? 'Deselect' : 'Select'}} {{propertyName}}
+              </button>
+            </div>
+            <div class="card-text spellWell" *ngIf="isBuildOpen(sphereBuild)">
+              <div *ngFor="let build of sphereBuild.powers">
+                <div id="nameHolder"
+                     class="px-2 spellHeight"
+                     *ngIf="build.name">
+                  <label for="buildName" class="font-weight-bold">Name: </label>
+                  <span id="buildName">{{build.name}}</span>
+                </div>
+                <div id="keywordsHolder"
+                     class="px-2 spellHeight"
+                     *ngIf="build.spellKeywords && build.spellKeywords.length > 0 || build.damageKeyword"
+                >
+                  <label for="keywords" class="font-weight-bold">Keywords: </label>
+                  <span id="keywords">{{build.damageKeyword}}<span
+                    *ngIf="build.damageKeyword && build.spellKeywords && build.spellKeywords.length > 0">, </span>
+                <span id="otherKeywords"
+                      *ngFor="let keyword of build.spellKeywords; let keywordIndex = index">
+                {{keyword | subthemesPipe}}<span *ngIf="build.spellKeywords[keywordIndex+1]">, </span>
+                </span>
+              </span>
+                </div>
+                <div id="defenseTypeHolder" class="px-2 spellHeight"
+                     *ngIf="!!build.defenseType && build.defenseType.length > 0">
+                  <label for="defenseType" class="font-weight-bold">Defense Type:</label>
+                  <span id="defenseType" *ngFor="let defense of build.defenseType; let index=index">{{defense.toString().trim()}}<span
+                    *ngIf="index < build.defenseType.length - 1">/</span></span>
+                </div>
+                <div id="aoeHolder" class="px-2 spellHeight" *ngIf="!!build.areaOfEffect">
+                  <label for="aoe" class="font-weight-bold">Area of Effect:</label>
+                  <span id="aoe">{{getAOEString(build)}}</span>
+                </div>
+                <div id="castActionHolder" class="px-2 spellHeight" *ngIf="!!build.castAction">
+                  <label for="castAction" class="font-weight-bold">Cast Action:</label>
+                  <span id="castAction">{{getCastActionString(build.castAction)}}</span>
+                </div>
+                <div id="durationHolder" class="px-2 spellHeight"
+                     *ngIf="!!build.duration && build.duration.length > 0">
+                  <label for="duration" class="font-weight-bold">Duration:</label>
+                  <span id="duration" *ngFor="let duration of build.duration; let index=index">{{duration}}<span
+                    *ngIf="index < build.duration.length - 1">/</span></span>
+                </div>
+                <div id="specialHolder" class="px-2"
+                     *ngIf="build.special && build.special.length > 0">
+                  <label for="special" class="font-weight-bold">Special:</label>
+                  <span id="special" *ngFor="let special of build.special; let index=index">{{special}}<span
+                    *ngIf="index < build.special.length -1">.  </span>
+                    </span>
+                </div>
+                <div id="critDieHolder" class="px-2 spellHeight" *ngIf="!!build.critRoll">
+                  <label for="critDie" class="font-weight-bold">Crit Die:</label>
+                  <span id="critDie">{{build.critRoll.printRoll()}}</span>
+                </div>
+                <corps-spell-chart
+                  [spell]="build">
+                </corps-spell-chart>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

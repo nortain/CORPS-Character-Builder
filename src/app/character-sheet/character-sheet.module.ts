@@ -6,13 +6,17 @@ import {CharacterThemePointsComponent} from './character-theme-points/character-
 import {SubthemeComponent} from "./character-subtheme-modal/subthemes/subtheme.component";
 import { CharacterSubthemeModalComponent } from './character-subtheme-modal/character-subthemes/character-subtheme-modal.component';
 import { CharacterMagicSubthemeComponent } from './character-subtheme-modal/character-magic-subtheme/character-magic-subtheme.component';
+import { SpellSelectionComponent } from './character-subtheme-modal/character-magic-subtheme/spell-selection/spell-selection.component';
+import { SpellChartComponent } from './character-subtheme-modal/character-magic-subtheme/spell-selection/spell-chart/spell-chart.component';
+import { BuildSelectionComponent } from './character-subtheme-modal/character-magic-subtheme/spell-selection/build-selection/build-selection.component';
+
 
 
 @NgModule({
   imports: [
     SharedModule
   ],
-  declarations: [CharacterAttributesComponent, CharacterSheetComponent, CharacterThemePointsComponent, SubthemeComponent, CharacterSubthemeModalComponent, CharacterMagicSubthemeComponent],
+  declarations: [CharacterAttributesComponent, CharacterSheetComponent, CharacterThemePointsComponent, SubthemeComponent, CharacterSubthemeModalComponent, CharacterMagicSubthemeComponent, SpellSelectionComponent, SpellChartComponent, BuildSelectionComponent],
   entryComponents: [CharacterSubthemeModalComponent]
 
 })

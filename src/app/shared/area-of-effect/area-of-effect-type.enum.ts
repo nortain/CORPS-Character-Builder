@@ -1,4 +1,4 @@
-export enum AreaOfEffectTypes {
+export enum AreaOfEffectType {
   Wall = "Wall",
   Aura = "Aura",
   Ranged = "Ranged",

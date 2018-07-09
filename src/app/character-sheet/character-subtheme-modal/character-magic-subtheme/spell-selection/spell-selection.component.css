@@ -1,0 +1,18 @@
+.spellWell {
+  background-color: #ededed;
+}
+
+.spellHeight {
+  height: 25px;
+}
+
+.selectedSpellDiv {
+  margin-bottom: 3px;
+  margin-top: -3px;
+  color: white;
+  font-weight: 500;
+}
+
+#displaySpellButton {
+  margin-left: 10px;
+}

@@ -1,30 +1,35 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
 import {CharacterSubthemeModalComponent} from './character-subtheme-modal.component';
 import {SharedModule} from "../../../shared/shared.module";
 import {SubthemeComponent} from "../subthemes/subtheme.component";
-import {NgbActiveModal, NgbDropdownConfig} from "@ng-bootstrap/ng-bootstrap";
+import {NgbActiveModal, NgbDropdownConfig, NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {NgbModalStack} from "@ng-bootstrap/ng-bootstrap/modal/modal-stack";
-import {actionClickDropdownItemX, actionGetDropdownValue, mockThemePoints} from "../../../shared/constants/testing-constants";
+import {actionClickDropdownItemX, actionGetDropdownValue, mockBuild, mockSubtheme, mockThemePoints} from "../../../shared/constants/testing-constants";
 import {ThemeStrength} from "../../../shared/theme-points/theme-strength.enum";
 import {ThemePointsContainer} from "../../../shared/theme-points/theme-points-container";
 import {SubthemeContainer} from "../../../shared/theme-points/subthemes/subtheme-container";
-import {SubthemeTypes} from "../../../shared/theme-points/subthemes/subtheme-types.enum";
+import {SubthemeType} from "../../../shared/theme-points/subthemes/subtheme-type.enum";
 import {Subtheme} from "../../../shared/theme-points/subthemes/subtheme";
 import {By} from "@angular/platform-browser";
 import {DropdownComponent} from "../../../shared/ui/dropdown/dropdown.component";
 import {NgbDropdownMenu} from "@ng-bootstrap/ng-bootstrap/dropdown/dropdown";
+import {CharacterMagicSubthemeComponent} from "../character-magic-subtheme/character-magic-subtheme.component";
+import {nextTick} from "q";
+import {SpellSelectionComponent} from "../character-magic-subtheme/spell-selection/spell-selection.component";
+import {SpellChartComponent} from "../character-magic-subtheme/spell-selection/spell-chart/spell-chart.component";
+import {BuildSelectionComponent} from "../character-magic-subtheme/spell-selection/build-selection/build-selection.component";
 
 describe('CharacterSubthemeModalComponent', () => {
   let component: CharacterSubthemeModalComponent;
   let fixture: ComponentFixture<CharacterSubthemeModalComponent>;
-  let weapon, protector, juggernaut, find, riposte, evasion;
+  let weapon, protector, juggernaut, find, riposte, evasion, magent;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [SharedModule],
-      declarations: [SubthemeComponent, CharacterSubthemeModalComponent],
-      providers: [NgbDropdownConfig, NgbActiveModal, NgbModalStack]
+      imports: [SharedModule, NgbModule.forRoot()],
+      declarations: [SubthemeComponent, CharacterSubthemeModalComponent, CharacterMagicSubthemeComponent, SpellSelectionComponent, SpellChartComponent, BuildSelectionComponent],
+      providers: [NgbDropdownConfig, NgbModal, NgbActiveModal, NgbModalStack]
     })
       .compileComponents();
   }));
@@ -34,12 +39,13 @@ describe('CharacterSubthemeModalComponent', () => {
     component = fixture.componentInstance;
     component.subthemePoints = new SubthemeContainer(mockThemePoints());
     component.getAllPossibleSubthemes();
-    weapon = new Subtheme(SubthemeTypes.WeaponSpecialization, 0);
-    protector = new Subtheme(SubthemeTypes.Protector, 0);
-    juggernaut = new Subtheme(SubthemeTypes.Juggernaut, 0);
-    find = new Subtheme(SubthemeTypes.FindWeakness, 0);
-    riposte = new Subtheme(SubthemeTypes.Riposte, 0);
-    evasion = new Subtheme(SubthemeTypes.Evasion, 0);
+    weapon = new Subtheme(SubthemeType.WeaponSpecialization, 0);
+    protector = new Subtheme(SubthemeType.Protector, 0);
+    juggernaut = new Subtheme(SubthemeType.Juggernaut, 0);
+    find = new Subtheme(SubthemeType.FindWeakness, 0);
+    riposte = new Subtheme(SubthemeType.Riposte, 0);
+    evasion = new Subtheme(SubthemeType.Evasion, 0);
+    magent = new Subtheme(SubthemeType.Magent, 0);
     fixture.detectChanges();
   });
 
@@ -67,7 +73,7 @@ describe('CharacterSubthemeModalComponent', () => {
 
   it('should be able to load in subthemes that have already been assigned values', () => {
     const sc = new SubthemeContainer(new ThemePointsContainer(3, 0, 0, 1));
-    sc.assignSubtheme(new Subtheme(SubthemeTypes.Protector, ThemeStrength.Lesser));
+    sc.assignSubtheme(new Subtheme(SubthemeType.Protector, ThemeStrength.Lesser));
     component.subthemePoints = sc;
     component.getAllPossibleSubthemes();
 
@@ -91,7 +97,7 @@ describe('CharacterSubthemeModalComponent', () => {
     expect(buttons.length).toEqual(8);
     buttons[1].nativeElement.click();
     fixture.detectChanges();
-    expect(component.selectedSubtheme).toBe(component.subthemeButtonsArray[1]);
+    expect(component.viewedSubtheme).toBe(component.subthemeButtonsArray[1]);
 
   });
 
@@ -142,6 +148,34 @@ describe('CharacterSubthemeModalComponent', () => {
     expect(component.subthemePoints.stealth).toEqual(
       [riposte]
     );
+  });
+
+  it('should be able to updateSubtheme after a magical subtheme has been selected', fakeAsync(() => {
+    spyOn(component, "updateSubtheme");
+    const mock = mockSubtheme(SubthemeType.Magent, ThemeStrength.Minor);
+
+    component.subthemePoints = new SubthemeContainer(new ThemePointsContainer(0, 0, 1, 1));
+    component.getAllPossibleSubthemes();
+    component.viewedSubtheme = magent;
+    const btn = fixture.debugElement.queryAll(By.css("#Magent"));
+    btn[0].nativeElement.click();
+    tick();
+    fixture.detectChanges();
+    tick();
+    const characterMagicComponent = fixture.debugElement.query(By.directive(CharacterMagicSubthemeComponent));
+    expect(characterMagicComponent).toBeTruthy("could not find the character magic component on the freaking page");
+    characterMagicComponent.componentInstance.submitter.emit(mock);
+    fixture.detectChanges();
+    expect(component.updateSubtheme).toHaveBeenCalled();
+
+  }));
+
+  it('should update a caster build', () => {
+    const build = mockBuild();
+    const sub = mockSubtheme();
+    sub.casterBuild = build;
+    component.viewSubtheme(sub);
+    expect(component.viewedSubtheme.casterBuild).toBe(build);
   });
 
 });

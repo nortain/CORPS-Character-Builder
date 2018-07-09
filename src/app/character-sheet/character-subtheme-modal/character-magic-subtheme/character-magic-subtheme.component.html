@@ -1,62 +1,159 @@
 <div class="container">
   <div class="row">
     <div class="col-12">
-      <label class="font-weight-bold">Subtheme Name: {{subtheme.subthemeName}}</label>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12">
-      <label class="font-weight-bold">Overview: </label> {{getMagicText(magicType.Overview)}}
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12">
-      <label class="font-weight-bold">Feature Bonus: </label> {{getMagicText(magicType.FeatureBonus)}}
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12">
-      <label class="font-weight-bold">General Feature: </label> {{getMagicText(magicType.GeneralFeature)}}
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12">
-      <label class="font-weight-bold">Implement Knacks: </label>
-      <button id="displayKnackButton" class="btn btn-primary" (click)="displayKnacks()">{{knackDisplayToggle ? 'Hide' : 'Show'}} Implement Knacks
+      <label class="font-weight-bold">{{subtheme.subthemeName | castleCase}}</label>
+      <button class="btn btn-sm float-right subthemeSelectBtn"
+              [ngClass]="{'btn-success': isSubthemeSelected(), 'btn-primary': !isSubthemeSelected()}"
+              [disabled]="subthemePointCap === 0 && subtheme.themeStrength === 0"
+              (click)="selectSubtheme()">{{isSubthemeSelected() ? 'Deselect Subtheme' : 'Select Subtheme'}}
       </button>
-      <div *ngIf="knackDisplayToggle">
-        <div class="knackOffset" *ngFor="let knack of getKnackText()">
-          <label class="font-weight-bold">Name:</label> <span class="name">{{knack.name | castleCase}}</span><br>
-          <label class="font-weight-bold">Description:</label>
-          <span class="description"> {{knack.text}}</span>
-          <div *ngIf="!getKnackData(knack.name)"></div>
-          <table id="{{knack.name}}Table" *ngIf="!!getKnackData(knack.name)" class="table table-bordered">
-            <thead>
-            <tr>
-              <th scope="col">Bonus</th>
-              <th scope="col">L 1</th>
-              <th scope="col">L 2</th>
-              <th scope="col">L 3</th>
-              <th scope="col">L 4</th>
-              <th scope="col">L 5</th>
-              <th scope="col">L 6</th>
-              <th scope="col">L 7</th>
-              <th scope="col">L 8</th>
-              <th scope="col">L 9</th>
-              <th scope="col">L 10</th>
-            </tr>
-            </thead>
-            <tr>
-              <th class="knackDataName">{{knack.name | castleCase}}</th>
-              <td *ngFor="let data of getKnackData(knack.name)">{{data}}</td>
-            </tr>
-          </table>
-          <br>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div>
+        {{getOverviewText()}}
+      </div>
+    </div>
+  </div>
+  <div class="row" id="featureRow" *ngIf="generalThemePoint === 0">
+    <div class="col-12">
+      <label class="font-weight-bold">Feature Bonuses: </label>
+      <div>{{getMagicText(magicType.FeatureBonus).name}}</div>
+      <div *ngFor="let item of getMagicText(magicType.FeatureBonus).values" class="px-2 font-weight-bold">
+        {{item.name}}
+        <ul>
+          <li class="font-weight-normal" *ngFor="let value of item.values">
+            {{value}}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="row" id="generalRow" *ngIf="generalThemePoint !== 0">
+    <div class="col-12">
+      <label class="font-weight-bold">General Feature: </label>
+      <div> {{getMagicText(magicType.GeneralFeature).name}}</div>
+      <div *ngFor="let item of getMagicText(magicType.GeneralFeature).values" class="px-2 font-weight-bold">
+        {{item.name}}
+        <ul>
+          <li class="font-weight-normal" *ngFor="let value of item.values">
+            {{value}}
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+  <div class="row rowEnder">
+    <div class="col-12">
+      <corps-build-selection *ngIf="isSphereSpecial()"
+                             [propertyName]="'Special'"
+                             [subtheme]="subtheme"
+                             [generalThemePoint]="generalThemePoint"
+                             [buildsToChooseFrom]="getSpecialPowers()"
+                             [isSpecialOnly]="spellRequirement.Special"
+                             [previouslySelectedBuild]="subtheme?.casterBuild?.specialBuild"
+                             (submitter)="selectBuild($event)"
+      >
+      </corps-build-selection>
+      <corps-build-selection
+        [propertyName]="'Build'"
+        [subtheme]="subtheme"
+        [generalThemePoint]="generalThemePoint"
+        [buildsToChooseFrom]="getSpecialPowers()"
+        [isSpecialOnly]="null"
+        [previouslySelectedBuild]="subtheme?.casterBuild?.build"
+        (submitter)="selectBuild($event)"
+      >
+      </corps-build-selection>
+    </div>
+  </div>
+  <div class="row rowEnder" *ngIf="generalThemePoint > 0 || subthemePointCap === 3">
+    <div class="container">
+      <div class="col-12">
+        <div class="notSelectedKnackDisplay row" *ngIf="subtheme.casterBuild?.knacks?.length ===0">
+          <label class="font-weight-bold col-auto">Implement Knacks: </label>
+        </div>
+        <div class="selectedKnackDisplay row" *ngIf="subtheme.casterBuild?.knacks?.length > 0">
+          <label class="font-weight-bold col-auto">Selected Implement {{subtheme.casterBuild?.knacks?.length === 1 ?
+            'Knack' :
+            'Knacks'}}:</label>
+          <div class="selectedKnackDiv btn-sm bg-success"
+               *ngFor="let selectDisplayKnack of subtheme.casterBuild.knacks">
+            {{selectDisplayKnack.name | castleCase}}
+          </div>
+        </div>
+        <button id="displayKnackButton" class="btn btn-outline-primary btn-sm float-right" (click)="displayKnacks()">
+          {{knackDisplayToggle ? 'Hide' :
+          'Show'}} Implement Knacks
+        </button>
+        <button *ngIf="knackDisplayToggle" id="openAllKnacks" class="btn btn-outline-secondary btn-sm float-right"
+                (click)="expandKnacks()">
+          {{shouldKnacksBeExpanded() ? 'Expand All Knacks' : 'Collapse All Knacks'}}
+        </button>
+
+        <div *ngIf="knackDisplayToggle">
+          <p>You can select {{numberOfKnacksToSelect}} {{numberOfKnacksToSelect === 1 ? 'knack' : 'knacks' }}</p>
+          <div class="col-12" *ngFor="let knack of getKnackText()">
+
+            <div type="button" class="card-header knackHeader" (click)="openKnack(knack)"><span
+              class="knackName font-weight-bold">{{knack.name | castleCase}}</span>
+              <button type="button" class="btn btn-sm knackButton float-right"
+                      [ngClass]="{'disabled': !isSubthemeSelected() ||
+                    numberOfKnacksToSelect - subtheme.casterBuild.knacks.length === 0 &&
+                    !isKnackSelected(knack),
+                     'btn-success': isKnackSelected(knack),
+                     'btn-primary': !isKnackSelected(knack)
+                    }"
+                      [disabled]="!isSubthemeSelected()"
+                      (click)="selectKnack(knack)">
+                {{isKnackSelected(knack) ? 'Deselect' : 'Select'}} Knack
+              </button>
+            </div>
+            <div class="card-text knackWell" *ngIf="isKnackOpen(knack)">
+              <span class="description">
+                {{knack.text}}
+              </span><br><br *ngIf="!getKnackData(knack.name)">
+              <table id="{{knack.name}}Table" *ngIf="!!getKnackData(knack.name)" class="table table-bordered">
+                <thead>
+                <tr>
+                  <th scope="col">Bonus</th>
+                  <th scope="col">L 1</th>
+                  <th scope="col">L 2</th>
+                  <th scope="col">L 3</th>
+                  <th scope="col">L 4</th>
+                  <th scope="col">L 5</th>
+                  <th scope="col">L 6</th>
+                  <th scope="col">L 7</th>
+                  <th scope="col">L 8</th>
+                  <th scope="col">L 9</th>
+                  <th scope="col">L 10</th>
+                </tr>
+                </thead>
+                <tr>
+                  <th class="knackDataName">{{knack.name | castleCase}}</th>
+                  <td *ngFor="let data of getKnackData(knack.name)">{{data}}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-
+  <div class="row">
+    <div class="col-12">
+      <corps-spell-selection
+        [subtheme]="subtheme"
+        [generalThemePoint]="generalThemePoint"
+        [numberOfSpellsToSelect]="getNumberOfSpells()"
+        [propertyType]="spellSelectionType.Spells"
+        [previouslySelectedSpell]="subtheme?.casterBuild?.spells"
+        (submitter)="selectSpells($event)">
+      </corps-spell-selection>
+    </div>
+  </div>
 </div>
 
 

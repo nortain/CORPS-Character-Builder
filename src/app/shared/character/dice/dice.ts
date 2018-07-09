@@ -1,6 +1,7 @@
 /**The Dice class knows everything about dice, how to use them and how to print out how they should be displayed.*/
 import {Field} from "../../field/field";
 import {DiceSize} from "./dice-size.enum";
+import {Precision} from "../../field/precision.enum";
 
 export class Dice {
   readonly numOfDice: Field;
@@ -15,6 +16,15 @@ export class Dice {
 
   getSizeOfDice(): Field {
     return this.sizeOfDice;
+  }
+
+  printMinionRoll(level = 1, monsterModifier = 0): string {
+    const mod = this.modifierOfDice.value(null, Precision.Percentile);
+    const base = Math.round(mod + (monsterModifier * .75) + (level * monsterModifier * .25));
+    const crit = Math.round(Math.round((mod + (monsterModifier * .75))) * 1.5 + (level * monsterModifier * .25));
+    return base + "/" + crit;
+
+
   }
 
   /**Give the number, size and modifier of the dice we can print the roll like 3d12+4 or 2d6-*/

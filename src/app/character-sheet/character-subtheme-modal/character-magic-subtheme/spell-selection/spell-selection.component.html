@@ -1,0 +1,96 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="notSelectedSpellDisplay row" *ngIf="selectedSpells.length === 0">
+        <label class="font-weight-bold col-auto">{{propertyName}}: </label>
+      </div>
+      <div class="selectedSpellDisplay row" *ngIf="selectedSpells.length > 0">
+        <label class="font-weight-bold col-auto">Selected {{propertyName}}:</label>
+        <div class="selectedSpellDiv btn-sm bg-success" *ngFor="let selectDisplaySpell of selectedSpells">
+          {{selectDisplaySpell.name | castleCase}}
+        </div>
+      </div>
+      <button id="displaySpellButton"
+              class="btn btn-outline-primary btn-sm float-right"
+              (click)="displaySpells()">
+        {{selectionDisplayToggle ? 'Hide' :
+        'Show'}} {{propertyName}}
+      </button>
+      <button *ngIf="selectionDisplayToggle"
+              id="openAllSpells"
+              class="btn btn-outline-secondary btn-sm float-right"
+              (click)="expandSpells()">
+        {{shouldSpellsBeExpanded() ? 'Expand All ' + propertyName : 'Collapse All ' + propertyName}}
+      </button>
+
+      <div *ngIf="selectionDisplayToggle">
+        <p>You can select {{numberOfSpellsToSelect}} {{propertyName}}</p>
+        <div class="col-12" *ngFor="let spell of getSpellData()">
+          <div class="card-header spellHeader" (click)="openSpell(spell)">
+            <span class="name font-weight-bold">{{spell.name | castleCase}} ({{spell.spellType | castleCase}})</span>
+            <span class="font-weight-bold" *ngIf="spell.castAction === actionType.Deliberate">*</span>
+            <span class="font-weight-bold" *ngIf="spell.castAction === actionType.Move">-</span>
+            <span class="font-weight-bold" *ngIf="spell.castAction === actionType.Minor">#</span>
+
+            <button class="btn btn-sm spellButton float-right"
+                    [ngClass]="{'disabled': !isSubthemeSelected() ||
+                    (numberOfSpellsToSelect - selectedSpells.length === 0 &&
+                    selectedSpells.indexOf(spell) === -1),
+                     'btn-success': isSpellSelected(spell),
+                     'btn-primary': !isSpellSelected(spell)
+                    }"
+                    [disabled]="!isSubthemeSelected()"
+                    (click)="selectSpell(spell); $event.stopPropagation()">
+              {{isSpellSelected(spell) ? 'Deselect' : 'Select'}} {{propertyName}}
+            </button>
+          </div>
+          <div class="card-text spellWell" *ngIf="isSpellOpen(spell)">
+            <div id="keywordsHolder"
+                 class="px-2 spellHeight"
+                 *ngIf="spell.spellKeywords && spell.spellKeywords.length > 0 || spell.damageKeyword"
+            >
+              <label for="keywords" class="font-weight-bold">Keywords: </label>
+              <span id="keywords">{{spell.damageKeyword}}<span
+                *ngIf="spell.damageKeyword && spell.spellKeywords && spell.spellKeywords.length > 0">, </span>
+                <span id="otherKeywords"
+                      *ngFor="let keyword of spell.spellKeywords; let keywordIndex = index">
+                {{keyword | subthemesPipe}}<span *ngIf="spell.spellKeywords[keywordIndex+1]">, </span>
+                </span>
+              </span>
+            </div>
+            <div id="defenseTypeHolder" class="px-2 spellHeight"
+                 *ngIf="!!spell.defenseType && spell.defenseType.length > 0">
+              <label for="defenseType" class="font-weight-bold">Defense Type:</label>
+              <span id="defenseType" *ngFor="let defense of spell.defenseType; let index=index">{{defense.toString().trim()}}<span
+                *ngIf="index < spell.defenseType.length - 1">/</span></span>
+            </div>
+            <div id="aoeHolder" class="px-2 spellHeight" *ngIf="!!spell.areaOfEffect">
+              <label for="aoe" class="font-weight-bold">Area of Effect:</label>
+              <span id="aoe">{{getAOEString(spell)}}</span>
+            </div>
+            <div id="castActionHolder" class="px-2 spellHeight" *ngIf="!!spell.castAction">
+              <label for="castAction" class="font-weight-bold">Cast Action:</label>
+              <span id="castAction">{{getCastActionString(spell.castAction)}}</span>
+            </div>
+            <div id="durationHolder" class="px-2 spellHeight" *ngIf="!!spell.duration && spell.duration.length > 0">
+              <label for="duration" class="font-weight-bold">Duration:</label>
+              <span id="duration" *ngFor="let duration of spell.duration; let index=index">{{duration}}<span
+                *ngIf="index < spell.duration.length - 1">/</span></span>
+            </div>
+            <div id="specialHolder" class="px-2 spellHeight" *ngIf="spell.special && spell.special.length > 0">
+              <label for="special" class="font-weight-bold">Special:</label>
+              <span id="special" *ngFor="let special of spell.special; let index=index">{{special}}</span>
+            </div>
+            <div id="critDieHolder" class="px-2 spellHeight" *ngIf="!!spell.critRoll">
+              <label for="critDie" class="font-weight-bold">Crit Die:</label>
+              <span id="critDie">{{spell.critRoll.printRoll()}}</span>
+            </div>
+            <corps-spell-chart
+              [spell]="spell">
+            </corps-spell-chart>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

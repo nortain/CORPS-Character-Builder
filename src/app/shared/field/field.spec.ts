@@ -86,7 +86,7 @@ describe('Field', () => {
     const bonus = new ff(50.565);
     expect(bonus.value(0, Precision.OneHalf)).toEqual(50.5);
     expect(bonus.value(0, Precision.OneFourth)).toEqual(50.5);
-    expect(bonus.value(0, Precision.Percentile)).toEqual(50.56);
+    expect(bonus.value(0, Precision.Percentile)).toEqual(50.57);
     bonus.addVal['cool'] = 10.5;
     expect(bonus.value()).toEqual(61);
 

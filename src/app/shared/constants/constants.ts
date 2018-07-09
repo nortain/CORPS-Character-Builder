@@ -10,15 +10,14 @@ import {VisionType} from "../character/race/vision-type.enum";
 import {AttributeName} from "../attribute/attribute-name.enum";
 import {ThemeType} from "../theme-points/theme-type.enum";
 import {SavingThrow} from "../character/saving-throw.enum";
-import {BonusByLevel} from "../character/bonus-by-level";
+import {BonusByLevel, NumberBonusByLevel} from "../character/bonus-by-level";
 import {Bonus} from "../character/bonus";
-import {Attribute} from "../attribute/attribute";
-import {AttributeStrength} from "../attribute/attribute-strength.enum";
-import {SubthemeTypes} from "../theme-points/subthemes/subtheme-types.enum";
-import {ThemeStrength} from "../theme-points/theme-strength.enum";
-import {Subtheme} from "../theme-points/subthemes/subtheme";
 import {MagentSpellList, SpellWardenSpellList} from "./spells/minor-spell-constants";
 import {Spell} from "../spells/spell";
+import {AssassinSpellList, ClericBlessingOfTheHoly, ClericBlessingOfTheStalwart, ClericHolyBuild, ClericSpellList, ClericStalwartBuild, DruidSpellList, WarriorMageSigilPowers, WarriorMageSpellList} from "./spells/lesser-spell-constants";
+import {SpellRequirement} from "../spells/enums/spell-requirement.enum";
+import {ShamanSpellList} from "./spells/greater-spell-constants";
+import {Subtheme} from "../theme-points/subthemes/subtheme";
 
 
 export const NON_HUMAN_AVAILABLE_ATTRIBUTE_POINTS = 4;
@@ -116,10 +115,19 @@ export const IN_THP_BONUS = [
 export const ONE_MAGIC_SPELLS = {
   Magent: {
     Overview: "You are a bad ass magent",
-    FeatureBonus: "You can have your attack spells use either your strength, agility or both as a balanced stat for determining your bonus damage",
-    GeneralFeature: "If you have 1 theme point in general you gain 1 spell knack and 1 additional spell.",
-    GeneralFeatureRequirement: {
-      General: 1
+    FeatureBonus: {
+      name: "Attack Spell Damage Bonus",
+      values: ["You can have your attack spells use either your strength, agility or both as a balanced stat for determining your bonus damage",
+        "You can pick 3 spells.  This value increases by 1 at levels 2 and 6"]
+    },
+    GeneralFeature: {
+      name: "If you have 1 theme point in general you gain ",
+      values: [{
+        name: "General Spell Bonus",
+        values: [
+          "1 spell knack",
+          " 1 additional spell"]
+      }]
     },
     ImplementKnacks: {
       RangedDefender: "You can use your AD vs range, area, and line attacks.",
@@ -131,13 +139,31 @@ export const ONE_MAGIC_SPELLS = {
       Carpetbagger: [4, 4, 5, 6, 7, 7, 8, 9, 10, 11],
       ElegantRetaliation: [4, 4, 5, 6, 7, 7, 8, 9, 10, 11],
       Reprobate: [4, 4, 5, 6, 7, 7, 8, 9, 10, 11]
-    },
-    Spells: () => MagentSpellList()
-  },
+    } as NumberBonusByLevel,
+    AdrenalinePowers: null,
+    PowerPointAbilities: null,
+    SpecialPowers: null,
+    ImplementAttack: null,
+    Spells: MagentSpellList(),
+    NumberOfSpellsToSelect: [3, 4, 4, 4, 4, 4, 5, 5, 5, 5],
+    NumberOfKnacksToSelect: [0, 1]
+  } as SpellSphere,
   SpellWarden: {
-    Overview: "",
-    FeatureBonus: "",
-    GeneralBonus: "",
+    Overview: "Spell Wardens were an ancient sect of Warriors who long ago discovered they could enhance their martial skills with the powers now known today as the essence of magic.  Although the order has all but been forgotten there are a rare few who have learned the secrets of Spell Warden and have passed those secrets down to others through the generations.  Although their magical capabilities aren’t nearly as strong as that of spell casters their sheer physical fortitude required to master this training style makes them a deadly foe on any battlefield.",
+    FeatureBonus: {
+      name: "Attack Spell Damage Bonus",
+      values: ["You can have your attack spells use either your strength, agility or both as a balanced stat for determining your bonus damage",
+        "You can pick 3 spells.  This value increases by 1 at levels 2 and 6"]
+    },
+    GeneralFeature: {
+      name: "If you have 1 theme point in general you gain: ",
+      values: [{
+        name: "General Spell Bonus",
+        values: [
+          "1 spell knack",
+          " 1 additional spell"]
+      }]
+    },
     ImplementKnacks: {
       RangedDefender: "You can use your AD vs range, area, and line attacks.",
       ImprovedWeaponSpells: "Increase the damage of your weapon and imbue spells by the amount listed below",
@@ -148,11 +174,381 @@ export const ONE_MAGIC_SPELLS = {
       ImprovedWeaponSpells: [4, 4, 5, 6, 7, 7, 8, 9, 10, 11],
       SpellAbsorption: [4, 4, 5, 6, 7, 7, 8, 9, 10, 11],
       ShieldOfTheWarden: [4, 4, 5, 6, 7, 7, 8, 9, 10, 11]
+    } as NumberBonusByLevel,
+    AdrenalinePowers: null,
+    PowerPointAbilities: null,
+    SpecialPowers: null,
+    ImplementAttack: null,
+    Spells: SpellWardenSpellList(),
+    NumberOfSpellsToSelect: [3, 4, 4, 4, 4, 4, 5, 5, 5, 5],
+    NumberOfKnacksToSelect: [0, 1]
+  } as SpellSphere
+
+
+};
+
+export const TWO_MAGIC_SPELLS = {
+  WarriorMage: {
+    Overview: "As a part of selecting the warrior mage sphere you can choose one of the following trainings.  Each training comes with passive bonuses, unique sphere specific ability and dictates the effects of your adrenaline points.",
+    FeatureBonus: {
+      name: "If you have no ranks in general you gain the benefits from your training as a balanced warrior",
+      values: [
+        {
+          name: "Training of the Balanced Warrior",
+          values: [
+            "You gain the Warrior’s Sigil Ability and 1 Sigil power",
+            "You can select 4 spells from the Warrior Archmage Sphere",
+            "Gain +1 damage to weapon and imbue spells. Increase by 1 at levels 5 and 9",
+            "Gain the Fury ability",
+            "Increase the damage done by your spells by 1 per stat point in Brawn and Agility."
+          ]
+        }
+      ]
+
     },
-    Spells: () => SpellWardenSpellList()
-  }
+    GeneralFeature: {
+      name: "If you have 1 theme point in general you can choose between the following Trainings",
+      values: [
+        {
+          name: "Training of the Provoking Psychic",
+          values: [
+            "The Phantom Blade implement attack and 1 implement knack",
+            "The Warrior’s Sigil Ability and 1 Sigil power",
+            "Visions of the Mind Power",
+            "5 spells from the Warrior Archmage Sphere",
+            "Force of Control Ability",
+            "Magic attack bonus increased by your Reasoning bonus"
+          ]
+        },
+        {
+          name: "Training of the Ravaging Magi",
+          values: [
+            "The Phantom Blade implement attack and 1 implement knack",
+            "The Warrior’s Sigil Ability and 1 Sigil power",
+            "Ravaging Assault Power",
+            "5 spells from the Warrior Archmage Sphere",
+            "Force of the Aggression Ability",
+            "Magic attack bonus increased by your Reasoning bonus"
+          ]
+        }
+      ]
+    },
+    ImplementKnacks: {
+      RangedDefender: "You can use your AD vs range, area, and line attacks.",
+      PhantomChain: "Phantom Blades gains the forced movement keyword and if you hit a target with phantom blades that has your sigil on them you can slide them one square.  You can also increase the damage of phantom blades by the amount listed below.",
+      EmpoweredOvercast: " When overcasting an attack spell you can increase the damage of the spell to the first target hit by the amount listed below.",
+      GiftedMagi: "When your sigil is on an enemy, spells with the forced movement keyword have their distances increased by 1.  When your sigil is on an ally they can decrease the distance of forced movement effects against them by 1.  You can also increase the damage of all of your attack spells and implement attacks to the first target hit by the amount listed below.",
+      EmpoweredSigil: "If your sigil is on an enemy you can increase the damage of the your Revenge or Rebuke by the amount listed below under Empowered Sigil.  If your sigil is on an ally you can increase the amount of damage reduced by your Force field power by the amount listed under force field."
+    },
+    ImplementKnacksData: {
+      PhantomChain: [3, 3, 4, 4, 5, 5, 6, 6, 7, 8],
+      EmpoweredOvercast: [6, 7, 8, 9, 10, 12, 13, 14, 15, 17],
+      GiftedMagi: [2, 2, 2, 3, 3, 3, 4, 4, 4, 5],
+      ForceField: [3, 3, 4, 5, 5, 6, 7, 7, 8, 9],
+      Rebuke: [6, 7, 8, 9, 10, 12, 13, 14, 15, 17],
+      Revenge: [6, 7, 8, 9, 10, 12, 13, 14, 15, 17]
+    } as NumberBonusByLevel,
+    AdrenalinePowers: [],
+    PowerPointAbilities: [],
+    SpecialPowers: [
+      {
+        name: "Blessing of the Stalwart",
+        powers: WarriorMageSigilPowers(),
+        requirement: SpellRequirement.Special
+      } as SpecialPower
+    ],
+    ImplementAttack: new Spell(),
+    Spells: WarriorMageSpellList(),
+    NumberOfSpellsToSelect: [4, 5, 5, 6, 6, 7, 7, 7, 7, 7],
+    NumberOfKnacksToSelect: [0, 1]
+  } as SpellSphere,
+  Assassin: {
+    Overview: "As a part of selecting the assassin sphere you can you choose one of the following paths.  Each path comes with passive bonuses, a unique sphere specific ability and dictates the effects of your adrenaline points.",
+    FeatureBonus: {
+      name: "Path of the Cutthroat",
+      values: [
+        "You gain the Veil of Shadows Ability",
+        "You can select 4 spells from the Assassin Sphere",
+        "Gain +1 damage to weapon spells. Increase this bonus 1 at levels 5 and 9",
+        " Gain +1 damage to your Veil of Shadows effect at levels 2, and 6",
+        "Gain the Fury ability",
+        "Increase the attack damage done by your spells by 1 per stat point in Brawn and Agility"
 
+      ]
+    },
+    GeneralFeature: {
+      name: "If you have 1 theme point in general you can choose between the following Trainings",
+      values: [
+        {
+          name: "Path of the Shadow",
+          values: [
+            "You gain the Shadow Stab Implement Attack and 1 implement knack",
+            "You gain the Veil of Shadows Ability",
+            "You can select 5 spells from the Assassin Sphere",
+            "You gain the Swallowed by Shadows Ability",
+            "You gain the Empowered Veil Ability",
+            "Increase your magic attack bonus by your Presence bonus"
+          ]
+        },
+        {
+          name: "Path of Chilling Vengeance",
+          values: [
+            "You gain the Shadow Stab Implement Attack and 1 implement knack",
+            "You gain the Veil of Shadows Ability",
+            "You can select 5 spells from the Assassin Sphere",
+            "You gain the Eternal Frost Ability",
+            "You gain the Payback Ability",
+            "Increase your magic attack bonus by your Presence bonus"
+          ]
+        }
+      ]
+    },
+    ImplementKnacks: {
+      RangedDefender: "You can use your AD vs range, area, and line attacks.",
+      EmpoweredImplement: "You can increase the distance you can teleport using Shadow Stab by 1 square and you can increase the damage of your implement attack by 1.  This damage bonus increases by 1 at levels 4 and 8.",
+      LethalShadows: "Increase the additional damage bonus provided by your Veil of Shadows by the damage bonus listed below.",
+      VeiledImplement: "Increase the damage of your implement by the amount listed for the Veiled Implement value.",
+      AssassinsContract: "Once per combat when you or ongoing damage kills a creature with your veil of shadows on it you can place ongoing damage onto the next target of your VoS when you cast it.  This bonus is unaffected by the talents, items or abilities that might increase ongoing damage."
+    },
+    ImplementKnacksData: {
+      LethalShadows: [3, 3, 4, 4, 5, 5, 6, 6, 7, 8],
+      VeiledImplement: [5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+      AssassinsContract: [7, 8, 9, 11, 12, 14, 15, 17, 18, 20]
+    } as NumberBonusByLevel,
+    AdrenalinePowers: [],
+    PowerPointAbilities: [],
+    SpecialPowers: null,
+    ImplementAttack: new Spell(),
+    Spells: AssassinSpellList(),
+    NumberOfSpellsToSelect: [4, 5, 5, 6, 6, 7, 7, 7, 7, 7],
+    NumberOfKnacksToSelect: [0, 1]
+  } as SpellSphere,
+  Cleric: {
+    Overview: "As a part of selecting the Cleric sphere you can choose one of the following ways.  Each way comes with passive bonuses, a unique sphere specific ability and dictates the effects of your adrenaline points.",
+    FeatureBonus: {
+      name: "All cleric uses a resource called blessings. If you have no theme points in general you also gain the benefits of the Order of the Chosen",
+      values: [
+        {
+          name: "Blessings",
+          values: [
+            "Depending on your order you start each combat with a certain number of blessings.  When you invoke the blessings of your order you spend all of the blessings you have.  The result of what your blessing does is dependant on the order you choose.  If you have 1 theme point in general you also gain 1 blessing when you hit an enemy with an attack, cast a utility spell or successfully spend a move action to maintain a concentration spell.  A cleric may not gain more than 1 blessing per round in this manner, however other powers or abilities may allow a cleric to gain additional blessings beyond this limit."
+          ]
+        },
+        {
+          name: "Order of the Chosen",
+          values: [
+            "You gain the Blessings Feature of either the Order of the Stalwart or Order of the Holy, you start each combat with 5 blessings",
+            "You can select 4 spells from the Cleric Sphere",
+            "Gain +1 damage to weapon spells. This bonus increases by 1 at levels 5 and 9",
+            "Gain the Fury Ability",
+            "Increase the damage done by your spells by 1 per stat point in Brawn and Agility."
+          ]
+        }
+      ]
+    },
+    GeneralFeature: {
+      name: "If you have 1 theme point in general you can choose between the following Orders",
+      values: [
+        {
+          name: "Order of the Stalwart",
+          values: [
+            "Gain Order’s Implement as an implement attack and 1 Cleric knack",
+            "Use your Presence stat to increase your magical attack bonus",
+            "You can select 5 spells from the Cleric Sphere",
+            "You gain the Blessings Feature for Order of the Stalwart and start combat with 5 blessings.",
+            "Gain the Repentance Adrenaline Power",
+            "Gain the Inner Resolve Power Point ability"
+          ]
+        },
+        {
+          name: "Order of the Holy",
+          values: [
+            "Gain Order’s Implement as an implement attack and 1 Cleric knack",
+            "Use your Presence stat to increase your magical attack bonus",
+            "You can select 5 spells from the Cleric Sphere",
+            "You gain the Blessings Feature for Order of the Stalwart and start combat with 4 blessings.",
+            "Gain the Divine Aid Adrenaline Power",
+            "Gain the Favor Power Point Ability"
+          ]
+        }
+      ]
+    },
+    ImplementKnacks: {
+      RangedDefender: "You can use your AD vs range, area, and line attacks.",
+      GracefulBonus: "Once per encounter as a swift action you can a cast the blessing of your order as if you had exactly 2 blessings.  This blessing doesn’t affect any current blessings you might already have.",
+      ProtectionBonus: "Once per combat as a free action you can immediately reduce the damage of an attack against yourself or a friendly ally within 10 by the protection bonus listed below",
+      Reverence: "Once per combat as a minor action you can cause all targets hit by the next attack you make this turn to get knocked prone and take additional damage equal to the Reverence bonus below.",
+      ConcentratedFortune: "Increase the damage you deal when paying a spell’s concentration cost by the amount listed below."
+    },
+    ImplementKnacksData: {
+      ProtectionBonus: [6, 7, 8, 10, 11, 12, 14, 15, 16, 18],
+      Reverence: [4, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      ConcentratedFortune: [4, 4, 5, 6, 7, 7, 8, 9, 10, 11],
+    } as NumberBonusByLevel,
+    SpecialPowers: [
+      {
+        name: "Blessing of the Holy",
+        powers: [ClericBlessingOfTheHoly()],
+        requirement: SpellRequirement.ZeroGeneral
+      }, {
+        name: "Blessing of the Stalwart",
+        powers: [ClericBlessingOfTheStalwart()],
+        requirement: SpellRequirement.ZeroGeneral
+      }, {
+        name: "Order of the Holy",
+        powers: ClericHolyBuild(),
+        requirement: SpellRequirement.OneGeneral
+      }, {
+        name: "Order of the Stalwart",
+        powers: ClericStalwartBuild(),
+        requirement: SpellRequirement.OneGeneral
+      }],
+    ImplementAttack: new Spell(),
+    Spells: ClericSpellList(),
+    NumberOfSpellsToSelect: [4, 5, 5, 6, 6, 7, 7, 7, 7, 7],
+    NumberOfKnacksToSelect: [0, 1]
+  } as SpellSphere,
+  Druid: {
+    Overview: "As a part of selecting the warrior mage sphere you can choose one of the following trainings.  Each training comes with passive bonuses, unique sphere specific ability and dictates the effects of your adrenaline points.",
+    FeatureBonus: {
+      name: "Training of the Balanced Warrior",
+      values: [
+        "You gain the Warrior’s Sigil Ability and 1 Sigil power",
+        "You can select 4 spells from the Warrior Archmage Sphere",
+        "Gain +1 damage to weapon and imbue spells. Increase by 1 at levels 5 and 9",
+        "Gain the Fury ability",
+        "Increase the damage done by your spells by 1 per stat point in Brawn and Agility."
+      ]
+    },
+    GeneralFeature: {
+      name: "If you have 1 theme point in general you can choose between the following Trainings",
+      values: [
+        {
+          name: "Training of the Provoking Psychic",
+          values: [
+            "The Phantom Blade implement attack and 1 implement knack",
+            "The Warrior’s Sigil Ability and 1 Sigil power",
+            "Visions of the Mind Power",
+            "5 spells from the Warrior Archmage Sphere",
+            "Force of Control Ability",
+            "Magic attack bonus increased by your Reasoning bonus"
+          ]
+        },
+        {
+          name: "Training of the Ravaging Magi",
+          values: [
+            "The Phantom Blade implement attack and 1 implement knack",
+            "The Warrior’s Sigil Ability and 1 Sigil power",
+            "Ravaging Assault Power",
+            "5 spells from the Warrior Archmage Sphere",
+            "Force of the Aggression Ability",
+            "Magic attack bonus increased by your Reasoning bonus"
+          ]
+        }
+      ]
+    },
+    ImplementKnacks: {
+      RangedDefender: "You can use your AD vs range, area, and line attacks.",
+      PhantomChain: "Phantom Blades gains the forced movement keyword and if you hit a target with phantom blades that has your sigil on them you can slide them one square.  You can also increase the damage of phantom blades by the amount listed below.",
+      EmpoweredOvercast: "When overcasting an attack spell you can increase the damage of the spell to the first target hit by the amount listed below.",
+      GiftedMagi: "Once per round, whenever an enemy misses you with an attack, choose to have your next weapon or spell attack you make to have its damage increased by the value listed below against the first target hit.",
+      EmpoweredSigil: "Once per round, whenever an enemy misses you with an attack, choose to have your next weapon or spell attack you make to have its damage increased by the value listed below against the first target hit."
+    },
+    ImplementKnacksData: {
+      PhantomChain: [3],
+      EmpoweredOvercast: [3],
+      GiftedMagi: [3],
+      ForceField: [3],
+      Rebuke: [3],
+      Revenge: [3]
+    } as NumberBonusByLevel,
+    AdrenalinePowers: [],
+    PowerPointAbilities: [],
+    SpecialPowers: null,
+    ImplementAttack: new Spell(),
+    Spells: DruidSpellList(),
+    NumberOfSpellsToSelect: [4, 5, 5, 6, 6, 7, 7, 7, 7, 7],
+    NumberOfKnacksToSelect: [0, 1]
+  } as SpellSphere,
+};
 
+export const THREE_MAGIC_SPELL = {
+  Shaman: {
+    Overview: "Wise man, witch doctor, practitioner of spiritual arts.  The shaman is known by many names but what all of these roles have in common is that they have deep roots in the spiritual world.  Through concentration and ritual they commune with the great spirits beyond to protect and lead those who follow them.  In combat shaman are fiercely protective of those who show devotion to them.  Whether they are on the front lines protecting their allies by physically blocking blows or in the background strengthening and healing shaman are always a welcome addition to any adventuring party.",
+    FeatureBonus: {
+      name: "As a part of selecting the shaman sphere you can choose one of the following teachings.  Each way comes with passive bonuses, a unique sphere specific powers and abilities.",
+      values: [
+        {
+          name: "Teach of the Sky Spirit",
+          values: [
+            "You gain the Spirit Touch Implement Attack and 1 implement knack",
+            "You gain Ancestral Aura of the Sky Spirit",
+            "You know the Essence of the Sky Spirit feature power and start with 0 Essence.  You also gain 1 Essence each time you cast any kind of utility spell or a spell with the Essence keyword",
+            "You gain the Breath of Life Rare Feature",
+            "You gain the Nurture Feature Ability",
+            "Increase your magic attack bonus by your Reasoning bonus"
+          ]
+        },
+        {
+          name: "Teach of the Earth Totem",
+          values: [
+            "You gain the Spirit Touch Implement Attack and 1 implement knack",
+            "You gain Ancestral Aura of the Earth Totem",
+            "You know the Essence of the Earth Totem feature power and start with 0 Essence.  You also gain 1 Essence each time you cast an attack spell, or a spell with the Essence keyword",
+            "You gain the Call of the Earth Rare Feature",
+            "You gain the Nurture Feature Ability",
+            "Increase your magic attack bonus by your Reasoning bonus"
+          ]
+        }
+      ]
+    },
+    GeneralFeature: {
+      name: "As a part of selecting the shaman sphere you can choose one of the following teachings.  Each way comes with passive bonuses, a unique sphere specific powers and abilities.",
+      values: [
+        {
+          name: "Teach of the Sky Spirit",
+          values: [
+            "You gain the Spirit Touch Implement Attack and 2 implement knack",
+            "You gain Ancestral Aura of the Sky Spirit",
+            "You know the Essence of the Sky Spirit feature power and start with 0 Essence.  You also gain 1 Essence each time you cast any kind of utility spell or a spell with the Essence keyword",
+            "You gain the Breath of Life Rare Feature",
+            "You gain the Nurture Feature Ability",
+            "Increase your magic attack bonus by your Reasoning bonus"
+          ]
+        },
+        {
+          name: "Teach of the Earth Totem",
+          values: [
+            "You gain the Spirit Touch Implement Attack and 2 implement knack",
+            "You gain Ancestral Aura of the Earth Totem",
+            "You know the Essence of the Earth Totem feature power and start with 0 Essence.  You also gain 1 Essence each time you cast an attack spell, or a spell with the Essence keyword",
+            "You gain the Call of the Earth Rare Feature",
+            "You gain the Nurture Feature Ability",
+            "Increase your magic attack bonus by your Reasoning bonus"
+          ]
+        }
+      ]
+    },
+    ImplementKnacks: {
+      RangedDefender: "You can use your AD vs range, area, and line attacks.",
+      EnlightenedTouch: "You start combat with 1 essence and can increase the damage of your implement attacks by the amount listed below.",
+      RenewedSpirit: "Once per encounter you can increase the temporary hit point value of a spell granted to 1 target of your spells with the fortify or regeneration keywords by Temporary Hit Point bonus listed below.",
+      ResilientSpirit: "Whenever you activate an essence power you gain a decaying 1 bonus to defense.  This bonus increases all your defenses by 1.",
+      HastenedRitual: "Once per combat you can activate your default essence power as a swift action.  When you do, you can also increase the damage stored within your ancestral aura by the amount listed below.",
+      DevoteShaman: "Once per combat, when you have 3 essence and cast a spell with the essence keyword you can spend 3 Essence and a minor action instead of 2 and a minor action to activate both your default essence power as well as the spells’ essence power.  You can also immediately increase the damage stored by your ancestral aura by the value below."
+    },
+    ImplementKnacksData: {
+      EnlightenedTouch: [3, 3, 4, 5, 6, 6, 7, 8, 9, 10],
+      DevoteShaman: [3, 3, 4, 4, 5, 5, 6, 6, 7, 8],
+      RenewedSpirit: [6, 7, 8, 10, 11, 12, 14, 15, 16, 18],
+      HastenedRitual: [6, 7, 8, 10, 11, 13, 14, 16, 17, 19],
+    } as NumberBonusByLevel,
+    SpecialPowers: null,
+    ImplementAttack: new Spell(),
+    Spells: ShamanSpellList(),
+    NumberOfSpellsToSelect: [5, 6, 6, 7, 7, 8, 8, 9, 9, 9],
+    NumberOfKnacksToSelect: [1, 2]
+  } as SpellSphere,
 };
 
 export const SUBTHEME_BONUS = {
@@ -221,8 +617,12 @@ export const SUBTHEME_BONUS = {
     text: ["<b>Active Defense:</b> Increase your active defense by 1.", "<b>Critical Damage Reduction:</b>Reduce ongoing damage from critical hits by the reduction value listed in the table below"]
   },
   Magent: ONE_MAGIC_SPELLS["Magent"],
-  SpellWarden: ONE_MAGIC_SPELLS["SpellWarden"]
-
+  SpellWarden: ONE_MAGIC_SPELLS["SpellWarden"],
+  Druid: TWO_MAGIC_SPELLS["Druid"],
+  WarriorMage: TWO_MAGIC_SPELLS["WarriorMage"],
+  Assassin: TWO_MAGIC_SPELLS["Assassin"],
+  Cleric: TWO_MAGIC_SPELLS["Cleric"],
+  Shaman: THREE_MAGIC_SPELL["Shaman"]
 };
 
 export const STARTING_PLAYER_RACES = {
@@ -578,6 +978,57 @@ export class StartingCharacterMagicDefense {
   Reflex = new MagicDefense(MagicDefenseType.Reflex, new Field(10));
   Will = new MagicDefense(MagicDefenseType.Will, new Field(10));
 }
+
+export class Knack {
+  name: string;
+  text: string;
+  subthemeName: string;
+}
+
+
+export class KeyValuePair {
+  [s: string]: string;
+}
+
+// https://basarat.gitbooks.io/typescript/docs/types/index-signatures.html
+
+export class Feature {
+  name: string;
+  values: any[];
+}
+
+/**
+ * name: of the special power
+ * powers: the list of all spells that make up this particular special power
+ * numberOfSelections: is the maximum number of choices that can be selected, assumption only 1 may be chosen
+ * requirement: acts a filter to designate if a one of the spells in the powers will show up for 0g, 1g or both
+ */
+export class SpecialPower {
+  name: string;
+  powers: Spell[];
+  requirement: SpellRequirement;
+}
+
+export class CasterBuild {
+  spells: Spell[] = [];
+  build: SpecialPower = null;
+  specialBuild: SpecialPower = null;
+  knacks: Knack[] = [];
+}
+
+export interface SpellSphere {
+  Overview: string;
+  FeatureBonus: Feature;
+  GeneralFeature: Feature;
+  ImplementKnacks: KeyValuePair;
+  ImplementKnacksData: NumberBonusByLevel;
+  SpecialPowers: SpecialPower[];
+  ImplementAttack: Spell;
+  Spells: Spell[];
+  NumberOfSpellsToSelect: number[];
+  NumberOfKnacksToSelect: number[];
+}
+
 
 
 
