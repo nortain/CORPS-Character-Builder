@@ -28,5 +28,8 @@ RUN apt-get install -y google-chrome-stable
 # Serve the app
 #CMD ["npm", "start-docker"]
 
+# not sure what this is supposed to accomplish
+RUN apt-get install -y xvfb
+
 # Start testing
 CMD ["npm", "test"]

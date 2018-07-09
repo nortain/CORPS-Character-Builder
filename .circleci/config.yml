@@ -9,7 +9,7 @@ jobs:
       # specify the version you desire here
       - image: mydockerimage:latest
       env:
-        - CHROME_BIN=/usr/bin/google-chrome
+        - CHROME_BIN=/usr/bin/google-chrome --no-sandbox
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
