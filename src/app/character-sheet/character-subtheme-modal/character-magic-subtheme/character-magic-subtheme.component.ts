@@ -160,8 +160,9 @@ export class CharacterMagicSubthemeComponent implements OnInit {
           if (result) {
             this.resetSubtheme();
             this.subtheme = new Subtheme(SubthemeType[this.subtheme.subthemeName]); // make new subtheme with 0 strength
-            this.ref.detectChanges(); // needed cause we are resolving a promise THEN updating UI
-            this.submitUpdatedCasterBuild();
+            // this.ref.detectChanges(); // needed cause we are resolving a promise THEN updating UI
+          } else {
+            console.log("Cancelled deselection");
           }
         }, (rejected) => {
           console.error("The user rejected the confirmation modal: ", rejected);
@@ -170,7 +171,7 @@ export class CharacterMagicSubthemeComponent implements OnInit {
         this.resetSubtheme();
         this.subtheme = new Subtheme(SubthemeType[this.subtheme.subthemeName]); // make new subtheme with 0 strength
       }
-
+      this.submitUpdatedCasterBuild();
     }// else do nothing
   }
 

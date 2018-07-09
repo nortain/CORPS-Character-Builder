@@ -74,7 +74,10 @@ export class CharacterSubthemeModalComponent implements OnInit {
   updateSubtheme(updatedSubtheme: Subtheme) {
     if (updatedSubtheme !== null) {
       for (const sub of this.subthemeButtonsArray) {
-        if (sub.subthemeName === updatedSubtheme.subthemeName && updatedSubtheme.themeStrength !== ThemeStrength.None) {
+        const alreadyChooseButNowDeselecting = sub.themeStrength > ThemeStrength.None && sub.subthemeName === updatedSubtheme.subthemeName && updatedSubtheme.themeStrength === ThemeStrength.None;
+        const themeNamesMatchAndThemeIsBeingSelectedBecauseStrengthIsNotZero = sub.subthemeName === updatedSubtheme.subthemeName && updatedSubtheme.themeStrength !== ThemeStrength.None;
+        if (themeNamesMatchAndThemeIsBeingSelectedBecauseStrengthIsNotZero
+          || alreadyChooseButNowDeselecting) {
           const index = this.subthemeButtonsArray.indexOf(sub);
           this.subthemeButtonsArray[index] = updatedSubtheme;
           this.subthemePoints.assignSubtheme(updatedSubtheme);
