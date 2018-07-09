@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild} from '@angular/core';
 import {Subtheme} from "../../../shared/theme-points/subthemes/subtheme";
 import {CasterBuild, Feature, Knack, SpecialPower, SUBTHEME_BONUS} from "../../../shared/constants/constants";
 import {MagicType, NumberToSelect, SpellSelectionType} from "./magic-type.enum";
@@ -10,6 +10,8 @@ import {SpellRequirement} from "../../../shared/spells/enums/spell-requirement.e
 import {Level} from "../../../shared/character/level.enum";
 import {Spell} from "../../../shared/spells/spell";
 import {mockSubtheme} from "../../../shared/constants/testing-constants";
+import {BuildSelectionComponent} from "./spell-selection/build-selection/build-selection.component";
+import {SpellSelectionComponent} from "./spell-selection/spell-selection.component";
 
 @Component({
   selector: 'corps-character-magic-subtheme',
@@ -23,6 +25,9 @@ export class CharacterMagicSubthemeComponent implements OnInit {
   @Input() subthemePointCap: number;
   @Input() characterLevel: Level;
   @Output() submitter: EventEmitter<Subtheme>;
+
+  @ViewChild(BuildSelectionComponent) buildSelection: BuildSelectionComponent;
+  @ViewChild(SpellSelectionComponent) spellSelection: SpellSelectionComponent;
 
   magicType = MagicType;
   spellSelectionType = SpellSelectionType;
@@ -81,6 +86,8 @@ export class CharacterMagicSubthemeComponent implements OnInit {
   resetSubtheme() {
     if (this.subtheme) {
       this.subtheme.casterBuild = new CasterBuild();
+      this.buildSelection.resetBuildSelection();
+      this.spellSelection.resetSpellSelection();
     }
     this.openKnacks = [];
   }
@@ -160,7 +167,7 @@ export class CharacterMagicSubthemeComponent implements OnInit {
           if (result) {
             this.resetSubtheme();
             this.subtheme = new Subtheme(SubthemeType[this.subtheme.subthemeName]); // make new subtheme with 0 strength
-            // this.ref.detectChanges(); // needed cause we are resolving a promise THEN updating UI
+            this.ref.detectChanges(); // needed cause we are resolving a promise THEN updating UI
           } else {
             console.log("Cancelled deselection");
           }
@@ -170,13 +177,14 @@ export class CharacterMagicSubthemeComponent implements OnInit {
           .then(() => {
             if (document.querySelector('body > .modal')) {
               document.body.classList.add('modal-open');
+              this.submitUpdatedCasterBuild();
             }
           });
       } else { // if the form is not dirty just deselect the damn thing
         this.resetSubtheme();
         this.subtheme = new Subtheme(SubthemeType[this.subtheme.subthemeName]); // make new subtheme with 0 strength
+        this.submitUpdatedCasterBuild();
       }
-      this.submitUpdatedCasterBuild();
     }// else do nothing
   }
 
