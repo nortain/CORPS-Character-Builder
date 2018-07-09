@@ -173,10 +173,11 @@ export class BuildSelectionComponent implements OnInit {
   selectBuild(build: SpecialPower) {
     if (!this.selectedBuild) {
       this.selectedBuild = build;
+      this.submitter.emit(this.selectedBuild);
     } else if (this.isBuildSelected(build)) {
       this.selectedBuild = null;
+      this.submitter.emit(build);
     }
-    this.submitter.emit(this.selectedBuild);
   }
 
   isValidBuild(build: SpecialPower): boolean {
@@ -191,8 +192,6 @@ export class BuildSelectionComponent implements OnInit {
     } else {
       return build.requirement === SpellRequirement.OneGeneral;
     }
-
-
   }
 
 

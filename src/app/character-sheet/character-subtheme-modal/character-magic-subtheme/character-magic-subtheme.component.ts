@@ -16,7 +16,7 @@ import {mockSubtheme} from "../../../shared/constants/testing-constants";
   templateUrl: './character-magic-subtheme.component.html',
   styleUrls: ['./character-magic-subtheme.component.css']
 })
-export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
+export class CharacterMagicSubthemeComponent implements OnInit {
 
   @Input() subtheme: Subtheme;
   @Input() generalThemePoint: ThemeStrength;
@@ -51,12 +51,9 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.determineNumberOfSelectableKnacks();
-    if (this.subtheme) {
-      this.checkCasterBuild(this.subtheme.casterBuild);
-    }
   }
 
-  ngOnChanges() {
+  submitUpdatedCasterBuild() {
     this.determineNumberOfSelectableKnacks();
     if (this.subtheme &&
       this.subtheme.casterBuild) {
@@ -67,7 +64,6 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
       } as Subtheme;
       this.submitter.emit(emitter);
     }
-
   }
 
   /**
@@ -149,7 +145,7 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
     // if we don't have a subtheme selected, select it
     if (!this.isSubthemeSelected() && this.subthemePointCap > 0) {
       this.subtheme = new Subtheme(SubthemeType[this.subtheme.subthemeName], this.subtheme.maxThemeStrength);
-      this.ngOnChanges();
+      this.submitUpdatedCasterBuild();
       // else warn them we will lose our selected subtheme
     } else if (this.isSubthemeSelected()) {
       if (this.isThisDirty()) {
@@ -165,7 +161,7 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
             this.resetSubtheme();
             this.subtheme = new Subtheme(SubthemeType[this.subtheme.subthemeName]); // make new subtheme with 0 strength
             this.ref.detectChanges(); // needed cause we are resolving a promise THEN updating UI
-            this.ngOnChanges();
+            this.submitUpdatedCasterBuild();
           }
         }, (rejected) => {
           console.error("The user rejected the confirmation modal: ", rejected);
@@ -203,6 +199,8 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
 
   selectSpells(spells: Spell[]) {
     this.subtheme.casterBuild.spells = spells;
+    this.submitUpdatedCasterBuild();
+
   }
 
   selectBuild(build: SpecialPower) {
@@ -212,7 +210,7 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
           this.subtheme.casterBuild.specialBuild = build;
         } else if (this.subtheme.casterBuild.specialBuild.name === build.name) { // deselect special build
           this.subtheme.casterBuild.specialBuild = null;
-        } // do nothing of consiquence
+        } // do nothing of consequence
       } else { // normal build
         if (!this.subtheme.casterBuild.build) { // select build
           this.subtheme.casterBuild.build = build;
@@ -221,6 +219,7 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
         }// do nothing
       }
     }
+    this.submitUpdatedCasterBuild();
   }
 
   selectKnack(knack: Knack) {
@@ -231,6 +230,7 @@ export class CharacterMagicSubthemeComponent implements OnInit, OnChanges {
     } else if (this.subtheme.casterBuild.knacks.length < this.numberOfKnacksToSelect) {
       this.subtheme.casterBuild.knacks.push(knack);
     }
+    this.submitUpdatedCasterBuild();
   }
 
   getOverviewText(): string {

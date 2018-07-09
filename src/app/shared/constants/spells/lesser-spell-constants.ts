@@ -12,14 +12,15 @@ import {DiceSize} from "../../character/dice/dice-size.enum";
 import {SpellChart} from "../../spells/spell-chart";
 import {SpellType} from "../../spells/enums/spell-type.enum";
 import {SpellDamageKeyword} from "../../spells/enums/spell-damage-keyword.enum";
+import {CasterType} from "../../theme-points/subthemes/subtheme-type.enum";
 
 export function ClericHolyBuild(): Spell[] {
   return [
     ClericBlessingOfTheHoly(),
     {
-      ...new Spell(),
       name: "Divine Aid",
       spellType: SpellType.FriendlyUtility,
+      sphereName: CasterType.Cleric,
       spellKeywords: [SpellKeyword.Fortify],
       areaOfEffect: {
         numberOfTargets: 1,
@@ -59,8 +60,8 @@ export function ClericHolyBuild(): Spell[] {
       ]
     },
     {
-      ...new Spell(),
       name: "Favor",
+      sphereName: CasterType.Cleric,
       spellType: SpellType.FriendlyUtility,
       spellKeywords: [SpellKeyword.Manipulate],
       areaOfEffect: {
@@ -85,8 +86,8 @@ export function ClericStalwartBuild(): Spell[] {
   return [
     ClericBlessingOfTheStalwart(),
     {
-      ...new Spell(),
       name: "Repentance",
+      sphereName: CasterType.Cleric,
       spellType: SpellType.DirectEffect,
       damageKeyword: SpellDamageKeyword.Radiant,
       areaOfEffect: {
@@ -105,20 +106,20 @@ export function ClericStalwartBuild(): Spell[] {
           text: "Make an attack that deals radiant damage equal to the amount listed below + Magic attack bonus and applies daze 2",
           spellChart: [
             {
-              ...new SpellChart(),
               rowName: "Damage",
               levelRange: LevelRange.FIFTHTEEN,
               dieSize: DiceSize.d10,
               minValue: 8.52,
-              maxValue: 35.29
+              maxValue: 35.29,
+              damageKeyword: SpellDamageKeyword.Radiant
             },
           ]
         }
       ]
     },
     {
-      ...new Spell(),
       name: "Inner Resolve",
+      sphereName: CasterType.Cleric,
       spellType: SpellType.FriendlyUtility,
       spellKeywords: [SpellKeyword.Manipulate],
       areaOfEffect: {
@@ -152,8 +153,8 @@ export function ClericStalwartBuild(): Spell[] {
 
 export function ClericBlessingOfTheHoly(): Spell {
   return {
-    ...new Spell(),
     name: "Blessing of the Holy",
+    sphereName: CasterType.Cleric,
     spellType: SpellType.FriendlyUtility,
     spellKeywords: [SpellKeyword.Healing],
     areaOfEffect: {
@@ -185,8 +186,8 @@ export function ClericBlessingOfTheHoly(): Spell {
 
 export function ClericBlessingOfTheStalwart(): Spell {
   return {
-    ...new Spell(),
     name: "Blessing of the Stalwart",
+    sphereName: CasterType.Cleric,
     spellType: SpellType.DirectEffect,
     spellKeywords: [SpellKeyword.ForcedMovement],
     damageKeyword: SpellDamageKeyword.Radiant,
@@ -220,8 +221,8 @@ export function ClericBlessingOfTheStalwart(): Spell {
 
 export function ClericSpellList(): Spell[] {
   return [{
-    ...new Spell(),
     name: "Fierce Devotion",
+    sphereName: CasterType.Cleric,
     defenseType: [AllDefenseType.Missile],
     spellType: SpellType.DirectEffect,
     spellKeywords: [SpellKeyword.Concentration],

@@ -97,7 +97,7 @@ describe('CharacterSubthemeModalComponent', () => {
     expect(buttons.length).toEqual(8);
     buttons[1].nativeElement.click();
     fixture.detectChanges();
-    expect(component.selectedSubtheme).toBe(component.subthemeButtonsArray[1]);
+    expect(component.viewedSubtheme).toBe(component.subthemeButtonsArray[1]);
 
   });
 
@@ -156,7 +156,7 @@ describe('CharacterSubthemeModalComponent', () => {
 
     component.subthemePoints = new SubthemeContainer(new ThemePointsContainer(0, 0, 1, 1));
     component.getAllPossibleSubthemes();
-    component.selectedSubtheme = magent;
+    component.viewedSubtheme = magent;
     const btn = fixture.debugElement.queryAll(By.css("#Magent"));
     btn[0].nativeElement.click();
     tick();
@@ -174,8 +174,8 @@ describe('CharacterSubthemeModalComponent', () => {
     const build = mockBuild();
     const sub = mockSubtheme();
     sub.casterBuild = build;
-    component.selectSubtheme(sub);
-    expect(component.selectedSubtheme.casterBuild).toBe(build);
+    component.viewSubtheme(sub);
+    expect(component.viewedSubtheme.casterBuild).toBe(build);
   });
 
 });

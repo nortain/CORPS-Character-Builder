@@ -48,9 +48,14 @@ describe('BuildSelectionComponent', () => {
     spyOn(component.submitter, "emit");
     component.selectBuild(power);
     expect(component.submitter.emit).toHaveBeenCalledWith({
-      subtheme: component.subtheme,
-      power: component.selectedBuild
+      ...component.selectedBuild
     });
+    component.selectBuild(power);
+    expect(component.selectedBuild).toBeNull();
+    expect(component.submitter.emit).toHaveBeenCalledWith({
+      ...power
+    });
+    expect(component.submitter.emit).toHaveBeenCalledTimes(2);
   });
 
   it('should be able to load previously selected spells', () => {

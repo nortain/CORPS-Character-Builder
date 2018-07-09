@@ -10,5 +10,5 @@ export class SpellChart {
   maxValue: number;
   dieSize: DiceSize;
   damageKeyword: SpellDamageKeyword | SpellKeyword;
-  modifier: number;
+  modifier?;
 }

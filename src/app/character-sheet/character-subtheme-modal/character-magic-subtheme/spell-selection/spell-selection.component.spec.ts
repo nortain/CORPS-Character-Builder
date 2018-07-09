@@ -189,10 +189,12 @@ describe('SpellSelectionComponent', () => {
       const spell = mockSpell();
       spyOn(component.submitter, "emit");
       component.selectSpell(spell);
-      expect(component.submitter.emit).toHaveBeenCalledWith({
-        subtheme: component.subtheme,
-        spells: component.selectedSpells
-      });
+      expect(component.submitter.emit).toHaveBeenCalledWith(
+        component.selectedSpells
+      );
+      component.selectSpell(spell);
+      expect(component.submitter.emit).toHaveBeenCalledWith([]);
+      expect(component.submitter.emit).toHaveBeenCalledTimes(2);
     });
 
     it('should be able to load previously selected spells', () => {

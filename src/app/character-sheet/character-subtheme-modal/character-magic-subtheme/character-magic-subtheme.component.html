@@ -53,7 +53,8 @@
                              [generalThemePoint]="generalThemePoint"
                              [buildsToChooseFrom]="getSpecialPowers()"
                              [isSpecialOnly]="spellRequirement.Special"
-                             (submitter)="subtheme.casterBuild.specialBuild = $event"
+                             [previouslySelectedBuild]="subtheme?.casterBuild?.specialBuild"
+                             (submitter)="selectBuild($event)"
       >
       </corps-build-selection>
       <corps-build-selection
@@ -62,7 +63,8 @@
         [generalThemePoint]="generalThemePoint"
         [buildsToChooseFrom]="getSpecialPowers()"
         [isSpecialOnly]="null"
-        (submitter)="subtheme.casterBuild.build = $event"
+        [previouslySelectedBuild]="subtheme?.casterBuild?.build"
+        (submitter)="selectBuild($event)"
       >
       </corps-build-selection>
     </div>
@@ -147,7 +149,8 @@
         [generalThemePoint]="generalThemePoint"
         [numberOfSpellsToSelect]="getNumberOfSpells()"
         [propertyType]="spellSelectionType.Spells"
-        (submitter)="subtheme.casterBuild.spells = $event">
+        [previouslySelectedSpell]="subtheme?.casterBuild?.spells"
+        (submitter)="selectSpells($event)">
       </corps-spell-selection>
     </div>
   </div>
