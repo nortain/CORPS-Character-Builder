@@ -166,7 +166,12 @@ export class CharacterMagicSubthemeComponent implements OnInit {
           }
         }, (rejected) => {
           console.error("The user rejected the confirmation modal: ", rejected);
-        });
+        }).catch(() => {})
+          .then(() => {
+            if (document.querySelector('body > .modal')) {
+              document.body.classList.add('modal-open');
+            }
+          });
       } else { // if the form is not dirty just deselect the damn thing
         this.resetSubtheme();
         this.subtheme = new Subtheme(SubthemeType[this.subtheme.subthemeName]); // make new subtheme with 0 strength
