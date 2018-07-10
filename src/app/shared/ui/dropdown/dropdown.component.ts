@@ -36,9 +36,19 @@ export class DropdownComponent implements OnInit {
     }
   }
 
-  selectDropdown(value) {
-    this.selectedValue = value;
-    this.valueChange.emit(value);
+  selectDropdown(value: DropdownValueObject) {
+    const weHaveASelectedValue = this.selectedValue;
+    if (weHaveASelectedValue) {
+      const theValueIsANewValue = value.label !== this.selectedValue.value || value.value !== this.selectedValue.value;
+      if (theValueIsANewValue) {
+        this.selectedValue = value;
+        this.valueChange.emit(value);
+      }
+    } else {
+      this.selectedValue = value;
+      this.valueChange.emit(value);
+    }
+
   }
 
 }

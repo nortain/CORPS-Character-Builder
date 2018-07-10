@@ -27,7 +27,7 @@
       <div class="col-9">
         <corps-subthemes *ngIf="viewedSubtheme.themeType !== themeType.Magic && subthemeToggle"
                          id="corpsSubtheme"
-                         [assignedSubthemePoints]="getAssignedSubthemes()"
+                         [assignedSubthemePoints]="getViewedSubthemeStrength()"
                          [subtheme]="viewedSubtheme"
                          [subthemePointCap]="getSubthemePointCap()"
                          [characterLevel]="characterLevel"
@@ -35,7 +35,7 @@
         </corps-subthemes>
         <corps-subthemes *ngIf="viewedSubtheme.themeType !== themeType.Magic && !subthemeToggle"
                          id="corpsSubtheme1"
-                         [assignedSubthemePoints]="getAssignedSubthemes()"
+                         [assignedSubthemePoints]="getViewedSubthemeStrength()"
                          [subtheme]="viewedSubtheme"
                          [subthemePointCap]="getSubthemePointCap()"
                          [characterLevel]="characterLevel"

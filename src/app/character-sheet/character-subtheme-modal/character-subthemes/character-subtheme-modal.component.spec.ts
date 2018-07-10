@@ -1,4 +1,4 @@
-import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {async, ComponentFixture, fakeAsync, inject, TestBed, tick} from '@angular/core/testing';
 
 import {CharacterSubthemeModalComponent} from './character-subtheme-modal.component';
 import {SharedModule} from "../../../shared/shared.module";
@@ -23,7 +23,7 @@ import {BuildSelectionComponent} from "../character-magic-subtheme/spell-selecti
 describe('CharacterSubthemeModalComponent', () => {
   let component: CharacterSubthemeModalComponent;
   let fixture: ComponentFixture<CharacterSubthemeModalComponent>;
-  let weapon, protector, juggernaut, find, riposte, evasion, magent;
+  let weapon, protector, juggernaut, find, riposte, evasion, magent, activeModal;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -48,6 +48,10 @@ describe('CharacterSubthemeModalComponent', () => {
     magent = new Subtheme(SubthemeType.Magent, 0);
     fixture.detectChanges();
   });
+
+  beforeEach(inject([NgbActiveModal], (svc: NgbActiveModal) => {
+    activeModal = svc;
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -176,6 +180,56 @@ describe('CharacterSubthemeModalComponent', () => {
     sub.casterBuild = build;
     component.viewSubtheme(sub);
     expect(component.viewedSubtheme.casterBuild).toBe(build);
+  });
+
+  it('should save all selected subthemes and their children when the submit button is pressed', () => {
+    const result = new SubthemeContainer(new ThemePointsContainer(0, 0, 1, 0));
+    spyOn(activeModal, "close");
+    const build = mockBuild();
+    const sub = mockSubtheme();
+    component.subthemePoints = result;
+    sub.casterBuild = build;
+    component.close();
+    result.magic = sub;
+    expect(activeModal.close).toHaveBeenCalledWith(result);
+  });
+
+  it('should be able to load any selected magic subtheme that were previously selected', () => {
+    // make the to load selected magic subtheme
+    const result = new SubthemeContainer(new ThemePointsContainer(0, 0, 1, 0));
+    spyOn(activeModal, "close");
+    const build = mockBuild();
+    const sub = mockSubtheme();
+    sub.casterBuild = build;
+    result.magic = sub;
+    fixture = TestBed.createComponent(CharacterSubthemeModalComponent);
+    component = fixture.componentInstance;
+    component.subthemePoints = result;
+    component.ngOnInit();
+    fixture.detectChanges();
+    expect(component.selectedMagicSubtheme).toBe(sub);
+
+  });
+
+  it('should be able to load any selected magic subtheme that were previously selected and it should be loaded in the UI if we are currently looking at it on startup', () => {
+    // make the to load selected magic subtheme
+    const result = new SubthemeContainer(new ThemePointsContainer(0, 0, 1, 0));
+    spyOn(activeModal, "close");
+    const build = mockBuild();
+    const sub = mockSubtheme(SubthemeType.SpellWarden, ThemeStrength.Minor);
+    sub.casterBuild = build;
+    // assign the previously picked subtheme to the subtheme container and make a new testbed component
+    result.magic = sub;
+    fixture = TestBed.createComponent(CharacterSubthemeModalComponent);
+    component = fixture.componentInstance;
+    component.subthemePoints = result;
+    try {
+      fixture.detectChanges(); // first time around this calls ngOnInit
+    } catch (err) { // catches any data errors in children components we don't care about
+      expect(component.selectedMagicSubtheme).toBe(sub);
+      const tracker = fixture.debugElement.query(By.css("#SpellWarden"));
+      expect(tracker.nativeElement.innerText).toContain("(Magic) Ranks: 1");
+    }
   });
 
 });
