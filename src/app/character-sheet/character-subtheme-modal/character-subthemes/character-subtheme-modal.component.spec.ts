@@ -194,12 +194,12 @@ describe('CharacterSubthemeModalComponent', () => {
     expect(activeModal.close).toHaveBeenCalledWith(result);
   });
 
-  it('should be able to load any selected magic subtheme that were previously selected', () => {
+ it('should be able to load any selected magic subtheme that were previously selected', () => {
     // make the to load selected magic subtheme
     const result = new SubthemeContainer(new ThemePointsContainer(0, 0, 1, 0));
     spyOn(activeModal, "close");
     const build = mockBuild();
-    const sub = mockSubtheme();
+   const sub = mockSubtheme(SubthemeType.Magent, ThemeStrength.Minor);
     sub.casterBuild = build;
     result.magic = sub;
     fixture = TestBed.createComponent(CharacterSubthemeModalComponent);
