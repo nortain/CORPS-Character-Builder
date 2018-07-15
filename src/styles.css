@@ -1,8 +1,76 @@
 /* You can add global styles to this file, and also import other style files */
-@import "../node_modules/bootstrap/dist/css/bootstrap.min.css"; /*Cause like bootstrap CSS is helpful...*/
+@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+/*Cause like bootstrap CSS is helpful...*/
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+@import "../node_modules/@fortawesome/fontawesome-pro/css/all.css";
 .xlModal > .modal-dialog {
   max-width: 1490px !important;
   min-width: 971px !important;
   width: 95% !important;
+}
+
+.control-label {
+  text-align: right;
+  padding-top: 7px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+input.error button.error {
+  border: 1px solid #c11b00;
+  background-color: #ffe6e6;
+}
+
+div.errorMessage, div.msgs.error {
+  color: #dc3545;
+}
+
+div.errorMessage, div.msgs {
+  padding: 2px 0 0 0;
+  float: left;
+}
+
+div.errorMessage {
+  margin-top: 8px;
+}
+
+div.errorMessage {
+  position: relative;
+  top: -10px;
+  padding-left: 3px;
+}
+
+
+span.required {
+  color: red;
+  font-size: 1em;
+  font-weight: bold;
+  padding-right: 3px
+}
+
+input.requiredField, textarea.requiredField {
+  border: 1px solid #006fb4;
+  background-color: #eff8ff;
+}
+
+.form-control {
+  font-size: 1em;
+}
+
+label.checkbox {
+  padding-left: 10px
+}
+
+@media (min-width: 768px) {
+  .form-horizontal .control-label {
+    text-align: right;
+  }
+}
+
+@media (max-width: 992px) {
+  .form-horizontal .control-label {
+    text-align: left;
+  }
 }

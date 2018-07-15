@@ -87,7 +87,7 @@ describe('DropdownComponent', () => {
     fixture = TestBed.createComponent(DropdownComponent);
     component = fixture.componentInstance;
     component.values = mockDropdownData();
-    component.defaultSelect = true;
+    component.required = true;
     fixture.detectChanges();
     const btn = fixture.debugElement.query(By.css("button")).nativeElement;
     expect(btn.innerText).toBe("<Select>");
@@ -97,13 +97,13 @@ describe('DropdownComponent', () => {
     fixture = TestBed.createComponent(DropdownComponent);
     component = fixture.componentInstance;
     component.values = mockDropdownData();
-    component.isInvalid = true;
+    component.errorMessage = true;
     fixture.detectChanges();
     const btn = fixture.debugElement.query(By.css("button")).nativeElement;
     expect(btn.classList).toContain("btn-outline-danger");
     const message = fixture.debugElement.query(By.css("div.errorMessage")).nativeElement;
     expect(message).toBeTruthy();
-    component.isInvalid = false;
+    component.errorMessage = false;
     btn.click();
     fixture.detectChanges();
     expect(btn.classList).not.toContain("btn-outline-danger");

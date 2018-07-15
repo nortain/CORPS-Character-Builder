@@ -12,8 +12,8 @@ export class DropdownComponent implements OnInit {
   @Input() newLineLabelName = false; // do we want the label on a new line
   @Input() values: DropdownValueObject[]; // array of possible values
   @Input() value: DropdownValueObject; // pre selected value on load
-  @Input() defaultSelect = false; // should there be a select option
-  @Input() isInvalid = false;
+  @Input() required = false; // should there be a select option
+  @Input() errorMessage: string;
   @Input() fixedWidth: number;
   @Output() valueChange: EventEmitter<DropdownValueObject>; // emits state on change
   @Output() selectedValue: any; // change to dropdown value object
@@ -24,7 +24,7 @@ export class DropdownComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.values && this.defaultSelect && this.values[0].value !== "<Select>") {
+    if (this.values && this.required && this.values[0].value !== "<Select>") {
       this.values.unshift(new DropdownValueObject("<Select>"));
     }
     if (this.value) {
