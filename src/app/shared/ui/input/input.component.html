@@ -1,12 +1,11 @@
 <div class="row">
-  <div class="col-md-4 col-12">
+  <div [ngClass]="newLineLabelName ? 'col-12' : 'col-md col-12'">
     <label *ngIf="labelName"
            class="control-label">
       {{labelName}}
     </label>
   </div>
-  <br *ngIf="newLineLabelName">
-  <div class="col-md-8 col-12">
+  <div class="col-md col-12">
     <input id="{{labelName}}Id"
            name="{{labelName}}Id"
            class="form-control"
@@ -16,7 +15,11 @@
            [required]="required"
            (ngModelChange)="changeModel($event)">
   </div>
+  <div *ngIf="errorMessage" class="errorMessage row">
+    <div class="col">
+      <i class="fal fa-times-octagon"></i>
+      {{errorMessage ? errorMessage : 'Invalid Value!'}}
+    </div>
+  </div>
 </div>
 
-
-<div *ngIf="isInvalid" class="errorMessage">Invalid Value!</div>

@@ -9,7 +9,7 @@ export class InputComponent {
   @Input() labelName: string;
   @Input() fixedWidth: number;
   @Input() newLineLabelName = false;
-  @Input() isInvalid = false;
+  @Input() errorMessage: string;
   @Input() required = false;
   @Input() inputType = "text";
   @Input() inputModel: string;

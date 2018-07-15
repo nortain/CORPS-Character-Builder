@@ -9,7 +9,7 @@
   <form name="characterSheetForm" class="container">
     <div class="row">
       <div class="col">
-        <corps-input id="characterName" labelName="Name" [required]="true" [newLineLabelName]="false"
+        <corps-input id="characterName" labelName="Name" [required]="true" [newLineLabelName]="true"
                      [inputModel]="character.name" (outGoingModel)="character.name=$event"></corps-input>
       </div>
 
@@ -17,20 +17,21 @@
       <div class="col">
         <corps-dropdown id="characterRace"
                         labelName="Race"
-                        [newLineLabelName]="false"
+                        [newLineLabelName]="true"
                         [values]="races"
                         (valueChange)="startReloadWithRace($event.value)"></corps-dropdown>
       </div>
       <div class="col">
         <corps-dropdown *ngIf="character.raceType === RaceType.Primental" id="characterSubRace"
                         labelName="Sub-Race"
+                        [newLineLabelName]="true"
                         [values]="subraces" (valueChange)="updateSubRace($event.value)">
 
         </corps-dropdown>
       </div>
 
       <div class="col">
-        <corps-dropdown id="characterLevel" labelName="Level" [newLineLabelName]="false"
+        <corps-dropdown id="characterLevel" labelName="Level" [newLineLabelName]="true"
                         [values]="levels" (valueChange)="startReloadWithLevel($event.value)">
 
         </corps-dropdown>
