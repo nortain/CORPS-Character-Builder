@@ -54,14 +54,10 @@
           <div class="col-12 col-md-4 align-self-center">
             <div class="row" *ngIf="character.themePoints.getTotalThemePoints() === 4">
               <div class="col-6">
-                <div class="row">
-                  <div class="col-md col-12">
-                    <label class="control-label">Pick your subtheme</label>
-                    <button id="subthemesBtn" class="btn btn-sm btn-outline-secondary form-control"
-                            (click)="launchSubthemesModal()">+ Subthemes
-                    </button>
-                  </div>
-                </div>
+                <corps-character-subtheme-display
+                  [previouslySelectedSubthemeContainer]="character?.subthemes"
+                  (openSubtheme)="launchSubthemesModal()">
+                </corps-character-subtheme-display>
               </div>
               <div class="col-6">
                 <corps-dropdown id="fightningStyle" labelName="Fighting Style" [newLineLabelName]="true"

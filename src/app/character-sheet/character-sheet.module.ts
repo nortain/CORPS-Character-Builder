@@ -9,6 +9,7 @@ import { CharacterMagicSubthemeComponent } from './character-subtheme-modal/char
 import { SpellSelectionComponent } from './character-subtheme-modal/character-magic-subtheme/spell-selection/spell-selection.component';
 import { SpellChartComponent } from './character-subtheme-modal/character-magic-subtheme/spell-selection/spell-chart/spell-chart.component';
 import { BuildSelectionComponent } from './character-subtheme-modal/character-magic-subtheme/spell-selection/build-selection/build-selection.component';
+import {CharacterSubthemeDisplayComponent} from "./character-subtheme-display/character-subtheme-display.component";
 
 
 
@@ -16,7 +17,7 @@ import { BuildSelectionComponent } from './character-subtheme-modal/character-ma
   imports: [
     SharedModule
   ],
-  declarations: [CharacterAttributesComponent, CharacterSheetComponent, CharacterThemePointsComponent, SubthemeComponent, CharacterSubthemeModalComponent, CharacterMagicSubthemeComponent, SpellSelectionComponent, SpellChartComponent, BuildSelectionComponent],
+  declarations: [CharacterAttributesComponent, CharacterSheetComponent, CharacterThemePointsComponent, SubthemeComponent, CharacterSubthemeModalComponent, CharacterMagicSubthemeComponent, SpellSelectionComponent, SpellChartComponent, BuildSelectionComponent, CharacterSubthemeDisplayComponent],
   entryComponents: [CharacterSubthemeModalComponent]
 
 })

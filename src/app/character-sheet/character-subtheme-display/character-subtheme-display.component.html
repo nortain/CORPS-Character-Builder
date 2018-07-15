@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-md col-12" *ngIf="areSubthemesEmpty()">
+    <label class="control-label">Pick your Subthemes</label>
+    <button id="subthemesBtn" class="btn btn-sm btn-outline-primary form-control"
+            (click)="launchModal()">+ Subthemes
+    </button>
+  </div>
+  <div class="col-md col-12 form-group" *ngIf="!areSubthemesEmpty()">
+    <label class="font-weight-bold">Subthemes</label>
+    <div *ngIf="!isCombatEmpty()" class="row">
+      <label class="font-weight-bold col-1">C:</label>
+      <div *ngFor="let combatName of displayCombatSubthemeNames()"
+           class="col text-left">
+        {{combatName}}
+      </div>
+    </div>
+    <div *ngIf="!isStealthEmpty()" class="row">
+      <label class="font-weight-bold col-1">S:</label>
+      <div *ngFor="let stealthName of displayStealthSubthemeNames()"
+           class="col text-left">
+        {{stealthName}}
+      </div>
+    </div>
+
+  </div>
+</div>
