@@ -11,6 +11,7 @@ import {ConfirmationComponent} from './ui/confirmation/confirmation.component';
 import {AreaOfEffectService} from "./area-of-effect/area-of-effect.service";
 import {ActionService} from "./action/action.service";
 import {DiceService} from "./character/dice/dice.service";
+import { FirstLetterOnlyPipe } from './pipes/first-letter-only.pipe';
 
 @NgModule({
   imports: [
@@ -19,9 +20,9 @@ import {DiceService} from "./character/dice/dice.service";
     ReactiveFormsModule,
     NgbDropdownModule
   ],
-  declarations: [DropdownComponent, InputComponent, SubthemePipe, CastleCasePipe, ConfirmationComponent],
+  declarations: [DropdownComponent, InputComponent, SubthemePipe, CastleCasePipe, ConfirmationComponent, FirstLetterOnlyPipe],
   providers: [AttributeService, AreaOfEffectService, ActionService, DiceService],
-  exports: [CommonModule, FormsModule, DropdownComponent, InputComponent, SubthemePipe, CastleCasePipe, ConfirmationComponent],
+  exports: [CommonModule, FormsModule, DropdownComponent, InputComponent, SubthemePipe, CastleCasePipe, ConfirmationComponent, FirstLetterOnlyPipe],
   entryComponents: [ConfirmationComponent]
 })
 export class SharedModule {

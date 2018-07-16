@@ -232,4 +232,21 @@ describe('CharacterSubthemeModalComponent', () => {
     }
   });
 
+  it('should be able to update a martial subtheme without it impacting magic', () => {
+    expect(component.selectedMagicSubtheme).toBeUndefined();
+    riposte.themeStrength = ThemeStrength.Minor;
+    component.updateSubtheme(riposte);
+    expect(component.selectedMagicSubtheme).toBeUndefined();
+  });
+
+  it('should be able to correctly deselect a magic subtheme point', () => {
+    expect(component.selectedMagicSubtheme).toBeUndefined();
+    magent.themeStrength = ThemeStrength.Minor;
+    component.updateSubtheme(magent);
+    expect(component.selectedMagicSubtheme).toBe(magent);
+    magent.themeStrength = ThemeStrength.None;
+    component.updateSubtheme(magent); // the subtheme strength is what dictates if a magic subtheme is selected or not
+    expect(component.selectedMagicSubtheme).toBe(magent);
+  });
+
 });

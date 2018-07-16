@@ -86,7 +86,9 @@ export class CharacterSubthemeModalComponent implements OnInit {
           this.subthemeButtonsArray[index] = updatedSubtheme;
           this.subthemePoints.assignSubtheme(updatedSubtheme);
           this.viewedSubtheme = updatedSubtheme;
-          this.selectedMagicSubtheme = updatedSubtheme;
+          if (updatedSubtheme.themeType === ThemeType.Magic) {
+            this.selectedMagicSubtheme = updatedSubtheme;
+          }
           break;
         }
       }

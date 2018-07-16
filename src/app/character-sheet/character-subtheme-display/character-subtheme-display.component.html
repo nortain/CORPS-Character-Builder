@@ -6,21 +6,21 @@
     </button>
   </div>
   <div class="col-md col-12 form-group" *ngIf="!areSubthemesEmpty()">
-    <label class="font-weight-bold">Subthemes</label>
-    <div *ngIf="!isCombatEmpty()" class="row">
-      <label class="font-weight-bold col-1">C:</label>
-      <div *ngFor="let combatName of displayCombatSubthemeNames()"
-           class="col text-left">
-        {{combatName}}
+    <div class="row">
+      <div class="col-12">
+        <label class="font-weight-bold">Subthemes</label>
+        <button class="btn btn-outline-primary btn-sm float-right" (click)="launchModal()" >+</button>
       </div>
     </div>
-    <div *ngIf="!isStealthEmpty()" class="row">
-      <label class="font-weight-bold col-1">S:</label>
-      <div *ngFor="let stealthName of displayStealthSubthemeNames()"
-           class="col text-left">
-        {{stealthName}}
+    <div class="row text-left">
+      <div *ngFor="let subName of displayAllSubthemes() | slice:0:2" class="col-auto">
+        {{subName}}
       </div>
     </div>
-
+    <div class="row text-left">
+      <div *ngFor="let subName of displayAllSubthemes() | slice:2:4" class="col-auto">
+        {{subName}}
+      </div>
+    </div>
   </div>
 </div>

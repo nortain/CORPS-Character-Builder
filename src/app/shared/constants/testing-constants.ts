@@ -24,6 +24,7 @@ import {LevelRange} from "../spells/enums/level-range.enum";
 import {AllDefenseType} from "../character/physical-defense/physical-defense-type.enum";
 import {CasterBuild, SpecialPower} from "./constants";
 import {SpellRequirement} from "../spells/enums/spell-requirement.enum";
+import {SubthemeContainer} from "../theme-points/subthemes/subtheme-container";
 
 export function mockDropdownData() {
   return [
@@ -36,6 +37,11 @@ export function mockDropdownData() {
 export function mockCharacter(name = "Bob", raceType = RaceType.Altwani) {
   const character = new Character(name, raceType);
   return character;
+}
+
+export function mockSubthemeContainer(): SubthemeContainer {
+  const container = new SubthemeContainer(mockThemePoints());
+  return container;
 }
 
 export function mockSubtheme(subthemeType?: SubthemeType, str?: ThemeStrength): Subtheme {
