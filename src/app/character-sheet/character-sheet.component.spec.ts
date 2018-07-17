@@ -3,7 +3,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CharacterSheetComponent} from './character-sheet.component';
 import {SharedModule} from "../shared/shared.module";
 import {NgbDropdown, NgbDropdownConfig, NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import {actionClickDropdownItemX, mockCharacter} from "../shared/constants/testing-constants";
+import {actionClickDropdownItemX, mockCharacter, mockThemePoints} from "../shared/constants/testing-constants";
 import {RaceType} from "../shared/character/race/race-type.enum";
 import {Level} from "../shared/character/level.enum";
 import {By} from "@angular/platform-browser";
@@ -17,6 +17,9 @@ import {ArmorType} from "../shared/armor/armor-type.enum";
 import {Armor} from "../shared/armor/armor";
 import {ThemePointsContainer} from "../shared/theme-points/theme-points-container";
 import {NgbModalStack} from "@ng-bootstrap/ng-bootstrap/modal/modal-stack";
+import {initServicesIfNeeded} from "@angular/core/src/view";
+import {MAGIC_FIGHTING_STYLE, MARTIAL_FIGHTING_STYLE} from "../shared/constants/constants";
+
 
 describe('CharacterSheetComponent', () => {
   let component: CharacterSheetComponent;
@@ -255,13 +258,49 @@ describe('CharacterSheetComponent', () => {
     expect(component.character.subthemes).toEqual(old);
   });
 
-  it('should show a button for subtheme points if at least one of magic, combat or stealth theme points are selected', () => {
-    component.updateThemePoints(new ThemePointsContainer(0, 0, 0, 1));
+  it('should show a button for subtheme points if all 4 theme points have been selected', () => {
+    component.updateThemePoints(new ThemePointsContainer(0, 0, 0, 0));
     fixture.detectChanges();
     let subthemeBtn = fixture.debugElement.queryAll(By.css("#subthemesBtn"));
     expect(subthemeBtn.length).toEqual(0, "With no subthemes button should be hidden");
     actionClickDropdownItemX(fixture, "#combat", 2);
     subthemeBtn = fixture.debugElement.queryAll(By.css("#subthemesBtn"));
+    expect(subthemeBtn.length).toEqual(0, "button should be visiable now");
+    actionClickDropdownItemX(fixture, "#stealth", 1);
+    actionClickDropdownItemX(fixture, "#general", 1);
+    subthemeBtn = fixture.debugElement.queryAll(By.css("#subthemesBtn"));
+    expect(subthemeBtn.length).toEqual(1, "button should be visiable now");
+  });
+
+  it('should be able to display a martial fighting style if they have more or equal martial than magic', () => {
+    const allCombat = new ThemePointsContainer(ThemeStrength.Greater, 0, 0, 1);
+    const halfAndHalf = new ThemePointsContainer(ThemeStrength.Lesser, 0, ThemeStrength.Lesser, 0);
+    component.updateThemePoints(allCombat);
+    expect(component.getFightingStyle()).toEqual(MARTIAL_FIGHTING_STYLE);
+    component.updateThemePoints(halfAndHalf);
+    expect(component.getFightingStyle()).toEqual(MARTIAL_FIGHTING_STYLE);
+  });
+
+  it('should be able to display a magic fighting style if they have more magic than martial', () => {
+    const allMagic = new ThemePointsContainer(0, 0, ThemeStrength.Greater, 1);
+    const almostHalfAndHalf = new ThemePointsContainer(ThemeStrength.Minor, 0, ThemeStrength.Lesser, ThemeStrength.Minor);
+    component.updateThemePoints(allMagic);
+    expect(component.getFightingStyle()).toBe(MAGIC_FIGHTING_STYLE);
+    component.updateThemePoints(almostHalfAndHalf);
+    expect(component.getFightingStyle()).toBe(MAGIC_FIGHTING_STYLE);
+  });
+
+  it('should only display fighting style when all subthemes have been selected', () => {
+    component.updateThemePoints(new ThemePointsContainer(0, 0, 0, 0));
+    fixture.detectChanges();
+    let subthemeBtn = fixture.debugElement.queryAll(By.css("#fightningStyle"));
+    expect(subthemeBtn.length).toEqual(0, "With no subthemes button should be hidden");
+    actionClickDropdownItemX(fixture, "#combat", 2);
+    subthemeBtn = fixture.debugElement.queryAll(By.css("#fightningStyle"));
+    expect(subthemeBtn.length).toEqual(0, "button should be visiable now");
+    actionClickDropdownItemX(fixture, "#stealth", 1);
+    actionClickDropdownItemX(fixture, "#general", 1);
+    subthemeBtn = fixture.debugElement.queryAll(By.css("#fightningStyle"));
     expect(subthemeBtn.length).toEqual(1, "button should be visiable now");
   });
 

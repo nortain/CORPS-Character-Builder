@@ -7,7 +7,7 @@ import {ThemeType} from "../../shared/theme-points/theme-type.enum";
 import {SubthemeType} from "../../shared/theme-points/subthemes/subtheme-type.enum";
 import {ThemeStrength} from "../../shared/theme-points/theme-strength.enum";
 
-fdescribe('CharacterSubthemeDisplayComponent', () => {
+describe('CharacterSubthemeDisplayComponent', () => {
   let component: CharacterSubthemeDisplayComponent;
   let fixture: ComponentFixture<CharacterSubthemeDisplayComponent>;
   let subContainer: SubthemeContainer;

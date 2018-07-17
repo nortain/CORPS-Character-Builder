@@ -8,10 +8,11 @@ import {RacialSubType} from "../shared/character/race/racial-sub-type.enum";
 
 import {MagicDefenseType} from "../shared/character/magic-defense/magic-defense-type.enum";
 import {AttributeBonus} from "../shared/attribute/character-attribute/attribute-bonus.enum";
-import {STARTING_HIT_POINTS, STARTING_RECOVERIES} from "../shared/constants/constants";
+import {MAGIC_FIGHTING_STYLE, MARTIAL_FIGHTING_STYLE, STARTING_HIT_POINTS, STARTING_RECOVERIES} from "../shared/constants/constants";
 import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
 import {SubthemeComponent} from "./character-subtheme-modal/subthemes/subtheme.component";
 import {CharacterSubthemeModalComponent} from "./character-subtheme-modal/character-subthemes/character-subtheme-modal.component";
+import {AttributeName} from "../shared/attribute/attribute-name.enum";
 
 @Component({
   selector: 'corps-character-sheet',
@@ -21,7 +22,6 @@ import {CharacterSubthemeModalComponent} from "./character-subtheme-modal/charac
 })
 export class CharacterSheetComponent implements OnInit, OnChanges {
 
-  testName;
   character: Character;
   races: DropdownValueObject[];
   subraces: DropdownValueObject[];
@@ -31,7 +31,6 @@ export class CharacterSheetComponent implements OnInit, OnChanges {
   MagicDefenseType = MagicDefenseType;
 
   constructor(private attributeService: AttributeService, private modalService: NgbModal) {
-    this.testName = "";
   }
 
   ngOnChanges() {
@@ -60,7 +59,15 @@ export class CharacterSheetComponent implements OnInit, OnChanges {
     this.reloadCharacter("raceType", RaceType[raceString]);
   }
 
-  startReloadWithLevel(level: number) {
+  updateCharacterFightingStyle(fightingStyle: AttributeName[]) {
+    this.reloadCharacter("fightingStyle", fightingStyle);
+  }
+
+  /**
+   * reloads the character because the level was changed
+   * @param {number} level
+   */
+  updateCharacterLevel(level: number) {
     this.reloadCharacter("level", level);
   }
 
@@ -89,6 +96,19 @@ export class CharacterSheetComponent implements OnInit, OnChanges {
     }, (err) => {
       console.log("User dismissed with err msg : ", err);
     });
+  }
+
+  /**
+   * based on theme points selected this will determine if a character should pick a martial or magic fighting style.  Fighting style dictates which offensive attributes are used for providing bonus damage.
+   * @returns {DropdownValueObject[]}
+   */
+  getFightingStyle(): DropdownValueObject[] {
+    const martial = this.character.themePoints.combat.getStrength() + this.character.themePoints.stealth.getStrength();
+    if (martial > 1) {
+      return MARTIAL_FIGHTING_STYLE;
+    } else {
+      return MAGIC_FIGHTING_STYLE;
+    }
   }
 
   /**

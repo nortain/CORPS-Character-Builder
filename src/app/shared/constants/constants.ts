@@ -18,6 +18,8 @@ import {AssassinSpellList, ClericBlessingOfTheHoly, ClericBlessingOfTheStalwart,
 import {SpellRequirement} from "../spells/enums/spell-requirement.enum";
 import {ShamanSpellList} from "./spells/greater-spell-constants";
 import {Subtheme} from "../theme-points/subthemes/subtheme";
+import {DropdownValueObject} from "../ui/dropdown/dropdown-value-object";
+import {AttributeType} from "../attribute/attribute-type.enum";
 
 
 export const NON_HUMAN_AVAILABLE_ATTRIBUTE_POINTS = 4;
@@ -110,6 +112,18 @@ export const IN_THP_BONUS = [
   [0, 5, 7, 10, 13],
   [0, 5, 8, 11, 14],
   [0, 6, 9, 12, 15]
+];
+
+export const MARTIAL_FIGHTING_STYLE: DropdownValueObject[] = [
+  {label: "Heavy Weapon", value: [AttributeName.Brawn]},
+  {label: "Balanced Weapon", value: [AttributeName.Brawn, AttributeName.Agility]},
+  {label: "Agile Weapon", value: [AttributeName.Agility]}
+];
+
+export const MAGIC_FIGHTING_STYLE: DropdownValueObject[] = [
+  {label: "Rational Caster", value: [AttributeName.Reasoning]},
+  {label: "Balanced Caster", value: [AttributeName.Reasoning, AttributeName.Presence]},
+  {label: "Passionate Caster", value: [AttributeName.Presence]}
 ];
 
 export const ONE_MAGIC_SPELLS = {

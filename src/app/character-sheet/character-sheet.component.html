@@ -8,13 +8,13 @@
   </div>
   <form name="characterSheetForm" class="container">
     <div class="row">
-      <div class="col">
+      <div class="col-4">
         <corps-input id="characterName" labelName="Name" [required]="true" [newLineLabelName]="true"
                      [inputModel]="character.name" (outGoingModel)="character.name=$event"></corps-input>
       </div>
 
 
-      <div class="col">
+      <div class="col-5">
         <div class="row">
           <div class="col">
             <corps-dropdown id="characterRace"
@@ -34,9 +34,7 @@
         </div>
 
       </div>
-
-
-      <div class="col">
+      <div class="col-md-3">
         <div class="row">
           <div class="col-6">
             <label class="control-label">Vision</label><br>
@@ -45,7 +43,7 @@
           </div>
           <div class="col-6">
             <corps-dropdown id="characterLevel" labelName="Level" [newLineLabelName]="true"
-                            [values]="levels" (valueChange)="startReloadWithLevel($event.value)">
+                            [values]="levels" (valueChange)="updateCharacterLevel($event.value)">
 
             </corps-dropdown>
           </div>
@@ -59,7 +57,11 @@
           <div class="col-12 col-md-4">
             <div class="row">
               <div class="col-12">
-                <label class="font-weight-bold text-center">Theme Points</label>
+                <div class="row">
+                  <div class="col">
+                    <label class="font-weight-bold control-label text-center">Theme Points</label>
+                  </div>
+                </div>
                 <corps-character-theme-points id="themePoints"
                                               (emitter)="updateThemePoints($event)">
                 </corps-character-theme-points>
@@ -80,24 +82,36 @@
             </div>
           </div>
 
-          <div class="col-12 col-md-4">
+          <div class="col-12 col-md-4 align-self-center">
             <div class="row">
-              <div class="col-md-4 col-12">
-                <label class=""></label>
-                <corps-dropdown id="fightningStyle"
-                                [labelName]="'Fighting Style'"
-                                [newLineLabelName]="true"
-                                [values]="levels"
-                                (valueChange)="startReloadWithLevel($event.value)">
-                </corps-dropdown>
+              <div class="col-md-5 col-12" *ngIf="character.themePoints.getTotalThemePoints() === 4">
+                <div class="row">
+                  <div class="col">
+                    <corps-dropdown id="fightningStyle"
+                                    [labelName]="'Fighting Style'"
+                                    [newLineLabelName]="true"
+                                    [values]="getFightingStyle()"
+                                    (valueChange)="updateCharacterFightingStyle($event.value)">
+                    </corps-dropdown>
+                  </div>
+                </div>
               </div>
-              <div class="col-md-4 col-6">
-                <label class="control-label label-thickener">Initiative</label><br>
+              <div class="col-md-3 offset-md-1 col-6">
+                <div class="row">
+                  <div class="col">
+                    <label class="control-label">Initiative</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                  <label class="font-weight-normal">{{character.getInitiative()}}</label>
 
-                <label class="font-weight-normal">{{character.getInitiative()}}</label>
+                  </div>
+                </div>
+
               </div>
-              <div class="col-md-4 col-6">
-                <label class="control-label label-thickener">Movement</label><br>
+              <div class="col-md-3 col-6">
+                <label class="control-label">Movement</label><br>
 
                 <label class="font-weight-normal">{{character.getSpeed()}}</label>
               </div>

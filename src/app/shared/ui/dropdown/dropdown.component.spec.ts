@@ -72,17 +72,6 @@ describe('DropdownComponent', () => {
     expect(newLine).toBeNull();
   });
 
-  it('should be able to put label on a new line', () => {
-    fixture = TestBed.createComponent(DropdownComponent);
-    component = fixture.componentInstance;
-    component.values = mockDropdownData();
-    component.labelName = "Bobs test";
-    component.newLineLabelName = true;
-    fixture.detectChanges();
-    const newLine = fixture.debugElement.query(By.css(".newLineForLabel"));
-    expect(newLine.nativeElement).toBeTruthy();
-  });
-
   it('should be able to have a default value of select when asked', function () {
     fixture = TestBed.createComponent(DropdownComponent);
     component = fixture.componentInstance;
