@@ -1,18 +1,20 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, OnChanges, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewChecked, ChangeDetectionStrategy, Component, EventEmitter, OnChanges, OnInit, Output, ViewChild} from '@angular/core';
 import {Character} from "../shared/character/character";
 import {AttributeService} from "../shared/attribute/attribute.service";
 import {RaceType} from "../shared/character/race/race-type.enum";
 import {DropdownValueObject} from "../shared/ui/dropdown/dropdown-value-object";
 import {ThemePointsContainer} from "../shared/theme-points/theme-points-container";
-import {RacialSubType} from "../shared/character/race/racial-sub-type.enum";
+import {RacialSubType, RacialSubTypeStringToEnumIndex, RacialSubTypeToDamageKeyword} from "../shared/character/race/racial-sub-type.enum";
 
 import {MagicDefenseType} from "../shared/character/magic-defense/magic-defense-type.enum";
 import {AttributeBonus} from "../shared/attribute/character-attribute/attribute-bonus.enum";
-import {MAGIC_FIGHTING_STYLE, MARTIAL_FIGHTING_STYLE, STARTING_HIT_POINTS, STARTING_RECOVERIES} from "../shared/constants/constants";
+import {MAGIC_FIGHTING_STYLE, MagicResistance, MARTIAL_FIGHTING_STYLE, STARTING_HIT_POINTS, STARTING_RECOVERIES} from "../shared/constants/constants";
 import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
 import {SubthemeComponent} from "./character-subtheme-modal/subthemes/subtheme.component";
 import {CharacterSubthemeModalComponent} from "./character-subtheme-modal/character-subthemes/character-subtheme-modal.component";
 import {AttributeName} from "../shared/attribute/attribute-name.enum";
+import {SpellDamageKeyword} from "../shared/spells/enums/spell-damage-keyword.enum";
+import {DropdownComponent} from "../shared/ui/dropdown/dropdown.component";
 
 @Component({
   selector: 'corps-character-sheet',
@@ -20,7 +22,9 @@ import {AttributeName} from "../shared/attribute/attribute-name.enum";
   styleUrls: ['./character-sheet.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CharacterSheetComponent implements OnInit, OnChanges {
+export class CharacterSheetComponent implements OnInit, OnChanges, AfterViewChecked {
+
+  @ViewChild('subRace') subRace: DropdownComponent;
 
   character: Character;
   races: DropdownValueObject[];
@@ -45,6 +49,16 @@ export class CharacterSheetComponent implements OnInit, OnChanges {
     this.character = new Character("", RaceType[raceType] as RaceType);
   }
 
+  ngAfterViewChecked() {
+    const hasDropdown = this.subRace && this.subRace.selectedValue;
+    const isPrimentalWithoutASubrace = this.character
+      && this.character.raceType === RaceType.Primental
+      && !this.character.racialSubType;
+    if (hasDropdown && isPrimentalWithoutASubrace) {
+      this.updateSubRace(this.subRace.selectedValue.value);
+    }
+  }
+
   reloadCharacter(propertyName: string, valueChange: any) {
     console.log("Character has been reloaded");
     this.character[propertyName] = valueChange;
@@ -52,7 +66,7 @@ export class CharacterSheetComponent implements OnInit, OnChanges {
     this.character = this.cloneCharacter(makeNewSubtheme);
   }
 
-  startReloadWithRace(raceString: RaceType) {
+  updateCharacterRace(raceString: RaceType) {
     if (RaceType[raceString] !== RaceType.Primental) {
       this.character.racialSubType = null;
     }
@@ -177,15 +191,26 @@ export class CharacterSheetComponent implements OnInit, OnChanges {
     return crv;
   }
 
-  getPrimaryMagicResistanceValue(): number {
+  getPrimaryMagicResistanceValues(): MagicResistance[] {
+    const magicResistances = [];
     let pmr = 0;
     const resistanceAsString = this.character.getMechanicalBonus("Elemental Resistance");
     pmr += resistanceAsString ? parseInt(resistanceAsString, 10) : 0;
-    return pmr;
+    if (pmr > 0) {
+      const type = SpellDamageKeyword[RacialSubTypeToDamageKeyword[this.character.racialSubType]];
+      magicResistances.push(new MagicResistance(type, pmr));
+    }
+    return magicResistances;
   }
 
   getSecondaryMagicRestanceValue(): number {
-    return Math.round(this.getPrimaryMagicResistanceValue() * .75);
+    let highestResistance = 0;
+    for (const resistance of this.getPrimaryMagicResistanceValues()) {
+      if (resistance.value > highestResistance) {
+        highestResistance = resistance.value;
+      }
+    }
+    return Math.round(highestResistance * .75);
   }
 
   getPrimaryMagicReistances(): string[] {

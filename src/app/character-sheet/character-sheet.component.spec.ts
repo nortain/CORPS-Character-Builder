@@ -177,7 +177,7 @@ describe('CharacterSheetComponent', () => {
     component.character.attributes.Quickness.strength = AttributeStrength.Heroic;
     component.character.attributes.SelfDiscipline.strength = AttributeStrength.Heroic;
     expect(component.getOutofCombatRecoveryValue()).toEqual(22);
-    component.startReloadWithRace(RaceType.Burman);
+    component.updateCharacterRace(RaceType.Burman);
     expect(component.getOutofCombatRecoveryValue()).toEqual(23);
     component.character.themePoints.general.setStrength(ThemeStrength.Minor);
     expect(component.getOutofCombatRecoveryValue()).toEqual(24);
@@ -192,7 +192,7 @@ describe('CharacterSheetComponent', () => {
     component.character.attributes.Quickness.strength = AttributeStrength.Heroic;
     component.character.attributes.SelfDiscipline.strength = AttributeStrength.Heroic;
     expect(component.getRecoveryValue()).toEqual(12);
-    component.startReloadWithRace(RaceType.Burman);
+    component.updateCharacterRace(RaceType.Burman);
     expect(component.getRecoveryValue()).toEqual(13);
     component.character.themePoints.general.setStrength(ThemeStrength.Minor);
     expect(component.getRecoveryValue()).toEqual(13);
@@ -211,7 +211,7 @@ describe('CharacterSheetComponent', () => {
     expect(component.getPowerPoints()).toEqual(8);
     component.character.themePoints.general.setStrength(ThemeStrength.Minor);
     expect(component.getPowerPoints()).toEqual(9);
-    component.startReloadWithRace(RaceType.Human);
+    component.updateCharacterRace(RaceType.Human);
     expect(component.getPowerPoints()).toEqual(10);
     component.character.level = Level.Four;
     expect(component.getPowerPoints()).toEqual(11);
@@ -241,10 +241,11 @@ describe('CharacterSheetComponent', () => {
   });
 
   it('should be able to get magic resistance of a character', () => {
-    expect(component.getPrimaryMagicResistanceValue()).toEqual(0);
+    expect(component.getPrimaryMagicResistanceValues().length).toEqual(0);
     component.character.racialSubType = RacialSubType.Air;
-    component.startReloadWithRace(RaceType.Primental);
-    expect(component.getPrimaryMagicResistanceValue()).toEqual(3);
+    component.updateCharacterRace(RaceType.Primental);
+    fixture.detectChanges();
+    expect(component.getPrimaryMagicResistanceValues()[0].value).toEqual(3);
   });
 
   it('should only load new subthemes if subthemePoints were changed', () => {
@@ -254,7 +255,7 @@ describe('CharacterSheetComponent', () => {
     expect(component.character.subthemes).not.toEqual(original);
     expect(component.character.subthemes.getAvailableSubthemePoints("combat")).toEqual(2);
     const old = component.character.subthemes;
-    component.startReloadWithRace(RaceType.Human);
+    component.updateCharacterRace(RaceType.Human);
     expect(component.character.subthemes).toEqual(old);
   });
 

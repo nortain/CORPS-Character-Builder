@@ -20,6 +20,7 @@ import {ShamanSpellList} from "./spells/greater-spell-constants";
 import {Subtheme} from "../theme-points/subthemes/subtheme";
 import {DropdownValueObject} from "../ui/dropdown/dropdown-value-object";
 import {AttributeType} from "../attribute/attribute-type.enum";
+import {SpellDamageKeyword} from "../spells/enums/spell-damage-keyword.enum";
 
 
 export const NON_HUMAN_AVAILABLE_ATTRIBUTE_POINTS = 4;
@@ -1002,6 +1003,11 @@ export class Knack {
 
 export class KeyValuePair {
   [s: string]: string;
+}
+
+export class MagicResistance {
+  constructor(public type: SpellDamageKeyword, public value: number) {
+  }
 }
 
 // https://basarat.gitbooks.io/typescript/docs/types/index-signatures.html

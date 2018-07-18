@@ -21,10 +21,11 @@
                             labelName="Race"
                             [newLineLabelName]="true"
                             [values]="races"
-                            (valueChange)="startReloadWithRace($event.value)"></corps-dropdown>
+                            (valueChange)="updateCharacterRace($event.value)"></corps-dropdown>
           </div>
           <div class="col">
-            <corps-dropdown *ngIf="character.raceType === RaceType.Primental" id="characterSubRace"
+            <corps-dropdown #subRace
+                            *ngIf="character.raceType === RaceType.Primental" id="characterSubRace"
                             labelName="Sub-Race"
                             [newLineLabelName]="true"
                             [values]="subraces" (valueChange)="updateSubRace($event.value)">
@@ -104,7 +105,7 @@
                 </div>
                 <div class="row">
                   <div class="col">
-                  <label class="font-weight-normal">{{character.getInitiative()}}</label>
+                    <label class="font-weight-normal">{{character.getInitiative()}}</label>
 
                   </div>
                 </div>
@@ -151,31 +152,78 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-3 float-right border-spacing magicResistancesBorder">
-        <label class="font-weight-bold">Magic Resistance (Prim/Sec):</label><br>
-        {{getPrimaryMagicResistanceValue()}}/{{getSecondaryMagicRestanceValue()}}
-        More stuff here
-      </div>
-    </div>
+
     <div class="row">
       <div class="col">
-        <div class="row d-flex clearfix rowPaddingAlongTop">
+        <div class="row">
           <div class="col">
-            <label class="font-weight-bold">Hit Points:</label>
-            {{getHitPointsValue()}}
+            <div class="row">
+              <div class="col-12">
+                <label class="control-label">Hit Points</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                {{getHitPointsValue()}}
+              </div>
+            </div>
+
+
           </div>
           <div class="col">
-            <label class="font-weight-bold">Bloodied Value:</label>
-            {{getBloodiedValue()}}
+            <div class="row">
+              <div class="col-12">
+                <label class="control-label">Bloodied Value</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                {{getBloodiedValue()}}
+              </div>
+            </div>
           </div>
           <div class="col">
-            <label class="font-weight-bold">Recovery Value (Combat/OoC):</label>
-            {{getRecoveryValue()}} / {{getOutofCombatRecoveryValue()}}
+            <div class="row">
+              <div class="col-12">
+                <label class="control-label">Recovery Value (IC/OoC):</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                {{getRecoveryValue()}} / {{getOutofCombatRecoveryValue()}}
+              </div>
+            </div>
           </div>
           <div class="col">
-            <label class="font-weight-bold">Critical Reduction:</label>
-            {{getCriticalReductionValue()}}
+            <div class="row">
+              <div class="col-12">
+                <label class="control-label">Critical Reduction:</label>
+
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                {{getCriticalReductionValue()}}
+
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="row">
+              <div class="col-12">
+                <label class="control-label">Magic Resistance (Prim/Sec)</label>
+              </div>
+            </div>
+            <div class="row" *ngIf="getPrimaryMagicResistanceValues().length > 0">
+              <div class="col-7" *ngFor="let res of getPrimaryMagicResistanceValues()">
+                <div class="row">
+                  <div class="col-6">{{res.type}}</div>
+                  <div class="col-6 text-right">{{res.value}}</div>
+                </div>
+              </div><div class="col-auto">/</div><div class="col-auto">
+                {{getSecondaryMagicRestanceValue()}}
+              </div>
+            </div>
           </div>
         </div>
       </div>

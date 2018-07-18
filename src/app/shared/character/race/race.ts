@@ -3,7 +3,7 @@ import {ThemeType} from "../../theme-points/theme-type.enum";
 import {MagicDefenseType} from "../magic-defense/magic-defense-type.enum";
 import {RaceType} from "./race-type.enum";
 import {VisionType} from "./vision-type.enum";
-import {RacialSubType, RacialSubTypeToDamageTypeConverter} from "./racial-sub-type.enum";
+import {RacialSubType, RacialSubTypeStringToEnumIndex} from "./racial-sub-type.enum";
 import {Level} from "../level.enum";
 import {NON_HUMAN_AVAILABLE_ATTRIBUTE_POINTS, STARTING_PLAYER_RACES} from "../../constants/constants";
 import {BonusByLevel} from "../bonus-by-level";
@@ -87,7 +87,7 @@ export class Race {
       if (valueArray && valueArray.length === 10) {
         valueResult = valueArray[this.level - 1];
       } else if (valueArray) {
-        valueResult = valueArray[RacialSubTypeToDamageTypeConverter[this.racialSubType]];
+        valueResult = valueArray[RacialSubTypeStringToEnumIndex[this.racialSubType]];
       }
       return valueResult;
     } else {

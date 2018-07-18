@@ -5,9 +5,16 @@ export enum RacialSubType {
   Water = "Water"
 }
 
-export enum RacialSubTypeToDamageTypeConverter {
+export enum RacialSubTypeStringToEnumIndex {
   Earth,
   Air,
   Fire,
   Water
+}
+
+export enum RacialSubTypeToDamageKeyword {
+  Earth = "Force",
+  Air = "Lightning",
+  Fire = "Heat",
+  Water = "Cold"
 }
