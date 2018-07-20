@@ -158,18 +158,22 @@
         <div class="row">
           <div class="col">
             <div class="row">
-              <div class="col-12">
-                <label class="control-label">Hit Points</label>
+              <div class="col text-center">
+                <div class="row">
+                  <div class=col>
+                    <label class="control-label">Hit Points
+                      <span *ngIf="getTemporaryHitPointsValue() > 0"> / Temp Hp</span></label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    {{getHitPointsValue()}}<span id="thpValue" *ngIf="getTemporaryHitPointsValue() > 0"> / {{getTemporaryHitPointsValue()}}</span>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-12">
-                {{getHitPointsValue()}}
-              </div>
-            </div>
-
-
           </div>
+
           <div class="col">
             <div class="row">
               <div class="col-12">
@@ -182,7 +186,7 @@
               </div>
             </div>
           </div>
-          <div class="col">
+          <div class="col text-center">
             <div class="row">
               <div class="col-12">
                 <label class="control-label">Recovery Value (IC/OoC):</label>
@@ -211,17 +215,26 @@
           <div class="col">
             <div class="row">
               <div class="col-12">
-                <label class="control-label">Magic Resistance (Prim/Sec)</label>
+                <label class="control-label">Magic Resistance</label>
               </div>
             </div>
             <div class="row" *ngIf="getPrimaryMagicResistanceValues().length > 0">
-              <div class="col-7" *ngFor="let res of getPrimaryMagicResistanceValues()">
+              <div class="col-12" *ngFor="let res of getPrimaryMagicResistanceValues()">
                 <div class="row">
-                  <div class="col-6">{{res.type}}</div>
-                  <div class="col-6 text-right">{{res.value}}</div>
+                  <div class="col-6 text-right">{{res.type}}</div>
+                  <div class="col-6 text-left">{{res.value}}</div>
                 </div>
-              </div><div class="col-auto">/</div><div class="col-auto">
-                {{getSecondaryMagicRestanceValue()}}
+              </div>
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-6 text-right">
+                    All Magic
+                  </div>
+                  <div class="col-6 text-left">
+                    {{getSecondaryMagicRestanceValue()}}
+                  </div>
+
+                </div>
               </div>
             </div>
           </div>

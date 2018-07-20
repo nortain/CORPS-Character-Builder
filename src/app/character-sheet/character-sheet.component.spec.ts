@@ -305,4 +305,15 @@ describe('CharacterSheetComponent', () => {
     expect(subthemeBtn.length).toEqual(1, "button should be visiable now");
   });
 
+  it('should be able to display temporary hit points if any are present', () => {
+    let thpValue = fixture.debugElement.queryAll(By.css("#thpValue"));
+    expect(thpValue.length).toEqual(0);
+    spyOn(component, "getTemporaryHitPointsValue").and.returnValue(3);
+    component.updateCharacterLevel(1);
+    actionClickDropdownItemX(fixture, "#stealth", 1); // needed to force UI to update
+    fixture.detectChanges();
+    thpValue = fixture.debugElement.queryAll(By.css("#thpValue"));
+    expect(thpValue.length).toEqual(1);
+  });
+
 });

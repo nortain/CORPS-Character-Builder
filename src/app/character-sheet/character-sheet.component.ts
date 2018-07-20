@@ -141,6 +141,14 @@ export class CharacterSheetComponent implements OnInit, OnChanges, AfterViewChec
     return hp;
   }
 
+  getTemporaryHitPointsValue(): number {
+    let thp = 0;
+    // bonus from stats
+    // bonus from talents
+    thp += 0; // remove me when logic is complete
+    return thp;
+  }
+
 
   getRecoveries(): number {
     let recoveries = STARTING_RECOVERIES;
