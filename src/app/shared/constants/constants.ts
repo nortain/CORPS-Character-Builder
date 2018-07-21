@@ -21,6 +21,7 @@ import {Subtheme} from "../theme-points/subthemes/subtheme";
 import {DropdownValueObject} from "../ui/dropdown/dropdown-value-object";
 import {AttributeType} from "../attribute/attribute-type.enum";
 import {SpellDamageKeyword} from "../spells/enums/spell-damage-keyword.enum";
+import {CombatAndResourceBonus} from "../theme-points/subthemes/subtheme-bonus.enum";
 
 
 export const NON_HUMAN_AVAILABLE_ATTRIBUTE_POINTS = 4;
@@ -1000,6 +1001,10 @@ export class Knack {
   subthemeName: string;
 }
 
+export class CombatAndResourceBonusObject {
+  constructor(public name: CombatAndResourceBonus, public value: number) {
+  }
+}
 
 export class KeyValuePair {
   [s: string]: string;

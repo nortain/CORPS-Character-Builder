@@ -156,86 +156,81 @@
     <div class="row">
       <div class="col">
         <div class="row">
-          <div class="col">
-            <div class="row">
-              <div class="col text-center">
-                <div class="row">
-                  <div class=col>
-                    <label class="control-label">Hit Points
-                      <span *ngIf="getTemporaryHitPointsValue() > 0"> / Temp Hp</span></label>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">
-                    {{getHitPointsValue()}}<span id="thpValue" *ngIf="getTemporaryHitPointsValue() > 0"> / {{getTemporaryHitPointsValue()}}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col">
-            <div class="row">
-              <div class="col-12">
-                <label class="control-label">Bloodied Value</label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12">
-                {{getBloodiedValue()}}
-              </div>
-            </div>
-          </div>
           <div class="col text-center">
             <div class="row">
-              <div class="col-12">
-                <label class="control-label">Recovery Value (IC/OoC):</label>
+              <div class=col>
+                <label class="control-label">Hit Points
+                  <span *ngIf="getTemporaryHitPointsValue() > 0"> / Temp Hp</span></label>
               </div>
             </div>
             <div class="row">
-              <div class="col-12">
-                {{getRecoveryValue()}} / {{getOutofCombatRecoveryValue()}}
+              <div class="col">
+                {{getHitPointsValue()}}<span id="thpValue" *ngIf="getTemporaryHitPointsValue() > 0"> / {{getTemporaryHitPointsValue()}}</span>
               </div>
             </div>
           </div>
-          <div class="col">
-            <div class="row">
-              <div class="col-12">
-                <label class="control-label">Critical Reduction:</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="row">
+          <div class="col-12">
+            <label class="control-label">Bloodied Value</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            {{getBloodiedValue()}}
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="row">
+          <div class="col-12">
+            <label class="control-label">Recovery Value (IC/OoC):</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            {{getRecoveryValue()}} / {{getOutofCombatRecoveryValue()}}
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="row">
+          <div class="col-12">
+            <label class="control-label">Critical Reduction:</label>
 
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12">
-                {{getCriticalReductionValue()}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            {{getCriticalReductionValue()}}
 
-              </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="row">
+          <div class="col-12">
+            <label class="control-label">Magic Resistance</label>
+          </div>
+        </div>
+        <div class="row" *ngIf="getPrimaryMagicResistanceValues().length > 0">
+          <div class="col-12" *ngFor="let res of getPrimaryMagicResistanceValues()">
+            <div class="row">
+              <div class="col-6 text-right">{{res.type}}</div>
+              <div class="col-6 text-left">{{res.value}}</div>
             </div>
           </div>
-          <div class="col">
+          <div class="col-12">
             <div class="row">
-              <div class="col-12">
-                <label class="control-label">Magic Resistance</label>
+              <div class="col-6 text-right">
+                All Magic
               </div>
-            </div>
-            <div class="row" *ngIf="getPrimaryMagicResistanceValues().length > 0">
-              <div class="col-12" *ngFor="let res of getPrimaryMagicResistanceValues()">
-                <div class="row">
-                  <div class="col-6 text-right">{{res.type}}</div>
-                  <div class="col-6 text-left">{{res.value}}</div>
-                </div>
+              <div class="col-6 text-left">
+                {{getSecondaryMagicRestanceValue()}}
               </div>
-              <div class="col-12">
-                <div class="row">
-                  <div class="col-6 text-right">
-                    All Magic
-                  </div>
-                  <div class="col-6 text-left">
-                    {{getSecondaryMagicRestanceValue()}}
-                  </div>
 
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -243,24 +238,55 @@
     </div>
     <div class="row">
       <div class="col">
-        <div class="row d-flex">
-          <div class="col">
-            <label class="font-weight-bold">Power Points:</label>
-            {{getPowerPoints()}}
+        <div class="row">
+          <div class="col text-center">
+            <div class="row">
+              <div class="col">
+                <label class="control-label">Power Points</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                {{getPowerPoints()}}
+              </div>
+            </div>
           </div>
-          <div class="col">
-            <label class="font-weight-bold">Adrenaline Points:</label>
-            {{getAdrenalinePoints()}}
+          <div class="col text-center">
+            <div class="row">
+              <div class="col">
+                <label class="control-label">Adrenaline Points</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                {{getAdrenalinePoints()}}
+              </div>
+            </div>
           </div>
-          <div class="col">
-            <label class="font-weight-bold">Recovery Points:</label>
-            {{getRecoveries()}}
+          <div class="col text-center">
+            <div class="row">
+              <div class="col">
+                <label class="control-label">Recovery Points</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                {{getRecoveries()}}
+              </div>
+            </div>
           </div>
-          <div class="col">
-            <label class="font-weight-bold">Auras:</label>
-            {{getAuras()}}
+          <div class="col-40 text-center">
+            <div class="row">
+              <div class="col">
+                <label class="control-label">Starting Combat/Resource Bonuses</label>
+              </div>
+            </div>
+            <div class="row" *ngFor="let bonus of getCombatBonuses()">
+              <div class="col">
+                {{bonus.name | castleCase}}: {{bonus.value}}
+              </div>
+            </div>
           </div>
-
         </div>
 
       </div>

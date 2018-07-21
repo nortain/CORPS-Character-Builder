@@ -168,7 +168,7 @@ describe('CharacterSheetComponent', () => {
     expect(component.getRecoveries()).toEqual(7);
   });
 
-  it('should be able to get out of combat recovery value', () => {
+ it('should be able to get out of combat recovery value', () => {
     expect(component.getOutofCombatRecoveryValue()).toEqual(18);
     component.character.themePoints.combat.setStrength(ThemeStrength.Minor);
     component.character.themePoints.stealth.setStrength(ThemeStrength.Minor);
@@ -178,6 +178,9 @@ describe('CharacterSheetComponent', () => {
     component.character.attributes.SelfDiscipline.strength = AttributeStrength.Heroic;
     expect(component.getOutofCombatRecoveryValue()).toEqual(22);
     component.updateCharacterRace(RaceType.Burman);
+   component.character.attributes.Vitality.strength = AttributeStrength.Heroic;
+   component.character.attributes.Quickness.strength = AttributeStrength.Heroic;
+   component.character.attributes.SelfDiscipline.strength = AttributeStrength.Heroic;
     expect(component.getOutofCombatRecoveryValue()).toEqual(23);
     component.character.themePoints.general.setStrength(ThemeStrength.Minor);
     expect(component.getOutofCombatRecoveryValue()).toEqual(24);
@@ -193,6 +196,9 @@ describe('CharacterSheetComponent', () => {
     component.character.attributes.SelfDiscipline.strength = AttributeStrength.Heroic;
     expect(component.getRecoveryValue()).toEqual(12);
     component.updateCharacterRace(RaceType.Burman);
+    component.character.attributes.Vitality.strength = AttributeStrength.Heroic;
+    component.character.attributes.Quickness.strength = AttributeStrength.Heroic;
+    component.character.attributes.SelfDiscipline.strength = AttributeStrength.Heroic;
     expect(component.getRecoveryValue()).toEqual(13);
     component.character.themePoints.general.setStrength(ThemeStrength.Minor);
     expect(component.getRecoveryValue()).toEqual(13);
@@ -212,6 +218,10 @@ describe('CharacterSheetComponent', () => {
     component.character.themePoints.general.setStrength(ThemeStrength.Minor);
     expect(component.getPowerPoints()).toEqual(9);
     component.updateCharacterRace(RaceType.Human);
+    component.character.attributes.SelfDiscipline.strength = AttributeStrength.Legendary;
+    component.character.themePoints.general.setStrength(ThemeStrength.Minor);
+    component.character.attributes.Presence.strength = AttributeStrength.Legendary;
+    component.character.attributes.Reasoning.strength = AttributeStrength.Epic;
     expect(component.getPowerPoints()).toEqual(10);
     component.character.level = Level.Four;
     expect(component.getPowerPoints()).toEqual(11);

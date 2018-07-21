@@ -8,13 +8,14 @@ import {RacialSubType, RacialSubTypeStringToEnumIndex, RacialSubTypeToDamageKeyw
 
 import {MagicDefenseType} from "../shared/character/magic-defense/magic-defense-type.enum";
 import {AttributeBonus} from "../shared/attribute/character-attribute/attribute-bonus.enum";
-import {MAGIC_FIGHTING_STYLE, MagicResistance, MARTIAL_FIGHTING_STYLE, STARTING_HIT_POINTS, STARTING_RECOVERIES} from "../shared/constants/constants";
+import {CombatAndResourceBonusObject, MAGIC_FIGHTING_STYLE, MagicResistance, MARTIAL_FIGHTING_STYLE, STARTING_HIT_POINTS, STARTING_RECOVERIES} from "../shared/constants/constants";
 import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
 import {SubthemeComponent} from "./character-subtheme-modal/subthemes/subtheme.component";
 import {CharacterSubthemeModalComponent} from "./character-subtheme-modal/character-subthemes/character-subtheme-modal.component";
 import {AttributeName} from "../shared/attribute/attribute-name.enum";
 import {SpellDamageKeyword} from "../shared/spells/enums/spell-damage-keyword.enum";
 import {DropdownComponent} from "../shared/ui/dropdown/dropdown.component";
+import {StartingCharacterAttributes} from "../shared/attribute/character-attribute/starting-character-attributes";
 
 @Component({
   selector: 'corps-character-sheet',
@@ -70,6 +71,7 @@ export class CharacterSheetComponent implements OnInit, OnChanges, AfterViewChec
     if (RaceType[raceString] !== RaceType.Primental) {
       this.character.racialSubType = null;
     }
+    this.character.attributes = new StartingCharacterAttributes();
     this.reloadCharacter("raceType", RaceType[raceString]);
   }
 
@@ -244,8 +246,8 @@ export class CharacterSheetComponent implements OnInit, OnChanges, AfterViewChec
     return Math.floor(this.getHitPointsValue() / 2);
   }
 
-  getAuras(): string[] {
-    return null;
+  getCombatBonuses(): CombatAndResourceBonusObject[] {
+    return this.character.getCombatAndResourceBonuses();
   }
 
 

@@ -12,3 +12,19 @@ export enum SubthemeBonus {
   Agile = "Agile",
   Balanced = "Balanced"
 }
+
+export enum CombatAndResourceBonus {
+  Thorns = "Thorns",
+  ForcedMovementResistance = "ForcedMovementResistance",
+  DamageResist = "DamageResist",
+  ProtectorAura = "ProtectorAura",
+  RiposteAura = "RiposteAura",
+  IsolationDamage = "IsolationDamage",
+  FindWeakness = "FindWeakness",
+  Essence = "Essence",
+  Blessings = "Blessings",
+  Mana = "Mana",
+  Corpse = "Corpse",
+  Grace = "Grace"
+
+}

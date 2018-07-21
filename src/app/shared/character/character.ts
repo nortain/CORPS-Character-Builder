@@ -1,7 +1,7 @@
 import {Race} from "./race/race";
 import {Weapon} from "../weapon/weapon";
 import {Armor} from "../armor/armor";
-import {StartingCharacterMagicDefense, STARTING_MOVEMENT, STARTING_INITIATIVE, STEALTH_INIT_BONUS} from "../constants/constants";
+import {StartingCharacterMagicDefense, STARTING_MOVEMENT, STARTING_INITIATIVE, STEALTH_INIT_BONUS, KeyValuePair, CombatAndResourceBonusObject} from "../constants/constants";
 import {RaceType} from "./race/race-type.enum";
 import {Level} from "./level.enum";
 import {RacialSubType} from "./race/racial-sub-type.enum";
@@ -15,6 +15,7 @@ import {AttributeStrength} from "../attribute/attribute-strength.enum";
 import {AttributeName} from "../attribute/attribute-name.enum";
 import {PhysicalDefense} from "./physical-defense/physical-defense";
 import {SubthemeContainer} from "../theme-points/subthemes/subtheme-container";
+import {CombatAndResourceBonus, SubthemeConditionalCombatBonuses} from "../theme-points/subthemes/subtheme-bonus.enum";
 
 export class Character extends Race {
 
@@ -95,6 +96,16 @@ export class Character extends Race {
         this.availableAttributePoints += strengthDifference;
       }
     }
+  }
+
+  getCombatAndResourceBonuses(): CombatAndResourceBonusObject[] {
+    // TODO REMOVE MY HARD CODED CANDY ASS
+    return [
+      {name: CombatAndResourceBonus.Blessings, value: 4},
+      {name: CombatAndResourceBonus.RiposteAura, value: 8},
+      {name: CombatAndResourceBonus.IsolationDamage, value: 4}
+
+    ];
   }
 
 
