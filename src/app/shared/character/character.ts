@@ -15,7 +15,7 @@ import {AttributeStrength} from "../attribute/attribute-strength.enum";
 import {AttributeName} from "../attribute/attribute-name.enum";
 import {PhysicalDefense} from "./physical-defense/physical-defense";
 import {SubthemeContainer} from "../theme-points/subthemes/subtheme-container";
-import {CombatAndResourceBonus, SubthemeConditionalCombatBonuses} from "../theme-points/subthemes/subtheme-bonus.enum";
+import {CombatAndResourceBonus} from "../theme-points/subthemes/subtheme-bonus.enum";
 
 export class Character extends Race {
 

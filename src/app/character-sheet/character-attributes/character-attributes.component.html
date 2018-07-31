@@ -1,20 +1,58 @@
-<div class="row">
-  <div *ngFor="let attribute of attributes | slice:0:4" class="col-md-6 col-sm-12">
-    <corps-dropdown [labelName]="attribute"
-                  [newLineLabelName]="true"
-                  [values]="attributeStrength"
-                  [fixedWidth]="175">
-    </corps-dropdown>
+<div class="row" *ngIf="onPushToggle">
+  <div class="col">
+    <div class="row">
+      <div *ngFor="let attribute of attributes | slice:0:4" class="col-md-3 col-sm-6">
+        <corps-dropdown [labelName]="attribute"
+                        [newLineLabelName]="true"
+                        [values]="getAttributeDropdownValues(attribute)"
+                        [fixedWidth]="175"
+                        [value]="getIncomingAttributeStrengthFor(attribute)"
+                        (valueChange)="updateAttribute(attribute, $event.value)">
+        </corps-dropdown>
+      </div>
+    </div>
+    <div class="row">
+      <div *ngFor="let attribute of attributes | slice:4:8" class="col-md-3 col-sm-6">
+        <corps-dropdown [labelName]="attribute"
+                        [newLineLabelName]="true"
+                        [values]="getAttributeDropdownValues(attribute)"
+                        [fixedWidth]="175"
+                        [value]="getIncomingAttributeStrengthFor(attribute)"
+                        (valueChange)="updateAttribute(attribute, $event.value)">
+        </corps-dropdown>
+      </div>
+    </div>
   </div>
 </div>
-<div class="row">
-  <div *ngFor="let attribute of attributes | slice:4:8" class="col-md-6 col-sm-12">
-    <corps-dropdown [labelName]="attribute"
-                  [newLineLabelName]="true"
-                  [values]="attributeStrength"
-                  [fixedWidth]="175">
-    </corps-dropdown>
+
+<div class="row" *ngIf="!onPushToggle">
+  <div class="col">
+    <div class="row">
+      <div *ngFor="let attribute of attributes | slice:0:4" class="col-md-3 col-sm-6">
+        <corps-dropdown [labelName]="attribute"
+                        [newLineLabelName]="true"
+                        [values]="getIncomingAttributeStrengthFor(attribute).value === 1 ? racialAttributeStrength : attributeStrength"
+                        [fixedWidth]="175"
+                        [value]="getIncomingAttributeStrengthFor(attribute)"
+                        (valueChange)="updateAttribute(attribute, $event.value)">
+        </corps-dropdown>
+      </div>
+    </div>
+    <div class="row">
+      <div *ngFor="let attribute of attributes | slice:4:8" class="col-md-3 col-sm-6">
+        <corps-dropdown [labelName]="attribute"
+                        [newLineLabelName]="true"
+                        [values]="getAttributeDropdownValues(attribute)"
+                        [fixedWidth]="175"
+                        [value]="getIncomingAttributeStrengthFor(attribute)"
+                        (valueChange)="updateAttribute(attribute, $event.value)">
+        </corps-dropdown>
+      </div>
+    </div>
   </div>
 </div>
+
+
+
 
 

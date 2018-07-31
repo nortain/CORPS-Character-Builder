@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {DropdownValueObject} from "../ui/dropdown/dropdown-value-object";
 import {Level} from "../character/level.enum";
 import {ThemeStrength} from "../theme-points/theme-strength.enum";
+import {AttributeStrength} from "./attribute-strength.enum";
 
 @Injectable()
 export class AttributeService {
@@ -30,16 +31,19 @@ export class AttributeService {
   }
 
   /**Takes in an enumeration and uses the keys and values to insert them into a dropdown value object. i.e. {label: "Normal" value: 0}.
-  If the isAttribute boolean is set to true then the label is appended wrapped in parenthesis like {label: "Normal (0), value: 0}"*/
-  getArrayOfDropdownValueObjectsFromEnum(enumeration, isAttribute = false): DropdownValueObject[] {
+   If the isAttribute boolean is set to true then the label is appended wrapped in parenthesis like {label: "Normal (0), value: 0}"*/
+  getArrayOfDropdownValueObjectsFromEnum(enumeration, isAttribute = false, minIndex = 0, maxIndex = 5): DropdownValueObject[] {
     const results: DropdownValueObject[] = [];
     const names = this.getEnumAsArrayOfStrings(enumeration);
-    for (const name of names) {
-      if (!isAttribute) {
-        results.push({value: enumeration[name], label: name});
-      } else {
-        const attributeName = name + " (" + enumeration[name] + ")";
-        results.push({value: enumeration[name], label: attributeName});
+    for (let i = 0; i < names.length; i++) {
+      if (minIndex <= i || maxIndex > i) {
+        const name = names[i];
+        if (!isAttribute) {
+          results.push({value: enumeration[name], label: name});
+        } else {
+          const attributeName = name + " (" + enumeration[name] + ")";
+          results.push({value: enumeration[name], label: attributeName});
+        }
       }
     }
     return results;
@@ -68,7 +72,6 @@ export class AttributeService {
       totalThemePointAssigned = 4;
     }
     if (isGeneral) {
-      totalThemePointAssigned = totalThemePointAssigned;
       resultArray = [ThemeStrength.None, ThemeStrength.Minor];
     } else {
       resultArray = [ThemeStrength.None, ThemeStrength.Minor, ThemeStrength.Lesser, ThemeStrength.Greater];
