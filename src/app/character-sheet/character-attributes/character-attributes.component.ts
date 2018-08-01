@@ -15,15 +15,14 @@ export class CharacterAttributesComponent implements OnInit, OnChanges {
 
   @Input() incomingAttributes: StartingCharacterAttributes;
   @Input() assignableAttributePoints: number;
+  @Input() racialAttributes: AttributeName[];
   onPushToggle = true;
   attributes: string[];
-  racialAttributeStrength: StartingCharacterAttributes;
 
   constructor(private attributeService: AttributeService) {
   }
 
   ngOnInit() {
-    this.racialAttributeStrength = this.incomingAttributes;
     this.attributes = this.attributeService.getEnumAsArrayOfStrings(AttributeName, true);
   }
 
@@ -32,14 +31,29 @@ export class CharacterAttributesComponent implements OnInit, OnChanges {
   }
 
   getAttributeDropdownValues(attributeName: string): DropdownValueObject[] {
-    const racial: Attribute = this.racialAttributeStrength[attributeName];
+    const racial: boolean = this.isRacialAttribute(attributeName);
     const attribute = this.incomingAttributes[attributeName];
-    const maxIndex = this.assignableAttributePoints + attribute.strength;
+    const maxIndex = this.assignableAttributePoints + attribute.strength + 1;
     let minIndex = 0;
-    if (racial.strength === AttributeStrength.Heroic) {
+    if (racial) {
       minIndex = 1;
     }
-    return this.attributeService.getArrayOfDropdownValueObjectsFromEnum(AttributeStrength, true, minIndex, maxIndex);
+    const ddObjects: DropdownValueObject[] = this.attributeService.getArrayOfDropdownValueObjectsFromEnum(AttributeStrength, true, minIndex, maxIndex);
+    return ddObjects;
+  }
+
+  /**
+   * This will return true if the given string/attribute name exists in the array of passed in racial attributes.  This lets us know which attributes cannot go below heroic because of the selected race
+   * @param {string} attributeName
+   * @returns {boolean}
+   */
+  isRacialAttribute(attributeName: string): boolean {
+    for (const attribute of this.racialAttributes) {
+      if (attribute === attributeName) {
+        return true;
+      }
+    }
+    return false;
   }
 
   getIncomingAttributeStrengthFor(attributeName: string): DropdownValueObject {
@@ -58,5 +72,6 @@ export class CharacterAttributesComponent implements OnInit, OnChanges {
     const attribute: Attribute = this.incomingAttributes[attributeName];
     attribute.strength = attributeStrength;
   }
+
 
 }

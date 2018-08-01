@@ -28,8 +28,18 @@
                             *ngIf="character.raceType === RaceType.Primental" id="characterSubRace"
                             labelName="Sub-Race"
                             [newLineLabelName]="true"
-                            [values]="subraces" (valueChange)="updateSubRace($event.value)">
+                            [values]="subraces"
+                            (valueChange)="updateSubRace($event.value)">
 
+            </corps-dropdown>
+          </div>
+          <div class="col">
+            <corps-dropdown #attributeChoice
+                            *ngIf="character.optionalStartingAttributes" id="characterOptionalAttribute"
+                            labelName="Racial Attribute"
+                            [newLineLabelName]="true"
+                            [values]="getOptionalStartingAttributesAsDropdownValueObjects()"
+                            (valueChange)="updateStartingRacialAttributes($event.value)">
             </corps-dropdown>
           </div>
         </div>
@@ -294,8 +304,10 @@
     </div>
     <div class="row">
       <div class="col">
-        <corps-character-attributes [incomingAttributes]="character.attributes" [assignableAttributePoints]="character.availableAttributePoints">
-
+        <corps-character-attributes
+          [incomingAttributes]="character.attributes"
+          [assignableAttributePoints]="character.availableAttributePoints"
+          [racialAttributes]="character.startingAttributes">
         </corps-character-attributes>
       </div>
     </div>

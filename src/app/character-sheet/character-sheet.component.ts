@@ -8,7 +8,7 @@ import {RacialSubType, RacialSubTypeStringToEnumIndex, RacialSubTypeToDamageKeyw
 
 import {MagicDefenseType} from "../shared/character/magic-defense/magic-defense-type.enum";
 import {AttributeBonus} from "../shared/attribute/character-attribute/attribute-bonus.enum";
-import {CombatAndResourceBonusObject, MAGIC_FIGHTING_STYLE, MagicResistance, MARTIAL_FIGHTING_STYLE, STARTING_HIT_POINTS, STARTING_RECOVERIES} from "../shared/constants/constants";
+import {CombatAndResourceBonusObject, MAGIC_FIGHTING_STYLE, MagicResistance, MARTIAL_FIGHTING_STYLE, STARTING_HIT_POINTS, STARTING_PLAYER_RACES, STARTING_RECOVERIES} from "../shared/constants/constants";
 import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
 import {SubthemeComponent} from "./character-subtheme-modal/subthemes/subtheme.component";
 import {CharacterSubthemeModalComponent} from "./character-subtheme-modal/character-subthemes/character-subtheme-modal.component";
@@ -60,11 +60,20 @@ export class CharacterSheetComponent implements OnInit, OnChanges, AfterViewChec
     }
   }
 
+  getOptionalStartingAttributesAsDropdownValueObjects(): DropdownValueObject[] {
+    if (this.character.optionalStartingAttributes) {
+      return this.attributeService.buildArrayAsDropdownArray(this.character.optionalStartingAttributes);
+    } else {
+      return null;
+    }
+  }
+
   reloadCharacter(propertyName: string, valueChange: any) {
     console.log("Character has been reloaded");
     this.character[propertyName] = valueChange;
+    const isStartingAttributes = propertyName === "startingAttributes";
     const makeNewSubtheme = propertyName === "themePoints";
-    this.character = this.cloneCharacter(makeNewSubtheme);
+    this.character = this.cloneCharacter(makeNewSubtheme, isStartingAttributes);
   }
 
   updateCharacterRace(raceString: RaceType) {
@@ -85,6 +94,14 @@ export class CharacterSheetComponent implements OnInit, OnChanges, AfterViewChec
    */
   updateCharacterLevel(level: number) {
     this.reloadCharacter("level", level);
+  }
+
+  updateStartingRacialAttributes(attribute: AttributeName) {
+    this.character.startingAttributes = [...STARTING_PLAYER_RACES[this.character.raceType].startingAttributes];
+    if (this.character.optionalStartingAttributes) {
+      this.character.startingAttributes.push(attribute);
+    }
+    this.reloadCharacter("startingAttributes", this.character.startingAttributes);
   }
 
   updateSubRace(subrace: RacialSubType) {
@@ -294,8 +311,9 @@ export class CharacterSheetComponent implements OnInit, OnChanges, AfterViewChec
    * @param {boolean} makeNewSubtheme, trigger a call to force a new subtheme to be created rather than passing in the same one.
    * @returns {Character}
    */
-  cloneCharacter(makeNewSubtheme?: boolean) {
+  cloneCharacter(makeNewSubtheme?: boolean, makeNewStartingAttributes?: boolean) {
     const subThemes = makeNewSubtheme ? undefined : this.character.subthemes;
+    const startingAttributes = makeNewStartingAttributes ? this.character.startingAttributes : undefined;
     const char = new Character(
       this.character.name,
       this.character.raceType,
@@ -306,7 +324,9 @@ export class CharacterSheetComponent implements OnInit, OnChanges, AfterViewChec
       this.character.physicalDefense,
       this.character.weapons,
       this.character.magicDefense,
-      this.character.attributes
+      this.character.attributes,
+      startingAttributes,
+      this.character.fightingStyle
     );
     return char;
   }

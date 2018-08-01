@@ -44,6 +44,7 @@ export class Race {
     this.activeBonuses = STARTING_PLAYER_RACES[raceType].activeBonuses;
     this.talentBonus = STARTING_PLAYER_RACES[raceType].talentBonus;
     this.startingAttributes = STARTING_PLAYER_RACES[raceType].startingAttributes;
+    this.optionalStartingAttributes = STARTING_PLAYER_RACES[raceType].optionalStartingAttributes;
     this.recoveryBonus = this.getRecoveryBonus();
     this.powerPointBonus = STARTING_PLAYER_RACES[raceType].powerPointBonus ? STARTING_PLAYER_RACES[raceType].powerPointBonus : 0;
     this.skillPointBonus = STARTING_PLAYER_RACES[raceType].skillPointBonus ? STARTING_PLAYER_RACES[raceType].skillPointBonus : 0;

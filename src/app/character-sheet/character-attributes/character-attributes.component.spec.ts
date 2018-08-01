@@ -8,8 +8,9 @@ import {NgbDropdownConfig, NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
 import {AttributeService} from "../../shared/attribute/attribute.service";
 import {StartingCharacterAttributes} from "../../shared/attribute/character-attribute/starting-character-attributes";
 import {AttributeStrength} from "../../shared/attribute/attribute-strength.enum";
+import {AttributeName} from "../../shared/attribute/attribute-name.enum";
 
-fdescribe('CharacterAttributesComponent', () => {
+describe('CharacterAttributesComponent', () => {
   let component: CharacterAttributesComponent;
   let fixture: ComponentFixture<CharacterAttributesComponent>;
 
@@ -27,6 +28,8 @@ fdescribe('CharacterAttributesComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CharacterAttributesComponent);
     component = fixture.componentInstance;
+    component.assignableAttributePoints = 4;
+    component.racialAttributes = [AttributeName.Brawn, AttributeName.Presence];
     component.incomingAttributes = new StartingCharacterAttributes();
     fixture.detectChanges();
   });

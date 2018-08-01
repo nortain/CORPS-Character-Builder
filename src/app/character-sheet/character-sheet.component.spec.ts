@@ -19,6 +19,7 @@ import {ThemePointsContainer} from "../shared/theme-points/theme-points-containe
 import {NgbModalStack} from "@ng-bootstrap/ng-bootstrap/modal/modal-stack";
 import {initServicesIfNeeded} from "@angular/core/src/view";
 import {MAGIC_FIGHTING_STYLE, MARTIAL_FIGHTING_STYLE} from "../shared/constants/constants";
+import {AttributeName} from "../shared/attribute/attribute-name.enum";
 
 
 describe('CharacterSheetComponent', () => {
@@ -324,6 +325,15 @@ describe('CharacterSheetComponent', () => {
     fixture.detectChanges();
     thpValue = fixture.debugElement.queryAll(By.css("#thpValue"));
     expect(thpValue.length).toEqual(1);
+  });
+
+  fit('should display an optional dropdown for attribute when the character has optional attributes', () => {
+    actionClickDropdownItemX(fixture, "#characterRace", 7);
+    const startingAttributes = component.character.startingAttributes;
+    expect(startingAttributes).toContain(AttributeName.Presence);
+    actionClickDropdownItemX(fixture, "#characterOptionalAttribute", 1);
+    expect(startingAttributes).toContain(AttributeName.Reasoning);
+    expect(startingAttributes).not.toContain(AttributeName.Presence);
   });
 
 });

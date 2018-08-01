@@ -29,8 +29,12 @@ export class Character extends Race {
               public weapons = [new Weapon('Fist', WeaponClass.Unarmed, WeaponCategory.Balanced)],
               public magicDefense = new StartingCharacterMagicDefense(),
               public attributes = new StartingCharacterAttributes(),
+              private newStartingAtts?: AttributeName[],
               public fightingStyle: AttributeName[] = []) {
     super(raceType, level, subRace);
+    if (newStartingAtts) {
+      this.startingAttributes = newStartingAtts;
+    }
     for (const attribute of this.attributes.attributesArray) {
       this.assignAttributePoint(attribute.strength, attribute.getName());
     }

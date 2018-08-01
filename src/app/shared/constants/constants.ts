@@ -782,7 +782,7 @@ export const STARTING_PLAYER_RACES = {
   } as Race,
   Primental: {
     startingAttributes: [AttributeName.Brawn, AttributeName.Intuition],
-    optionalStartingAttributes: [AttributeName.Reasoning, AttributeName.Presence],
+    optionalStartingAttributes: [AttributeName.Presence, AttributeName.Reasoning],
     availableLanguagePoints: 3,
     talentBonus: [ThemeType.Magic],
     passiveBonuses: [
