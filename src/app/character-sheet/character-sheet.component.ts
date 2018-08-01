@@ -26,6 +26,7 @@ import {StartingCharacterAttributes} from "../shared/attribute/character-attribu
 export class CharacterSheetComponent implements OnInit, OnChanges, AfterViewChecked {
 
   @ViewChild('subRace') subRace: DropdownComponent;
+  @ViewChild('attributeChoice') attributeChoice: DropdownComponent;
 
   character: Character;
   races: DropdownValueObject[];
@@ -51,12 +52,35 @@ export class CharacterSheetComponent implements OnInit, OnChanges, AfterViewChec
   }
 
   ngAfterViewChecked() {
+    this.selectDefaultSubRace();
+    this.selectDefaultOptionalStartingAttribute();
+  }
+
+  /**
+   * Used to select a subrace by default when the primental if first chosen automatically
+   */
+  selectDefaultSubRace() {
     const hasDropdown = this.subRace && this.subRace.selectedValue;
     const isPrimentalWithoutASubrace = this.character
       && this.character.raceType === RaceType.Primental
       && !this.character.racialSubType;
     if (hasDropdown && isPrimentalWithoutASubrace) {
       this.updateSubRace(this.subRace.selectedValue.value);
+    }
+  }
+
+  selectDefaultOptionalStartingAttribute() {
+    if (this.character.optionalStartingAttributes) {
+      let isMissingRacialAttribute = true;
+      for (const optionalAttribute of this.character.optionalStartingAttributes) {
+        if (this.character.startingAttributes.indexOf(optionalAttribute) > -1) {
+          isMissingRacialAttribute = false;
+          break;
+        }
+      }
+      if (isMissingRacialAttribute) {
+        this.updateStartingRacialAttributes(this.attributeChoice.selectedValue.value);
+      }
     }
   }
 
@@ -71,7 +95,7 @@ export class CharacterSheetComponent implements OnInit, OnChanges, AfterViewChec
   reloadCharacter(propertyName: string, valueChange: any) {
     console.log("Character has been reloaded");
     this.character[propertyName] = valueChange;
-    const isStartingAttributes = propertyName === "startingAttributes";
+    const isStartingAttributes = propertyName === "raceType";
     const makeNewSubtheme = propertyName === "themePoints";
     this.character = this.cloneCharacter(makeNewSubtheme, isStartingAttributes);
   }
@@ -97,6 +121,7 @@ export class CharacterSheetComponent implements OnInit, OnChanges, AfterViewChec
   }
 
   updateStartingRacialAttributes(attribute: AttributeName) {
+    this.character.attributes = new StartingCharacterAttributes();
     this.character.startingAttributes = [...STARTING_PLAYER_RACES[this.character.raceType].startingAttributes];
     if (this.character.optionalStartingAttributes) {
       this.character.startingAttributes.push(attribute);
@@ -313,7 +338,7 @@ export class CharacterSheetComponent implements OnInit, OnChanges, AfterViewChec
    */
   cloneCharacter(makeNewSubtheme?: boolean, makeNewStartingAttributes?: boolean) {
     const subThemes = makeNewSubtheme ? undefined : this.character.subthemes;
-    const startingAttributes = makeNewStartingAttributes ? this.character.startingAttributes : undefined;
+    const startingAttributes = makeNewStartingAttributes ? undefined : this.character.startingAttributes;
     const char = new Character(
       this.character.name,
       this.character.raceType,

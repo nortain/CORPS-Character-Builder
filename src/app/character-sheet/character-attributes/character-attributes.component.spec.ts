@@ -10,7 +10,7 @@ import {StartingCharacterAttributes} from "../../shared/attribute/character-attr
 import {AttributeStrength} from "../../shared/attribute/attribute-strength.enum";
 import {AttributeName} from "../../shared/attribute/attribute-name.enum";
 
-describe('CharacterAttributesComponent', () => {
+fdescribe('CharacterAttributesComponent', () => {
   let component: CharacterAttributesComponent;
   let fixture: ComponentFixture<CharacterAttributesComponent>;
 
@@ -68,6 +68,6 @@ describe('CharacterAttributesComponent', () => {
   });
 
   it('should limit a character to being able to only select up to their assignable attribute points value', () => {
-
+    expect(true).toBeFalsy();
   });
 });

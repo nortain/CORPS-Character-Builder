@@ -327,11 +327,12 @@ describe('CharacterSheetComponent', () => {
     expect(thpValue.length).toEqual(1);
   });
 
-  fit('should display an optional dropdown for attribute when the character has optional attributes', () => {
+  it('should display an optional dropdown for attribute when the character has optional attributes', () => {
     actionClickDropdownItemX(fixture, "#characterRace", 7);
-    const startingAttributes = component.character.startingAttributes;
+    let startingAttributes = component.character.startingAttributes;
     expect(startingAttributes).toContain(AttributeName.Presence);
     actionClickDropdownItemX(fixture, "#characterOptionalAttribute", 1);
+    startingAttributes = component.character.startingAttributes;
     expect(startingAttributes).toContain(AttributeName.Reasoning);
     expect(startingAttributes).not.toContain(AttributeName.Presence);
   });
